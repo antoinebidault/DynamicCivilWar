@@ -50,7 +50,7 @@ SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",getPosWorld _unit
 
 
 
-_unit setVariable ["IH_SCORE",_unit getVariable ["IH_SCORE",START_SCORE]];
+_unit setVariable ["DCW_SCORE",_unit getVariable ["DCW_SCORE",START_SCORE]];
 
 if (isPlayer _unit)then{
 	_unit addAction ["<t color='#eee'>Get supports</t>",{

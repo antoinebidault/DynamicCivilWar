@@ -4,11 +4,10 @@
   "description": "A dynamic singleplayer scenario for Arma III",
   "main": "gulpfile.js",
   "dependencies": {
-    "moment": "^2.19.3"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-header-comment": "^0.2.1"
+    "moment": "^2.19.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

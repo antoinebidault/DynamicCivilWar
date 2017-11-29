@@ -10,7 +10,7 @@ private["_type","_price"];
 _type  = _this select 0;
 _price = _this select 1;
 
-if( ((player getVariable["IH_SCORE",0]) - _price) >= 0)then {
+if( ((player getVariable["DCW_SCORE",0]) - _price) >= 0)then {
 
 	_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;
 	hint format["%1 x%2",_type,_nb];

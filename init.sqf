@@ -3,21 +3,18 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License: MIT
+ *
+ * Mission start up
+ * https://github.com/bidass/DynamicCivilWar
+ * You are free to edit or share it
  */
 
-//Mission start up
-//BIDASS
-//https://github.com/bidass/DynamicCivilWar
-//You are free to edit or share it
-
-//Mission loading
-[("... Loading Mission")] spawn BIS_fnc_infoText;
-titleCut ["", "BLACK FADED", 999];
-sleep 3;
+titleCut ["Loading Mission...", "BLACK FADED", 999];
 playMusic "ASOTheme";
 
 [] Spawn {
     _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
+	
 	// Info text
 	[worldName, format["%1km from %2", round(((getPos _loc) distance player)/10)/100,text _loc], str(date select 1) + "." + str(date select 2) + "." + str(date select 0)] spawn BIS_fnc_infoText;
 	sleep 5;
@@ -26,38 +23,13 @@ playMusic "ASOTheme";
 	"dynamicBlur" ppEffectCommit 0;     
 	"dynamicBlur" ppEffectAdjust [0.0];  
 	"dynamicBlur" ppEffectCommit 5;  
-	titleCut ["", "BLACK IN", 3];
+	titleCut ["", "BLACK IN", 5];
 };
 
 //A little animation for the player
 player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 
 
-MUSICS = [
-	"beast",
-	"mhDown",
-	"axe",
-	"seal",
-	"summit",
-	"bhdown",
-	"bhdown2"
-];
-ehID = addMusicEventHandler ["MusicStop", {MUSIC_PLAYING = false}];
-MUSIC_PLAYING = true;
-fnc_playList = {
-	params["_musics"];
-	while {count _musics > 0} do
-	{
-		MUSIC_PLAYING = true;
-		_music = _musics call BIS_fnc_selectRandom;
-		playMusic _music;
-		_musics = _musics - [_music];
-		waitUntil{sleep 5;!MUSIC_PLAYING};
-	};
-	[MUSICS] spawn fnc_playList;
-};
-
-[MUSICS] spawn fnc_playList;
-
-
-nul = [] execVM "insurgent_hunt\init.sqf";
-nul = [player] execVM "medevac\init.sqf";
+//Mission loading
+nul = [] execVM "functions\playlist.sqf"; //Init the music playlist
+nul = [] execVM "DCW\init.sqf"; //Init the insurgents
+nul = [player] execVM "medevac\init.sqf"; //Init the medevac system

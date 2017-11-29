@@ -7,9 +7,9 @@
 
 	params ["_unit","_bonus","_silent"];
 	_silent = if (isNil '_silent') then{false}else{true};
-	_score = _unit getVariable ["IH_SCORE",0];
+	_score = _unit getVariable ["DCW_SCORE",0];
 	_score = (_score + _bonus);
-	_unit setVariable ["IH_SCORE",_score];
+	_unit setVariable ["DCW_SCORE",_score];
 	private _scoreType = if (_bonus > 0) then {"+"}else{""};
 
 	if (!_silent)then{
