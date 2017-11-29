@@ -58,7 +58,7 @@ _this select 0 addEventHandler["FiredNear",
 				sleep 2;
 				_unit switchMove "";
 				sleep 2;
-				[_unit] call fnc_addAction;
+				[_unit] call fnc_addCivilianAction;
 				[_unit] call fnc_handleFiredNear;
 				[_unit,20] call fnc_UpdateRep;
 				sleep 100;

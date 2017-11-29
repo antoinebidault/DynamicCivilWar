@@ -46,7 +46,7 @@ fnc_createtask =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\cr
 fnc_UpdateRep =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\UpdateRep.sqf";
 fnc_LocalChief = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\LocalChief.sqf";
 fnc_PrepareAction = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\addActionFn.sqf"; 
-fnc_AddAction = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\addAction.sqf";
+fnc_AddCivilianAction = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\addCivilianAction.sqf";
 fnc_shout = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Shout.sqf";
 fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\BadBuyLoadout.sqf";
 

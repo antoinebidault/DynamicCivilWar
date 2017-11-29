@@ -1,12 +1,14 @@
-//execVM "civilian\init.sqf";
-//[position player, 100] execVM "wreck\init.sqf";
-//0 = [50,5] execvm "tpw_furniture.sqf";
+//Mission start up
+//BIDASS
+//https://github.com/bidass/DynamicCivilWar
+//You are free to edit or share it
 
-
-
+//Mission loading
 [("... Loading Mission")] spawn BIS_fnc_infoText;
 titleCut ["", "BLACK FADED", 999];
+sleep 3;
 playMusic "ASOTheme";
+
 [] Spawn {
     _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	// Info text
@@ -20,6 +22,7 @@ playMusic "ASOTheme";
 	titleCut ["", "BLACK IN", 3];
 };
 
+//A little animation for the player
 player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 
 
 MUSICS = [
