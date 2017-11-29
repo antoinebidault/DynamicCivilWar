@@ -1,3 +1,8 @@
+/*
+Transform a civil in an insurgent.
+BIDASS
+*/
+
 params ["_unit","_side"];
 
 [_unit] joinSilent grpNull;
@@ -5,7 +10,6 @@ params ["_unit","_side"];
 
 _unit removeEventHandler ["HandleDamage",0];
 _unit removeEventHandler ["FiredNear",0];
-//_unit setVariable ["",""];
 
 private _marker = _unit getVariable["marker",""];
 if (_side == ENEMY_SIDE)then{
@@ -16,13 +20,12 @@ if (_side == ENEMY_SIDE)then{
         _unit setVariable["IH_type","civ"];
 };
 
-// Random weapon loadout
-
 _unit stop true;
 _unit playActionNow  "TakeFlag";
 removeAllActions _unit;
 sleep 2;
 
+// Random weapon loadout
 switch (floor(random 3)) do
 {
 case 0:
@@ -65,7 +68,5 @@ sleep 3;
 _unit stop false;
 _unit SetBehaviour "COMBAT";
 _unit allowFleeing .1;
-
-
 
 _unit;

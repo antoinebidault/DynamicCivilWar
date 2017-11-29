@@ -16,17 +16,27 @@ _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _tempList] call BIS_fnc_findSafePos;
 {  
     _initPos = _x select 0;
+
+    //Spawn the commander
     ENEMY_COMMANDER = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],ENEMY_SKILLS,"NONE"];
     removeAllWeapons ENEMY_COMMANDER;
-    _marker = createMarker ["commanderMarker",getPos ENEMY_COMMANDER];
-    _marker setMarkerShape "ICON";
-    _marker setMarkerColor "ColorRed";
-    _marker setMarkerType "o_motor_inf";
-    ENEMY_COMMANDER setVariable["marker",_marker];
+    ENEMY_COMMANDER setBehaviour "SAFE";
+    
+    //Custom variable
+    if (DEBUG) then {
+        _marker = createMarker ["commanderMarker",getPos ENEMY_COMMANDER];
+        _marker setMarkerShape "ICON";
+        _marker setMarkerColor "ColorRed";
+        _marker setMarkerType "o_motor_inf";
+        ENEMY_COMMANDER setVariable["marker",_marker];
+    };
+
+    //Push to units-spawned to update the marker pos
     UNITS_SPAWNED pushback ENEMY_COMMANDER;
     ESCORT pushBack ENEMY_COMMANDER;
-    ENEMY_COMMANDER setBehaviour "SAFE";
 
+
+    //When the commander is attacked by the player group, he would try to flee. If he is far from the player, he would disappear and got respawned in another sector
     ENEMY_COMMANDER addEventHandler ["FiredNear",{
         _civ=_this select 0;	
 		_distance = _this select 2;	

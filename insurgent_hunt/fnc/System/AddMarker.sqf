@@ -1,3 +1,9 @@
+/*
+Add a marker associated to a unit. 
+The marker name is stored in a variable.
+BIDASS
+*/
+
 params["_unit","_color"];
 
 if (!DEBUG) exitWith {""};

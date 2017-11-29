@@ -1,59 +1,61 @@
 
 
 //SYSTEM
-fnc_FactionClasses = compileFinal preprocessFileLineNumbers "insurgent_hunt\fnc\FactionClasses.sqf";
-fnc_isInMarker= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\isinMarker.sqf";
-fnc_findBuildings= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\findBuildings.sqf";
-fnc_addMarker = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\addMarker.sqf";
-fnc_findNearestMarker = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\findNearestMarker.sqf";
-fnc_CachePut = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\CachePut.sqf";
-fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\ShowIndicator.sqf"; 
+fnc_FactionClasses = compileFinal preprocessFileLineNumbers "insurgent_hunt\fnc\System\FactionClasses.sqf";
+fnc_isInMarker= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\System\isinMarker.sqf";
+fnc_findBuildings= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\System\findBuildings.sqf";
+fnc_addMarker = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\System\addMarker.sqf";
+fnc_findNearestMarker = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\System\findNearestMarker.sqf";
+fnc_CachePut = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\System\CachePut.sqf";
+fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\System\ShowIndicator.sqf"; 
 
 //SPAWN
-fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\SpawnUnits.sqf";
-fnc_SpawnAsEnemy = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\SpawnAsEnemy.sqf";
-fnc_spawnchaser = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\spawnchaser.sqf";
-fnc_spawnoutpost = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\spawnoutpost.sqf";
-fnc_SpawnMeetingPoint = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\SpawnMeetingPoint.sqf";
-fnc_SpawnCivil =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\SpawnCivil.sqf";
-fnc_SpawnEnemy =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\SpawnEnemy.sqf";
-fnc_SpawnMortar = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\SpawnMortar.sqf";
-fnc_SpawnCars = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Cars.sqf";
-fnc_SpawnMainObjective = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\SpawnMainObjective.sqf";
+fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnUnits.sqf";
+fnc_SpawnAsEnemy = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnAsEnemy.sqf";
+fnc_spawnchaser = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\spawnchaser.sqf";
+fnc_spawnoutpost = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\spawnoutpost.sqf";
+fnc_SpawnMeetingPoint = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnMeetingPoint.sqf";
+fnc_SpawnCivil =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnCivil.sqf";
+fnc_SpawnEnemy =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnEnemy.sqf";
+fnc_SpawnMortar = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnMortar.sqf";
+fnc_SpawnCars = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnCars.sqf";
+fnc_SpawnMainObjective = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnMainObjective.sqf";
+fnc_SpawnPosition = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Spawn\SpawnPosition.sqf";
 
 //PATROL
-fnc_Patrol= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Patrol.sqf";
-fnc_SimplePatrol= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\SimplePatrol.sqf";
-fnc_LargePatrol = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\LargePatrol.sqf";
-fnc_chase = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\chase.sqf";
-fnc_carPatrol = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\carPatrol.sqf";
-fnc_civilianPatrol = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\civilianPatrol.sqf";
+fnc_Patrol= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Patrol\CompoundPatrol.sqf";
+fnc_SimplePatrol= compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Patrol\SimplePatrol.sqf";
+fnc_LargePatrol = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Patrol\LargePatrol.sqf";
+fnc_chase = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Patrol\chase.sqf";
+fnc_carPatrol = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Patrol\carPatrol.sqf";
+fnc_civilianPatrol = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Patrol\civilianPatrol.sqf";
+fnc_gotomeeting =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Patrol\gotomeeting.sqf";
 
 //OBJECTIVES
-fnc_GetIntel = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\GetIntel.sqf";
-fnc_ieds = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\ied.sqf";
-fnc_cache = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\cache.sqf";
-fnc_Hostage = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\hostage.sqf";
-fnc_MortarBombing = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\MortarBombing.sqf";
-fnc_Success = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Success.sqf";
-fnc_failed = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Failed.sqf";
+fnc_GetIntel = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\objective\GetIntel.sqf";
+fnc_ieds = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\objective\ied.sqf";
+fnc_cache = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\objective\cache.sqf";
+fnc_Hostage = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\objective\hostage.sqf";
+fnc_Success = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\objective\Success.sqf";
+fnc_failed = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\objective\Failed.sqf";
+fnc_createtask =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\objective\createtask.sqf";
 
 //CUSTOM BEHAVIOR
-fnc_addtorch = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\addtorch.sqf";
-fnc_randomAnimation = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\randomAnimation.sqf";
-fnc_gotomeeting =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\gotomeeting.sqf";
-fnc_createtask =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\createtask.sqf";
-fnc_UpdateRep =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\UpdateRep.sqf";
-fnc_LocalChief = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\LocalChief.sqf";
-fnc_PrepareAction = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\addActionFn.sqf"; 
-fnc_AddCivilianAction = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\addCivilianAction.sqf";
-fnc_shout = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Shout.sqf";
-fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\BadBuyLoadout.sqf";
+fnc_MortarBombing = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\MortarBombing.sqf";
+fnc_addtorch = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\addtorch.sqf";
+fnc_randomAnimation = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\randomAnimation.sqf";
+fnc_UpdateRep =  compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\UpdateRep.sqf";
+fnc_LocalChief = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\LocalChief.sqf";
+fnc_PrepareAction = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\PrepareAction.sqf"; 
+fnc_AddCivilianAction = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\addCivilianAction.sqf";
+fnc_shout = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\Shout.sqf";
+fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\BadBuyLoadout.sqf";
+fnc_Talk = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Behavior\Talk.sqf";
 
 //HANDLERS
-fnc_HandleFiredNear = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\HandleFiredNear.sqf";
-fnc_HandleDamaged = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\HandleDamaged.sqf";
-fnc_handlekill = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\handleKill.sqf";
+fnc_HandleFiredNear = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Handler\HandleFiredNear.sqf";
+fnc_HandleDamaged = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Handler\HandleDamaged.sqf";
+fnc_handlekill = compileFinal preprocessFileLineNumbers  "insurgent_hunt\fnc\Handler\HandleKill.sqf";
 
 //composition
 compo_camp1 =  call (compileFinal preprocessFileLineNumbers "insurgent_hunt\composition\camp1.sqf");
@@ -195,13 +197,13 @@ LAST_FLARE_TIME = time;
 MARKER_WHITE_LIST pushBack "playerMarker";
 
 [] call fnc_PrepareAction;
-[getPosATL(missionNamespace getVariable ["IH_Respawn_Mat", objNull])] execVM "insurgent_hunt\fnc\respawn.sqf"; //Respawn loop
-[] execVM "insurgent_hunt\fnc\sheep.sqf"; //Sheep herds spawn
-[] execVM "insurgent_hunt\fnc\randomPatrol.sqf"; //Enemy patrols
-[] execVM "insurgent_hunt\fnc\randomCar.sqf"; //Civil & enemy cars
-[] execVM "insurgent_hunt\fnc\randomCivilian.sqf"; //Civilians walking around
-[] execVM "insurgent_hunt\fnc\chopper.sqf"; //Chopper spawn
-[] execVM "insurgent_hunt\fnc\SpawnTank.sqf"; //Tanks
+[getPosATL(missionNamespace getVariable ["IH_Respawn_Mat", objNull])] execVM "insurgent_hunt\fnc\Spawn\Respawn.sqf"; //Respawn loop
+[] execVM "insurgent_hunt\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
+[] execVM "insurgent_hunt\fnc\spawn\RandomPatrol.sqf"; //Enemy patrols
+[] execVM "insurgent_hunt\fnc\spawn\RandomCar.sqf"; //Civil & enemy cars
+[] execVM "insurgent_hunt\fnc\spawn\RandomCivilian.sqf"; //Civilians walking around
+[] execVM "insurgent_hunt\fnc\spawn\SpawnChopper.sqf"; //Chopper spawn
+[] execVM "insurgent_hunt\fnc\spawn\SpawnTank.sqf"; //Tanks
 [] spawn fnc_SpawnMainObjective;
 
 private _ret = false;

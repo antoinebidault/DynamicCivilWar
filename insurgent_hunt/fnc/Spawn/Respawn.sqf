@@ -5,7 +5,7 @@ for "_i" from 0 to NUMBER_RESPAWN do
 {
 	_loadout = getUnitLoadout player;
 	player setUnitTrait ["explosiveSpecialist",true];
-	[player] execVM "insurgent_hunt\fnc\rest.sqf";
+	[player] execVM "insurgent_hunt\fnc\Behavior\Rest.sqf";
 	nul = [player] execVM "supportui\init.sqf";
 
 	waitUntil

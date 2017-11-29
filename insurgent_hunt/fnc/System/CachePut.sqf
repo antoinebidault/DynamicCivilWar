@@ -1,3 +1,10 @@
+/*
+Put a compound with all associated units in cache
+The precise number of units remained is kept in memory in an array
+The main purpose is to keep the same effective as before with just a randomization on the spawnng positions.
+BIDASS
+*/
+
 private["_type","_units","_nbPeople","_nbSniper","_nbEnemies","_nbCars","_unitsToRemove","_nbIeds"];
 _units = _this select 0;
 
@@ -24,8 +31,6 @@ _unitsToRemove = [];
         _unitsToRemove pushBack _x;
         deleteVehicle _x;
     }else{
-        //if (_x distance player > 350)then{
-            //Suppression de la tâche
             _x call fnc_failed;
             _unitsToRemove pushBack _x;
             if (_type == "civ")then{
@@ -63,7 +68,6 @@ _unitsToRemove = [];
                     };
                 };
             };
-       // };
         if (DEBUG)then{ 
             deleteMarker (_x getVariable["marker",""]);
         };
@@ -77,12 +81,4 @@ foreach _units;
 
 [[_nbPeople,_nbSniper,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost],_unitsToRemove];
 
-/*
-_unit setVariable["unit_cached",true];
-(_unit getVariable["marker",objNull]) setMarkerAlpha 0;
-_unit enableSimulationGlobal false;
-_unit disableAI "ALL";
-_unit hideObjectGlobal true;
-UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
-UNITS_CACHED pushback _unit;
-*/
+
