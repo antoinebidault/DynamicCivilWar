@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 	params ["_unit","_bonus","_silent"];
 	_silent = if (isNil '_silent') then{false}else{true};
 	_score = _unit getVariable ["IH_SCORE",0];

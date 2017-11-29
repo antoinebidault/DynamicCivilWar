@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private ["_pos","_radius","_nb","_unit","_unitName","_enemy","_mortar"];
 
 _pos = _this select 0;

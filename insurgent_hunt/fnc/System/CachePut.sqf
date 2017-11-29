@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 /*
 Put a compound with all associated units in cache
 The precise number of units remained is kept in memory in an array

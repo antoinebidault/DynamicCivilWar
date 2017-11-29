@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 //Inspired by SPUn / LostVar
 
 private ["_unit","_radius","_newPos","_i","_i2","_bPoss","_building","_buildings","_dir","_range","_curPos","_outOrNot"];

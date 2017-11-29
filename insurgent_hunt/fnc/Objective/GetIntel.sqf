@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private _unit = _this select 0;
 private _asker = _this select 1;
 private _probability  =  if (count _this == 3) then { _this select 2 } else { 50 };

@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 	
 	// return array of enterable building objects which have min 3 positions inside
 	// passed params are [[pos], radius]

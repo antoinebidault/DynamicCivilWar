@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private ["_enemy","_unitName"];
 private _units = [];
 private _nbUnit = (PATROL_SIZE select 0) + round(random(PATROL_SIZE SELECT 1));;

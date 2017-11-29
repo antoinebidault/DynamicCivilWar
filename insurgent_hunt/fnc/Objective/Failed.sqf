@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private _unitWithTask = _this;
 
 if (isNil '_unitWithTask') exitWith{false};

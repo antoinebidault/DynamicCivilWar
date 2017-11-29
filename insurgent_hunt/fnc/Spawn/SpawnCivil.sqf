@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 _group = _this select 0;
 _pos = _this select 1;
 _chief = if (count _this >= 3) then{ _this select 2 }else{objNull};

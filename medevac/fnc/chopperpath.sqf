@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private ["_grp","_landPos","_unit","_deathReplaced","_startPos","_wp0","_wp1","_wp01","_pos"];
 _grp = _this select 0;
 _landPos =_this select 1;

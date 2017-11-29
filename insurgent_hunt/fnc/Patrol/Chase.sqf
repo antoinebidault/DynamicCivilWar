@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 
 private ["_leader","_marker","_lastKnownPosition","_flrObj"];
 _leader = _this;

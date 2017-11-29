@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private ["_unit","_side","_transportHelo","_soldier"];
 _transportHelo = _this select 0;
 _side = _this select 1;

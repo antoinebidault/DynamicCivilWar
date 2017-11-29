@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private ["_chopper","_spawnPos","_className"];
 
 fnc_chopperpatrol = compile preprocessFileLineNumbers  "insurgent_hunt\fnc\ChopperPatrol.sqf";

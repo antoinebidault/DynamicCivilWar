@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 params ["_unit"];
 fnc_updatescore = compile preprocessFileLineNumbers  "supportui\fnc\UpdateScore.sqf";
 fnc_supportui = compile preprocessFileLineNumbers  "supportui\fnc\SupportUI.sqf";

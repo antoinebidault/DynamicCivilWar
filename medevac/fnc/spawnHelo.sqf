@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private ["_transporthelo","_chopper","_start","_ch"];
 
 _chopper = missionNamespace getVariable ["medevac_chopper" , objNull];

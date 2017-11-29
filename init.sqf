@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 //Mission start up
 //BIDASS
 //https://github.com/bidass/DynamicCivilWar

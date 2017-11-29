@@ -1,3 +1,10 @@
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License: MIT
+ */
+
 private["_pos","_radius","_roads","_car","_cars","_connectedRoad","_roadConnectedTo"];
 
 _pos = _this select 0;
