@@ -12,7 +12,7 @@ _unit setSpeedMode "LIMITED";
 _unit forceWalk  true;
 while { alive _unit }do{
 
-    _newPos = [getPosWorld player, 1, 250, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+    _newPos = [getPos player, 1, 250, 3, 0, 20, 0] call BIS_fnc_findSafePos;
     group _unit move _newPos;
     waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 };
     [_unit] call fnc_randomAnimation;
@@ -38,7 +38,7 @@ while { alive _unit }do{
         };
     } forEach MARKERS;
     if (count _potentialIntel > 0 ) then {
-        _newPos = [getPosWorld (_potentialIntel call BIS_fnc_selectrandom), 1, 10, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+        _newPos = [getPos (_potentialIntel call BIS_fnc_selectrandom), 1, 10, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         group _unit move _newPos;
          waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 };
          [_unit] call fnc_randomAnimation;

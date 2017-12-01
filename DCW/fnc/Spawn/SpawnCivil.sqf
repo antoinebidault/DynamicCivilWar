@@ -24,7 +24,9 @@ _unit setVariable["DCW_Chief",_chief];
 _unit call fnc_handleDamaged;
 
 //By default, it takes the average civil reputation;
+_unit setVariable["DCW_suspect", if(random 100 > PERCENTAGE_SUSPECT) then {false}else{true} ];
 _unit setVariable["DCW_friendliness",CIVIL_REPUTATION];
+
 _unit setVariable["DCW_type","civ"];
 _unit setDir random 360;
 removeAllWeapons _unit;

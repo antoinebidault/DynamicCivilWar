@@ -18,7 +18,7 @@ replacementGroup = [transportHelo,side _unit,_this select 4] call fnc_SpawnHeloR
  HASLANDED = false;
  MEDEVAC_ISABORTED = false;
 
-_startPos = position medevac_chopper;
+_startPos = position transportHelo;
 HQ sideChat format["Be advised: medevac chopper in bound ! ETA : %1min",ceil((_landPos distance _startPos)/1000)*.333] ;
 
  private _wp0 = _grp addwaypoint [_landPos, 10];
@@ -81,7 +81,10 @@ deleteWaypoint [_grp, 0];
  _wp01 setwaypointtype "UNLOAD";
  _wp01 setWaypointStatements ["true","HASLANDED = true;"];
 
-waitUntil {HASLANDED};
+_timer = time;
+waitUntil {sleep 2; HASLANDED || time == _timer + 300};
+
+if (!HASLANDED) exitWith {[transportHelo] call fnc_AbortMedevac;};
 
 transportHelo land "GET IN";
 replacementGroup leavevehicle transportHelo;
@@ -94,7 +97,7 @@ replacementGroup move position player;
 [interventionGroup,_deathReplaced,transportHelo] call fnc_save ;
 HQ sideChat format["We're starting the %1 injured's evacuations.",count _deathReplaced];
 
-waitUntil{ MEDEVAC_ISABORTED || ({_x in transportHelo} count units  interventionGroup == count units  interventionGroup) };
+waitUntil{ MEDEVAC_ISABORTED || ({_x in transportHelo} count (units  interventionGroup) == count (units  interventionGroup)) };
  
 if (MEDEVAC_ISABORTED) then {
 	HQ sideChat "Mission aborted, it's too dangerous here ! out.";
@@ -110,6 +113,7 @@ if (MEDEVAC_ISABORTED) then {
 	{unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);
 	(units replacementGroup) join group _unit;
 	HQ sideChat "Reinforcments arriving.";
+	transportHelo move _startPos;
 };
 
 //Suppression des waypoints
@@ -118,7 +122,6 @@ while {(count(waypoints _grp))>0} do
 	deleteWaypoint ((waypoints _grp) select 1);	
 	sleep 0.01;
 };
-
 
 _wp1 = _grp addwaypoint [_startPos, 0];
 _wp1 setwaypointtype "MOVE";

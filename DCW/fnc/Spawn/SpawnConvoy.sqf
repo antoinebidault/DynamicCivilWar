@@ -47,9 +47,9 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
         params["_unit","_killer"];
 
         if (group _killer == group player)then{
-            player globalChat "HQ ! This is charlie team, the enemy commander is KIA ! Out.";
-            sleep 4;
-            HQ globalChat "Copy that ! Good job Charlie";
+            
+            [player,"HQ ! This is charlie team, the enemy commander is KIA ! Out."] call fnc_Talk;
+            [HQ,"Copy that ! Good job Charlie"] call fnc_Talk;
             []spawn{
                 sleep 10;
                 ["END1",true,2] call BIS_fnc_endMission;
@@ -69,7 +69,7 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
             params["_unit","_killer"];
             if (group _killer == group player)then{
                []spawn{
-                player globalChat "Shit ! We killed his civilian escort. The operation is compromised.";
+                [player,"Shit ! We killed his civilian escort. The operation is compromised."] call fnc_Talk;
                 sleep 10;
                 ["epicFail",false,2] call BIS_fnc_endMission;
                };

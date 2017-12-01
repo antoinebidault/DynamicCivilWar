@@ -25,7 +25,7 @@ if (DEBUG)then{
 	_marker setMarkerColor "ColorWhite";
 };
 
-_houses  = [getPosWorld _unit, _radius] call fnc_findbuildings; 
+_houses  = [getPosATL _unit, _radius] call fnc_findbuildings; 
 
 sleep 3;
 _unit forceWalk false;

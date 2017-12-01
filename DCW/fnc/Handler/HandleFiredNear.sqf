@@ -59,16 +59,16 @@ _this select 0 addEventHandler["FiredNear",
 				params["_unit","_asker","_action"];
 				_unit removeAction _action;
 				_asker  action ["WeaponOnBack",  _asker];
-				_asker globalChat "Calm down my friend !";
+        		[_asker,"Calm down my friend !"] call fnc_Talk;
 				_unit stop true;
 				_unit  setVariable["civ_affraid",false];
-				sleep 2;
+				sleep .3;
 				_unit switchMove "";
-				sleep 2;
+				sleep .3;
 				[_unit] call fnc_addCivilianAction;
-				[_unit] call fnc_handleFiredNear;
 				[_unit,20] call fnc_UpdateRep;
 				sleep 100;
+				[_unit] call fnc_handleFiredNear;
 				_unit stop false;
 			},nil,1.5,true,true,"","true",2,false,""];
 			if (isPlayer _gunner )then {

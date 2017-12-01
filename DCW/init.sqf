@@ -15,6 +15,7 @@ fnc_addMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\addMarke
 fnc_findNearestMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\findNearestMarker.sqf";
 fnc_CachePut = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\CachePut.sqf";
 fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\ShowIndicator.sqf"; 
+fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Talk.sqf";
 
 //SPAWN
 fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnUnits.sqf";
@@ -58,7 +59,6 @@ fnc_PrepareAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Pr
 fnc_AddCivilianAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\addCivilianAction.sqf";
 fnc_shout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Shout.sqf";
 fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\BadBuyLoadout.sqf";
-fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Talk.sqf";
 
 //HANDLERS
 fnc_HandleFiredNear = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleFiredNear.sqf";
@@ -105,7 +105,7 @@ PERCENTAGE_CIVILIAN = 65; //Percentage civilian in a block
 PERCENTAGE_ENEMIES = 35; //Percentage enemies
 PERCENTAGE_INSURGENTS = 50; //Percentage of potential insurgents in the civilians. If the civilian are attacked they might join the east or west wether the shot are coming from (And with probabilities rules...)
 PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joining the west.
-
+PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/1000);
 
 //ENEMIES
 ENEMY_SIDE = EAST; //Enemy side 
@@ -347,7 +347,7 @@ while {true} do{
 						if (!_enemyInMarker)then {
 							_success = true;
 							[_marker,_radius,_units,_points] call COMPOUND_SECURED;
-							player globalChat "This compound is cleared !";
+							[player,"This compound is cleared ! Great job."] call fnc_talk;
 							_marker setMarkerColor "ColorGreen";
 						};
 

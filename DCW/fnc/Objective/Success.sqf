@@ -6,7 +6,7 @@
  */
 
 private _unitWithTask = _this;
-private _taskId = "";
+private _task = "";
 
 if (isNil '_unitWithTask') exitWith{false};
 if (isnull _unitWithTask) exitWith{false};
@@ -16,15 +16,19 @@ if (_unitWithTask getVariable["DCW_type",""] == "") exitWith { false };
 
 
 if (_unitWithTask getVariable["DCW_task",""] != "") then{
-    _taskId = _unitWithTask getVariable["DCW_task",""];
-    [_taskId, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
+    _task = _unitWithTask getVariable["DCW_task",""];
+    [_task, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
     _unitWithTask setVariable["DCW_task",""];
     _unitWithTask getVariable["DCW_markerIntel",""] setMarkerColor "ColorGreen";
 }else{
-    _task = [_unitWithTask,player] call fnc_CreateTask;
-    [(_task select 0), "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-    player globalChat (_task select 2);   
+    _newTask = [_unitWithTask,player,false] call fnc_CreateTask;
+    [(_newTask select 0), "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
+    [player,(_newTask select 2)] call fnc_Talk;
+    _task = (_newTask select 0);
 };
+
+//Delete the task after success.
+[_task,true] call BIS_fnc_deleteTask;
 
 _unitWithTask setVariable["DCW_type",""];
 _unitWithTask setVariable["DCW_IsIntel",false];

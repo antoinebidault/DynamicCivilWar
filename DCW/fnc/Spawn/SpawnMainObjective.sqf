@@ -42,7 +42,6 @@ _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _te
     UNITS_SPAWNED pushback ENEMY_COMMANDER;
     ESCORT pushBack ENEMY_COMMANDER;
 
-
     //When the commander is attacked by the player group, he would try to flee. If he is far from the player, he would disappear and got respawned in another sector
     ENEMY_COMMANDER addEventHandler ["FiredNear",{
         _civ=_this select 0;	
@@ -50,7 +49,7 @@ _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _te
 		_gunner = _this select 7;	
 
         if (group _gunner == group player && _distance < 50)then{
-            player globalChat "Shit this asshole is fleeing.";
+            [player,"Shit ! this asshole is fleeing."] spawn fnc_talk;
             [_civ] joinSilent (createGroup ENEMY_SIDE);
             _civ setBehaviour "CARELESS";
             _civ forceWalk false;
@@ -64,8 +63,8 @@ _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _te
                 if (!alive ENEMY_COMMANDER)exitWith{false};
                 deleteMarker ENEMY_COMMANDER getVariable["marker",""];
                 deleteVehicle ENEMY_COMMANDER;
-                player globalChat "He has definitely left the area... Mission compromised. Maybe we would catch him later...";
-                {ESCORT = ESCORT - [_x];deleteVehicle _x; } forEach ESCORT;
+                [player,"He has definitely left the area... Mission compromised. Maybe we would catch him later..."] call fnc_talk;
+                //{ESCORT = ESCORT - [_x];deleteVehicle _x; } forEach ESCORT;
                 [] call fnc_SpawnMainObjective;
             };
         };
@@ -75,11 +74,9 @@ _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _te
         params["_unit","_killer"];
 
         if (group _killer == group player)then{
-            player globalChat "HQ ! This is charlie team, the enemy commander is KIA ! Out.";
             []spawn{
-                sleep 4;
-                HQ globalChat "Copy that ! Good job Charlie";
-                sleep 10;
+                [player,"HQ ! This is charlie team, the enemy commander is KIA ! Out."] call fnc_talk;
+                sleep 14;
                 ["END1",true,2] call BIS_fnc_endMission;
             };
         }else{
@@ -97,7 +94,7 @@ _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _te
             params["_unit","_killer"];
             if (group _killer == group player)then{
             []spawn{
-                player globalChat "Shit ! We killed his civilian escort. The operation is compromised.";
+                [player,"Shit ! We killed his civilian escort. The operation is compromised."] call fnc_talk;
                 sleep 10;
                 ["epicFail",false,2] call BIS_fnc_endMission;
             };

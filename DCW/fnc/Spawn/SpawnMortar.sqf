@@ -15,7 +15,7 @@ private _units = [];
 
 if (_nb == 0)exitWith{_units;};
 
-_posToSpawn = [_pos, 250 max (1.5*_radius) , 300 max (2*_radius), 3, 0, 20, 0] call BIS_fnc_findSafePos;
+_posToSpawn = [_pos, 350 max (1.5*_radius) , 500 max (2*_radius), 3, 0, 20, 0] call BIS_fnc_findSafePos;
 for "_j" from 1 to _nb do {
     _mortar = ENEMY_MORTAR_CLASS createVehicle _posToSpawn ; 
     _mortar setVariable["DCW_isIntel",true];
@@ -36,7 +36,7 @@ for "_j" from 1 to _nb do {
     //Déclenchement du bombardement
     [_pos,_radius,_mortar] spawn {
         params["_pos","_radius","_mortar"];
-        waitUntil{sleep 15; getPosWorld player distance _pos < _radius };
+        waitUntil{sleep 15; getPosATL player distance _pos < _radius };
         [_mortar,player,_pos,_radius] call fnc_mortarbombing;
     };
                     

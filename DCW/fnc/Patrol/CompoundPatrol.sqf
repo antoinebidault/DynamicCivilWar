@@ -5,7 +5,7 @@
  * License: MIT
  */
 
-//Inspired by SPUn / LostVar
+//Modified script by SPUn / LostVar
 
 private ["_unit","_radius","_newPos","_i","_i2","_bPoss","_building","_buildings","_dir","_range","_curPos","_outOrNot"];
 
@@ -61,6 +61,10 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
                  };
             };
 
+        if (_unit getVariable["DCW_suspect",false])then{
+            _unit playActionNow "medic";
+        };
+
          _goToMeeting = ceil(random 2);
          if(_goToMeeting == 1)then{
            [_unit,_meetPoint] call fnc_gotomeeting;
@@ -70,7 +74,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
         if(_outOrNot == 1)then{
             _dir = random 360;
             _range = 10 ;
-            _curPos = getPosWorld _unit;
+            _curPos = getPos _unit;
              _newPos = [_curPos ,_range,_range + 30, 2, 0, 20, 0] call BIS_fnc_findSafePos;
             _unit doMove _newPos;
             _timer = time;

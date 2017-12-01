@@ -31,7 +31,7 @@ fnc_ActionRest =  {
         _cam cameraeffect ["terminate", "back"];
         camDestroy _cam;
 
-        _unit globalChat "Ok, let's go back to work !";
+        [_unit,"Ok, let's go back to work !"] call fnc_Talk;
         _unit setFatigue 0;
         _unit setStamina 1;
         _unit enableStamina false;

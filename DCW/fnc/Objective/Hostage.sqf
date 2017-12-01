@@ -29,7 +29,7 @@ for "_j" from 1 to _nb do {
     _posBuildings = _posBuildings -[_posToSpawn];
     _grp = createGroup CIV_SIDE;
     _unitName = CIV_LIST_UNITS call BIS_fnc_selectRandom;
-    _hostage = _grp  createUnit [_unitName, _pos,[],0,"NONE"];
+    _hostage = _grp  createUnit [_unitName, _posToSpawn,[],0,"NONE"];
     _hostage setCaptive true;
 	removeAllWeapons _hostage;
 	removeAllAssignedItems _hostage;
@@ -41,7 +41,7 @@ for "_j" from 1 to _nb do {
 	_hostage setBehaviour "Careless";
     _hostage setDamage .7;
     _hostage setHit ["legs", 1]; 
-    _largeSplash = createSimpleObject ["a3\characters_f\blood_splash.p3d", getPosWorld _hostage]; 
+    _largeSplash = createSimpleObject ["a3\characters_f\blood_splash.p3d", getPos _hostage]; 
     _largeSplash setDir random 360;
 	_hostage allowFleeing 0;
 	_hostage disableAI "Move";

@@ -7,17 +7,19 @@
 
 private ["_transporthelo","_chopper","_start","_ch"];
 
-_chopper = missionNamespace getVariable ["medevac_chopper" , objNull];
-_chopperClassName = typeOf _chopper;
-_start = position _chopper;
+//_chopper = missionNamespace getVariable ["medevac_chopper" , objNull];
+_chopperClassName = "RHS_UH60M_d";
+_start = [position player, 4000, 4500, 0, 0, 20, 0] call BIS_fnc_findSafePos;
+
 _ch = [[_start select 0, _start select 1, 50], 180, _chopperClassName, side unit] call BIS_fnc_spawnVehicle;
+
 _transporthelo = _ch select 0;
-_chGroup = _ch select 2; // group of helo so waypoints work.
-_chGroup setBehaviour "CARELESS"; // Make sure they don't get distracted.
-//_transporthelo flyInHeight 50;
+_chGroup = _ch select 2; 
+_chGroup setBehaviour "CARELESS"; 
 _transporthelo setVehicleLock "LOCKEDPLAYER";
 _transporthelo setCaptive true;
 
+//If the chopper is destroyed => Abort medevac
 _transporthelo addEventHandler["Killed",{
     [transportHelo] call fnc_abortMedevac;
 }];

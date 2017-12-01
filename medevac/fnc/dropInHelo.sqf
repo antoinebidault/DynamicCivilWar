@@ -14,7 +14,7 @@ params [
 
 
 _unit playAction "released";
-private _pos = getPosWorld _target;
+private _pos = getPosATL _target;
 
 detach _unit;
 detach _target;

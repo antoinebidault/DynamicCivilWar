@@ -29,11 +29,13 @@ while {_i > 0} do {
 {
   _x;
   _r = floor random 100;
+
   if (_r < PERCENTAGE_ENEMIES)then{
   	_car = createVehicle [ENEMY_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
   }else{
   	_car = createVehicle [CIV_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
   };
+
   _car setVariable ["DCW_type","car"];
   _car setVehicleLock "LOCKED";
   _roadConnectedTo = roadsConnectedTo _x;

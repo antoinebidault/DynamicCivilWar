@@ -53,9 +53,9 @@ while{true}do {
 			_goat= _goatgroup createUnit [_type,_pos,[],0,"NONE"];
 			_goat addEventHandler ["Killed", {
 				_man = leader (group (_this select 0));
-				if (((group _this select 1) == (group player)) && alive _man && _man isKindOf "Man")then{
+				if (  ( group(_this select 1) == (group player)) && alive _man && _man isKindOf "Man") then{
 					[_man,-5] call fnc_updateRep;
-					_man globalChat "Don't touch my sheep !";
+                	[_man,"Damn ! Don't touch my sheep !"] call fnc_talk;
 				};
 			}];
 			if (DEBUG)then{

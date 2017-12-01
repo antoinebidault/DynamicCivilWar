@@ -42,7 +42,6 @@ addActionHandcuff =  {
         _man call addActionLiberate;
         _man call addActionLookInventory;
         hint "Civilian captured";	   
-
         [_man] call CIVIL_CAPTURED;
 
     },nil,1.5,true,true,"","true",3,false,""];
@@ -53,7 +52,7 @@ addActionLiberate =  {
         _man  = (_this select 0);
         (_this select 1) playActionNow "PutDown";
         [_man] call fnc_handlefiredNear;
-        [_man] call fnc_addAction;
+        [_man] call fnc_addCivilianAction;
         (_this select 0) SetBehaviour "AWARE";
         (_this select 0) setCaptive false;
         _man switchMove ""; 
@@ -67,7 +66,15 @@ addActionLookInventory = {
     _this addAction["Search in gear",{
         _unit = (_this select 0);
         _human = (_this select 1);
-        [_unit,-5] call fnc_updateRep;
+        if (_unit getVariable["DCW_suspect",false])then{
+            _unit addItem "IEDLandSmall_Remote_Mag";
+            [_human,"Holy shit ! This man is carrying an IED !"];
+            [_unit,4] call fnc_updateRep;   
+            [_unit,30] call fnc_updateScore;   
+        }else{
+            [_unit,-2] call fnc_updateRep;   
+        };
+
         if (alive _unit) then {
             _human action ["Gear", _unit];
         };
@@ -77,23 +84,25 @@ addActionLookInventory = {
 addActionHalt = {
     _this addAction["Say hello",{
         params["_unit","_asker","_action"];
+        _asker playActionNow "GestureFreeze";
+        [_asker,"Hello sir !"] call fnc_Talk;
         if (!weaponLowered _asker) exitWith { 
-            _unit globalChat "I don't talk to somebody pointing his gun on me ! Go away !"; 
+            [_unit,"I don't talk to somebody pointing his gun on me ! Go away !"] call fnc_Talk;
             _unit playActionNow "gestureNo";
-            _asker globalChat "Sorry sir !";
+            [_asker,"I'm sorry, sir !"] call fnc_Talk;
             [_unit,-7] call fnc_updateRep;
             [] call CIVIL_DISRESPECT;
             false; 
-            };
-        _unit globalChat format["Hi ! My name is %1.", name _unit];
+        };
+        
         _unit removeAction _action;
         _unit doWatch _asker;
-        sleep 3;
+        sleep 1;
         _unit stop true;
-        _asker playActionNow "GestureFreeze";
+        _unit playActionNow "GestureHi";
+        [_unit,format["Hi ! My name is %1.", name _unit]] call fnc_Talk;
         sleep 1.5;
         _unit disableAI "MOVE";
-        _unit playActionNow "GestureHi";
         sleep 30;
         _unit stop false;
         _unit enableAI "MOVE";
@@ -109,18 +118,20 @@ addActionDidYouSee = {
 
         if (_unit getVariable["DCW_friendliness",50] < 40) exitWith {
             [_unit,-15] call fnc_updateRep;
-            _unit globalChat  "Don't talk to me !";
+            [_unit,"Don't talk to me !"] call fnc_Talk;
             false;
         };
-
-        _talker globalChat "Did you see anything recently ?";
+        
+        [_talker,"Did you see anything recently ?"] call fnc_Talk;
         private _data = _unit targetsQuery [objNull,ENEMY_SIDE, "", [], 0];
         sleep 1;
         _data = _data select {side group (_x select 1) == ENEMY_SIDE};
-        if (count _data == 0) exitWith {_unit globalChat "I saw nothing...";};
+        if (count _data == 0) exitWith {
+            [_unit, "I saw nothing..."] call fnc_Talk;
+        };
         if (count _data > 3) then { _data = [_data select 0] + [_data select 1] + [_data select 2];};
         
-        _unit globalChat format["I saw %1 enemies...",count _data];
+        [_unit,format["I saw %1 enemies...",count _data]] call fnc_Talk;
         _markers = [];
         {
             _enemy = _x select 1;
@@ -132,19 +143,21 @@ addActionDidYouSee = {
                 _num = floor (_ang / 22.5);
                 _compass = _points select _num;
                 _type = getText (configFile >> "cfgVehicles" >> typeOf vehicle _enemy >> "displayName");
-                _unit globalChat  format["I saw a %1 %2 %3km away, %4minutes ago ", _type,_compass,_nbMeters,ceil((_x select 5)/60)];
+                [_unit, format["I saw a %1 %2 %3km away, %4minutes ago ", _type,_compass,_nbMeters,ceil((_x select 5)/60)]] call fnc_Talk;
                 _marker = createMarkerLocal [format["enemyviewed-%1", random 50], position _enemy];
                 _marker setMarkerShapeLocal "ICON";
                 _marker setMarkerTypeLocal "mil_dot";
                 _marker setMarkerColorLocal "ColorRed";
                 _marker setMarkerTextLocal format["%1", _type];
                 _markers pushback _marker;
-                sleep 2;
+                sleep .3;
             };
         } forEach _data;
 
-        _unit globalChat "I marked them on yout map. Help us please !";
+        [_unit,"I marked their positions on your map. Help us please !"] call fnc_Talk;
         [_unit,15] call fnc_updateRep;
+        [_talker,"Thanks a lot !"] call fnc_Talk;
+        [_unit,"You're welcome !"] call fnc_Talk;
         sleep 240;
         { deleteMarker _x; }foreach _markers;
         if (alive _unit) then {
@@ -199,7 +212,7 @@ AddActionFeeling = {
                 };
             };
 
-            _unit globalChat  _message;
+            [_unit,_message] call fnc_Talk;
             sleep 120;
             _unit call AddActionFeeling;
 
@@ -214,8 +227,8 @@ addActionGetIntel = {
        params["_unit","_talker","_action"];
 
          if (_unit getVariable["DCW_friendliness",50] < 35) exitWith {
-            [_unit,-15] call fnc_updateRep;
-           _unit globalChat  "Don't talk to me !";
+            [_unit,-12] call fnc_updateRep;
+           [_unit,"Don't talk to me !"] call fnc_Talk;
            false;
         };
 
@@ -249,9 +262,7 @@ addActionGetIntel = {
 
         titleCut ["15 minutes later...", "BLACK IN", 4];
         _res = [_unit,_talker] call fnc_GetIntel;
-        _unit globalChat  (_res select 1);
-        sleep 3;
-
+        [_unit,(_res select 1)] call fnc_Talk;
         showCinemaBorder false;
         _cam cameraeffect ["terminate", "back"];
         camDestroy _cam;
@@ -293,11 +304,13 @@ addActionRally = {
         camDestroy _cam;
 
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS) then {
-            _unit globalChat "Ok, I'm in !";
+            [_unit,"Ok, I'm in !"] call fnc_Talk;
             [_unit,SIDE_CURRENT_PLAYER] call fnc_BadBuyLoadout;
             [_unit,50] call fnc_updateRep;
+            sleep 5;
+            [_unit] joinSilent group(_talker);
         }else{
-            _unit globalChat "No thanks...";
+            [_unit,"No thanks..."] call fnc_Talk;
             [_unit,- round(random 15) ] call fnc_updateRep;
         };
     },nil,1.5,true,true,"","true",3,false,""];
@@ -312,24 +325,31 @@ addActionFindChief = {
         params["_unit","_talker","_action"];
         _chief = (_this select 3) select 0;
         if(alive _chief)then{
-            _unit globalChat  format["I marked you the position where I last saw %1", name _chief];
-            _marker = createMarkerLocal [format["chief-%1", random 50], position _enemy];
+            [_unit,format["I marked you the exact position where I last saw %1", name _chief]] call fnc_Talk;
+            _marker = createMarkerLocal [format["chief-%1", random 50], getPosWorld _chief];
             _marker setMarkerShapeLocal "ICON";
             _marker setMarkerTypeLocal "mil_dot";
             _marker setMarkerColorLocal "ColorGreen";
             _marker setMarkerTextLocal "LocalChief";
         }else{
-            _unit globalChat "My chief is no more...";
+            [_unit,"Our chief is no more... Fucking war !"] call fnc_Talk;
         };
     },[_chief],1.5,true,true,"","true",3,false,""];
 };
 
 
-addActionFindChief = {
-    _this addAction["Ask him to leave.",{
-        [_unit,-5] call fnc_updateRep;
-        RemoveAllActions (_this select 0);
-        _pos = [getPos(_this select 0), 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
-        (_this select 0) move _pos;
+addActionLeave = {
+    _this addAction["Go away !",{
+        params["_unit","_asker"];
+        [_unit,-3] call fnc_updateRep;
+        RemoveAllActions _unit;
+        _asker playActionNow "gestureGo";
+        [_asker,"Sorry sir, you must leave now, go away !"] call fnc_Talk;
+        _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+        _unit stop false;
+        _unit forceWalk false;
+        _unit forceSpeed 10;
+        _unit move _pos;
     }];
 };
+

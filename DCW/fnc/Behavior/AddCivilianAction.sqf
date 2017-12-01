@@ -15,6 +15,7 @@ if (side _unit == CIV_SIDE)then
     _unit call addActionFeeling;
     _unit call addActionGetIntel;
     _unit call addActionRally;
+    _unit call addActionLeave;
     if ( _unit getVariable["DCW_Chief",objNull] != objNull && alive (_unit getVariable["DCW_Chief",objNull]))then{
         [_unit,_unit getVariable["DCW_Chief",objNull]] call addActionFindChief;
     };
