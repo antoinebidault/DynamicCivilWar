@@ -48,6 +48,7 @@ fnc_Hostage = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\hostage
 fnc_Success = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Success.sqf";
 fnc_failed = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Failed.sqf";
 fnc_createtask =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\createtask.sqf";
+fnc_MainObjectiveIntel =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\MainObjectiveIntel.sqf";
 
 //CUSTOM BEHAVIOR
 fnc_MortarBombing = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\MortarBombing.sqf";
@@ -144,7 +145,7 @@ CIVILIAN_KILLED = {
 	params["_unit","_killer"]; 
 	hint format ["%1 %2 was killed by %3",name (_unit),side _unit,name (_killer)];
 	_friends = nearestObjects [position _unit,["Man"],50];
-	{  if (side _x == CIV_SIDE) then { [_x,-10] call fnc_UpdateRep}; }foreach _friends;
+	{  if (side _x == CIV_SIDE) then { [_x,-4] call fnc_UpdateRep}; }foreach _friends;
 	[player,-20] call fnc_updateScore;
 };
 
@@ -157,7 +158,7 @@ COMPOUND_SECURED = {
 	params["_marker","_radius","_units","_points"]; 
 
 	//Misa à jour de l'amitié
-	{  if (side _x == CIV_SIDE && _x getVariable["DCW_friendliness",-1] != -1) then { _x setVariable["DCW_friendliness",100];}; }foreach _units;
+	{  if (side _x == CIV_SIDE && _x getVariable["DCW_friendliness",-1] != -1) then { [_x,6] call fnc_UpdateRep;}; }foreach _units;
 	[player,_points] call fnc_updateScore;
 };
 

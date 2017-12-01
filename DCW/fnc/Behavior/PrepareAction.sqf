@@ -17,7 +17,7 @@ addActionHandcuff =  {
         (_this select 1) playActionNow "PutDown";
         _man SetBehaviour "CARELESS";
         _man setCaptive true;
-        [_man,-30] call fnc_updateRep;
+        [_man,-4] call fnc_updateRep;
 
         _rifle = primaryWeapon _man; //get the officers primary weapon
         if (_rifle != "") then {
@@ -58,7 +58,7 @@ addActionLiberate =  {
         _man switchMove ""; 
         _man enableai "ANIM"; 
         _man enableai "MOVE"; 
-        [_man,10] call fnc_updateRep;
+        [_man,2] call fnc_updateRep;
     },nil,1.5,true,true,"","true",3,false,""];
 };
 
@@ -69,10 +69,10 @@ addActionLookInventory = {
         if (_unit getVariable["DCW_suspect",false])then{
             _unit addItem "IEDLandSmall_Remote_Mag";
             [_human,"Holy shit ! This man is carrying an IED !"];
-            [_unit,4] call fnc_updateRep;   
+            [_unit,1] call fnc_updateRep;   
             [_unit,30] call fnc_updateScore;   
         }else{
-            [_unit,-2] call fnc_updateRep;   
+            [_unit,-1] call fnc_updateRep;   
         };
 
         if (alive _unit) then {
@@ -90,7 +90,7 @@ addActionHalt = {
             [_unit,"I don't talk to somebody pointing his gun on me ! Go away !"] call fnc_Talk;
             _unit playActionNow "gestureNo";
             [_asker,"I'm sorry, sir !"] call fnc_Talk;
-            [_unit,-7] call fnc_updateRep;
+            [_unit,-1] call fnc_updateRep;
             [] call CIVIL_DISRESPECT;
             false; 
         };
@@ -117,7 +117,7 @@ addActionDidYouSee = {
         _unit removeAction _action;
 
         if (_unit getVariable["DCW_friendliness",50] < 40) exitWith {
-            [_unit,-15] call fnc_updateRep;
+            [_unit,-2] call fnc_updateRep;
             [_unit,"Don't talk to me !"] call fnc_Talk;
             false;
         };
@@ -155,7 +155,7 @@ addActionDidYouSee = {
         } forEach _data;
 
         [_unit,"I marked their positions on your map. Help us please !"] call fnc_Talk;
-        [_unit,15] call fnc_updateRep;
+        [_unit,1] call fnc_updateRep;
         [_talker,"Thanks a lot !"] call fnc_Talk;
         [_unit,"You're welcome !"] call fnc_Talk;
         sleep 240;
@@ -227,7 +227,7 @@ addActionGetIntel = {
        params["_unit","_talker","_action"];
 
          if (_unit getVariable["DCW_friendliness",50] < 35) exitWith {
-            [_unit,-12] call fnc_updateRep;
+            [_unit,-3] call fnc_updateRep;
            [_unit,"Don't talk to me !"] call fnc_Talk;
            false;
         };
@@ -266,7 +266,7 @@ addActionGetIntel = {
         showCinemaBorder false;
         _cam cameraeffect ["terminate", "back"];
         camDestroy _cam;
-        [_unit,30] call fnc_updateRep;
+        [_unit,3] call fnc_updateRep;
         sleep 10;
         _unit enableAI "MOVE";
     },nil,1.5,true,true,"","true",3,false,""];
@@ -303,15 +303,24 @@ addActionRally = {
         _cam cameraeffect ["terminate", "back"];
         camDestroy _cam;
 
-       if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS) then {
+        //Suspect
+        _isSuspect=!_unit getVariable ["DCW_suspect",false];
+       
+       if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !"] call fnc_Talk;
             [_unit,SIDE_CURRENT_PLAYER] call fnc_BadBuyLoadout;
-            [_unit,50] call fnc_updateRep;
+            [_unit,3] call fnc_updateRep;
             sleep 5;
+            [_unit] joinSilent grpNull;
             [_unit] joinSilent group(_talker);
         }else{
-            [_unit,"No thanks..."] call fnc_Talk;
-            [_unit,- round(random 15) ] call fnc_updateRep;
+            if (_isSuspect)then{
+                [_unit,"No thanks"] call fnc_Talk;
+            }else{
+                [_unit,"Sorry, but I have a family ! No way I get back to war..."] call fnc_Talk;
+            };
+
+            [_unit,-1 ] call fnc_updateRep;
         };
     },nil,1.5,true,true,"","true",3,false,""];
 };

@@ -54,7 +54,7 @@ _ctrl ctrlSetStructuredText _text;
 _ctrl ctrlSetFade 0;
 _ctrl ctrlCommit 1;
 
-sleep (count(_say)/6);
+sleep (count(_say)/10);
 
 // Hide subtitle
 _ctrl ctrlSetFade 1;

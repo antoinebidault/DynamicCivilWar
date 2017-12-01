@@ -50,9 +50,16 @@ for "_j" from 1 to _nb do {
     [_hostage,"ColorBlue"] call fnc_addMarker;
     _hostage setVariable["DCW_type","hostage"];
 
-    [ _hostage,"Secure Prisoner","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","_this distance _target < 2","true",{
+    _hostage addEventHandler ["Killed",{
+        [_this select 0, (_this select 0) getVariable["DCW_Act",0]]call BIS_fnc_holdActionRemove;
+        [player,"Hostage down... Mission failed"] call fnc_talk;
+        (_this select 0) call fnc_failed;
+    }];
+
+    _actionId = [ _hostage,"Secure Prisoner","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","_this distance _target < 2","true",{
         (_this select 1) playActionNow "medic";
     },{},{
+        if (!alive _hostage) exitWith{hint "He is dead";};
         _hostage = _this select 0;
         removeallactions _hostage;
         _hostage stop false;
@@ -63,14 +70,17 @@ for "_j" from 1 to _nb do {
         _hostage allowFleeing 1;
         _hostage setCaptive false;
         _hostage setVariable["DCW_isIntel",true];
-        (_this select 1) playActionNow "medic";
         _pos = [getPosASL _hostage, 1000, 1200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
         _hostage move _pos;
         
+        [_hostage,"Thank you !"] call fnc_talk;
+        [(_this select 1),"HQ, this is bravo team, we've liberated a hostage held down in a compound."] call fnc_talk;
+
         //Task success
         _hostage call fnc_success;
         
     },{},[],4,nil,true,false] call BIS_fnc_holdActionAdd;
+    _hostage setVariable["DCW_Act",_actionId];
 
     _units pushBack _hostage;
 

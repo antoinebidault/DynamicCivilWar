@@ -66,15 +66,15 @@ _this select 0 addEventHandler["FiredNear",
 				_unit switchMove "";
 				sleep .3;
 				[_unit] call fnc_addCivilianAction;
-				[_unit,20] call fnc_UpdateRep;
+				[_unit,2] call fnc_UpdateRep;
 				sleep 100;
 				[_unit] call fnc_handleFiredNear;
 				_unit stop false;
 			},nil,1.5,true,true,"","true",2,false,""];
 			if (isPlayer _gunner )then {
-				[_unit,-10] call fnc_UpdateRep;
+				[_unit,-5] call fnc_UpdateRep;
 			}else{
-				[_unit,+5] call fnc_UpdateRep;
+				[_unit,1] call fnc_UpdateRep;
 			};
 		};
 
