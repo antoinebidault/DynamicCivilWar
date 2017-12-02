@@ -36,21 +36,14 @@ for "_j" from 1 to _nb do {
 
     
     _unit addEventHandler["Killed",{ 
-        if (group(_this select 1) == group player) then {
-            (_this select 0) call fnc_success; 
+        params["_cache","_killer"];
+        if (group(_killer) == group player) then {
+            _cache call fnc_success; 
          }else{
-            (_this select 0) call fnc_failed;
+            _cache call fnc_failed;
         }; 
     }];
 
-    _unit addeventhandler ["HandleDamage",
-     { 
-            params["_unit","_hitSelection","_damage","_source"];
-            if (group _source == group _player && _damage > .9) then{
-                (_this select 0) spawn fnc_success;
-            };
-        }
-    ];
     _nbGuards = 1 + round(random 2);
     _grp = createGroup ENEMY_SIDE;
     for "_i" from 1 to _nbGuards do {

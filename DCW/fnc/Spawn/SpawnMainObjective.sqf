@@ -81,7 +81,7 @@ _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _te
             };
         }else{
             { ESCORT = ESCORT - [_x]; deleteMarker (_x getVariable["marker",""]);deleteVehicle _x;} forEach CONVOY;
-            [] call fnc_SpawnMainObjective;
+            [] spawn fnc_SpawnMainObjective;
         };
     }];
 

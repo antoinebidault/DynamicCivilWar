@@ -40,7 +40,7 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
     _car = [_roadPos, _roadDirection, ENEMY_CONVOY_CAR_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
 
     _car addEventHandler["Killed",{
-        [player,10] call fnc_updatescore;
+        [player,10] spawn fnc_updatescore;
     }];
 
     CONVOY pushback _car;
@@ -68,7 +68,7 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
          CONVOY pushback _truck;
          CONVOY = CONVOY + (crew _truck);
          _truck addEventHandler["Killed",{
-             [player,40] call fnc_updatescore;
+             [player,40] spawn fnc_updatescore;
          }];
     };
 

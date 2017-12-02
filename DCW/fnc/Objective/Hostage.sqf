@@ -52,8 +52,8 @@ for "_j" from 1 to _nb do {
 
     _hostage addEventHandler ["Killed",{
         [_this select 0, (_this select 0) getVariable["DCW_Act",0]]call BIS_fnc_holdActionRemove;
-        [player,"Hostage down... Mission failed"] call fnc_talk;
-        (_this select 0) call fnc_failed;
+        [player,"Hostage down... Mission failed"] spawn fnc_talk;
+        (_this select 0) spawn fnc_failed;
     }];
 
     _actionId = [ _hostage,"Secure Prisoner","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","_this distance _target < 2","true",{

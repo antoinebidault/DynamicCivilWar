@@ -41,13 +41,16 @@ for "_j" from 1 to _nb do {
     _mortar = "B_Mortar_01_F" createVehicle getPos player ; 
 
     _mortar addEventHandler["Killed",{ 
+        params["_mortar","_killer"];
         hint "Mortar destroyed";
-        if (group(_this select 1) == group player) then {
-            (_this select 0) call fnc_success; 
+        if (group(_killer) == group player) then {
+            _mortar call fnc_success; 
          }else{
-            (_this select 0) call fnc_failed;
+            _mortar call fnc_failed;
         }; 
     }];
+
+    
     _mortar setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
     [_mortar,"ColorPink"] call fnc_addMarker;
     _nbGuards = 1 + round(random 2);

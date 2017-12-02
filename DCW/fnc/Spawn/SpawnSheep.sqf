@@ -55,7 +55,7 @@ while{true}do {
 				_man = leader (group (_this select 0));
 				if (  ( group(_this select 1) == (group player)) && alive _man && _man isKindOf "Man") then{
 					[_man,-2] call fnc_updateRep;
-                	[_man,"Damn ! Don't touch my sheep !"] call fnc_talk;
+                	[_man,"Damn ! Don't touch my sheep !"] spawn fnc_talk;
 				};
 			}];
 			if (DEBUG)then{

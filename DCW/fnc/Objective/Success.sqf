@@ -29,7 +29,7 @@ if (_unitWithTask getVariable["DCW_task",""] != "") then{
 }else{
     _newTask = [_unitWithTask,player,false] call fnc_CreateTask;
     [(_newTask select 0), "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-    [player,(_newTask select 2)] call fnc_Talk;
+    [player,(_newTask select 2)] spawn fnc_Talk;
     _task = (_newTask select 0);
 };
 
