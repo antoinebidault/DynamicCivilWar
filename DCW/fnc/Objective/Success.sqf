@@ -10,7 +10,13 @@ private _task = "";
 
 if (isNil '_unitWithTask') exitWith{false};
 if (isnull _unitWithTask) exitWith{false};
+
+
+//Task type unknown
 if (_unitWithTask getVariable["DCW_type",""] == "") exitWith { false };
+
+//Task already successful
+if (!(_unitWithTask setVariable["DCW_IsIntel",false])) exitWith {false};
 
 [_unitWithTask getVariable["DCW_task",""],_unitWithTask] spawn OBJECTIVE_ACCOMPLISHED;
 

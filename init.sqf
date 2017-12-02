@@ -9,9 +9,10 @@
  * You are free to edit or share it
  */
 
-titleCut ["Loading Mission...", "BLACK FADED", 999];
 playMusic "ASOTheme";
 
+/*
+titleCut ["Loading Mission...", "BLACK FADED", 999];
 [] Spawn {
     _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	
@@ -24,12 +25,12 @@ playMusic "ASOTheme";
 	"dynamicBlur" ppEffectAdjust [0.0];  
 	"dynamicBlur" ppEffectCommit 5;  
 	titleCut ["", "BLACK IN", 5];
-};
+};*/
 
 //A little animation for the player
-player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 
+//player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 
 
 //Mission loading
-nul = [] execVM "functions\playlist.sqf"; //Init the music playlist
+//nul = [] execVM "functions\playlist.sqf"; //Init the music playlist
 nul = [] execVM "DCW\init.sqf"; //Init the insurgents
 nul = [player] execVM "medevac\init.sqf"; //Init the medevac system

@@ -28,6 +28,7 @@ fnc_SpawnEnemy =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnEn
 fnc_SpawnMortar = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnMortar.sqf";
 fnc_SpawnCars = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnCars.sqf";
 fnc_SpawnMainObjective = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnMainObjective.sqf";
+fnc_SpawnConvoy = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnConvoy.sqf";
 fnc_SpawnPosition = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnPosition.sqf";
 
 //PATROL
@@ -84,7 +85,9 @@ SHOW_SECTOR = true; //Make every sector colored on the map
 SIDE_CURRENT_PLAYER = side player; //Side player
 NUMBER_RESPAWN = 3;
 CIVIL_REPUTATION = 50;
-HQ = [SIDE_CURRENT_PLAYER,"HQ"];  
+HQ = (createGroup (side player)) createUnit ["B_RangeMaster_F", [-1000,-1000], [], 0, "FORM"];
+HQ setName  ["Major Andrew Lewis","Andrew","Major Lewis"];
+HQ hideObject true;
 
 //SPAWNING CONFIG
 SIZE_BLOCK = 350; // Size of blocks
@@ -126,8 +129,8 @@ ENEMY_MORTAR_CLASS = "B_Mortar_01_F"; //Mortar class
 NUMBER_TANKS = 5;
 ENEMY_LIST_TANKS = ["LOP_TKA_T55","LOP_TKA_T72BA"]; //Tanks
 ENEMY_COMMANDER_CLASS = "LOP_TKA_Infantry_Officer"; //commander
-ENEMY_COMMANDER_CAR_CLASS = "LOP_AM_OPF_Nissan_PKM"; //commander
-ENEMY_COMMANDER_TRUCK_CLASS = "LOP_TKA_Ural"; //commander
+ENEMY_CONVOY_CAR_CLASS = "LOP_AM_OPF_Nissan_PKM"; //commander
+ENEMY_CONVOY_TRUCK_CLASS = "LOP_TKA_Ural"; //commander
 
 
 //Variable in Global scope
@@ -214,6 +217,7 @@ MARKER_WHITE_LIST pushBack "playerMarker";
 [] execVM "DCW\fnc\spawn\SpawnChopper.sqf"; //Chopper spawn
 [] execVM "DCW\fnc\spawn\SpawnTank.sqf"; //Tanks
 [] spawn fnc_SpawnMainObjective;
+[-150] spawn fnc_SpawnConvoy;
 
 private _ret = false;
 for "_xc" from 0 to _worldNbBlocks do {

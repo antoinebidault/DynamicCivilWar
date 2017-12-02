@@ -66,6 +66,14 @@ switch (_type) do {
         _messageSuccess = "Good job ! The tank has been destroyed.";
         _bonus = 100;
      };
+      case "mortar": { 
+        _taskId = "Mortar";
+        _desc = "Destroy the mortar.";
+        _title = "Destroy the mortar";
+        _message = "There is a mortar position over here !";
+        _messageSuccess = "This mortar won't cause any trouble.";
+        _bonus = 10;
+     };
     default { };
 };
 

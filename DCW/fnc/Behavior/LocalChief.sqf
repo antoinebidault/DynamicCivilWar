@@ -37,7 +37,7 @@ _this addAction["Set up camp here",{
         };
     } foreach _buildings;
     
-    [_asker,format["Is it possible to set up our camp here ?",_dir]] call fnc_talk;
+    [_asker,"Is it possible to set up our camp here ?"] call fnc_talk;
     [_unit,format["Alright...",_dir]] call fnc_talk;
     [_unit,-1] call fnc_updateRep;
     hint "Next time, you'll respawn at this position.";

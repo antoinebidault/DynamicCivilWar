@@ -8,7 +8,6 @@
 
 unit = _this select 0;
 REVIVETIME_INSECONDS = 10;
-HQ = [(side unit),"HQ"];  
 
 fnc_spawnHelo = compile preprocessFileLineNumbers  "medevac\fnc\SpawnHelo.sqf";
 fnc_SpawnHeloCrew = compile preprocessFileLineNumbers  "medevac\fnc\SpawnHeloCrew.sqf";

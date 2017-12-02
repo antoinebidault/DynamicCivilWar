@@ -59,8 +59,8 @@ for "_j" from 1 to _nb do {
     _actionId = [ _hostage,"Secure Prisoner","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","_this distance _target < 2","true",{
         (_this select 1) playActionNow "medic";
     },{},{
-        if (!alive _hostage) exitWith{hint "He is dead";};
         _hostage = _this select 0;
+        if (!alive(_hostage)) exitWith{hint "He is dead";};
         removeallactions _hostage;
         _hostage stop false;
         _hostage playMove "Acts_ExecutionVictim_Unbow";

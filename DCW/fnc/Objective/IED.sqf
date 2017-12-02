@@ -59,7 +59,6 @@ iedAct={
 	_ied allowDamage true;
 	_ieds pushBack _ied;
 
-	
 	if(round(random 2)==1)then{
 		_iedJunk=createVehicle[_junk,getPosATL _ied,[],0,"NONE"];
 		_iedJunk setPosATL(getPosATL _iedJunk select 2+1);

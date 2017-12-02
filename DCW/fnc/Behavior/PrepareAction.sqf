@@ -61,16 +61,16 @@ addActionLiberate =  {
         [_man,2] call fnc_updateRep;
     },nil,1.5,true,true,"","true",3,false,""];
 };
-
 addActionLookInventory = {
     _this addAction["Search in gear",{
         _unit = (_this select 0);
         _human = (_this select 1);
         if (_unit getVariable["DCW_suspect",false])then{
-            _unit addItem "IEDLandSmall_Remote_Mag";
-            [_human,"Holy shit ! This man is carrying an IED !"];
+            for "_i" from 1 to 3 do {_unit addItemToUniform "1Rnd_HE_Grenade_shell";};
+            [_human,"Holy shit ! This man is carrying material for IED purposes !"];
             [_unit,1] call fnc_updateRep;   
             [_unit,30] call fnc_updateScore;   
+            RemoveAllActions _unit;
         }else{
             [_unit,-1] call fnc_updateRep;   
         };
@@ -226,7 +226,12 @@ addActionGetIntel = {
    _this addAction["Gather intel (15 minutes)",{
        params["_unit","_talker","_action"];
 
-         if (_unit getVariable["DCW_friendliness",50] < 35) exitWith {
+        //Suspect
+        _isSuspect=_unit getVariable ["DCW_suspect",false];
+
+      
+
+         if (_unit getVariable["DCW_friendliness",50] < 35 ) exitWith {
             [_unit,-3] call fnc_updateRep;
            [_unit,"Don't talk to me !"] call fnc_Talk;
            false;
@@ -251,24 +256,40 @@ addActionGetIntel = {
         sleep 1;
 
         _unit disableAI "MOVE";
-        _unit switchMove format["Acts_CivilTalking_%1",ceil(random 2)];
+
+        //Talking with the fixed glitch
+        _anim = format["Acts_CivilTalking_%1",ceil(random 2)];
+        _unit switchMove _anim;
+
         titleCut ["15 minutes later...", "BLACK OUT", 1];
 
         sleep 1;
 
         skipTime .25;
 
-        sleep 4;
+        if (!_isSuspect)then{
+            [_unit,"Sorry, I have plenty work to do !"] call fnc_Talk;
+        }else{
+            _res = [_unit,_talker] call fnc_GetIntel;
+            [_unit,(_res select 1)] call fnc_Talk;
+            [_unit,3] call fnc_updateRep;
+        };
+
+        sleep 1;
 
         titleCut ["15 minutes later...", "BLACK IN", 4];
-        _res = [_unit,_talker] call fnc_GetIntel;
-        [_unit,(_res select 1)] call fnc_Talk;
+
         showCinemaBorder false;
         _cam cameraeffect ["terminate", "back"];
         camDestroy _cam;
-        [_unit,3] call fnc_updateRep;
+
+         waitUntil{animationState _unit != _anim};
+        _unit switchMove "";
+
         sleep 10;
         _unit enableAI "MOVE";
+        _unit stop false;
+
     },nil,1.5,true,true,"","true",3,false,""];
 };
 
@@ -304,7 +325,7 @@ addActionRally = {
         camDestroy _cam;
 
         //Suspect
-        _isSuspect=!_unit getVariable ["DCW_suspect",false];
+        _isSuspect=_unit getVariable ["DCW_suspect",false];
        
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !"] call fnc_Talk;

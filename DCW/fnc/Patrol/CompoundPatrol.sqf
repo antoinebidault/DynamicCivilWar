@@ -28,6 +28,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
         _unit setBehaviour "SAFE";
     }else{
         _unit forceWalk false;
+        _unit setBehaviour "AWARE";
     };
 
     _bPoss = [];
@@ -62,7 +63,10 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
             };
 
         if (_unit getVariable["DCW_suspect",false])then{
+            _unit stop true;
             _unit playActionNow "medic";
+            sleep 4;
+            _unit stop false;
         };
 
          _goToMeeting = ceil(random 2);
