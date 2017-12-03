@@ -19,6 +19,7 @@ iedAmmo=["IEDUrbanSmall_Remote_Ammo","IEDLandSmall_Remote_Ammo","IEDUrbanBig_Rem
 iedJunk=["Land_Garbage_square3_F","Land_Garbage_square5_F","Land_Garbage_line_F"];
 
 
+private _localIeds = [];
 private _ieds = [];
 private _roads = _pos nearRoads (_radius + 200);
 private _roadSelects = [];
@@ -59,23 +60,14 @@ iedAct={
 	_ied allowDamage true;
 	_ieds pushBack _ied;
 
-	if(round(random 2)==1)then{
-		_iedJunk=createVehicle[_junk,getPosATL _ied,[],0,"NONE"];
-		_iedJunk setPosATL(getPosATL _iedJunk select 2+1);
-		_iedJunk enableSimulationGlobal false;
-		_iedJunk setVariable ["DCW_type","ied"];
-		_iedJunk setVariable ["DCW_isIntel",true];
-		[_iedJunk,"ColorYellow"] call fnc_addMarker;
-
-		/*IED task*/
-		[_iedJunk,_ied] spawn{
-			waitUntil{sleep 5;!alive (_this select 1)||!(mineActive (_this select 1))};
-			sleep 2;
-         	(_this select 0) call fnc_success;
-		 };
-		 
-		_ieds pushBack _iedJunk;
-	};
+	
+	_iedJunk=createVehicle[_junk,getPosATL _ied,[],0,"NONE"];
+	_iedJunk setPosATL(getPosATL _iedJunk select 2+1);
+	_iedJunk enableSimulationGlobal false;
+	_iedJunk setVariable ["DCW_Type","ied"];
+	_iedJunk setVariable ["DCW_IsIntel",true];
+	[_iedJunk,"ColorYellow"] call fnc_addMarker;
+	_ieds pushBack _iedJunk;
 
 	_trig = createTrigger["EmptyDetector",getPosATL _ied];
 	_trig setTriggerArea[3,3,0,FALSE,3];
@@ -101,9 +93,39 @@ iedAct={
 	_junk setPosATL(getPosATL _junk select 2+1);
 	_junk enableSimulationGlobal false;
 	_ieds pushBack _junk;
-
+	_localIeds pushBack [_ied,_iedJunk,_trig];
 } forEach _roadSelects;
 
 {CIV_SIDE revealMine _x;ENEMY_SIDE revealMine _x;}forEach allMines;
+
+
+//Loop to check status
+[_localIeds]spawn{
+	params["_localIeds"];
+	while {count _localIeds > 0}do
+	{
+		{
+			_mine = _x select 0;
+			if (!(mineActive _mine) || !(alive _mine))then{
+				_trig = _x select 2;
+				_junk = _x select 1;
+				//It's in cache, that's okay !
+				if (player distance _junk < 250) then{
+					//The mine is defused by the player
+					_junk call fnc_success;
+				};
+				
+				//Anyway;
+				_localIeds - [_x];
+				deleteVehicle _trig;
+			};
+			_x;
+			sleep 1;
+		}
+		foreach _localIeds;
+		sleep 1;
+		LOCALIED = _localIeds;
+	}
+};
 
 _ieds;

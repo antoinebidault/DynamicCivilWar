@@ -34,6 +34,7 @@ if ( _damage > .9 && !(_unit getVariable["unit_injured",false])) then {
     _unit setHit ["legs", 1]; 
     [_unit] call fnc_removeFAKS;
 
+	[leader (group _unit), "Shit ! We've got a man down ! Requesting immediate air support at our coordinates !"] spawn fnc_talk;
     _marker = createMarker [format["body-%1", name _unit], position _unit];
     _marker setMarkerShape "ICON";
     _marker setMarkerType "mil_dot";
@@ -42,6 +43,7 @@ if ( _damage > .9 && !(_unit getVariable["unit_injured",false])) then {
 	_unit setVariable ["unit_marker", _marker];
 
 }else{
+	//if (_source == player) exitWith {false};
 	if (_unit getVariable["unit_injured",false])then{_damage = .9;};
 };
 

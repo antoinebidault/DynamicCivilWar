@@ -9,7 +9,7 @@ private _intel = _this select 0;
 private _asker = _this select 1;
 private _withNotif = if (count _this >=3)then{_this select 2}else{true};
 
- _type = _intel getVariable["DCW_type",""];
+ _type = _intel getVariable["DCW_Type",""];
  _taskId = "";
  _title = "";
  _desc = "";

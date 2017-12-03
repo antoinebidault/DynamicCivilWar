@@ -25,8 +25,8 @@ _radius = ((getMarkerSize _marker) select 0);
     private _objBase = (_newObjs select 0);
 
     [_objBase, "ColorOrange"] call fnc_addMarker;
-    _objBase setVariable["DCW_isIntel",true];
-    _objBase setVariable["DCW_type","outpost"];
+    _objBase setVariable["DCW_IsIntel",true];
+    _objBase setVariable["DCW_Type","outpost"];
     _soldiers = [];
     _nbUnit = ceil (random 3);
     for "_xc" from 1 to _nbUnit do {

@@ -11,6 +11,6 @@ if (isNil '_unitWithTask') exitWith{false};
 if (isnull _unitWithTask) exitWith{false};
 if (_unitWithTask getVariable["DCW_IsIntelRevealed",false])then{
     _unitWithTask setVariable["DCW_IsIntelRevealed",false];
-    deleteMarker(_unitWithTask getVariable["DCW_markerIntel",""]);
-    [_unitWithTask getVariable["DCW_task",""], "FAILED",true] spawn BIS_fnc_taskSetState;
+    deleteMarker(_unitWithTask getVariable["DCW_MarkerIntel",""]);
+    [_unitWithTask getVariable["DCW_Task",""], "FAILED",true] spawn BIS_fnc_taskSetState;
 };

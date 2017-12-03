@@ -49,20 +49,20 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
         	waitUntil {unitReady _unit || _unit distance _newPos < 2 || time > _timer + 150};
             if (_unit getVariable ["civ_insurgent",false])exitWith{false};
 
-            if (side _unit == ENEMY_SIDE) then{
+            if (side _unit != CIV_SIDE) then{
                  _unit stop true;
                 sleep 2;
                 [_unit,_anims call BIS_fnc_selectRandom,"FULL"] call BIS_fnc_ambientAnimCombat;
             };
         	sleep (20 + random 5);
-            if (side _unit == ENEMY_SIDE) then{
+            if (side _unit!= CIV_SIDE) then{
                  if (alive _unit)then{
                      _unit stop false;
                     _unit call BIS_fnc_ambientAnim__terminate;
                  };
             };
 
-        if (_unit getVariable["DCW_suspect",false])then{
+        if (_unit getVariable["DCW_Suspect",false])then{
             _unit stop true;
             _unit playActionNow "medic";
             sleep 4;

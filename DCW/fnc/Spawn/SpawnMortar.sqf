@@ -26,34 +26,23 @@ _posToSpawn = [_pos, 350 max (1.5*_radius) , 500 max (2*_radius), 3, 0, 20, 0,_t
 for "_j" from 1 to _nb do {
     _mortar = ENEMY_MORTAR_CLASS createVehicle _posToSpawn ; 
 
-    
-    _mortar setVariable["DCW_isIntel",true];
-    _mortar setVariable["DCW_type","mortar"];
-    /*_mortar addeventhandler ["HandleDamage",
-        { 
-            params["_unit","_hitSelection","_damage","_source"];
-            if (group _source == group _player && _damage > .9) then{
-                (_this select 0) spawn fnc_success;
-            };
-        }
-    ];*/
-    
-    _mortar = "B_Mortar_01_F" createVehicle getPos player ; 
+    _mortar setVariable["DCW_IsIntel",true];
+    _mortar setVariable["DCW_Type","mortar"];
 
     _mortar addEventHandler["Killed",{ 
         params["_mortar","_killer"];
-        hint "Mortar destroyed";
         if (group(_killer) == group player) then {
+            hint "Mortar destroyed";
             _mortar call fnc_success; 
          }else{
             _mortar call fnc_failed;
         }; 
     }];
 
-    
+
     _mortar setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
     [_mortar,"ColorPink"] call fnc_addMarker;
-    _nbGuards = 1 + round(random 2);
+    _nbGuards = 2 + round(random 1);
     _grp = createGroup ENEMY_SIDE;
 
     //Déclenchement du bombardement

@@ -48,7 +48,7 @@ for "_j" from 1 to _nb do {
 
     _hostage setDir (random 359);
     [_hostage,"ColorBlue"] call fnc_addMarker;
-    _hostage setVariable["DCW_type","hostage"];
+    _hostage setVariable["DCW_Type","hostage"];
 
     _hostage addEventHandler ["Killed",{
         [_this select 0, (_this select 0) getVariable["DCW_Act",0]]call BIS_fnc_holdActionRemove;
@@ -69,7 +69,7 @@ for "_j" from 1 to _nb do {
         _hostage enableAI "Move";
         _hostage allowFleeing 1;
         _hostage setCaptive false;
-        _hostage setVariable["DCW_isIntel",true];
+        _hostage setVariable["DCW_IsIntel",true];
         _pos = [getPosASL _hostage, 1000, 1200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
         _hostage move _pos;
         

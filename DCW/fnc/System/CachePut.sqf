@@ -24,11 +24,12 @@ _nbHostages = 0;
 _nbCaches = 0;
 _nbMortars = 0;
 _nbOutpost = 0;
+_nbFriendlies = 0;
 _unitsToRemove = [];
 
 {
-    _type = _x getVariable["DCW_type",""];
-    
+    _type = _x getVariable["DCW_Type",""];
+    if (_type == "") exitWith{deleteVehicle _x};
     
     //If dead, we remove him
     if (!alive _x)then{
@@ -66,6 +67,10 @@ _unitsToRemove = [];
                                         }else{
                                             if (_type == "outpost")then{
                                                 _nbOutpost = _nbOutpost+1;
+                                            }else{
+                                                if (_type == "friendly")then{
+                                                    _nbFriendlies = _nbFriendlies+1;
+                                                }
                                             };   
                                         };
                                     };
@@ -86,6 +91,6 @@ _unitsToRemove = [];
 }
 foreach _units;
 
-[[_nbPeople,_nbSniper,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost],_unitsToRemove];
+[[_nbPeople,_nbSniper,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies],_unitsToRemove];
 
 

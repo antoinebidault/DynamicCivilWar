@@ -22,9 +22,10 @@ while{true}do {
 
 			for "_j" from 1 to _numberOfmen do {
 				_unit = [_grp,_pos] call fnc_spawnEnemy;
-				_unit setVariable["DCW_type","chaser"];
+				_unit setVariable["DCW_Type","chaser"];
 				_unit setDir random 360;
 				_unitPool pushBack _unit;
+				UNITS_SPAWNED pushBack _unit;
 				_unit setBehaviour "SAFE";
 				sleep .4;
 			};

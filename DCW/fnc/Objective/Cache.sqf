@@ -31,8 +31,8 @@ for "_j" from 1 to _nb do {
     _unit setDir (random 359);
     [_unit,"ColorBrown"] call fnc_addMarker;
     _units pushBack _unit;
-    _unit setVariable["DCW_type","cache"];
-    _unit setVariable["DCW_isIntel",true];
+    _unit setVariable["DCW_Type","cache"];
+    _unit setVariable["DCW_IsIntel",true];
 
     
     _unit addEventHandler["Killed",{ 

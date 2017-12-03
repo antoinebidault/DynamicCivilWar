@@ -31,7 +31,7 @@ while { alive _unit }do{
     {
         if (_x select 2)then{
             {
-                if (!(_x getVariable["DCW_isIntelRevealed",false]) && _x getVariable["DCW_isIntel",false] && _newPos distance _x < 500)then{
+                if (!(_x getVariable["DCW_IsIntelRevealed",false]) && _x getVariable["DCW_IsIntel",false] && _newPos distance _x < 500)then{
                     _potentialIntel pushBack _x;
                 };
             } foreach (_x select 7);

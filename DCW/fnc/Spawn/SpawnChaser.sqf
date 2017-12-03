@@ -13,7 +13,7 @@ private _posSelected = [position player ,SPAWN_DISTANCE+50,SPAWN_DISTANCE+100, 2
 
  for "_xc" from 1 to _nbUnit do {
     _enemy = [_grp,_posSelected] call fnc_spawnEnemy;
-    _enemy setVariable["DCW_type","chaser"];
+    _enemy setVariable["DCW_Type","chaser"];
     _enemy setDir random 360;
     _units pushback _enemy;
  };

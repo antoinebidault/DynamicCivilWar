@@ -23,7 +23,6 @@ _this addEventHandler["HandleDamage",{
 	if (_damage == 0) exitWith {false};
 	
 	if ( _damage > .9 && !(_unit getVariable["unit_injured",false])) then {
-		hint str _damage;
 		[_unit] spawn fnc_shout;	
 		removeAllActions _unit;
 		_unit setUnconscious true;

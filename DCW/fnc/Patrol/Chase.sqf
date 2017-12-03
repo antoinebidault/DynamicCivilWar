@@ -8,7 +8,6 @@
 
 private ["_leader","_marker","_lastKnownPosition","_flrObj"];
 _leader = _this;
-
 _marker = createMarker [format["sold%1",random 13100], position player];
 _marker setMarkerShape "ELLIPSE";
 _marker setMarkerSize [6,6];
@@ -26,9 +25,9 @@ while { alive _leader && alive player }do{
     }else{
         //Si déclenchement de la recherche
         if (CHASER_TRIGGERED)then{
-            _lastKnownPosition = [position player , 50, 300, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+            _lastKnownPosition = [position player , 0, 100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         }else{
-            _lastKnownPosition = [position _leader , 30, 100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+            _lastKnownPosition = [position _leader , 0, 500, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         };
     };
     _marker setMarkerPos _lastKnownPosition;

@@ -20,6 +20,7 @@ fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Talk.sqf";
 //SPAWN
 fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnUnits.sqf";
 fnc_SpawnAsEnemy = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnAsEnemy.sqf";
+fnc_SpawnFriendlies = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnFriendlies.sqf";
 fnc_spawnchaser = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnchaser.sqf";
 fnc_spawnoutpost = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnoutpost.sqf";
 fnc_SpawnMeetingPoint = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnMeetingPoint.sqf";
@@ -95,6 +96,19 @@ MARKER_WHITE_LIST = ["marker_base"]; //Pass list of marker white list name
 SPAWN_DISTANCE = 500 MIN (viewdistance - 350); //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
 
+//FRIENDLIES
+FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses;
+FRIENDLY_LIST_CARS = [
+"rhsusf_m1025_d_m2",
+"rhsusf_m1025_d_Mk19",
+"rhsusf_M1220_M153_M2_usarmy_d",
+"rhsusf_M1230_MK19_usarmy_d",
+"rhsusf_M1232_M2_usarmy_d",
+"rhsusf_M1230_MK19_usarmy_d",
+"rhsusf_M1083A1P2_B_M2_D_fmtv_usarmy",
+"rhsusf_m113d_usarmy_M240"];
+FRIENDLY_FLAG = "Flag_US_F";
+
 //CIVILIAN
 CIV_SIDE = CIVILIAN; // Side civilian
 CIV_LIST_UNITS = ["civ_ref"] call fnc_FactionClasses;
@@ -143,7 +157,6 @@ UNITS_CHASERS = [];
 CHASER_TRIGGERED = false;
 
 //EVENT LIST
-
 CIVILIAN_KILLED = { 
 	params["_unit","_killer"]; 
 	hint format ["%1 %2 was killed by %3",name (_unit),side _unit,name (_killer)];
@@ -161,15 +174,14 @@ COMPOUND_SECURED = {
 	params["_marker","_radius","_units","_points"]; 
 
 	//Misa à jour de l'amitié
-	{  if (side _x == CIV_SIDE && _x getVariable["DCW_friendliness",-1] != -1) then { [_x,6] call fnc_UpdateRep;}; }foreach _units;
+	{  if (side _x == CIV_SIDE && _x getVariable["DCW_Friendliness",-1] != -1) then { [_x,6] call fnc_UpdateRep;}; }foreach _units;
 	[player,_points] call fnc_updateScore;
 };
 
 OBJECTIVE_ACCOMPLISHED = { 
-	params["_type","_unit"]; 
-	_score = _unit getVariable["DCW_Bonus",0];
-	if (_score != 0) then{
-		[player,_score] call fnc_updateScore;
+	params["_type","_unit","_bonus"]; 
+	if (_bonus > 0) then{
+		[player,_bonus] call fnc_updateScore;
 	};
 };
 
@@ -209,7 +221,7 @@ LAST_FLARE_TIME = time;
 MARKER_WHITE_LIST pushBack "playerMarker";
 
 [] call fnc_PrepareAction;
-[getPosATL(missionNamespace getVariable ["DCW_Respawn_Mat", objNull])] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
+[getPos player] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
 [] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
 [] execVM "DCW\fnc\spawn\SpawnRandomEnemies.sqf"; //Enemy patrols
 [] execVM "DCW\fnc\spawn\SpawnRandomCar.sqf"; //Civil & enemy cars
@@ -249,7 +261,8 @@ for "_xc" from 0 to _worldNbBlocks do {
 			//Nb units to spawn per block
 			_popbase = 30 MIN (ceil((count _buildings)*(RATIO_POPULATION)  + (floor random 3)));
 			_nbCivilian =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
-			_nbSnipers = if (random 100 > 66) then{ 2 } else{ 0 };
+			_nbFriendlies =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
+			_nbSnipers = if (random 100 > 75) then{ 2 } else{ 0 };
 			_nbEnemies = 1 max (round (_popbase * (PERCENTAGE_ENEMIES/100)));
 			_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((count _buildings)*(RATIO_CARS))));
 			_nbIeds = (1 + floor(random 10));
@@ -257,6 +270,7 @@ for "_xc" from 0 to _worldNbBlocks do {
 			_nbHostages = [0,1] call BIS_fnc_selectRandom;
 			_nbMortars = if (_nbSnipers > 1) then{ 0 }else{ [0,1] call BIS_fnc_selectRandom };
 			_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
+			_nbFriendlies = 0;
 			_points = _nbEnemies * 5;
 
 			_meetingPointPosition =  [_posCenteredOnBuilding, 0, .5*_radius, 4, 0, 20, 0] call BIS_fnc_findSafePos;
@@ -264,7 +278,7 @@ for "_xc" from 0 to _worldNbBlocks do {
 				_meetingPointPosition =  [_posCenteredOnBuilding, 0, .67*_radius, 4, 0, 20, 0] call BIS_fnc_findSafePos;
 			};
 
-			_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost];
+			_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
 			MARKERS pushBack  [_m,_posCenteredOnBuilding,false,false,_xc,_yc,_radius,[],_peopleToSpawn,_meetingPointPosition,_points];
 		};
 	};
@@ -307,6 +321,10 @@ while {true} do{
 
 				//Units
 				_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition] call fnc_SpawnUnits);
+				UNITS_SPAWNED = UNITS_SPAWNED + _units;
+
+				//Units
+				_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlies);
 				UNITS_SPAWNED = UNITS_SPAWNED + _units;
 
 				//IEDs
@@ -402,8 +420,8 @@ while {true} do{
 			};
 
 			//Calcul du score
-			if (_x getVariable["DCW_friendliness",-1] != -1) then{
-				_civilReputationSum = _civilReputationSum + (_x getVariable["DCW_friendliness",-1]);
+			if (_x getVariable["DCW_Friendliness",-1] != -1) then{
+				_civilReputationSum = _civilReputationSum + (_x getVariable["DCW_Friendliness",-1]);
 				_civilReputationNb = _civilReputationNb + 1;
 			};
 

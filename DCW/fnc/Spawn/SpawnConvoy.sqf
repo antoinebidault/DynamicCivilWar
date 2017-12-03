@@ -7,7 +7,7 @@
 
 //Stand by during a long period
 
-//SLEEP (200+(RANDOM 500)) + (_this select 0);
+SLEEP (200+(RANDOM 500)) + (_this select 0);
 
 _nbTrucks = 2;
 _roadRadius = 40;

@@ -21,10 +21,10 @@ _unit removeEventHandler ["FiredNear",0];
 private _marker = _unit getVariable["marker",""];
 if (_side == ENEMY_SIDE)then{
         _marker setMarkerColor "ColorRed";
-        _unit setVariable["DCW_type","enemy"];
+        _unit setVariable["DCW_Type","enemy"];
 }else{
         _marker setMarkerColor "ColorGreen";
-        _unit setVariable["DCW_type","civ"];
+        _unit setVariable["DCW_Type","civ"];
 };
 
 _unit stop true;

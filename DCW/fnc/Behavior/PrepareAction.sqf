@@ -65,7 +65,7 @@ addActionLookInventory = {
     _this addAction["Search in gear",{
         _unit = (_this select 0);
         _human = (_this select 1);
-        if (_unit getVariable["DCW_suspect",false])then{
+        if (_unit getVariable["DCW_Suspect",false])then{
             for "_i" from 1 to 3 do {_unit addItemToUniform "1Rnd_HE_Grenade_shell";};
             [_human,"Holy shit ! This man is carrying material for IED purposes !"];
             [_unit,1] call fnc_updateRep;   
@@ -116,7 +116,7 @@ addActionDidYouSee = {
     params["_unit","_talker","_action"];
         _unit removeAction _action;
 
-        if (_unit getVariable["DCW_friendliness",50] < 40) exitWith {
+        if (_unit getVariable["DCW_Friendliness",50] < 40) exitWith {
             [_unit,-2] call fnc_updateRep;
             [_unit,"Don't talk to me !"] call fnc_Talk;
             false;
@@ -227,11 +227,11 @@ addActionGetIntel = {
        params["_unit","_talker","_action"];
 
         //Suspect
-        _isSuspect=_unit getVariable ["DCW_suspect",false];
+        _isSuspect=_unit getVariable ["DCW_Suspect",false];
 
       
 
-         if (_unit getVariable["DCW_friendliness",50] < 35 ) exitWith {
+         if (_unit getVariable["DCW_Friendliness",50] < 35 ) exitWith {
             [_unit,-3] call fnc_updateRep;
            [_unit,"Don't talk to me !"] call fnc_Talk;
            false;
@@ -325,15 +325,15 @@ addActionRally = {
         camDestroy _cam;
 
         //Suspect
-        _isSuspect=_unit getVariable ["DCW_suspect",false];
+        _isSuspect=_unit getVariable ["DCW_Suspect",false];
        
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !"] call fnc_Talk;
             [_unit,SIDE_CURRENT_PLAYER] call fnc_BadBuyLoadout;
             [_unit,3] call fnc_updateRep;
             sleep 5;
-            [_unit] joinSilent grpNull;
-            [_unit] joinSilent group(_talker);
+            [_unit] join grpNull;
+            [_unit] join group(_talker);
         }else{
             if (_isSuspect)then{
                 [_unit,"No thanks"] call fnc_Talk;

@@ -32,8 +32,8 @@ while {count TANKS < NUMBER_TANKS} do{
         _tank setVariable["marker",_marker];
     };
 
-    _tank setVariable ["DCW_type","tank"];
-    _tank setVariable ["DCW_isIntel",true];
+    _tank setVariable ["DCW_Type","tank"];
+    _tank setVariable ["DCW_IsIntel",true];
 
     _tank addEventHandler ["Killed",{
          params["_tank","_killer"];

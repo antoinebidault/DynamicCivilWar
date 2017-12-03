@@ -7,5 +7,5 @@
 
 params["_unit","_score"];
 
-_startScore = _unit getVariable["DCW_friendliness",50];
-_unit setVariable["DCW_friendliness",(0 max (100 min (_startScore + _score)))];
+_startScore = _unit getVariable["DCW_Friendliness",50];
+_unit setVariable["DCW_Friendliness",(0 max (100 min (_startScore + _score)))];

@@ -5,15 +5,13 @@
  * License: MIT
  */
 
-private["_pos","_radius","_roads","_car","_cars","_connectedRoad","_roadConnectedTo"];
+private _pos = _this select 0;
+private _radius = _this select 1;
+private _nb = _this select 2;
 
-_pos = _this select 0;
-_radius = _this select 1;
-_nb = _this select 2;
+private _cars = [];
 
-_cars = [];
-
-_roads = _pos nearRoads _radius;
+private _roads = _pos nearRoads _radius;
 _roadSelects = [];
 //_i = floor(_radius/100);
 _i = _nb;
@@ -26,6 +24,11 @@ while {_i > 0} do {
     _i = _i-1;
 };
 
+
+private _connectedRoad = objNull;
+private _car = objNull;
+private _roadConnectedTo = objNull;
+
 {
   _x;
   _r = floor random 100;
@@ -36,7 +39,7 @@ while {_i > 0} do {
   	_car = createVehicle [CIV_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
   };
 
-  _car setVariable ["DCW_type","car"];
+  _car setVariable ["DCW_Type","car"];
   _car setVehicleLock "LOCKED";
   _roadConnectedTo = roadsConnectedTo _x;
   ROAD = _roadConnectedTo;

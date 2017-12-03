@@ -34,11 +34,21 @@ if (_nbSnipers > 0)then{
       private _obj  =_objs select 0;
       private  _grp = createGroup ENEMY_SIDE;
       for "_xc" from 1 to _nbSnipers do {
-        _unit = [_grp,_obj] call fnc_spawnEnemy;
-        _unit setVariable["DCW_type","sniper"];
+        
+        _unitName = ENEMY_SNIPER_UNITS call BIS_fnc_selectRandom;
+        _unit = _grp createUnit [_unitName, _pos,[],ENEMY_SKILLS,"NONE"];
+
+        if (DEBUG)then{
+            [_unit,"ColorRed"] call fnc_addmarker;
+        };
+
+        [_unit] call fnc_AddTorch;
+        [_unit] call fnc_handlekill;
+
+        _unit setVariable["DCW_Type","sniper"];
         _unit doWatch _pos;
         if (_xc == 1)then{
-          _unit setVariable["DCW_isIntel",true];
+          _unit setVariable["DCW_IsIntel",true];
           _unit setUnitPos "MIDDLE";
           _unit addWeapon "Binocular";
           _unit selectWeapon "Binocular";
@@ -63,7 +73,7 @@ if (_nbSnipers > 0)then{
       };
     };
   }
-  foreach selectBestPlaces [position player, 500, "trees + 3*hills - houses - forest", 5, 1];
+  foreach selectBestPlaces [_pos, 500, "trees + 3*hills - houses - forest", 5, 1];
 };
 
 
@@ -92,7 +102,7 @@ for "_xc" from 1 to _nbenemies  do {
       _grp = createGroup ENEMY_SIDE;
       for "_xc" from 1 to _nbUnit do {
         _enemy = [_grp,_posSelected] call fnc_spawnEnemy;
-        _enemy setVariable["DCW_type","enemy"];
+        _enemy setVariable["DCW_Type","enemy"];
         _enemy setDir random 360;
         _units pushBack _enemy;
       };

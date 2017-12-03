@@ -56,7 +56,6 @@ disableUserInput false;
 _timenow = time;
 waitUntil {!alive _target || {!alive _unit} ||  {time > _timenow + 16}};
 _state = _target getVariable ["unit_injured", false];
-hint str _state;
 if (!alive _target || {!alive _unit} || {!_state}) then {
 	if (alive _target) then {
 		[_target, "agonyStart"] remoteExec ["playActionNow", 0, false];

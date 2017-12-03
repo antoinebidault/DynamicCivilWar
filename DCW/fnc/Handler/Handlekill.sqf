@@ -31,7 +31,7 @@
             };
         };
         //UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
-        _unit setVariable["DCW_isIntel",false];
+        _unit setVariable["DCW_IsIntel",false];
         _unit setVariable["unit_injured",false];
         deleteMarker (_unit getVariable["marker",""]);
 
