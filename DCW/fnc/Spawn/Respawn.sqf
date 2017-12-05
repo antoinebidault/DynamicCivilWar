@@ -28,6 +28,7 @@ for "_i" from 0 to NUMBER_RESPAWN do
 	cutText ["You are dead","BLACK FADED", 999];
 	_score = player getVariable ["DCW_SCORE",0];
 	_units = units (group player);
+	[player] joinSilent grpNull;
 	{ if(alive _x) then{_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_findSafePos)}; }foreach _units;
 	(typeof player) createUnit [RESPAWN_POSITION, group player, "newUnit = this; "];
 	sleep 1;

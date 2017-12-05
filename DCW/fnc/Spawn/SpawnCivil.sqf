@@ -33,8 +33,7 @@ removeAllWeapons _unit;
 
 if (_handleFireEvent)then{
     [_unit] spawn fnc_HandleFiredNear;
+    [_unit] spawn fnc_AddCivilianAction;
 };
-
-[_unit] spawn fnc_AddCivilianAction;
 
 _unit

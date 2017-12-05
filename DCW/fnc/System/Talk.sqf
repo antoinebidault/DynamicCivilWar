@@ -6,11 +6,11 @@
  * License: MIT
  * Show chat
  */
-_talker = _this select 0;
-_say = _this select 1;
+private _talker = _this select 0;
+private _say = _this select 1;
 
-_side = side _talker;
-_color = "#E0E0E0";
+private _side = side _talker;
+private _color = "#E0E0E0";
 if (_side == CIVILIAN) then {
 	_color = '#c6b32b';
 }else{

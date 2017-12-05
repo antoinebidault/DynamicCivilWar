@@ -15,7 +15,7 @@ while{true}do {
 		if (_firstTrigger) then {_minRange = 20; _firstTrigger = false;}else{_minRange = 300;};
 		_pos = [position player, _minRange, 350, 4, 0, 20, 0] call BIS_fnc_findSafePos;
 
-		_numberOfmen = 1 + round(random 1);
+		_numberOfmen = round(random 2);
 		_numberOfSheep = 3 + floor(random 7);
 
 		_goatgroup = createGroup CIV_SIDE; 
@@ -25,23 +25,26 @@ while{true}do {
 		_hasDog = if (random 1 > 0.5)then{true;}else{false;}; 
 		_isEnemy = if (random 1 > 0.5)then{true;}else{false;}; 
 
-		for "_j" from 1 to _numberOfmen  do {
-		
-			_unit = [_goatgroup,_pos] call fnc_SpawnCivil;
-	  	
-			if(_j==1)then{
-				_unit setBehaviour "SAFE";
-				_unit allowFleeing 0;
-				_unit setSpeedMode "LIMITED";
-				_unit  setUnitRank "COLONEL";
-				_goatgroup selectLeader _unit;
-	  		};
 
-			if(random 1 > 0.5)then{
-				_unit action ["sitdown",_unit];
+		if (_numberOfmen > 0)then{
+			for "_j" from 1 to _numberOfmen  do {
+			
+				_unit = [_goatgroup,_pos] call fnc_SpawnCivil;
+			
+				if(_j==1)then{
+					_unit setBehaviour "SAFE";
+					_unit allowFleeing 0;
+					_unit setSpeedMode "LIMITED";
+					_unit  setUnitRank "COLONEL";
+					_goatgroup selectLeader _unit;
+				};
+
+				if(random 1 > 0.5)then{
+					_unit action ["sitdown",_unit];
+				};
+
+				UNITS_SPAWNED pushBack _unit;
 			};
-
-			UNITS_SPAWNED pushBack _unit;
 		};
 
 		if (_hasDog)then{

@@ -24,12 +24,24 @@ while{true}do {
 			if(random 100 > PERCENTAGE_CIVILIAN )then{
 				_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
 				_car = ([getPos _road, _roadDirection,_unitName, ENEMY_SIDE] call bis_fnc_spawnvehicle)  select 0;
+				_nbUnit = (count (fullCrew [_car,"cargo",true]));
+    
+				//Civilian team spawn.
+				//If we killed them, it's over.
+				_grp = group _car;
+				for "_xc" from 1 to _nbUnit  do {
+					_unit =[_grp,_pos] call fnc_spawnEnemy;
+					_unit moveInCargo _car;
+				};
 				
 			}else{
 				_unitName = CIV_LIST_CARS call BIS_fnc_selectRandom;
 				_car = ([getPos _road, _roadDirection,_unitName, CIV_SIDE] call bis_fnc_spawnvehicle)  select 0;
-			
+
 			};
+
+
+
 			_carPool pushBack _car ;
 			CAR = _car;
 

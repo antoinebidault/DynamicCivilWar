@@ -50,11 +50,14 @@ addActionHandcuff =  {
 addActionLiberate =  {
     _this addAction["Liberate him",{
         _man  = (_this select 0);
-        (_this select 1) playActionNow "PutDown";
+        _talker  = (_this select 1);
+        _action  = (_this select 2);
+        removeAllActions _man;
+        _talker playActionNow "PutDown";
         [_man] call fnc_handlefiredNear;
         [_man] call fnc_addCivilianAction;
-        (_this select 0) SetBehaviour "AWARE";
-        (_this select 0) setCaptive false;
+        _man SetBehaviour "AWARE";
+        _man setCaptive false;
         _man switchMove ""; 
         _man enableai "ANIM"; 
         _man enableai "MOVE"; 
@@ -63,8 +66,8 @@ addActionLiberate =  {
 };
 addActionLookInventory = {
     _this addAction["Search in gear",{
-        _unit = (_this select 0);
-        _human = (_this select 1);
+        private _unit = (_this select 0);
+        private _human = (_this select 1);
         if (_unit getVariable["DCW_Suspect",false])then{
             for "_i" from 1 to 3 do {_unit addItemToUniform "1Rnd_HE_Grenade_shell";};
             [_human,"Holy shit ! This man is carrying material for IED purposes !"];
@@ -298,7 +301,7 @@ addActionRally = {
     //Try to make him a friendly
    _this addAction["Try to rally (30 minutes)",{
        params["_unit","_talker","_action"];
-       _unit removeAction _action;
+        _unit removeAction _action;
         showCinemaBorder true;
         _camPos = _talker modelToWorld [-1,-0.2,1.9];
         _cam = "camera" camcreate _camPos;
@@ -325,15 +328,15 @@ addActionRally = {
         camDestroy _cam;
 
         //Suspect
-        _isSuspect=_unit getVariable ["DCW_Suspect",false];
+        _isSuspect = _unit getVariable ["DCW_Suspect",false];
        
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !"] call fnc_Talk;
             [_unit,SIDE_CURRENT_PLAYER] call fnc_BadBuyLoadout;
             [_unit,3] call fnc_updateRep;
             sleep 5;
-            [_unit] join grpNull;
-            [_unit] join group(_talker);
+            [_unit] joinSilent grpNull;
+            [_unit] joinSilent (group _talker);
         }else{
             if (_isSuspect)then{
                 [_unit,"No thanks"] call fnc_Talk;

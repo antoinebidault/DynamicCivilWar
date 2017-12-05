@@ -8,11 +8,9 @@
 
 RemoveAllActions _this;
 _this setVariable["DCW_LocalChief",true];
-
 removeGoggles _this;
 _this addGoggles (["G_Spectacles_Tinted","G_Aviator"] call BIS_fnc_selectRandom);
 _this addHeadgear "LOP_H_ChDKZ_Beret";
-
 
 
 _this addAction["Give me some information about your chief",{
@@ -20,17 +18,10 @@ _this addAction["Give me some information about your chief",{
     (_this select 0) call fnc_MainObjectiveIntel;
 }];
 
-/*
-_this addAction["Ask for medical supplies",{
-    [(_this select 0),-1] call fnc_updateRep;
-}];
-*/
-
 _this addAction["Set up camp here (100 points, 6 hours)",{
     params["_unit","_asker","_action"];
 
-
-
+    //Talk
     [_asker,"Is it possible to set up our camp here ?"] spawn fnc_talk;
 
     //[_unit,] call fnc_updateRep;
@@ -40,6 +31,7 @@ _this addAction["Set up camp here (100 points, 6 hours)",{
     _curr = ([position _unit,false] call fnc_findNearestMarker);
     MARKERS = MARKERS - [_curr];
 
+   
     private _marker =_curr select 0;
     private _pos =_curr select 1;
     private _triggered =_curr select 2;
@@ -65,6 +57,13 @@ _this addAction["Set up camp here (100 points, 6 hours)",{
         };
     } foreach _buildings;
 
+     //Put in whitelisty
+    _mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
+    _mkrToAvoid setMarkerAlpha 0;
+    _mkrToAvoid setMarkerSize [500,500];
+    MARKER_WHITE_LIST pushback _mkrToAvoid;
+
+    //disableAi
     _unit disableAI "MOVE";
 
      //Talking with the fixed glitch
@@ -122,9 +121,6 @@ _this addAction["Set up camp here (100 points, 6 hours)",{
     sleep 1;
     titleCut ["6 hours later...", "BLACK IN", 4];
     
-    //CamSetPos
-    
-
     _flag = (_units select { typeOf _x == FRIENDLY_FLAG }) select 0;
     
 

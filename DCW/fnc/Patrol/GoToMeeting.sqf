@@ -27,6 +27,7 @@ waitUntil {unitReady _unit || _unit distance _newPos < 2 || time > _timer + 500}
 if (time > _timer + 149) exitWith{false;}; 
 
 sleep 5;
+
 _unit setPos _newPos;
 
 //look for a chair around

@@ -5,10 +5,13 @@
  * License: MIT
  */
 
+//CONFIG
+fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 
+//Switch here the config you need.
+[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-malden.sqf"); 
 
 //SYSTEM
-fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 fnc_isInMarker= compileFinal preprocessFileLineNumbers  "DCW\fnc\System\isinMarker.sqf";
 fnc_findBuildings= compileFinal preprocessFileLineNumbers  "DCW\fnc\System\findBuildings.sqf";
 fnc_addMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\addMarker.sqf";
@@ -74,78 +77,10 @@ compo_camp2 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\cam
 compo_camp3 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp3.sqf");
 compo_camp4 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp4.sqf");
 compo_camp5 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp5.sqf");
+compo_commander1 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\commander1.sqf");
+compo_commander2 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\commander2.sqf");
 compos = [compo_camp1,compo_camp2,compo_camp3,compo_camp4,compo_camp5];
 compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest.sqf");
-
-
-//Global configuration
-
-//GLOBAL
-DEBUG = true; //Make all units visible on the map
-SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_CURRENT_PLAYER = side player; //Side player
-NUMBER_RESPAWN = 3;
-CIVIL_REPUTATION = 50;
-HQ = (createGroup (side player)) createUnit ["B_RangeMaster_F", [-1000,-1000], [], 0, "FORM"];
-HQ setName  ["Major Andrew Lewis","Andrew","Major Lewis"];
-HQ hideObject true;
-
-//SPAWNING CONFIG
-SIZE_BLOCK = 350; // Size of blocks
-MARKER_WHITE_LIST = ["marker_base"]; //Pass list of marker white list name
-SPAWN_DISTANCE = 500 MIN (viewdistance - 350); //Distance uniuts are spawned
-MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
-
-//FRIENDLIES
-FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses;
-FRIENDLY_LIST_CARS = [
-"rhsusf_m1025_d_m2",
-"rhsusf_m1025_d_Mk19",
-"rhsusf_M1220_M153_M2_usarmy_d",
-"rhsusf_M1230_MK19_usarmy_d",
-"rhsusf_M1232_M2_usarmy_d",
-"rhsusf_M1230_MK19_usarmy_d",
-"rhsusf_M1083A1P2_B_M2_D_fmtv_usarmy",
-"rhsusf_m113d_usarmy_M240"];
-FRIENDLY_FLAG = "Flag_US_F";
-
-//CIVILIAN
-CIV_SIDE = CIVILIAN; // Side civilian
-CIV_LIST_UNITS = ["civ_ref"] call fnc_FactionClasses;
-CIV_LIST_CARS = ["civ_ref","Car"] call fnc_FactionClasses;
-HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
-HUMANITAR_LIST_UNITS = ["C_IDAP_Man_AidWorker_06_F","C_IDAP_Man_AidWorker_05_F","C_IDAP_Man_AidWorker_01_F","C_IDAP_Man_AidWorker_08_F","C_IDAP_Man_UAV_06_medical_F","C_IDAP_Man_EOD_01_F","C_IDAP_Man_AidWorker_03_F"];
-MAX_RANDOM_CIVILIAN = 7;
-MAX_SHEEP_HERD = 3; //Number of sheep herd
-RATIO_POPULATION = .2; //Number of unit per building. 0.4 default
-RATIO_CARS = .02; //Number of empty cars spawned in a city by buidling
-PERCENTAGE_CIVILIAN = 65; //Percentage civilian in a block
-PERCENTAGE_ENEMIES = 35; //Percentage enemies
-PERCENTAGE_INSURGENTS = 50; //Percentage of potential insurgents in the civilians. If the civilian are attacked they might join the east or west wether the shot are coming from (And with probabilities rules...)
-PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joining the west.
-PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/1000);
-
-//ENEMIES
-ENEMY_SIDE = EAST; //Enemy side 
-ENEMY_SKILLS = 1; //Skills units
-PATROL_SIZE = [1,2]; //Size of patrol => [minimum,random additionnals units]
-MAX_SPAWNED_UNITS = 60; //Max units to spawn
-MAX_CHASERS = 7; //Max hunters who are looking for you !
-MAX_RANDOM_PATROL = 10; //Number of units patroling around the player at the same time
-MAX_RANDOM_CAR = 2; //Max car spawned.
-NUMBER_CHOPPERS = 0; // Number of choppers
-ENEMY_LIST_UNITS = ["enemy_ref","Man"] call fnc_FactionClasses;
-ENEMY_SNIPER_UNITS = ["sniper_ref","Man",["Sniper","Marksman"]] call fnc_FactionClasses;
-ENEMY_LIST_CARS = ["enemy_ref","Car"] call fnc_FactionClasses;
-ENEMY_CHOPPERS = ["enemy_chopper_ref","Helicopter"] call fnc_FactionClasses;
-ENEMY_ATTACHEDLIGHT_CLASS =  "rhs_acc_2dpZenit"; //default : "acc_flashlight"
-ENEMY_MORTAR_CLASS = "B_Mortar_01_F"; //Mortar class
-NUMBER_TANKS = 5;
-ENEMY_LIST_TANKS = ["LOP_TKA_T55","LOP_TKA_T72BA"]; //Tanks
-ENEMY_COMMANDER_CLASS = "LOP_TKA_Infantry_Officer"; //commander
-ENEMY_CONVOY_CAR_CLASS = "LOP_AM_OPF_Nissan_PKM"; //commander
-ENEMY_CONVOY_TRUCK_CLASS = "LOP_TKA_Ural"; //commander
-
 
 //Variable in Global scope
 UNITS_SPAWNED = [];
@@ -155,6 +90,7 @@ MARKERS = [];
 SHEEP_POOL = [];
 UNITS_CHASERS = [];
 CHASER_TRIGGERED = false;
+
 
 //EVENT LIST
 CIVILIAN_KILLED = { 
