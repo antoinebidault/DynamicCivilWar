@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 private _mortar = _this select 0;
@@ -11,6 +11,7 @@ private _pos = _this select 2;
 private _distance = _this select 3;
 
 private _dir = round([_targetedUnit,_mortar] call BIS_fnc_dirTo);
+private _dirOpposite = round([_mortar,_targetedUnit] call BIS_fnc_dirTo);
 
 deleteMarker "DCW_mortar";
 _marker = createMarker ["DCW_mortar",_pos];
@@ -21,7 +22,7 @@ _marker setMarkerType "hd_arrow";
 _marker setMarkerDir _dir;
 _refUnit = "Land_HelipadEmpty_F" createVehicle _pos;
 _refUnit setDir 0;
-_marker setMarkerPos (_refUnit getRelPos [_distance/2, _dir]);
+_marker setMarkerPos (_refUnit getRelPos [_distance/2,_dirOpposite]);
 deleteVehicle _refUnit;
 
 if ({alive _x} count crew(_mortar) == count crew(_mortar))  then{

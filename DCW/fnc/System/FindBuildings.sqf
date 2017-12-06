@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 // return array of enterable building objects which have min 3 positions inside

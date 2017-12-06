@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 private["_unitName","_car","_pos","_unit","_roadConnectedTo","_roads","_road","_connectedRoad","_roadDirection"];

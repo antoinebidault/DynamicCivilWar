@@ -7,7 +7,7 @@ gulp.task('default', function() {
         DYNAMIC CIVIL WAR
         Created: <%= moment().format('YYYY-MM-DD') %>
         Author: <%= pkg.author %>
-        License: MIT
+        License: GNU (GPL)
     `))
    .pipe(gulp.dest(function (file) {
         return file.base;

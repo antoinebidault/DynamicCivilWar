@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 private ["_pos","_radius","_nb","_unit","_unitName","_enemy","_mortar"];

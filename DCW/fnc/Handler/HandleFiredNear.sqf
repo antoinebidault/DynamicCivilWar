@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 
@@ -58,7 +58,9 @@ _this select 0 addEventHandler["FiredNear",
 			_civ addAction["Calm down !",{
 				params["_unit","_asker","_action"];
 				_unit removeAction _action;
-				_asker  action ["WeaponOnBack",  _asker];
+				 if (!weaponLowered _asker)then{
+					_asker  action ["WeaponOnBack", _asker];
+				};
         		[_asker,"Calm down my friend !"] call fnc_Talk;
 				_unit stop true;
 				_unit  setVariable["civ_affraid",false];

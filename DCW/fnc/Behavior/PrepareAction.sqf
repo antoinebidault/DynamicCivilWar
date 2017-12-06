@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 
@@ -270,7 +270,7 @@ addActionGetIntel = {
 
         skipTime .25;
 
-        if (!_isSuspect)then{
+        if (_isSuspect)then{
             [_unit,"Sorry, I have plenty work to do !"] call fnc_Talk;
         }else{
             _res = [_unit,_talker] call fnc_GetIntel;
@@ -299,7 +299,7 @@ addActionGetIntel = {
 
 addActionRally = {
     //Try to make him a friendly
-   _this addAction["Try to rally (30 minutes)",{
+   _this addAction["Try to rally (30 minutes/30 points)",{
        params["_unit","_talker","_action"];
         _unit removeAction _action;
         showCinemaBorder true;
@@ -329,6 +329,7 @@ addActionRally = {
 
         //Suspect
         _isSuspect = _unit getVariable ["DCW_Suspect",false];
+        [_talker,-30] call fnc_updatescore;
        
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !"] call fnc_Talk;

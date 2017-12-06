@@ -3,6 +3,10 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License : GNU (GPL)
+ *
+ * ADD
  */
 
-skipTime 12;
+params["_unit","_interrogator"];
+
+

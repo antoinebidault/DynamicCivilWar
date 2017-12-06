@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 _nbTrucks = 2;
@@ -151,7 +151,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 
     //trace a line
     if (DEBUG)then{
-        (findDisplay 12 displayCtrl 51) ctrlAddEventHandler ["Draw",format["(_this select 0) drawLine [%1,%2,[0,0,1,1]];",_initPos,_newPos]];
+        (findDisplay 12 displayCtrl 51) ctrlAddEventHandler ["Draw",format["(_this select 0) drawLine [%1,%2,[244, 93, 93,1]];",_initPos,_newPos]];
     };
 
     waitUntil {sleep 30;ENEMY_COMMANDER distance _newPos < 5};

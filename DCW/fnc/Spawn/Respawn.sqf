@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 params["_initialPos"];
@@ -13,6 +13,7 @@ for "_i" from 0 to NUMBER_RESPAWN do
 	_loadout = getUnitLoadout player;
 	player setUnitTrait ["explosiveSpecialist",true];
 	[player] execVM "DCW\fnc\Behavior\Rest.sqf";
+	sleep 10;
 	nul = [player] execVM "supportui\init.sqf";
 
 	waitUntil

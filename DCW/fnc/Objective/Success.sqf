@@ -2,7 +2,7 @@
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
  * Author: BIDASS
- * License: MIT
+ * License : GNU (GPL)
  */
 
 private _objWithTask = _this;
@@ -25,7 +25,7 @@ if (!(_objWithTask setVariable["DCW_IsIntel",false])) exitWith {false};
 _task = _objWithTask getVariable["DCW_Task",""];
 if (_task != "") then{
     [_task, "SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-    _taskName = ([_task,player] call BIS_fnc_taskDescription) select 0;
+    _taskName = (([_task,player] call BIS_fnc_taskDescription) select 0) select 0;
     [player,format["Done : %1",_taskName]] spawn fnc_Talk;
     _objWithTask setVariable["DCW_Task",""];
     _objWithTask getVariable["DCW_MarkerIntel",""] setMarkerColor "ColorGreen";

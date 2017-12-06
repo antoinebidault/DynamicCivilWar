@@ -9,7 +9,6 @@ CIVIL_REPUTATION = 50;
 HQ = (createGroup (side player)) createUnit ["B_RangeMaster_F", [-1000,-1000], [], 0, "FORM"];
 HQ setName  ["Major Andrew Lewis","Andrew","Major Lewis"];
 
-
 //SPAWNING CONFIG
 SIZE_BLOCK = 350; // Size of blocks
 MARKER_WHITE_LIST = ["marker_base"]; //Pass list of marker white list name
