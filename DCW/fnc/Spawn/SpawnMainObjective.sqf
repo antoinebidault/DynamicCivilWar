@@ -16,13 +16,14 @@ private _newPos = [];
 ENEMY_COMMANDER = objNull;
 _grp = createGroup ENEMY_SIDE;
 ESCORT = [];
+
 _mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
 _mkrToAvoid setMarkerShape "ELLIPSE";
 _mkrToAvoid setMarkerAlpha 0;
 _mkrToAvoid setMarkerSize [1200,1200];
 _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
-private _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _tempList] call BIS_fnc_findSafePos;
+private _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
 _initPos = ((selectBestPlaces[_initPos, 500, _situation, 5, 1]) select 0 )select 0;
 
 //Spawn the commander
@@ -58,9 +59,9 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
         _civ setBehaviour "CARELESS";
         _civ forceWalk false;
         _civ forceSpeed 10;
-        _dir = [player,_civ] call BIS_fnc_dirTo;
+        _dir = [player,_civ] call BIS_fnc_dirTo; 
         _newPos = [(getPos _civ), 2000,_dir] call BIS_fnc_relPos;
-        [_newPos, 0, 1000, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
+        [_newPos, 0, 1000, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
         _civ move _newPos;
         [] spawn{
             waitUntil{sleep 1;(player distance ENEMY_COMMANDER) > 500 || !(alive ENEMY_COMMANDER) };
@@ -84,6 +85,7 @@ ENEMY_COMMANDER addEventHandler ["Killed",{
             ["END1",true,2] call BIS_fnc_endMission;
         };
     }else{
+        //Start over
         { ESCORT = ESCORT - [_x]; deleteMarker (_x getVariable["marker",""]);deleteVehicle _x;} forEach CONVOY;
         [] spawn fnc_SpawnMainObjective;
     };
@@ -142,7 +144,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
     _initPos = _newPos;
-    _newPos = [_newPos, 600, 1600, 1, 0, 20, 0,_tempList] call BIS_fnc_findSafePos;
+    _newPos = [_newPos, 600, 1600, 1, 0, 20, 0,_tempList] call BIS_fnc_FindSafePos;
     _newPos = ((selectBestPlaces [_newPos, 200, _situation, 5, 1]) SELECT 0)SELECT 0;
 
     _grp setBehaviour "AWARE";

@@ -9,7 +9,7 @@ private ["_transporthelo","_chopper","_start","_ch"];
 
 //_chopper = missionNamespace getVariable ["medevac_chopper" , objNull];
 _chopperClassName = "RHS_UH60M_d";
-_start = [position player, 4000, 4500, 0, 0, 20, 0] call BIS_fnc_findSafePos;
+_start = [position player, 4000, 4500, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
 
 _ch = [[_start select 0, _start select 1, 50], 180, _chopperClassName, side unit] call BIS_fnc_spawnVehicle;
 

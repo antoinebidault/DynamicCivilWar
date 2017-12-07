@@ -379,7 +379,7 @@ addActionLeave = {
         RemoveAllActions _unit;
         _asker playActionNow "gestureGo";
         [_asker,"Sorry sir, you must leave now, go away !"] call fnc_Talk;
-        _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+        _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
         _unit stop false;
         _unit forceWalk false;
         _unit forceSpeed 10;

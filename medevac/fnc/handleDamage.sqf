@@ -40,7 +40,7 @@ if ( _damage > .9 && !(_unit getVariable["unit_injured",false])) then {
     _marker setMarkerType "mil_dot";
     _marker setMarkerColor "ColorOrange";
     _marker setMarkerText format["An injured comrade %1", name _unit];
-	_unit setVariable ["unit_marker", _marker];
+	_unit setVariable ["unit_marker",  _marker];
 
 }else{
 	//if (_source == player) exitWith {false};

@@ -27,11 +27,12 @@ fnc_ActionRest =  {
         setAccTime 1;
         skipTime .25;
         sleep 3;
+        [_unit,"Ok, let's go back to work !"] call fnc_Talk;
+        _unit action ["sitdown",_unit];
 
         _cam cameraeffect ["terminate", "back"];
         camDestroy _cam;
 
-        [_unit,"Ok, let's go back to work !"] call fnc_Talk;
         _unit setFatigue 0;
         _unit setStamina 1;
         _unit enableStamina false;
@@ -39,7 +40,7 @@ fnc_ActionRest =  {
 
         { deleteVehicle _x; }foreach _newObjs;
 
-        _unit action ["sitdown",_unit];
+        sleep 1;
         disableUserInput false;
         sleep 3;
 

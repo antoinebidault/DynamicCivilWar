@@ -15,7 +15,7 @@ _startPos = getPosASL _unit;
 while { alive _unit }do{
     _dir = random 360;
     _curPos = getPosASL _unit;
-    _pos = [position player, 0, _radius, 2, 0, 20, 0] call BIS_fnc_findSafePos;
+    _pos = [position player, 0, _radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
     _newPos = getPosASL( [_pos,_radius] call BIS_fnc_nearestRoad);
     _unit move _newPos;
     _timer = time;

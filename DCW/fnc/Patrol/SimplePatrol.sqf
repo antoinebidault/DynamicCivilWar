@@ -30,7 +30,7 @@ while { alive _unit }do{
 
     _dir = random 360;
     _curPos = getPosASL _unit;
-    _newPos = [_startPos ,0,(_radius+ 10), 1, 0, 20, 0,MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
+    _newPos = [_startPos ,0,(_radius+ 10), 1, 0, 20, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 
     _unit move _newPos;
     _timer = time;

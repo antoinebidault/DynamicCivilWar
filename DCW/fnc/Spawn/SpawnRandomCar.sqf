@@ -14,7 +14,7 @@ while{true}do {
 	if (count _carPool < MAX_RANDOM_CAR)then{
 		//Get random pos
 		// get the next connected roadsegements to determine the direction of the road
-		_pos = [position player, 500, 580, 0, 0, 20, 0] call BIS_fnc_findSafePos;
+		_pos = [position player, 500, 580, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
 		_road = [_pos,1000] call BIS_fnc_nearestRoad;
 		if (isOnRoad(getPos _road) && (getPos _road) distance player > 400 )then{
 			_roadConnectedTo = roadsConnectedTo _road;

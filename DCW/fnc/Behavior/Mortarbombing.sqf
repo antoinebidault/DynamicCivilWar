@@ -28,9 +28,9 @@ deleteVehicle _refUnit;
 if ({alive _x} count crew(_mortar) == count crew(_mortar))  then{
     [_targetedUnit,format["Mortar incoming ! Bearing %1",_dir]] spawn fnc_talk;
     while{alive _mortar && alive _targetedUnit }do{
-        _shootingPos = [getPos _targetedUnit, 17, 160, 0, 0, 20, 0] call BIS_fnc_findSafePos;
+        _shootingPos = [getPos _targetedUnit, 17, 160, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
         _mortar doArtilleryFire [_shootingPos, "8Rnd_82mm_Mo_shells", 1];
-        if (getPos player distance _pos > (_radius + 80)) exitWith{false};
+        if (getPos player distance _pos > (_radius + 150)) exitWith{false};
         sleep 8;
     };
 };

@@ -15,7 +15,7 @@ while{true}do {
 
 		//Get random pos
 		if (_firstTrigger) then {_minRange = 1; _firstTrigger = false;}else{_minRange = 500;};
-		_pos = [position player, _minRange, 550, 4, 0, 20, 0,MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
+		_pos = [position player, _minRange, 550, 4, 0, 20, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 		_numberOfmen =  1;
 		_group = createGroup CIV_SIDE;
 

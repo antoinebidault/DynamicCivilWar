@@ -7,7 +7,7 @@
 
 private _unit = _this select 0;
 private _asker = _this select 1;
-private _probability  =  if (count _this == 3) then { _this select 2 } else { 50 };
+private _probability  =  if (count _this == 3) then { _this select 2 } else { 66 };
 
 
 private _pos = getPosASL _unit;

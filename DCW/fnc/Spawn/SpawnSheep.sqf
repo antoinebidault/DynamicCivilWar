@@ -13,7 +13,7 @@ while{true}do {
 
 		//Get random pos
 		if (_firstTrigger) then {_minRange = 20; _firstTrigger = false;}else{_minRange = 300;};
-		_pos = [position player, _minRange, 350, 4, 0, 20, 0] call BIS_fnc_findSafePos;
+		_pos = [position player, _minRange, 350, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
 
 		_numberOfmen = round(random 2);
 		_numberOfSheep = 3 + floor(random 7);

@@ -14,7 +14,8 @@ if( ((player getVariable["DCW_SCORE",0]) - _price) >= 0)then {
 
 	_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;
 	[SUPPORT_REQUESTER, _type,_nb] call BIS_fnc_limitSupport;
-	BIS_supp_refresh = TRUE; publicVariable "BIS_supp_refresh";
+	BIS_supp_refresh = TRUE; 
+	publicVariable "BIS_supp_refresh";
 
 
 	closeDialog 0;

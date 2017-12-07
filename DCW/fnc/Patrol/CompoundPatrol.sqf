@@ -79,7 +79,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
             _dir = random 360;
             _range = 10 ;
             _curPos = getPos _unit;
-             _newPos = [_curPos ,_range,_range + 30, 2, 0, 20, 0] call BIS_fnc_findSafePos;
+             _newPos = [_curPos ,_range,_range + 30, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
             _unit doMove _newPos;
             _timer = time;
             waitUntil {sleep 4 ; unitReady _unit || _unit distance _newPos < 2 || time > _timer + 150};

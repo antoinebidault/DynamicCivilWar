@@ -22,7 +22,7 @@ _mkrToAvoid setMarkerShape "ELLIPSE";
 _mkrToAvoid setMarkerAlpha 0;
 _mkrToAvoid setMarkerSize [500,500];
 _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
-_initPos = [_worldCenter, (_worldSize/2)*0.8, (_worldSize/2)*1.2, 5, 0, 20, 0, _tempList] call BIS_fnc_findSafePos;
+_initPos = [_worldCenter, (_worldSize/2)*0.8, (_worldSize/2)*1.2, 5, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
 
 _road = [_initPos,_worldSize] call BIS_fnc_nearestRoad;
 _roadPos = getPos _road;

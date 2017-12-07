@@ -25,9 +25,9 @@ while { alive _leader && alive player }do{
     }else{
         //Si déclenchement de la recherche
         if (CHASER_TRIGGERED)then{
-            _lastKnownPosition = [position player , 0, 100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+            _lastKnownPosition = [position player , 0, 100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
         }else{
-            _lastKnownPosition = [position _leader , 0, 500, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+            _lastKnownPosition = [position _leader , 0, 500, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
         };
     };
     _marker setMarkerPos _lastKnownPosition;

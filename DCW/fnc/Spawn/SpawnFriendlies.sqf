@@ -40,7 +40,7 @@ if (!isNil '_road')then{
     _units pushBack _car;
 };
 
-private _flagPos = [_pos,0, 20, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+private _flagPos = [_pos,0, 20, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
 _unit = FRIENDLY_FLAG createVehicle _flagPos;
 _units pushBack _unit;
 
@@ -54,7 +54,7 @@ for "_xc" from 1 to _nb  do {
     //if (random 100 > 75) then{_nbUnit = ((PATROL_SIZE select 0) + floor random (PATROL_SIZE select 1)); _isPatrol = true; };
 
     if (_isPatrol)then{
-      _posSelected = [_pos,1, _radius, 5, 0, 20, 0] call BIS_fnc_findSafePos;
+      _posSelected = [_pos,1, _radius, 5, 0, 20, 0] call BIS_fnc_FindSafePos;
     }else{
       if (count _posSelects > 0)then{
          _posSelected = _posSelects call BIS_fnc_selectRandom;

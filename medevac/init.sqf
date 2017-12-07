@@ -25,6 +25,7 @@ fnc_dropInHelo = compile preprocessFileLineNumbers "medevac\fnc\dropInHelo.sqf";
 fnc_help = compile preprocessFileLineNumbers "medevac\fnc\help.sqf";
 fnc_abortMedevac = compile preprocessFileLineNumbers "medevac\fnc\abortMedevac.sqf";
 fnc_removeFAKS = compile preprocessFileLineNumbers "medevac\fnc\removeFAKS.sqf";
+fnc_deleteMedevac = compile preprocessFileLineNumbers "medevac\fnc\deleteMedevac.sqf";
 
 
 transportHelo = objNull;
@@ -40,6 +41,7 @@ unit addItem  "SmokeShellGreen";
 unit addItem  "SmokeShellGreen";
 
 SoldiersDead = [];
+
 {	
 	if (!isPlayer(_x))then{
 		_x addEventHandler ["HandleDamage",{_this call fnc_HandleDamage;}];
@@ -53,18 +55,14 @@ _posChopper = objNull;
 while {true} do {
 
 	//Push dead soldiers
-	{
-		_isInjured = _x getVariable["unit_injured",false];
-		SoldiersDead = SoldiersDead - [_x];
-		if(alive(_x) && _isInjured)then{
-			[_x] join grpNull;
-			SoldiersDead pushback _x;
-		};
-	}foreach(units (group unit));
+	SoldiersDead = units (group unit) select {_x getVariable["unit_injured",false] };
 
 
 	//Launch chopper
 	if (MEDEVAC_FirstTrigger)then{
+
+		{ [_x] joinSilent grpNull; } foreach SoldiersDead;
+
 		MEDEVAC_showMenu = false;
 		MEDEVAC_FirstTrigger = false;
 		MEDEVAC_marker = "";
@@ -74,8 +72,8 @@ while {true} do {
 
 		//open the map
 		if (player == unit) then {
-	    	openMap true;
 
+	    	openMap true;
 
 			//move the marker to the click position
 			onMapSingleClick {
@@ -118,12 +116,15 @@ while {true} do {
 	}else{
 
 		if (MEDEVAC_ISABORTED)then{
+			transportHelo move _posChopper;
 			sleep 150;
+			[transportHelo] call fnc_deleteMedevac;
 			IsInBound = false;
 		}else{
 			if (!alive transportHelo || damage transportHelo > .6)then{
 				hint "Chopper is destroyed ! Transport available in 150s";
 				sleep 150;
+				[transportHelo] call fnc_deleteMedevac;
 				IsInBound = false;
 			};
 		}

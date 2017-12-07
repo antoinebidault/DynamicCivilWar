@@ -30,8 +30,9 @@ if (_side == CIVILIAN) then {
 // Create display and control
 disableSerialization;
 titleRsc ["RscDynamicText", "PLAIN"];
-private "_display";
+private _display = displayNull;
 waitUntil {_display = uiNamespace getVariable "BIS_dynamicText"; !(isNull _display)};
+MESS_SHOWN = true;
 private _ctrl = _display displayCtrl 9999;
 uiNamespace setVariable ["BIS_dynamicText", displayNull];
 private _ctrlBackground = _display ctrlCreate ["RscText",99999];
@@ -49,7 +50,7 @@ _ctrl ctrlSetFade 1;
 _ctrl ctrlCommit 0;
 
 // Show subtitle
-_text = parseText format ["<t align = 'center' opacity='.7' shadow = '2' size = '.8'><t color = '%1'>%2</t></t><br /><t align = 'center' opacity='.6' shadow = '1' size = '.63'><t color = '#E0E0E0'>%3</t></t>",_color,name _talker,_say];
+_text = parseText format ["<t align = 'center' shadow = '2' size = '.8'><t color = '%1'>%2</t></t><br /><t align = 'center' shadow = '1' size = '.63'><t color = '#E0E0E0'>%3</t></t>",_color,name _talker,_say];
 _ctrl ctrlSetStructuredText _text;
 _ctrl ctrlSetFade 0;
 _ctrl ctrlCommit 1;
@@ -58,5 +59,7 @@ sleep (count(_say)/10);
 
 // Hide subtitle
 _ctrl ctrlSetFade 1;
-_ctrl ctrlCommit 1;
+_ctrl ctrlCommit .5;
 ctrlDelete _ctrl;
+MESS_SHOWN = false;
+sleep .5;

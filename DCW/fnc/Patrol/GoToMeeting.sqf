@@ -8,7 +8,8 @@
 private _friend = objNull;
 params["_unit","_meetingPoint"];
 
-if (isNil '_meetingPoint') then{_meetingPoint = ([getPosASL _unit,false] call fnc_findnearestmarker) select 8; };
+if (isNil '_meetingPoint') then{ _meetingPoint = ([getPosATL _unit,false] call fnc_findnearestmarker) select 9; };
+if (count _meetingPoint != 3) exitWith {false;};
 if (!alive _unit) exitWith{false;};
 if (_unit getVariable["civ_affraid",false]) exitWith{false;};
 
@@ -17,7 +18,7 @@ _anims = ["STAND","STAND_IA","WATCH","WATCH1","WATCH2"];
 //{_unit disableCollisionWith _x;}foreach _chairs;
 //{_unit disableCollisionWith _x;}foreach _objs;
 
-_newPos =  [_meetingPoint ,.6,1.5,.25, 0, 20, 0] call BIS_fnc_findSafePos;//[[[_meetingPoint, 2]],[[_meetingPoint,1]]] call BIS_fnc_randomPos;
+_newPos =  [_meetingPoint ,.6,1.5,.25, 0, 20, 0] call BIS_fnc_FindSafePos;//[[[_meetingPoint, 2]],[[_meetingPoint,1]]] call BIS_fnc_randomPos;
 _unit doMove _newPos;
 _timer = time;
 

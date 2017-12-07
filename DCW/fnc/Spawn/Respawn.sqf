@@ -30,7 +30,7 @@ for "_i" from 0 to NUMBER_RESPAWN do
 	_score = player getVariable ["DCW_SCORE",0];
 	_units = units (group player);
 	[player] joinSilent grpNull;
-	{ if(alive _x) then{_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_findSafePos)}; }foreach _units;
+	{ if(alive _x) then{_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)}; }foreach _units;
 	(typeof player) createUnit [RESPAWN_POSITION, group player, "newUnit = this; "];
 	sleep 1;
 	newUnit setPos RESPAWN_POSITION;

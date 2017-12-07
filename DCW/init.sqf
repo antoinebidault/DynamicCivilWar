@@ -19,6 +19,8 @@ fnc_findNearestMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\
 fnc_CachePut = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\CachePut.sqf";
 fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\ShowIndicator.sqf"; 
 fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Talk.sqf";
+BIS_fnc_FindSafePos = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\FindSafePos.sqf";
+
 
 //SPAWN
 fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnUnits.sqf";
@@ -90,6 +92,8 @@ MARKERS = [];
 SHEEP_POOL = [];
 UNITS_CHASERS = [];
 CHASER_TRIGGERED = false;
+MESS_SHOWN = false;
+LAST_FLARE_TIME = time;
 
 
 //EVENT LIST
@@ -153,8 +157,8 @@ private _mp = createMarker ["playerMarker",getPosWorld player ];
 _mp setMarkerShape "ELLIPSE";
 _mp setMarkerAlpha 0;
 _mp setMarkerSize [SIZE_BLOCK,SIZE_BLOCK];
-LAST_FLARE_TIME = time;
-MARKER_WHITE_LIST pushBack "playerMarker";
+MARKER_WHITE_LIST pushBack _mp;
+
 
 [] call fnc_PrepareAction;
 [getPos player] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
@@ -201,17 +205,17 @@ for "_xc" from 0 to _worldNbBlocks do {
 			_nbSnipers = if (random 100 > 75) then{ 2 } else{ 0 };
 			_nbEnemies = 1 max (round (_popbase * (PERCENTAGE_ENEMIES/100)));
 			_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((count _buildings)*(RATIO_CARS))));
-			_nbIeds = (1 + floor(random 10));
-			_nbCaches = [0,1] call BIS_fnc_selectRandom;
+			_nbIeds = (1 + floor(random 7));
 			_nbHostages = [0,1] call BIS_fnc_selectRandom;
-			_nbMortars = if (_nbSnipers > 1) then{ 0 }else{ [0,1] call BIS_fnc_selectRandom };
+			_nbCaches = if (_nbHostages == 0) then {[0,1] call BIS_fnc_selectRandom}else{0};
+			_nbMortars = if (_nbSnipers >= 1) then{[0,1] call BIS_fnc_selectRandom }else{0};
 			_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
 			_nbFriendlies = 0;
 			_points = _nbEnemies * 5;
 
-			_meetingPointPosition =  [_posCenteredOnBuilding, 0, .5*_radius, 4, 0, 20, 0] call BIS_fnc_findSafePos;
+			_meetingPointPosition =  [_posCenteredOnBuilding, 0, .5*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
 			while {isOnRoad _meetingPointPosition} do{
-				_meetingPointPosition =  [_posCenteredOnBuilding, 0, .67*_radius, 4, 0, 20, 0] call BIS_fnc_findSafePos;
+				_meetingPointPosition =  [_posCenteredOnBuilding, 0, .67*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
 			};
 
 			_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
@@ -336,7 +340,7 @@ while {true} do{
 				[_x] spawn {
 					params["_unit"];
 					if (DEBUG) then  {
-						hint format["You've been watched by %1",name _unit];
+						//hint format["You've been watched by %1",name _unit];
 					};
 					sleep 10;
 					if (alive _unit && !CHASER_TRIGGERED && _unit knowsAbout player > .2)then{

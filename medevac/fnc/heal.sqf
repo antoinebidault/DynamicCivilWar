@@ -91,7 +91,7 @@ if (alive _injured) then {
 	_injured setUnitPos "UP";
 	[_injured] join grpNull;
 
-	deleteMarker _injured setVariable ["unit_marker", ""];
+	deleteMarker (_injured getVariable ["unit_marker", ""]) ;
 	_injured removeEventHandler ["HandleDamage",0];
 	_injured addEventHandler ["Killed",{ [transportHelo] call fnc_abortMedevac; }];
 	
