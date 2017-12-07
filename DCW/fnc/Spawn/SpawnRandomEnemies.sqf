@@ -25,7 +25,6 @@ while{true}do {
 				_unit setVariable["DCW_Type","chaser"];
 				_unit setDir random 360;
 				_unitPool pushBack _unit;
-				UNITS_SPAWNED pushBack _unit;
 				_unit setBehaviour "SAFE";
 				sleep .4;
 			};

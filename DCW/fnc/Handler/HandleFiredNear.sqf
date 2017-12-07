@@ -16,8 +16,7 @@ _this select 0 addEventHandler["FiredNear",
 		_gunner = _this select 7;	
 		if (_distance > 50) exitWith { false };
 		
-		
-		if (_civ distance _gunner > 45 && (random 100) < PERCENTAGE_INSURGENTS)then{
+		if (_civ distance _gunner > 30 && (random 100) < PERCENTAGE_INSURGENTS)then{
 			[_civ,_gunner] spawn fnc_SpawnAsEnemy;
 		}else{
 			group _unit setspeedmode "FULL";

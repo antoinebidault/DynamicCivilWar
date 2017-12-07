@@ -18,14 +18,14 @@ _this addAction["Give me some information about your chief",{
     (_this select 0) call fnc_MainObjectiveIntel;
 }];
 
-_this addAction["Set up camp here (100 points, 6 hours)",{
+_this addAction["Set up camp here (200 points, 6 hours)",{
     params["_unit","_asker","_action"];
 
     //Talk
     [_asker,"Is it possible to set up our camp here ?"] spawn fnc_talk;
 
     //[_unit,] call fnc_updateRep;
-    [_asker,-100] call fnc_updateScore;
+    [_asker,-200] call fnc_updateScore;
 
     //Populate with friendlies
     _curr = ([position _unit,false] call fnc_findNearestMarker);

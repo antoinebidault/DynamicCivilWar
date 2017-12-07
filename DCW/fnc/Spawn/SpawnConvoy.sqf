@@ -83,7 +83,7 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
 };
 
 
-_wpt = createMarker ["initMarker",getPos ENEMY_COMMANDER];
+_wpt = createMarker ["initMarker",[0,0,0]];
 _wpt setMarkerShape "ICON";
 _wpt setMarkerColor "ColorRed";
 _wpt setMarkerType "hd_pickup";

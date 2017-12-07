@@ -48,8 +48,6 @@ iedAct={
 	};
 };
 
-
-
 {
 	_x;
 	_ied=selectRandom iedList;
@@ -59,7 +57,6 @@ iedAct={
 	_ied setDir(random 359);
 	_ied allowDamage true;
 	_ieds pushBack _ied;
-
 	
 	_iedJunk=createVehicle[_junk,getPosATL _ied,[],0,"NONE"];
 	_iedJunk setPosATL(getPosATL _iedJunk select 2+1);

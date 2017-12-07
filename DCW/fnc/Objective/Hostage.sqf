@@ -90,16 +90,8 @@ for "_j" from 1 to _nb do {
         if (count _posBuildings == 0) exitWith{_units};
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
          _posBuildings = _posBuildings -[_posToSpawn];
-        _unitName = ENEMY_LIST_UNITS call BIS_fnc_selectRandom;
-        _enemy = _grp createUnit [_unitName, _posToSpawn , [], ENEMY_SKILLS, "NONE"];
-        _enemy setDir random 360;
+        _enemy = [_grp,_posToSpawn] call fnc_SpawnEnemy;
 
-        [_enemy,"ColorRed"] call fnc_addMarker;
-
-        [_enemy] call fnc_addTorch;
-
-        //Handle killed unit
-        [_enemy] call fnc_handlekill;
         _units pushBack _enemy;
     };
 

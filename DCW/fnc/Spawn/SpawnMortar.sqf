@@ -42,6 +42,8 @@ for "_j" from 1 to _nb do {
 
     _mortar setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
     [_mortar,"ColorPink"] call fnc_addMarker;
+    _units pushback _mortar;
+
     _nbGuards = 2 + round(random 1);
     _grp = createGroup ENEMY_SIDE;
 

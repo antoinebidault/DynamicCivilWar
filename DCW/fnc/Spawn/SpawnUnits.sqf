@@ -46,6 +46,8 @@ if (_nbSnipers > 0)then{
         [_unit] call fnc_handlekill;
 
         _unit setVariable["DCW_Type","sniper"];
+        UNITS_SPAWNED pushback _unit;
+        
         _unit doWatch _pos;
         if (_xc == 1)then{
           _unit setVariable["DCW_IsIntel",true];

@@ -9,5 +9,6 @@ _marker setMarkerSize [4,4];
 _marker setMarkerBrush "SolidBorder";
 _marker setMarkerText "Meeting point";
 _marker setMarkerColor "ColorYellow";
+_fire setVariable["marker",_marker];
 
 [_fire];

@@ -5,8 +5,8 @@
  * License : GNU (GPL)
  */
 
-private _friend = objNull;
 params["_unit","_meetingPoint"];
+private _friend = objNull;
 
 if (isNil '_meetingPoint') then{ _meetingPoint = ([getPosATL _unit,false] call fnc_findnearestmarker) select 9; };
 if (count _meetingPoint != 3) exitWith {false;};
@@ -18,7 +18,7 @@ _anims = ["STAND","STAND_IA","WATCH","WATCH1","WATCH2"];
 //{_unit disableCollisionWith _x;}foreach _chairs;
 //{_unit disableCollisionWith _x;}foreach _objs;
 
-_newPos =  [_meetingPoint ,.6,1.5,.25, 0, 20, 0] call BIS_fnc_FindSafePos;//[[[_meetingPoint, 2]],[[_meetingPoint,1]]] call BIS_fnc_randomPos;
+private _newPos =  [_meetingPoint ,.6,1.5,.25, 0, 20, 0] call BIS_fnc_FindSafePos;//[[[_meetingPoint, 2]],[[_meetingPoint,1]]] call BIS_fnc_randomPos;
 _unit doMove _newPos;
 _timer = time;
 
@@ -26,22 +26,10 @@ sleep 1;
 
 waitUntil {unitReady _unit || _unit distance _newPos < 2 || time > _timer + 500};
 if (time > _timer + 149) exitWith{false;}; 
-
 sleep 5;
-
 _unit setPos _newPos;
 
-//look for a chair around
-/*
-_chairFound = [];
-{
-	_obj = nearestObject [_unit, _x select 0];
-	if (([_obj,_unit] call BIS_fnc_distance2D) < 1.5) exitWith
-	{
-		_chairFound = _x;
-	};
-}
-forEach chairs;*/
+
 
 if (side _unit == CIV_SIDE)then{
 	_animPossible = ["Acts_CivilListening_1","Acts_CivilListening_2","acts_StandingSpeakingUnarmed"];

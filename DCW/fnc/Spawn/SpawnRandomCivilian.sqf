@@ -20,17 +20,9 @@ while{true}do {
 		_group = createGroup CIV_SIDE;
 
 		for "_j" from 1 to _numberOfmen do {
-			_unitName = CIV_LIST_UNITS call BIS_fnc_selectRandom;
-			_unit = _group createUnit [_unitName, _pos,[],0,"NONE"];
-			
-			[_unit,"ColorBlue"] call fnc_addMarker;
-			[_unit] call fnc_handlekill;
-			[_unit] call fnc_handleFiredNear;
-			[_unit] call fnc_addCivilianAction;
-			_unit call fnc_handleDamaged;
+			_unit = [_group,_pos] call fnc_SpawnCivil;
 			_unitPool pushBack _unit;
 			_unit setBehaviour "SAFE";
-			UNITS_SPAWNED pushBack _unit;
 			sleep .4;
 		};
 		[leader _group] spawn fnc_civilianPatrol;

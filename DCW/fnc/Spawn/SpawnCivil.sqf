@@ -36,4 +36,6 @@ if (_handleFireEvent)then{
     [_unit] spawn fnc_AddCivilianAction;
 };
 
+UNITS_SPAWNED pushBack _unit;
+
 _unit

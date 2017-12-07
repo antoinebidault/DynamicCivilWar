@@ -1,5 +1,5 @@
 
-_this call BIS_BIS_fnc_FindSafePos; 
+_this call BIS_fnc_FindSafePos; 
 // diag_log _this;
  /*} 
  catch

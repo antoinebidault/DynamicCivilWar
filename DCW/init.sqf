@@ -94,6 +94,7 @@ UNITS_CHASERS = [];
 CHASER_TRIGGERED = false;
 MESS_SHOWN = false;
 LAST_FLARE_TIME = time;
+REFRESH_TIME = 10;
 
 
 //EVENT LIST
@@ -225,17 +226,26 @@ for "_xc" from 0 to _worldNbBlocks do {
 };
 
 
-_timerChaser = time - 360;
-private ["_cars","_mkr","_cacheResult","_ieds"];
-//Main Loop
-while {true} do{
 
+private ["_cars","_mkr","_cacheResult","_ieds"];
+
+
+_timerChaser = time - 360;
+
+while {true} do{
+	
 	_playerPos = position player;
 	_isInFlyingVehicle = false;
+	_nbUnitSpawned = count UNITS_SPAWNED;
 
-		if( (vehicle player) != player && ((vehicle player) isKindOf "Air" && (_playerPos select 2) > 4))then{
-			_isInFlyingVehicle = true;
-		};
+	if( (vehicle player) != player && ((vehicle player) isKindOf "Air" && (_playerPos select 2) > 4))then{
+		_isInFlyingVehicle = true;
+	};
+
+	_xC = floor((_playerPos select 0)/SIZE_BLOCK);
+	_yC = floor((_playerPos select 1)/SIZE_BLOCK);
+	_o = 4;
+
 
 	{
 		private _marker =_x select 0;
@@ -250,45 +260,44 @@ while {true} do{
 		private _meetingPointPosition =_x select 9;
 		private _points =_x select 10;
 
-		//if (_playerPos distance _pos < SPAWN_DISTANCE && _playerPos distance _pos > MIN_SPAWN_DISTANCE && !_triggered && !_isInFlyingVehicle ) then{
-		if (_playerPos distance _pos < SPAWN_DISTANCE && !_triggered && !_isInFlyingVehicle ) then{
+		if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE) then{
 		
-			if (count UNITS_SPAWNED < MAX_SPAWNED_UNITS)then{
+			if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
 
 				//Véhicles spawn
-				_cars = ([_pos,_radius,(_peopleToSpawn select 3)] call fnc_SpawnCars);
-				_units = _units + _cars;
+				_units = _units +  ([_pos,_radius,(_peopleToSpawn select 3)] call fnc_SpawnCars);
 
 				//Units
 				_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition] call fnc_SpawnUnits);
-				UNITS_SPAWNED = UNITS_SPAWNED + _units;
 
 				//Units
 				_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlies);
-				UNITS_SPAWNED = UNITS_SPAWNED + _units;
-
+				
 				//IEDs
 				_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_Ieds);
 				
-				_outpost = [_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost;
-				_units = _units + _outpost;
+				//Outposts
+				_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
 				
+				//Cache
 				_units = _units + ([_pos,_radius,(_peopleToSpawn select 5)] call fnc_cache);
 
+				//Hostages
 				_units = _units + ([_pos,_radius,(_peopleToSpawn select 6)] call fnc_hostage);
 
-				_mortars = [_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar;
-
+				//Meeting points
 				_units = _units + ([_meetingPointPosition] call fnc_SpawnMeetingPoint);
+				
+				//Mortars
+				_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
 
-				_units = _units + _mortars;
 				_triggered = true;
 			}
 
 		}else{
 
 			//Gestion du cache
-			if(_playerPos distance _pos > (SPAWN_DISTANCE + 150) && _triggered)then {
+			if(_playerPos distance _pos > (SPAWN_DISTANCE + 100) && _triggered)then {
 				_cacheResult = [_units] call fnc_CachePut;
 				_peopleToSpawn = _cacheResult select 0;
 				_units = _units - [_cacheResult select 1];
@@ -319,11 +328,11 @@ while {true} do{
 			};
 		}; 
 
-
+		
 	
 		MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_xc,_yc,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points]]; 
 
-	}foreach MARKERS;
+	}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
 
 		_civilReputationSum = 0;
 		_civilReputationNb = 0;
@@ -332,7 +341,6 @@ while {true} do{
 			//Empty the killed units
 			if (!alive _x)then{
 				UNITS_SPAWNED = UNITS_SPAWNED - [_x];
-				UNITS_CHASERS = UNITS_CHASERS - [_x];
 			};
 
 			//Detection
@@ -365,6 +373,13 @@ while {true} do{
 				_civilReputationNb = _civilReputationNb + 1;
 			};
 
+			if (_x getVariable["DCW_Type",""] == "chaser")then{
+				if (_x distance _playerPos > SPAWN_DISTANCE + 300)then {
+					deleteMarker (_x getVariable["marker",""]);
+					deleteVehicle _x;
+				};
+			};
+
 			//Update marker position
 			if (DEBUG)then{
 				_mkr = _x getVariable["marker",""];
@@ -372,7 +387,10 @@ while {true} do{
 					_mkr setMarkerPos (getPosWorld _x);
 				};
 			};
-		} foreach UNITS_SPAWNED + UNITS_CHASERS;
+
+
+
+		} foreach UNITS_SPAWNED ;
 		
 		if (_civilReputationNb > 0) then  {
 			_tmp = round(_civilReputationSum/_civilReputationNb);
@@ -384,19 +402,10 @@ while {true} do{
 		};
 
 	//Chasers
-	if (CHASER_TRIGGERED && count UNITS_CHASERS < MAX_CHASERS && time > (_timerChaser + 20))then{
+	if (CHASER_TRIGGERED && time > (_timerChaser + 20))then{
 		_timerChaser = time;
-		UNITS_CHASERS = UNITS_CHASERS + ([] call fnc_SpawnChaser);
+		UNITS_SPAWNED = UNITS_SPAWNED + ([] call fnc_SpawnChaser);
 	};
 
-
-	//Remove chasers too far
-	{
-		if (_x distance _playerPos > SPAWN_DISTANCE + 500)then {
-			deleteMarker (_x getVariable["marker",""]);
-			deleteVehicle _x;
-		};
-	} foreach UNITS_CHASERS;
-
-	sleep 5;
+	sleep REFRESH_TIME;
 };

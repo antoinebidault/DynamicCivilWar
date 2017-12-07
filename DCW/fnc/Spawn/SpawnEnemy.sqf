@@ -24,6 +24,7 @@ if (DEBUG)then{
 
 [_unit] call fnc_AddTorch;
 [_unit] call fnc_handlekill;
+UNITS_SPAWNED pushback _unit;
 
 _unit
 
