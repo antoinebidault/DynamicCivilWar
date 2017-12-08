@@ -9,11 +9,12 @@
 RemoveAllActions _this;
 _this setVariable["DCW_LocalChief",true];
 removeGoggles _this;
+removeHeadgear _this;
 _this addGoggles (["G_Spectacles_Tinted","G_Aviator"] call BIS_fnc_selectRandom);
 _this addHeadgear "LOP_H_ChDKZ_Beret";
 
 
-_this addAction["Give me some information about your chief",{
+_this addAction["Interrogate",{
     (_this select 0) RemoveAction (_this select 2);
     (_this select 0) call fnc_MainObjectiveIntel;
 }];
@@ -24,13 +25,9 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     //Talk
     [_asker,"Is it possible to set up our camp here ?"] spawn fnc_talk;
 
-    //[_unit,] call fnc_updateRep;
-    [_asker,-200] call fnc_updateScore;
-
     //Populate with friendlies
     _curr = ([position _unit,false] call fnc_findNearestMarker);
     MARKERS = MARKERS - [_curr];
-
    
     private _marker =_curr select 0;
     private _pos =_curr select 1;
@@ -44,9 +41,12 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     private _meetingPointPosition =_curr select 9;
     private _points =_curr select 10;
 
-    if(!_triggered) exitWith{[_unit,"No way man..."] call fnc_talk;};
-    if(!_success) exitWith{[_unit,"Secure our position first"] call fnc_talk;};
-    
+    if(!_triggered) exitWith{[_unit,"No way man..."] spawn fnc_talk;false;};
+    if(!_success) exitWith{[_unit,"Secure our position first"] spawn fnc_talk;false;};
+
+        //[_unit,] call fnc_updateRep;
+    if (!([_asker,200] call fnc_afford)) exitWith {[_unit,"You need more money !"] spawn fnc_talk;false;};
+
     _unit RemoveAction _action;
     _buildings = nearestObjects [_pos, ["house"], 300];
     {

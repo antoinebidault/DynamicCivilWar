@@ -77,10 +77,11 @@ addActionLookInventory = {
         }else{
             [_unit,-1] call fnc_updateRep;   
         };
-
+        sleep .4;
         if (alive _unit) then {
             _human action ["Gear", _unit];
         };
+
     },nil,1.5,true,true,"","true",3,false,""];
 };
 
@@ -301,6 +302,9 @@ addActionRally = {
     //Try to make him a friendly
    _this addAction["Try to rally (30 minutes/30 points)",{
        params["_unit","_talker","_action"];
+       
+        if (!([_talker,-30] call fnc_afford)) exitWith {[_unit,"You need more money !"] call fnc_talk;false;};
+
         _unit removeAction _action;
         showCinemaBorder true;
         _camPos = _talker modelToWorld [-1,-0.2,1.9];
@@ -329,7 +333,7 @@ addActionRally = {
 
         //Suspect
         _isSuspect = _unit getVariable ["DCW_Suspect",false];
-        [_talker,-30] call fnc_updatescore;
+        
        
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !"] call fnc_Talk;

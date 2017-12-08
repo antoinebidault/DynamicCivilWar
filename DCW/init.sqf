@@ -147,6 +147,32 @@ ENEMY_SEARCHED = {
 	[player,round (random 5)] call fnc_updateScore;
 };
 
+townLabels = true; // include name markers too 
+ 
+{ 
+   _town = text _x; 
+
+   _name = format["mrk_%1", _town]; 
+ 
+   _foo = createmarker [_name, getPos _x]; 
+   _radius = ((size _x) select 0) max ((size _x) select 1);
+   _foo setMarkerSize [_radius,_radius]; 
+   _foo setMarkerShape "ELLIPSE"; 
+   _foo setMarkerBrush "SOLID"; 
+   _foo setMarkerColor "ColorRed"; 
+ 
+   if (townLabels) then { 
+       _label = format["lbl_%1", _town]; 
+       _foo = createmarker [_label, getPos _x]; 
+       _foo setMarkerShape "ICON"; 
+       _foo setMarkerType "selector_selectedMission"; 
+       _foo setMarkerColor "ColorBlack"; 
+       _foo setMarkerText _town; 
+       _foo setMarkerAlpha 0.5; 
+   }; 
+ 
+} forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Strategic","CityCenter"], 25000]; 
+
 
 private _unitsSpawned = [];
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
@@ -186,7 +212,8 @@ for "_xc" from 0 to _worldNbBlocks do {
 
 		if (count _buildings > 0 && !_return)then{
 			private _radius = (SIZE_BLOCK/2) MIN ((count _buildings + 3)*12);
-			private _posCenteredOnBuilding = position (_buildings call BIS_fnc_selectrandom);
+			//private _posCenteredOnBuilding = position (_buildings call BIS_fnc_selectrandom);
+			private _posCenteredOnBuilding = position (_buildings select 0);
 
 			//Création du marker
 			_m = createMarker [format ["mrk%1",random 100000],_posCenteredOnBuilding];

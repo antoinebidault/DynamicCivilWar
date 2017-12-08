@@ -7,6 +7,7 @@
 
 params ["_unit"];
 fnc_updatescore = compile preprocessFileLineNumbers  "supportui\fnc\UpdateScore.sqf";
+fnc_afford = compile preprocessFileLineNumbers  "supportui\fnc\Afford.sqf";
 fnc_supportui = compile preprocessFileLineNumbers  "supportui\fnc\SupportUI.sqf";
 fnc_displayscore = compile preprocessFileLineNumbers  "supportui\fnc\DisplayScore.sqf";
 

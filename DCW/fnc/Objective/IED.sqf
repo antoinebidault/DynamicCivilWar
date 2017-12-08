@@ -33,20 +33,7 @@ while {_i > 0} do {
     _i = _i-1;
 };
 
-iedAct={
-	_iedObj=_this select 0;
-	if(mineActive _iedObj)then{
-		_iedBlast=selectRandom iedBlast;
-		createVehicle[_iedBlast,(getPosATL _iedObj),[],0,"NONE"];
-		createVehicle["Crater",(getPosATL _iedObj),[],0,"NONE"];
 
-		{
-			deleteVehicle _x
-		}forEach nearestObjects[getPosATL _iedObj,iedJunk,4];
-
-		deleteVehicle _iedObj;
-	};
-};
 
 {
 	_x;
@@ -64,25 +51,8 @@ iedAct={
 	_iedJunk setVariable ["DCW_Type","ied"];
 	_iedJunk setVariable ["DCW_IsIntel",true];
 	[_iedJunk,"ColorYellow"] call fnc_addMarker;
+
 	_ieds pushBack _iedJunk;
-
-	_trig = createTrigger["EmptyDetector",getPosATL _ied];
-	_trig setTriggerArea[3,3,0,FALSE,3];
-	_trig setTriggerActivation["ANY","PRESENT",false];
-	_trig setTriggerTimeout[1,1,1,true];
-	
-	if (isMultiplayer) then{
-		_trig setTriggerStatements[
-		"{vehicle _x in thisList && speed vehicle _x>4}count playableUnits>0",
-		"{if((typeOf _x)in iedAmmo)then{[_x]call iedAct;};}forEach nearestObjects[thisTrigger,[],10];",
-		"deleteVehicle thisTrigger"];
-	}else{
-		_trig setTriggerStatements[
-		"{vehicle _x in thisList && isPlayer vehicle _x && speed vehicle _x>4}count allUnits>0",
-		"{if((typeOf _x)in iedAmmo)then{[_x]call iedAct;};}forEach nearestObjects[thisTrigger,[],10];",
-		"deleteVehicle thisTrigger"];
-	};
-
 
 	if (count _roads == 0)exitWith {};
 	_jnkR=selectRandom _roads;
@@ -90,21 +60,37 @@ iedAct={
 	_junk setPosATL(getPosATL _junk select 2+1);
 	_junk enableSimulationGlobal false;
 	_ieds pushBack _junk;
-	_localIeds pushBack [_ied,_iedJunk,_trig];
+	_localIeds pushBack [_ied,_iedJunk];
+
 } forEach _roadSelects;
 
 {CIV_SIDE revealMine _x;ENEMY_SIDE revealMine _x;}forEach allMines;
 
 
 //Loop to check status
-[_localIeds]spawn{
+[_localIeds] spawn{
 	params["_localIeds"];
+
+	iedAct={
+		_iedObj=_this;
+		if(mineActive _iedObj)then{
+			_iedBlast=selectRandom iedBlast;
+			createVehicle[_iedBlast,(getPosATL _iedObj),[],0,"NONE"];
+			createVehicle["Crater",(getPosATL _iedObj),[],0,"NONE"];
+
+			{
+				deleteVehicle _x
+			}forEach nearestObjects[getPosATL _iedObj,iedJunk,4];
+
+			deleteVehicle _iedObj;
+		};
+	};
+
 	while {count _localIeds > 0}do
 	{
 		{
 			_mine = _x select 0;
 			if (!(mineActive _mine) || !(alive _mine))then{
-				_trig = _x select 2;
 				_junk = _x select 1;
 				//It's in cache, that's okay !
 				if (player distance _junk < 250) then{
@@ -114,13 +100,15 @@ iedAct={
 				
 				//Anyway;
 				_localIeds - [_x];
-				deleteVehicle _trig;
+			}else{
+				if (_mine distance player < 3  && (speed player > 4 || (stance player) != "PRONE")) then{
+					_mine call iedAct;
+				};
 			};
-			_x;
-			sleep 1;
+			sleep .3;
 		}
 		foreach _localIeds;
-		sleep 1;
+		sleep .2;
 		LOCALIED = _localIeds;
 	}
 };
