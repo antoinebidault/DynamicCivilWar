@@ -5,11 +5,11 @@
  * License : GNU (GPL)
  */
 
-_group = _this select 0;
-_pos = _this select 1;
+private _group = _this select 0;
+private _pos = _this select 1;
 
-_unitName = ENEMY_LIST_UNITS call BIS_fnc_selectRandom;
-_unit = _group createUnit [_unitName, _pos,[],ENEMY_SKILLS,"NONE"];
+private _unitName = ENEMY_LIST_UNITS call BIS_fnc_selectRandom;
+private _unit = _group createUnit [_unitName, _pos,[],ENEMY_SKILLS,"NONE"];
 
 if(isNull(_unit findNearestEnemy _unit))then{
     _unit forceWalk  true;

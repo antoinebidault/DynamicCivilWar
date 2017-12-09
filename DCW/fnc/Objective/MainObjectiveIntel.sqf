@@ -25,7 +25,6 @@ _distance = 250 + random 250;
 };*/
 
 //Get the marker position
-//_posMarker = ([_pos,false] call fnc_FindNearestMarker) select 1;
 _pos = [_pos, _offset, (_distance - _offset) , 0, 0, 20, 0] call BIS_fnc_FindSafePos;
 
 deleteMarker "DCW_intel_q";

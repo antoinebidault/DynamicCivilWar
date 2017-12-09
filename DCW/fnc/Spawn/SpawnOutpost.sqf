@@ -5,7 +5,7 @@
  * License : GNU (GPL)
  */
 
-private ["_pos","_radius","_nicePos","_unitName","_enemy","_grp"];
+private ["_pos","_radius","_nicePos","_enemy","_grp"];
 
 params["_marker","_nb"];
 private _units = [];

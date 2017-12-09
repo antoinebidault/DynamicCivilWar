@@ -18,7 +18,7 @@ private _potentialIntel = [];
             if (!(_x getVariable["DCW_IsIntelRevealed",false]) && _x getVariable["DCW_IsIntel",false] && _pos distance _x < 500)then{
                 _potentialIntel pushBack _x;
             };
-        } foreach (_x select 7);
+        } foreach (_x select 5);
     };
 } forEach MARKERS;
 

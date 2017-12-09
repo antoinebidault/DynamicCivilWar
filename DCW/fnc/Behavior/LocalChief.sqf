@@ -33,13 +33,12 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     private _pos =_curr select 1;
     private _triggered =_curr select 2;
     private _success =_curr select 3;
-    private _xc =_curr select 4;
-    private _yc =_curr select 5;
-    private _radius =_curr select 6;
-    private _units =_curr select 7;
-    private _peopleToSpawn =_curr select 8;
-    private _meetingPointPosition =_curr select 9;
-    private _points =_curr select 10;
+    private _radius =_curr select 4;
+    private _units =_curr select 5;
+    private _peopleToSpawn =_curr select 6;
+    private _meetingPointPosition =_curr select 7;
+    private _points =_curr select 8;
+    private _isLocation =_curr select 9;
 
     if(!_triggered) exitWith{[_unit,"No way man..."] spawn fnc_talk;false;};
     if(!_success) exitWith{[_unit,"Secure our position first"] spawn fnc_talk;false;};
@@ -107,7 +106,7 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     _peopleToSpawn set [9,(_peopleToSpawn select 0) + ceil(random 3)];
     _curr  set [6,_peopleToSpawn];
 
-    _units = _curr select 7;
+    _units = _curr select 5;
 	_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlies);
 
     _marker = createMarker ["marker",_pos];

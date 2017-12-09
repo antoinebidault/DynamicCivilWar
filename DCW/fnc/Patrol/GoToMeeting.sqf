@@ -8,7 +8,7 @@
 params["_unit","_meetingPoint"];
 private _friend = objNull;
 
-if (isNil '_meetingPoint') then{ _meetingPoint = ([getPosATL _unit,false] call fnc_findnearestmarker) select 9; };
+if (isNil '_meetingPoint') then{ _meetingPoint = ([getPosATL _unit,false] call fnc_findnearestmarker) select 7; };
 if (count _meetingPoint != 3) exitWith {false;};
 if (!alive _unit) exitWith{false;};
 if (_unit getVariable["civ_affraid",false]) exitWith{false;};

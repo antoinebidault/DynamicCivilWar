@@ -11,7 +11,7 @@ params ["_unit","_marker"];
 _unit addWeapon "Binocular";
 
 while { alive _unit }do{
-    _rndMarker = ([position _unit] call fnc_findNearestMarker) select 0;;
+    _rndMarker = ([position _unit] call fnc_findNearestMarker) select 0;
     _rndPos = getMarkerPos _rndMarker;
     _radius = (getMarkerSize _rndMarker) select 0;
     _newPos = [_rndPos, 1, _radius, 1, 0, 20, 0] call BIS_fnc_FindSafePos;

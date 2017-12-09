@@ -12,6 +12,7 @@ fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\Fact
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-malden.sqf"); 
 
 //SYSTEM
+fnc_GetClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClusters.sqf";
 fnc_isInMarker= compileFinal preprocessFileLineNumbers  "DCW\fnc\System\isinMarker.sqf";
 fnc_findBuildings= compileFinal preprocessFileLineNumbers  "DCW\fnc\System\findBuildings.sqf";
 fnc_addMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\addMarker.sqf";
@@ -19,7 +20,6 @@ fnc_findNearestMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\
 fnc_CachePut = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\CachePut.sqf";
 fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\ShowIndicator.sqf"; 
 fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Talk.sqf";
-BIS_fnc_FindSafePos = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\FindSafePos.sqf";
 
 
 //SPAWN
@@ -147,31 +147,8 @@ ENEMY_SEARCHED = {
 	[player,round (random 5)] call fnc_updateScore;
 };
 
-townLabels = true; // include name markers too 
- 
-{ 
-   _town = text _x; 
 
-   _name = format["mrk_%1", _town]; 
- 
-   _foo = createmarker [_name, getPos _x]; 
-   _radius = ((size _x) select 0) max ((size _x) select 1);
-   _foo setMarkerSize [_radius,_radius]; 
-   _foo setMarkerShape "ELLIPSE"; 
-   _foo setMarkerBrush "SOLID"; 
-   _foo setMarkerColor "ColorRed"; 
- 
-   if (townLabels) then { 
-       _label = format["lbl_%1", _town]; 
-       _foo = createmarker [_label, getPos _x]; 
-       _foo setMarkerShape "ICON"; 
-       _foo setMarkerType "selector_selectedMission"; 
-       _foo setMarkerColor "ColorBlack"; 
-       _foo setMarkerText _town; 
-       _foo setMarkerAlpha 0.5; 
-   }; 
- 
-} forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Strategic","CityCenter"], 25000]; 
+
 
 
 private _unitsSpawned = [];
@@ -198,66 +175,70 @@ MARKER_WHITE_LIST pushBack _mp;
 [] spawn fnc_SpawnMainObjective;
 [-150] spawn fnc_SpawnConvoy;
 
-private _ret = false;
-for "_xc" from 0 to _worldNbBlocks do {
-	for "_yc" from 0 to _worldNbBlocks do {
-		_markerPos = [(_xc*SIZE_BLOCK),(_yc*SIZE_BLOCK),0];
-		_buildings = [_markerPos, (SIZE_BLOCK/2)] call fnc_findBuildings;
-		_return = false;
-	    { 
-			if([_markerPos,_x] call fnc_isInMarker)exitWith{_return = true;};
-		} foreach MARKER_WHITE_LIST;
+private _popbase = 0;
+private _nbFriendlies = 0;
+private _nbCars = 0;
+private _nbFriendlies = 0;
+private _nbCivilian = 0;
+private _points = 0;
+private _nbSnipers = 0;
+private _nbMortars = 0;
+private _clusters = [] call fnc_GetClusters;
 
-		if (isNil{_return})then{_return = false;};
+{
+	private _return = false;
+	private _pos = _x select 0;
+	private _radius = _x select 1;
+	private _nbBuildings = _x select 2;
+	private _isLocation = _x select 3;
 
-		if (count _buildings > 0 && !_return)then{
-			private _radius = (SIZE_BLOCK/2) MIN ((count _buildings + 3)*12);
-			//private _posCenteredOnBuilding = position (_buildings call BIS_fnc_selectrandom);
-			private _posCenteredOnBuilding = position (_buildings select 0);
+	{ 
+		if(_pos inArea _x)exitWith{_return = true;};
+	} foreach MARKER_WHITE_LIST;
 
-			//Création du marker
-			_m = createMarker [format ["mrk%1",random 100000],_posCenteredOnBuilding];
-			_m setMarkerShape "ELLIPSE";
-			_m setMarkerSize [_radius,_radius];
-			_m setMarkerBrush "FDiagonal";
-			_m setMarkerColor "ColorRed";
-			_m setMarkerAlpha 0;
-			if (SHOW_SECTOR || DEBUG) then{
-				_m setMarkerAlpha .5;
-			};
-		
-			//Nb units to spawn per block
-			_popbase = 30 MIN (ceil((count _buildings)*(RATIO_POPULATION)  + (floor random 3)));
-			_nbCivilian =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
-			_nbFriendlies =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
-			_nbSnipers = if (random 100 > 75) then{ 2 } else{ 0 };
-			_nbEnemies = 1 max (round (_popbase * (PERCENTAGE_ENEMIES/100)));
-			_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((count _buildings)*(RATIO_CARS))));
-			_nbIeds = (1 + floor(random 7));
-			_nbHostages = [0,1] call BIS_fnc_selectRandom;
-			_nbCaches = if (_nbHostages == 0) then {[0,1] call BIS_fnc_selectRandom}else{0};
-			_nbMortars = if (_nbSnipers >= 1) then{[0,1] call BIS_fnc_selectRandom }else{0};
-			_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
-			_nbFriendlies = 0;
-			_points = _nbEnemies * 5;
+	if (isNil{_return})then{_return = false;};
+	if (!_return)then
+	{
 
-			_meetingPointPosition =  [_posCenteredOnBuilding, 0, .5*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
-			while {isOnRoad _meetingPointPosition} do{
-				_meetingPointPosition =  [_posCenteredOnBuilding, 0, .67*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
-			};
-
-			_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
-			MARKERS pushBack  [_m,_posCenteredOnBuilding,false,false,_xc,_yc,_radius,[],_peopleToSpawn,_meetingPointPosition,_points];
+		//Création du marker
+		_m = createMarker [format ["mrk%1",random 100000],_pos];
+		_m setMarkerShape "ELLIPSE";
+		_m setMarkerSize [_radius,_radius];
+		_m setMarkerBrush "FDiagonal";
+		_m setMarkerColor "ColorRed";
+		_m setMarkerAlpha 0;
+		if (SHOW_SECTOR || DEBUG) then{
+			_m setMarkerAlpha .5;
 		};
+
+		//Nb units to spawn per block
+		_popbase = 30 MIN (ceil((_nbBuildings)*(RATIO_POPULATION)  + (round random 1)));
+		_nbCivilian =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
+		_nbFriendlies =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
+		_nbSnipers = if (random 100 > 75) then{ 2 } else{ 0 };
+		_nbEnemies = 1 max (round (_popbase * (PERCENTAGE_ENEMIES/100)));
+		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
+		_nbIeds = (1 + floor(random 7));
+		_nbHostages = [0,1] call BIS_fnc_selectRandom;
+		_nbCaches = if (_nbHostages == 0) then {[0,1] call BIS_fnc_selectRandom}else{0};
+		_nbMortars = if (_nbSnipers >= 1) then{[0,1] call BIS_fnc_selectRandom }else{0};
+		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
+		_nbFriendlies = 0;
+		_points = _nbEnemies * 5;
+		_meetingPointPosition =  [_pos, 0, .5*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
+		while {isOnRoad _meetingPointPosition} do{
+			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
+		};
+
+		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
+		MARKERS pushBack  [_m,_pos,false,false,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation];
 	};
-};
+	
+} foreach _clusters;
 
 
-
-private ["_cars","_mkr","_cacheResult","_ieds"];
-
-
-_timerChaser = time - 360;
+private ["_mkr","_cacheResult","_ieds"];
+private _timerChaser = time - 360;
 
 while {true} do{
 	
@@ -279,13 +260,12 @@ while {true} do{
 		private _pos =_x select 1;
 		private _triggered =_x select 2;
 		private _success =_x select 3;
-		private _xc =_x select 4;
-		private _yc =_x select 5;
-		private _radius =_x select 6;
-		private _units =_x select 7;
-		private _peopleToSpawn =_x select 8;
-		private _meetingPointPosition =_x select 9;
-		private _points =_x select 10;
+		private _radius =_x select 4;
+		private _units =_x select 5;
+		private _peopleToSpawn =_x select 6;
+		private _meetingPointPosition =_x select 7;
+		private _points =_x select 8;
+		private _isLocation = _x select 9;
 
 		if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE) then{
 		
@@ -357,7 +337,7 @@ while {true} do{
 
 		
 	
-		MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_xc,_yc,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points]]; 
+		MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation]]; 
 
 	}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
 

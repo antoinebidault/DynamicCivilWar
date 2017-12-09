@@ -1,7 +1,7 @@
 
 //Global configuration
 //GLOBAL
-DEBUG = false; //Make all units visible on the map
+DEBUG = true; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
 SIDE_CURRENT_PLAYER = side player; //Side player
 NUMBER_RESPAWN = 3;
@@ -28,7 +28,7 @@ HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
 HUMANITAR_LIST_UNITS = ["C_IDAP_Man_AidWorker_06_F","C_IDAP_Man_AidWorker_05_F","C_IDAP_Man_AidWorker_01_F","C_IDAP_Man_AidWorker_08_F","C_IDAP_Man_UAV_06_medical_F","C_IDAP_Man_EOD_01_F","C_IDAP_Man_AidWorker_03_F"];
 MAX_RANDOM_CIVILIAN = 7;
 MAX_SHEEP_HERD = 2; //Number of sheep herd
-RATIO_POPULATION = .2; //Number of unit per building. 0.4 default
+RATIO_POPULATION = 1; //Number of unit per building. 0.4 default
 RATIO_CARS = .02; //Number of empty cars spawned in a city by buidling
 PERCENTAGE_CIVILIAN = 60; //Percentage civilian in a block
 PERCENTAGE_ENEMIES = 40; //Percentage enemies

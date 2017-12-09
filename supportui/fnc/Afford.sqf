@@ -13,7 +13,7 @@
 		hint "Can't afford this";
 		false;
 	}else{
-		_unit spawn fnc_updatescore;
+		[_unit,-_price] spawn fnc_updatescore;
 		true;
 	};
 	
