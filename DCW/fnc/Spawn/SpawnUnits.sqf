@@ -134,9 +134,15 @@ for "_xc" from 1 to _population do {
       _units pushBack _civ;
       _chief = _civ;
     }else{
-       _civ = [_grp,_posSelected,_chief,true] call fnc_SpawnCivil;
-      [_civ,_radius,_meetingPointPosition] spawn fnc_patrol;
-      _units pushBack _civ;
+      if (_xc == 2 && _population > 10)then{
+        _civ = [_grp,_posSelected,_chief,false] call fnc_SpawnCivil;
+        _civ call fnc_Medic;
+        _units pushBack _civ;
+      }else{
+        _civ = [_grp,_posSelected,_chief,true] call fnc_SpawnCivil;
+        [_civ,_radius,_meetingPointPosition] spawn fnc_patrol;
+        _units pushBack _civ;
+      };
     };
   };
 };

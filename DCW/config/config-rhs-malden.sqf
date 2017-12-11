@@ -42,7 +42,7 @@ ENEMY_SKILLS = 1; //Skills units
 PATROL_SIZE = [1,2]; //Size of patrol => [minimum,random additionnals units]
 MAX_SPAWNED_UNITS = 65; //Max units to spawn
 MAX_CHASERS = 10; //Max hunters who are looking for you !
-MAX_RANDOM_PATROL = 7; //Number of units patroling around the player at the same time
+MAX_RANDOM_PATROL = 17; //Number of units patroling around the player at the same time
 MAX_RANDOM_CAR = 2; //Max car spawned.
 NUMBER_CHOPPERS = 0; // Number of choppers
 ENEMY_LIST_UNITS = ["rhsgref_nat_specialist_aa","rhsgref_nat_grenadier_rpg","rhsgref_nat_commander","rhsgref_nat_crew","rhsgref_nat_hunter","rhsgref_nat_machinegunner","rhsgref_nat_medic","rhsgref_nat_militiaman_kar98k","rhsgref_nat_rifleman_akms","rhsgref_nat_rifleman_aks74","rhsgref_nat_grenadier","rhsgref_nat_rifleman","rhsgref_nat_rifleman_m92","rhsgref_nat_saboteur","rhsgref_nat_scout","rhsgref_nat_pmil_saboteur","rhsgref_nat_pmil_rifleman_m92","rhsgref_nat_pmil_rifleman","rhsgref_nat_pmil_grenadier","rhsgref_nat_pmil_rifleman_aksu","rhsgref_nat_pmil_medic","rhsgref_nat_pmil_machinegunner","rhsgref_nat_pmil_hunter","rhsgref_nat_pmil_commander","rhsgref_nat_pmil_grenadier_rpg","rhsgref_nat_pmil_specialist_aa","rhsgref_nat_pmil_scout","rhsgref_nat_pmil_crew"];

@@ -39,7 +39,9 @@ fnc_getRadiusLocation = {
 {
 	_pos = getPos _x;
     _res = [getPos _x,true] call fnc_getRadiusLocation;
-	_clusters pushback [_pos,_res select 0,_res select 1,true,name _x];
+	if( _res select 1 > 3)then{
+		_clusters pushback [_pos,_res select 0,_res select 1,true,name _x];
+	};
 } forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Strategic","CityCenter"], 25000]; 
 
 for "_xc" from 0 to _worldNbBlocks do {

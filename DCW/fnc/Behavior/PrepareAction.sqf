@@ -89,6 +89,7 @@ addActionHalt = {
     _this addAction["Say hello",{
         params["_unit","_asker","_action"];
         _asker playActionNow "GestureFreeze";
+        _unit stop true;
         [_asker,"Hello sir !"] call fnc_Talk;
         if (!weaponLowered _asker) exitWith { 
             [_unit,"I don't talk to somebody pointing his gun on me ! Go away !"] call fnc_Talk;
@@ -96,13 +97,13 @@ addActionHalt = {
             [_asker,"I'm sorry, sir !"] call fnc_Talk;
             [_unit,-1] call fnc_updateRep;
             [] call CIVIL_DISRESPECT;
+            _unit stop false;
             false; 
         };
         
         _unit removeAction _action;
         _unit doWatch _asker;
         sleep 1;
-        _unit stop true;
         _unit playActionNow "GestureHi";
         [_unit,format["Hi ! My name is %1.", name _unit]] call fnc_Talk;
         sleep 1.5;

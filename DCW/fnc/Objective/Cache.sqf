@@ -15,8 +15,9 @@ private _boxeClasses = ["Box_Syndicate_Ammo_F"];
 
 if (_nb == 0)exitWith{_units;};
 
-
 private	_buildings = [_pos, _radius] call fnc_findBuildings;
+
+if (count _buildings == 0) exitWith{[]};
 
 for "_j" from 1 to _nb do {
     _building = _buildings call BIS_fnc_selectRandom;

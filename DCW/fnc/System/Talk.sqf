@@ -53,14 +53,16 @@ _ctrl ctrlCommit 0;
 _text = parseText format ["<t align = 'center' shadow = '2' size = '.8'><t color = '%1'>%2</t></t><br /><t align = 'center' shadow = '1' size = '.63'><t color = '#E0E0E0'>%3</t></t>",_color,name _talker,_say];
 _ctrl ctrlSetStructuredText _text;
 _ctrl ctrlSetFade 0;
-_ctrl ctrlCommit .4;
-sleep .4;
+_talker setRandomLip true;
+_ctrl ctrlCommit .2;
+sleep .3;
 
-sleep (count(_say)/10);
+sleep (count(_say)/7);
+_talker setRandomLip false;
 
 // Hide subtitle
 _ctrl ctrlSetFade 1;
-_ctrl ctrlCommit .5;
+_ctrl ctrlCommit .3;
 ctrlDelete _ctrl;
 MESS_SHOWN = false;
-sleep .5;
+sleep .3;
