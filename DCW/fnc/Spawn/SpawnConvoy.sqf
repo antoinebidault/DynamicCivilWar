@@ -22,9 +22,9 @@ _mkrToAvoid setMarkerShape "ELLIPSE";
 _mkrToAvoid setMarkerAlpha 0;
 _mkrToAvoid setMarkerSize [500,500];
 _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
-_initPos = [_worldCenter, (_worldSize/2)*0.8, (_worldSize/2)*1.2, 5, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
+_initPos = [getPos player,2500,3000, 5, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
 
-_road = [_initPos,_worldSize] call BIS_fnc_nearestRoad;
+_road = [_initPos,1000] call BIS_fnc_nearestRoad;
 _roadPos = getPos _road;
 
 
@@ -40,7 +40,7 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
     _car = [_roadPos, _roadDirection, ENEMY_CONVOY_CAR_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
 
     _car addEventHandler["Killed",{
-        [player,10] spawn fnc_updatescore;
+        [player,30] spawn fnc_updatescore;
     }];
 
     CONVOY pushback _car;
@@ -51,7 +51,7 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
     //Civilian team spawn.
     //If we killed them, it's over.
     for "_xc" from 1 to _nbUnit  do {
-        _unit =[_grp,_initPos] call fnc_spawnEnemy;
+        _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
         _unit moveInCargo _car;
         CONVOY pushback _unit;
     };
@@ -61,14 +61,14 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
         _truck = [_car modelToWorld [0,-(_xc*20),0], _roadDirection, ENEMY_CONVOY_TRUCK_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
         _nbUnit = (count (fullCrew [_truck,"cargo",true]));
         for "_yc" from 1 to _nbUnit  do {
-            _unit =[_grp,_initPos] call fnc_spawnEnemy;
+            _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
             _unit moveInCargo _truck;
             CONVOY pushback _unit;
         };
          CONVOY pushback _truck;
          CONVOY = CONVOY + (crew _truck);
          _truck addEventHandler["Killed",{
-             [player,40] spawn fnc_updatescore;
+             [player,50] spawn fnc_updatescore;
          }];
     };
 

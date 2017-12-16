@@ -12,7 +12,7 @@ removeGoggles _this;
 removeHeadgear _this;
 
 _this addGoggles (["G_Spectacles_Tinted","G_Aviator"] call BIS_fnc_selectRandom);
-_this addHeadgear "LOP_H_ChDKZ_Beret";
+_this addHeadgear "H_Beret_blk";
 
 _this addAction["Interrogate",{
     (_this select 0) RemoveAction (_this select 2);

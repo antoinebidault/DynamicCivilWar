@@ -55,9 +55,8 @@ _ctrl ctrlSetStructuredText _text;
 _ctrl ctrlSetFade 0;
 _talker setRandomLip true;
 _ctrl ctrlCommit .2;
-sleep .3;
 
-sleep (count(_say)/7);
+sleep (count(_say)/12);
 _talker setRandomLip false;
 
 // Hide subtitle
@@ -65,4 +64,3 @@ _ctrl ctrlSetFade 1;
 _ctrl ctrlCommit .3;
 ctrlDelete _ctrl;
 MESS_SHOWN = false;
-sleep .3;

@@ -55,7 +55,7 @@ for "_j" from 1 to _nb do {
     };
                     
     for "_i" from 1 to _nbGuards do {
-        _enemy = [_grp,_posToSpawn] call fnc_spawnEnemy;
+        _enemy = [_grp,_posToSpawn,false] call fnc_spawnEnemy;
         _enemy setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
 
         _units pushBack _enemy;
@@ -67,10 +67,19 @@ for "_j" from 1 to _nb do {
                 _enemy setUnitPos "MIDDLE";
                 _enemy addWeapon "Binocular";
                 _enemy selectWeapon "Binocular";
+
+                //Handler to make him switch back to AK if attacked.
+                 _enemy addEventHandler["FiredNear",{
+                    params["_unit"];
+                    _unit selectWeapon (primaryWeapon _unit);
+                    _unit setUnitPos "AUTO";
+                }];
             }else{
                 _enemy setUnitPos "MIDDLE";
             };
         };
+
+       
     };
 };
 

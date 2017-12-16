@@ -26,6 +26,7 @@ while { alive _unit }do{
         (group _unit) setBehaviour "SAFE";
     }else{
         _unit forceWalk  false;
+        (group _unit) setBehaviour "AWARE";
     };
 
     _dir = random 360;

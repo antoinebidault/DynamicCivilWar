@@ -35,7 +35,7 @@ transportHelo addEventHandler ["handleDamage", {
 		"_hitPoint"		
 	];
 	if (_damage > .2)then{
-		transportHelo setVariable ["mission_aborted",true];
+		[transportHelo] call fnc_AbortMedevac;
 	}
 }];
 
@@ -55,8 +55,8 @@ _unit addEventHandler ["Fired", {
 
 private _startTime = time;
 
-waitUntil {!isNull SmokeShell || time > (_startTime + 40 ) };
-if (time > (_startTime + 40)) exitWith {transportHelo setVariable ["mission_aborted",true];};
+waitUntil {!isNull SmokeShell || time > (_startTime + 50 ) };
+if (time > (_startTime + 50)) exitWith {[transportHelo] call fnc_AbortMedevac;};
 
 sleep 5;
 
@@ -94,7 +94,7 @@ waitUntil{{_x in transportHelo} count units  replacementGroup == 0 && {_x in tra
 
 replacementGroup move position player;
 {_x setUnitPos "MIDDLE"; _x setBehaviour "MIDDLE"; } foreach (units replacementGroup);
-[interventionGroup,_deathReplaced,transportHelo] call fnc_save ;
+[interventionGroup,_deathReplaced,transportHelo] call fnc_save;
 HQ sideChat format["We're starting the %1 injured's evacuations.",count _deathReplaced];
 
 waitUntil{ MEDEVAC_ISABORTED || ({_x in transportHelo} count (units  interventionGroup) == count (units  interventionGroup)) };

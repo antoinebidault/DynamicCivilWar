@@ -10,6 +10,7 @@ params ["_unit"];
 
 _unit setSpeedMode "LIMITED";
 _unit forceWalk  true;
+
 while { alive _unit }do{
 
     _newPos = [getPos player, 1, 250, 3, 0, 20, 0] call BIS_fnc_FindSafePos;

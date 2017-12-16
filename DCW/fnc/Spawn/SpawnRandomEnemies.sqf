@@ -21,8 +21,8 @@ while{true}do {
 			_grp = createGroup ENEMY_SIDE;
 
 			for "_j" from 1 to _numberOfmen do {
-				_unit = [_grp,_pos] call fnc_spawnEnemy;
-				_unit setVariable["DCW_Type","chaser"];
+				_unit = [_grp,_pos,false] call fnc_spawnEnemy;
+				_unit setVariable["DCW_Type",""];
 				_unit setDir random 360;
 				_unitPool pushBack _unit;
 				_unit setBehaviour "SAFE";

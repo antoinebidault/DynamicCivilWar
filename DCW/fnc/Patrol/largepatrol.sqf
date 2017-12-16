@@ -10,6 +10,15 @@ params ["_unit","_marker"];
 
 _unit addWeapon "Binocular";
 
+
+if(isNull(_unit findNearestEnemy _unit))then{
+    _unit forceWalk true;
+    _unit setBehaviour "SAFE";
+}else{
+    _unit forceWalk false;
+    _unit setBehaviour "AWARE";
+};
+
 while { alive _unit }do{
     _rndMarker = ([position _unit] call fnc_findNearestMarker) select 0;
     _rndPos = getMarkerPos _rndMarker;
@@ -17,8 +26,10 @@ while { alive _unit }do{
     _newPos = [_rndPos, 1, _radius, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
     group _unit move _newPos;
     
-    waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 };
-
+    waitUntil {sleep 5;CHASER_TRIGGERED || unitReady _unit || _unit distance _newPos < 2 };
+    if (CHASER_TRIGGERED) then {
+        _unit call fnc_chase;
+    };
     _unit setUnitPos "Middle";
     _unit selectWeapon "Binocular";
     sleep 10 + random 60;

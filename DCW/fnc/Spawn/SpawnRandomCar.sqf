@@ -30,7 +30,7 @@ while{true}do {
 				//If we killed them, it's over.
 				_grp = group _car;
 				for "_xc" from 1 to _nbUnit  do {
-					_unit =[_grp,_pos] call fnc_spawnEnemy;
+					_unit =[_grp,_pos,true] call fnc_spawnEnemy;
 					_unit moveInCargo _car;
 				};
 				
@@ -39,8 +39,6 @@ while{true}do {
 				_car = ([getPos _road, _roadDirection,_unitName, CIV_SIDE] call bis_fnc_spawnvehicle)  select 0;
 
 			};
-
-
 
 			_carPool pushBack _car ;
 			CAR = _car;

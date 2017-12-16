@@ -17,7 +17,7 @@ private _enterable = [];
 		//this both buildings are not enterable but pickedup by BIS_fnc_isBuildingEnterable
 		if (typeof _x == "Land_HouseV2_03" || typeof _x == "Land_Nasypka") exitWith {};
 	
-			_enterable  pushback _x;
+		_enterable  pushback _x;
 
 	};
 } foreach _buildings;

@@ -20,7 +20,7 @@ fnc_findNearestMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\
 fnc_CachePut = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\CachePut.sqf";
 fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\ShowIndicator.sqf"; 
 fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Talk.sqf";
-
+fnc_Undercover = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\BadBuyLoadout.sqf";
 
 //SPAWN
 fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnUnits.sqf";
@@ -145,7 +145,7 @@ CIVIL_HEALED = {
  };
 
 ENEMY_SEARCHED = {
-	[player,round (random 5)] call fnc_updateScore;
+	[player,ceil (random 5)] call fnc_updateScore;
 };
 
 
@@ -192,6 +192,9 @@ private _clusters = [] call fnc_GetClusters;
 	private _radius = _x select 1;
 	private _nbBuildings = _x select 2;
 	private _isLocation = _x select 3;
+	private _nameLocation = _x select 3;
+	private _isMilitary = _x select 5;
+
 
 	{ 
 		if(_pos inArea _x)exitWith{_return = true;};
@@ -205,19 +208,39 @@ private _clusters = [] call fnc_GetClusters;
 		_m = createMarker [format ["mrk%1",random 100000],_pos];
 		_m setMarkerShape "ELLIPSE";
 		_m setMarkerSize [_radius,_radius];
-		_m setMarkerBrush "FDiagonal";
-		_m setMarkerColor "ColorRed";
+
+		if (!_isMilitary) then{
+			_m setMarkerBrush "FDiagonal";
+		};
+		if (_isLocation)then{
+			_m setMarkerColor "ColorRed";
+		}else{
+			_m setMarkerColor "ColorOrange";
+		};
+
 		_m setMarkerAlpha 0;
 		if (SHOW_SECTOR || DEBUG) then{
+			
 			_m setMarkerAlpha .5;
 		};
 
 		//Nb units to spawn per block
 		_popbase = 30 MIN (ceil((_nbBuildings)*(RATIO_POPULATION)  + (round random 1)));
-		_nbCivilian =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
+		_nbEnemies = 0;
+		_nbCivilian = 0;
+		for "_x" from 1 to _popbase  do
+		{
+			_rnd = random 100;
+			if (_rnd < PERCENTAGE_CIVILIAN && !_isMilitary) then{
+				_nbCivilian = _nbCivilian + 1;
+			}else{
+				_nbEnemies = _nbEnemies + 1;
+			}
+		};
+	//	_nbCivilian =  if (_isMilitary)then{0}else{ ceil (_popbase * (PERCENTAGE_CIVILIAN/100)) };
 		_nbFriendlies =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
 		_nbSnipers = if (random 100 > 75) then{ 2 } else{ 0 };
-		_nbEnemies = 1 max (round (_popbase * (PERCENTAGE_ENEMIES/100)));
+	//	_nbEnemies = 1 max ((round (_popbase * (PERCENTAGE_ENEMIES/100)))*(if (_isMilitary) then {2}else{1}));
 		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
 		_nbIeds = (1 + floor(random 7));
 		_nbHostages = [0,1] call BIS_fnc_selectRandom;
@@ -225,14 +248,23 @@ private _clusters = [] call fnc_GetClusters;
 		_nbMortars = if (_nbSnipers >= 1) then{[0,1] call BIS_fnc_selectRandom }else{0};
 		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
 		_nbFriendlies = 0;
-		_points = _nbEnemies * 5;
+		_points = _nbEnemies * 10;
 		_meetingPointPosition =  [_pos, 0, .5*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
 		while {isOnRoad _meetingPointPosition} do{
 			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
 		};
 
+
+		if (DEBUG) then {
+			_marker = createMarker [format["body-%1", random 10000], _pos];
+			_marker setMarkerShape "ICON";
+			_marker setMarkerType "mil_dot";
+			_marker setMarkerColor "ColorOrange";
+			_marker setMarkerText  format["bld:%1/pop:%2/Car:%3",_nbCivilian,_nbEnemies,_nbCars];
+		};
+
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
-		MARKERS pushBack  [_m,_pos,false,false,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation];
+		MARKERS pushBack  [_m,_pos,false,false,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary];
 	};
 	
 } foreach _clusters;
@@ -267,6 +299,7 @@ while {true} do{
 		private _meetingPointPosition =_x select 7;
 		private _points =_x select 8;
 		private _isLocation = _x select 9;
+		private _isMilitary = _x select 10;
 
 		if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE) then{
 		
@@ -282,8 +315,10 @@ while {true} do{
 				_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlies);
 				
 				//IEDs
-				_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_Ieds);
-				
+				if (!_isMilitary)then{
+					_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_Ieds);
+				};
+
 				//Outposts
 				_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
 				
@@ -338,7 +373,7 @@ while {true} do{
 
 		
 	
-		MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation]]; 
+		MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary]]; 
 
 	}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
 
@@ -363,13 +398,16 @@ while {true} do{
 						if (DEBUG) then  {
 							hint "Alarm !";
 						};
+						playMusic (["LeadTrack04a_F","LeadTrack04_F"] call BIS_fnc_selectRandom);
 						CHASER_TRIGGERED = true;
+						player call fnc_DisplayScore;
 						[] spawn {
 							sleep 250;
 							if (DEBUG) then  {
 								hint "Alarm off!";
 							};
 							CHASER_TRIGGERED = false;
+							player call fnc_DisplayScore;
 						};
 					};
 				}

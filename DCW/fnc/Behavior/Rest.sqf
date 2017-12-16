@@ -7,7 +7,7 @@
 
 params["_unit"];
 fnc_ActionRest =  {
-    _this addAction ["Rest", {
+    _this addAction ["Rest (3 hours)", {
         params["_unit","_asker","_action"];
         _unit removeAction _action;
         _newObjs = [getPos _unit,getDir _unit, compo_rest ] call BIS_fnc_ObjectsMapper;
@@ -25,7 +25,7 @@ fnc_ActionRest =  {
         setAccTime 120;
         sleep 25;
         setAccTime 1;
-        skipTime .25;
+        skipTime 3;
         sleep 3;
         [_unit,"Ok, let's go back to work !"] call fnc_Talk;
         _unit action ["sitdown",_unit];

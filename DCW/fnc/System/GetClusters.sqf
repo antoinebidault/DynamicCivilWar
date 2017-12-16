@@ -10,49 +10,70 @@ private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "ma
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
 private _worldNbBlocks = floor(_worldSize/SIZE_BLOCK);
 private _return = false;
+private _isMilitary = false;
 private _clusters = [];
 
+fnc_isMilitary = {
+	params["_buildings"];
+	_isMilitary = false;
+	//Check military houses
+	_nbMilitaryBuilding = {
+		_class = (getText (configfile >> "CfgVehicles" >>  (typeOf _x) >> "vehicleClass")) ;
+		_class == "Structures_Military" || _class == "Structures_Airport" || _class == "Fortifications"
+	} count _buildings;
+	if(_nbMilitaryBuilding > (count _buildings)/3) exitWith {true};
+	false;
+};
+
 fnc_getRadiusLocation = {
-	params ["_locpos", "_countonlyhouses"];
+	params ["_locpos"];
 	_locpos set [2,0];
 	private _houseCount = 0;
 	private _oldHouseCount = 0;
 	private _prevHouseCount = 0;
-	private _rad = 300;
-	private _finalCount = 0;
+	private _rad = 50;
+	private _count = 0;
 	private _houses = []; 
-	for "_radius" from 50 to 500 step 50 do
+	private _totalHouses  = [];
+	for "_radius" from 50 to 350 step 50 do
 	{
 		_houses = []; 
-		_excludedcount = 0;
-		_houses = [_locPos,_radius] call fnc_findBuildings;
-		_allhousecount = (count _houses);
-		_finalCount = _allhousecount - _oldHouseCount;
-		if ((_finalCount < _prevHouseCount) && (_radius > 99)) exitWith { _rad = _radius; _finalCount = _finalCount; };
-		_oldHouseCount = _oldHouseCount +  _finalCount;
-		_prevHouseCount = _finalCount;
+		_houses = nearestObjects [_locPos, ["house"], _radius];
+		//_houses = [_locPos,_radius] call fnc_findBuildings;
+		_count = (count _houses);
+		_totalHouses = _totalHouses + _houses;
+		if (_count == _prevHouseCount) exitWith { _rad = _radius-50; };
+		_prevHouseCount = _count;
+		_rad = _radius;
 	};
-	[_rad, _finalCount];
+	_isMilitary = [_totalHouses] call fnc_isMilitary;
+
+
+	[_rad, _count,_isMilitary];
 };
 
 
 {
 	_pos = getPos _x;
     _res = [getPos _x,true] call fnc_getRadiusLocation;
-	if( _res select 1 > 3)then{
-		_clusters pushback [_pos,_res select 0,_res select 1,true,name _x];
+	if( _res select 1 > 0)then{
+		_clusters pushback [_pos,_res select 0,_res select 1,true,name _x,_res select 2];
 	};
 } forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Strategic","CityCenter"], 25000]; 
+
+
 
 for "_xc" from 0 to _worldNbBlocks do {
 	for "_yc" from 0 to _worldNbBlocks do {
 		_markerPos = [(_xc*SIZE_BLOCK),(_yc*SIZE_BLOCK),0];
 		_buildings = [_markerPos, (SIZE_BLOCK/2)] call fnc_findBuildings;
 		_nbBuildings = count _buildings;
-		if (_nbBuildings > 0)then{
-			private _radius = (SIZE_BLOCK/2) MIN ((count _buildings + 3)*10);
-			private _posCenteredOnBuilding = position (_buildings call BIS_fnc_selectrandom);
 
+		if (_nbBuildings > 0)then{
+			private _posCenteredOnBuilding = position (_buildings select 0);
+			private _res  =[_posCenteredOnBuilding] call fnc_getRadiusLocation;
+			private _radius = _res select 0;
+			
 			_return = false;
 			{ 
 				private _dist = _posCenteredOnBuilding distance (_x select 0);
@@ -61,7 +82,8 @@ for "_xc" from 0 to _worldNbBlocks do {
 
 			if (isNil '_return')then{_return = false;};
 			if (!_return)then {
-				_clusters pushback [_posCenteredOnBuilding,_radius,_nbBuildings,false,""];
+				_isMilitary = _res select 2;
+				_clusters pushback [_posCenteredOnBuilding,_radius,_res select 1,false,"",_isMilitary];
 			};
 
 		};

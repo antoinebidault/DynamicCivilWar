@@ -17,6 +17,10 @@ _this select 0 addEventHandler["FiredNear",
 		if (_distance > 50) exitWith { false };
 		
 		if (_civ distance _gunner > 30 && (random 100) < PERCENTAGE_INSURGENTS)then{
+			
+			//Remove the eventHandler to prevent spamming
+			_civ removeAllEventHandlers "FiredNear";
+
 			[_civ,_gunner] spawn fnc_SpawnAsEnemy;
 		}else{
 			group _unit setspeedmode "FULL";
@@ -68,9 +72,9 @@ _this select 0 addEventHandler["FiredNear",
 				sleep .3;
 				[_unit] call fnc_addCivilianAction;
 				[_unit,2] call fnc_UpdateRep;
-				sleep 100;
-				[_unit] call fnc_handleFiredNear;
 				_unit stop false;
+				sleep 10;
+				[_unit] call fnc_handleFiredNear;
 			},nil,1.5,true,true,"","true",2,false,""];
 			if (isPlayer _gunner )then {
 				[_unit,-5] call fnc_UpdateRep;

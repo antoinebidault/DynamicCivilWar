@@ -33,4 +33,3 @@ titleCut ["Loading Mission...", "BLACK FADED", 999];
 //Mission loading
 //nul = [] execVM "functions\playlist.sqf"; //Init the music playlist
 nul = [] execVM "DCW\init.sqf"; //Init the insurgents
-nul = [player] execVM "medevac\init.sqf"; //Init the medevac system

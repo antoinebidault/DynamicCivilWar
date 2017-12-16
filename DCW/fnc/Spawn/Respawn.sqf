@@ -13,7 +13,8 @@ for "_i" from 0 to NUMBER_RESPAWN do
 	_loadout = getUnitLoadout player;
 	player setUnitTrait ["explosiveSpecialist",true];
 	[player] execVM "DCW\fnc\Behavior\Rest.sqf";
-	sleep 10;
+	[player] execVM "medevac\init.sqf";
+	sleep 3;
 	nul = [player] execVM "supportui\init.sqf";
 
 	waitUntil
@@ -33,15 +34,26 @@ for "_i" from 0 to NUMBER_RESPAWN do
 	{ if(alive _x) then{_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)}; }foreach _units;
 	(typeof player) createUnit [RESPAWN_POSITION, group player, "newUnit = this; "];
 	sleep 1;
+	//Disable chasing
+	CHASER_TRIGGERED = false; 
+
+	//Set new pos and loadout
 	newUnit setPos RESPAWN_POSITION;
 	newUnit setUnitLoadout _loadout;
 	newUnit setVariable["DCW_SCORE",_score];
+
+	//Switching units
 	addSwitchableUnit newUnit;
 	selectPlayer newUnit;
+
+	//Joint group storeed in var
 	_units joinSilent newUnit;
 	group(newUnit) selectLeader newUnit;
+
+	//Black screen with timer...
 	sleep 1;
 	cutText ["You are dead","BLACK FADED", 999];
+	
 	newUnit switchMove "Acts_UnconsciousStandUp_part1";
 	BIS_DeathBlur ppEffectAdjust [0.0];
 	BIS_DeathBlur ppEffectCommit 0;

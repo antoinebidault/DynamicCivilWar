@@ -48,7 +48,7 @@ for "_j" from 1 to _nb do {
         if (count _posBuildings == 0) exitWith{_units};
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
          _posBuildings = _posBuildings -[_posToSpawn];
-        _enemy = [_grp,_posToSpawn] call fnc_SpawnEnemy;
+        _enemy = [_grp,_posToSpawn,false] call fnc_SpawnEnemy;
         _units pushBack _enemy;
     };
 

@@ -94,6 +94,13 @@ ENEMY_COMMANDER addEventHandler ["Killed",{
 //Civilian team spawn.
 //If we killed them, it's over.
 
+
+for "_yc" from 1 to 4  do {
+    _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
+    ESCORT pushback _unit;
+};
+
+
 for "_xc" from 1 to 4  do {
     _unit = _grp createUnit [CIV_LIST_UNITS call BIS_fnc_selectRandom, _initPos,[],ENEMY_SKILLS,"NONE"];
     _unit addEventHandler ["Killed",{
@@ -107,11 +114,6 @@ for "_xc" from 1 to 4  do {
         };
         
     }];
-    ESCORT pushback _unit;
-};
-
-for "_yc" from 1 to 4  do {
-    _unit =[_grp,_initPos] call fnc_spawnEnemy;
     ESCORT pushback _unit;
 };
 

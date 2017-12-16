@@ -24,7 +24,6 @@ private _posSelects = _posResult select 0;
 private _enterable = _posResult select 1;
 private _cancel = true;
 
-if (_population < 1) exitWith { _units };
 
 if (_nbSnipers > 0)then{
   
@@ -79,72 +78,63 @@ if (_nbSnipers > 0)then{
 };
 
 
-//Ajout des enemis 
+//Enemies
 for "_xc" from 1 to _nbenemies  do {
 
-    _isPatrol = false;
-    _cancel = false;
-    _nbUnit = 1;
-    _posSelected = [];
-
-    //if (random 100 > 75) then{_nbUnit = ((PATROL_SIZE select 0) + floor random (PATROL_SIZE select 1)); _isPatrol = true; };
-
-    if (_isPatrol)then{
-      _posSelected = [_pos,1, _radius, 5, 0, 20, 0] call BIS_fnc_FindSafePos;
-    }else{
-      if (count _posSelects > 0)then{
-         _posSelected = _posSelects call BIS_fnc_selectRandom;
+    private _posSelected = [];
+    private _nbUnit = 1;
+    
+    if (count _posSelects > 0)then{
+        _posSelected = _posSelects call BIS_fnc_selectRandom;
         _posSelects = _posSelects - [_posSelected];
-      }else{
-         _cancel = true;
-      }
+    }else{
+        _posSelected = [_pos,1, _radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
     };
 
-    if (!_cancel) then {
-      _grp = createGroup ENEMY_SIDE;
-      for "_xc" from 1 to _nbUnit do {
-        _enemy = [_grp,_posSelected] call fnc_spawnEnemy;
-        _enemy setVariable["DCW_Type","enemy"];
-        _enemy setDir random 360;
-        _units pushBack _enemy;
-      };
-
-      //Si c'est une patrouille
-      if (_isPatrol)then{
-        [leader _grp] spawn fnc_largePatrol;
-      }else{
-        [leader _grp,_radius,_meetingPointPosition] spawn fnc_patrol;
-      };
+    _grp = createGroup ENEMY_SIDE;
+    for "_xc" from 1 to _nbUnit do {
+      _enemy = [_grp,_posSelected,false] call fnc_spawnEnemy;
+      _enemy setVariable["DCW_Type","enemy"];
+      _enemy setDir random 360;
+      _units pushBack _enemy;
     };
+
+    [leader _grp,_radius,_meetingPointPosition] spawn fnc_patrol;
 };
 
 
-//Ajout des civils avec leur chef si c'est un gros compound
+//Civilians
 _chief = objNull;
 for "_xc" from 1 to _population do {
-  if (count _posSelects > 0)then{
-    _posSelected = _posSelects call BIS_fnc_selectRandom;
-    _posSelects = _posSelects - [_posSelected];
-    _unitName = CIV_LIST_UNITS call BIS_fnc_selectRandom;
-    _grp = createGroup CIV_SIDE;
-  
-    if (_xc == 1 && _population >= 2) then {
-		  _civ = [_grp,_posSelected,_chief,false] call fnc_SpawnCivil;
-      _civ call fnc_localChief;
-      _units pushBack _civ;
-      _chief = _civ;
+    private _posSelected = [];
+     if (count _posSelects > 0)then{
+      _posSelected = _posSelects call BIS_fnc_selectRandom;
+      _posSelects = _posSelects - [_posSelected];
     }else{
-      if (_xc == 2 && _population > 10)then{
+        _posSelected = [_pos,1, _radius, 1.5, 0, 20, 0] call BIS_fnc_FindSafePos;
+    };
+
+    if (count _posSelected > 0) then {
+      _unitName = CIV_LIST_UNITS call BIS_fnc_selectRandom;
+      _grp = createGroup CIV_SIDE;
+    
+      if (_xc == 1 && _population >= 4) then {
         _civ = [_grp,_posSelected,_chief,false] call fnc_SpawnCivil;
-        _civ call fnc_Medic;
+        _civ call fnc_localChief;
         _units pushBack _civ;
+        _chief = _civ;
       }else{
-        _civ = [_grp,_posSelected,_chief,true] call fnc_SpawnCivil;
-        [_civ,_radius,_meetingPointPosition] spawn fnc_patrol;
-        _units pushBack _civ;
+        if (_xc == 2 && _population > 10)then{
+          _civ = [_grp,_posSelected,_chief,false,"C_Marshal_F"] call fnc_SpawnCivil;
+          _civ call fnc_Medic;
+          _units pushBack _civ;
+        }else{
+          _civ = [_grp,_posSelected,_chief,true] call fnc_SpawnCivil;
+          [_civ,_radius,_meetingPointPosition] spawn fnc_patrol;
+          _units pushBack _civ;
+        };
       };
     };
-  };
 };
 
 _units;

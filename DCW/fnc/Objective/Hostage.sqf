@@ -21,6 +21,7 @@ private	_buildings = [_pos, _radius] call fnc_findBuildings;
 
 
 for "_j" from 1 to _nb do {
+    if (count _buildings == 0)exitWith {_units;};
     _building = _buildings call BIS_fnc_selectRandom;
     _buildings = _buildings - [_building];
     _posBuildings = [_building] call BIS_fnc_buildingPositions;
@@ -90,7 +91,7 @@ for "_j" from 1 to _nb do {
         if (count _posBuildings == 0) exitWith{_units};
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
          _posBuildings = _posBuildings -[_posToSpawn];
-        _enemy = [_grp,_posToSpawn] call fnc_SpawnEnemy;
+        _enemy = [_grp,_posToSpawn,false] call fnc_SpawnEnemy;
 
         _units pushBack _enemy;
     };

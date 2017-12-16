@@ -6,9 +6,9 @@
  */
 
 
-private ["_leader","_marker","_lastKnownPosition","_flrObj"];
-_leader = _this;
-_marker = createMarker [format["sold%1",random 13100], position player];
+private ["_lastKnownPosition","_flrObj"];
+private _leader = _this;
+private _marker = createMarker [format["sold%1",random 13100], position player];
 _marker setMarkerShape "ELLIPSE";
 _marker setMarkerSize [6,6];
 _marker setMarkerColor "ColorBlack";

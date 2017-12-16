@@ -24,7 +24,9 @@
                  {
                     _unit = (_this select 0);
                     [_unit,(_this select 1)] call ENEMY_SEARCHED;
-                    [_unit, _this select 1,25] call fnc_GetIntel;
+                    
+                    _resIntel = [_unit, _this select 1,25] call fnc_GetIntel;
+                    if(_resIntel select 0) then {[_this select 0, "I found some informations !"] spawn fnc_talk;};
                 },{},[],1,nil,true,false] call BIS_fnc_holdActionAdd;
 
                 [_unit,_killer] call ENEMY_KILLED;

@@ -12,7 +12,10 @@ addActionHandcuff =  {
         _man  = (_this select 0);
         _man removeAllEventHandlers "FiredNear";
         _man  setVariable["civ_affraid",false];
+
+        sleep .2;
         _man switchMove "";
+        sleep .2;
         // (_this select 1)  action ["WeaponOnBack",  _this select 1];
         (_this select 1) playActionNow "PutDown";
         _man SetBehaviour "CARELESS";
@@ -70,7 +73,7 @@ addActionLookInventory = {
         private _human = (_this select 1);
         if (_unit getVariable["DCW_Suspect",false])then{
             for "_i" from 1 to 3 do {_unit addItemToUniform "1Rnd_HE_Grenade_shell";};
-            [_human,"Holy shit ! This man is carrying material for IED purposes !"];
+            [_human,"Holy shit ! This man is carrying material for IED purposes !"] call fnc_talk;
             [_unit,1] call fnc_updateRep;   
             [_unit,30] call fnc_updateScore;   
             RemoveAllActions _unit;
@@ -304,7 +307,7 @@ addActionRally = {
    _this addAction["Try to rally (30 minutes/30 points)",{
        params["_unit","_talker","_action"];
        
-        if (!([_talker,-30] call fnc_afford)) exitWith {[_unit,"You need more money !"] call fnc_talk;false;};
+        if (!([_talker,30] call fnc_afford)) exitWith {[_unit,"You need more money !"] call fnc_talk;false;};
 
         _unit removeAction _action;
         showCinemaBorder true;

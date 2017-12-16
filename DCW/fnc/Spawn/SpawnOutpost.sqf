@@ -16,7 +16,7 @@ _radius = ((getMarkerSize _marker) select 0);
 
  for "_xc" from 1 to _nb do {
      
-    _nicePos = [_pos, _radius, (_radius + 100), 20, 0,10, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+    _nicePos = [_pos, _radius, (_radius + 100), .5, 0,10, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
     if (isNil "_nicePos")exitWith{[]};
     if (isOnRoad _nicePos)exitWith{[]};
 
@@ -31,7 +31,7 @@ _radius = ((getMarkerSize _marker) select 0);
     _nbUnit = ceil (random 3);
     for "_xc" from 1 to _nbUnit do {
         _grp = createGroup ENEMY_SIDE;
-        _enemy = [_grp,_nicePos] call fnc_spawnEnemy;
+        _enemy = [_grp,_nicePos,false] call fnc_spawnEnemy;
         _enemy setDir random 360;
 
         //Add torch to soldiers
