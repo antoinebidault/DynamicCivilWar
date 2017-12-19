@@ -27,6 +27,8 @@ if (_side == CIVILIAN) then {
 	};
 };
 
+_talker setVariable["DCW_speak",true];
+
 // Create display and control
 disableSerialization;
 titleRsc ["RscDynamicText", "PLAIN"];
@@ -64,3 +66,5 @@ _ctrl ctrlSetFade 1;
 _ctrl ctrlCommit .3;
 ctrlDelete _ctrl;
 MESS_SHOWN = false;
+
+_talker setVariable["DCW_speak",false];

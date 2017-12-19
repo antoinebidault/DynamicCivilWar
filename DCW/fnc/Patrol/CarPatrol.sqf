@@ -20,5 +20,5 @@ while { alive _unit }do{
     _unit move _newPos;
     _timer = time;
     waitUntil {unitReady _unit || _unit distance _newPos < 2 || time > _timer + 150};
-    sleep 20 + random 25;
+    sleep 5 + random 25;
 };

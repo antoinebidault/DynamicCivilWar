@@ -21,6 +21,7 @@ private	_buildings = [_pos, _radius] call fnc_findBuildings;
 
 
 for "_j" from 1 to _nb do {
+    
     if (count _buildings == 0)exitWith {_units;};
     _building = _buildings call BIS_fnc_selectRandom;
     _buildings = _buildings - [_building];
@@ -30,7 +31,7 @@ for "_j" from 1 to _nb do {
     _posBuildings = _posBuildings -[_posToSpawn];
     _grp = createGroup CIV_SIDE;
     _unitName = CIV_LIST_UNITS call BIS_fnc_selectRandom;
-    _hostage = _grp  createUnit [_unitName, _posToSpawn,[],0,"NONE"];
+    _hostage = _grp  createUnit [_unitName, _posToSpawn,[],0,"CAN_COLLIDE"];
     _hostage setCaptive true;
 	removeAllWeapons _hostage;
 	removeAllAssignedItems _hostage;
@@ -92,7 +93,6 @@ for "_j" from 1 to _nb do {
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
          _posBuildings = _posBuildings -[_posToSpawn];
         _enemy = [_grp,_posToSpawn,false] call fnc_SpawnEnemy;
-
         _units pushBack _enemy;
     };
 

@@ -21,7 +21,7 @@ _mkrToAvoid setMarkerAlpha 0;
 _mkrToAvoid setMarkerSize [150,150];
 _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
-_posToSpawn = [_pos, 350 max (1.5*_radius) , 500 max (3*_radius), 3, 0, 20, 0,_tempList] call BIS_fnc_FindSafePos;
+_posToSpawn = [_pos, 350 max (1.5*_radius) , 500 max (3*_radius), 3, 0, 2, 0,_tempList] call BIS_fnc_FindSafePos;
 
 for "_j" from 1 to _nb do {
     _mortar = ENEMY_MORTAR_CLASS createVehicle _posToSpawn ; 

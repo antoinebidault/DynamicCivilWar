@@ -20,7 +20,8 @@ fnc_findNearestMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\
 fnc_CachePut = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\CachePut.sqf";
 fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\ShowIndicator.sqf"; 
 fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Talk.sqf";
-fnc_Undercover = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\BadBuyLoadout.sqf";
+fnc_GetVisibility = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetVisibility.sqf";
+fnc_Undercover = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Undercover.sqf";
 
 //SPAWN
 fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnUnits.sqf";
@@ -73,6 +74,7 @@ fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Ba
 fnc_HandleFiredNear = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleFiredNear.sqf";
 fnc_HandleDamaged = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleDamaged.sqf";
 fnc_handlekill = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleKill.sqf";
+fnc_handleAttacked = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleAttacked.sqf";
 
 //composition
 compo_camp1 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp1.sqf");
@@ -93,6 +95,7 @@ MARKERS = [];
 SHEEP_POOL = [];
 UNITS_CHASERS = [];
 CHASER_TRIGGERED = false;
+CHASER_VIEWED = false;
 MESS_SHOWN = false;
 LAST_FLARE_TIME = time;
 REFRESH_TIME = 10;
@@ -212,16 +215,15 @@ private _clusters = [] call fnc_GetClusters;
 		if (!_isMilitary) then{
 			_m setMarkerBrush "FDiagonal";
 		};
-		if (_isLocation)then{
-			_m setMarkerColor "ColorRed";
-		}else{
-			_m setMarkerColor "ColorOrange";
+		if (_isLocation && !_isMilitary) then{
+			_m setMarkerBrush "BDiagonal";
 		};
 
-		_m setMarkerAlpha 0;
+		_m setMarkerColor "ColorRed";
 		if (SHOW_SECTOR || DEBUG) then{
-			
 			_m setMarkerAlpha .5;
+		}else{
+			_m setMarkerAlpha 0;
 		};
 
 		//Nb units to spawn per block
@@ -249,9 +251,9 @@ private _clusters = [] call fnc_GetClusters;
 		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
 		_nbFriendlies = 0;
 		_points = _nbEnemies * 10;
-		_meetingPointPosition =  [_pos, 0, .5*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
+		_meetingPointPosition =  [_pos, 0, .5*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
 		while {isOnRoad _meetingPointPosition} do{
-			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
+			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
 		};
 
 
@@ -259,7 +261,8 @@ private _clusters = [] call fnc_GetClusters;
 			_marker = createMarker [format["body-%1", random 10000], _pos];
 			_marker setMarkerShape "ICON";
 			_marker setMarkerType "mil_dot";
-			_marker setMarkerColor "ColorOrange";
+			_marker setMarkerAlpha 0.3;
+			_marker setMarkerColor "ColorRed";
 			_marker setMarkerText  format["bld:%1/pop:%2/Car:%3",_nbCivilian,_nbEnemies,_nbCars];
 		};
 
@@ -387,30 +390,32 @@ while {true} do{
 			};
 
 			//Detection
-			if (!CHASER_TRIGGERED && side _x == ENEMY_SIDE && _x knowsAbout player > .2 ) then{
-				[_x] spawn {
-					params["_unit"];
-					if (DEBUG) then  {
-						//hint format["You've been watched by %1",name _unit];
-					};
-					sleep 10;
-					if (alive _unit && !CHASER_TRIGGERED && _unit knowsAbout player > .2)then{
-						if (DEBUG) then  {
-							hint "Alarm !";
-						};
-						playMusic (["LeadTrack04a_F","LeadTrack04_F"] call BIS_fnc_selectRandom);
-						CHASER_TRIGGERED = true;
+			if (!CHASER_TRIGGERED && !CHASER_VIEWED && !(player getVariable["DCW_undercover",false]) && side _x == ENEMY_SIDE && _x knowsAbout player > 1) then{
+				
+					[_x] spawn {
+						params["_unit"];
+						CHASER_VIEWED = true;
+						sleep (10 + random 5);
+						CHASER_VIEWED = false;
 						player call fnc_DisplayScore;
-						[] spawn {
-							sleep 250;
+						if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,player] call fnc_GetVisibility > 20 || _unit knowsAbout player > 2))then{
 							if (DEBUG) then  {
-								hint "Alarm off!";
+								hint "Alarm !";
 							};
-							CHASER_TRIGGERED = false;
+							playMusic (["LeadTrack04a_F","LeadTrack04_F"] call BIS_fnc_selectRandom);
+							CHASER_TRIGGERED = true;
 							player call fnc_DisplayScore;
+							[] spawn {
+								sleep 250;
+								if (DEBUG) then  {
+									hint "Alarm off!";
+								};
+								sleep 200;
+								CHASER_TRIGGERED = false;
+								player call fnc_DisplayScore;
+							};
 						};
 					};
-				}
 			};
 
 			//Calcul du score
@@ -435,8 +440,7 @@ while {true} do{
 			};
 
 
-
-		} foreach UNITS_SPAWNED ;
+		} foreach UNITS_SPAWNED;
 		
 		if (_civilReputationNb > 0) then  {
 			_tmp = round(_civilReputationSum/_civilReputationNb);

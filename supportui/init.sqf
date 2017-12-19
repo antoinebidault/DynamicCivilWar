@@ -40,12 +40,12 @@ SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",getPosWorld _unit
 	[_unit, SUPPORT_REQUESTER, _supportProvider] call BIS_fnc_addSupportLink;
 
 }forEach [
-	["Artillery",["RHS_M119_WD"]],
+	["Artillery",["rhs_D30_msv"]],
 	["CAS_Heli",[]],
-	["CAS_Bombing",["RHS_A10"]],
-	["UAV",["B_UAV_02_dynamicLoadout_F"]],
-	["Drop",["RHS_C130J"]],
-	["Transport",["RHS_UH1Y_d"]]
+	["CAS_Bombing",["RHS_Su25SM_vvsc"]],
+	["UAV",["rhs_pchela1t_vvsc"]],
+	["Drop",["RHS_TU95MS_vvs_old"]],
+	["Transport",["RHS_Mi8mt_vdv"]]
 ];
 
 

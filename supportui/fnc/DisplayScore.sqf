@@ -9,6 +9,8 @@
 private _points = _this getVariable["DCW_SCORE",0];
 private _colorChaser = "";
 private _labelChaser = "";
+private _statusUnd = "";
+private _colorUnd = "";
 
 if (CHASER_TRIGGERED) then{
 	_colorChaser = "#e46b6b";
@@ -18,9 +20,20 @@ if (CHASER_TRIGGERED) then{
 	_labelChaser = "Standby";
 };
 
+if (_this getVariable["DCW_undercover",false]) then{
+	_statusUnd = "hidden";
+	_colorUnd = "#2f9581";
+	if (_this getVariable["DCW_watched",false]) then{
+		_statusUnd = "watched";
+		_colorUnd = "#e46b6b";
+	};
+}else{
+	_statusUnd = "broken";
+	_colorUnd = "#e46b6b";
+};
 
 
 ("RscStatusBar" call BIS_fnc_rscLayer) cutRsc ["RscStatusBar","PLAIN"];	
 	disableSerialization;
 	((uiNamespace getVariable "RscStatusBar")displayCtrl 55554) ctrlSetStructuredText
-parseText format ["<t shadow='1' shadowColor='#000000' color='#FFFFFF'>Score : %1 points | Reinforcements : <t color='%2'>%3</t></t>",_points,_colorChaser,_labelChaser];
+parseText format ["<t shadow='1' shadowColor='#000000' color='#FFFFFF'>Score : %1 points | Lives : %2 | Reinforcements : <t color='%3'>%4</t> | Undercover : <t color='%5'>%6</t></t>",_points,NUMBER_RESPAWN,_colorChaser,_labelChaser,_colorUnd,_statusUnd];

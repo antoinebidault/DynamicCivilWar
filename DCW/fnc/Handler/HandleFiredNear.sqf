@@ -14,7 +14,6 @@ _this select 0 addEventHandler["FiredNear",
 		_civ=_this select 0;	
 		_distance = _this select 2;	
 		_gunner = _this select 7;	
-		if (_distance > 50) exitWith { false };
 		
 		if (_civ distance _gunner > 30 && (random 100) < PERCENTAGE_INSURGENTS)then{
 			
