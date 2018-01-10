@@ -14,8 +14,6 @@ _roadRadius = 40;
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 _worldCenter = [_worldSize/2,_worldSize/2,0];
 
-[HQ,"There is an enemy convoy moving not far from your position. You can destroy them to earn some points."] call fnc_talk;
-
 
 private _mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
 _mkrToAvoid setMarkerShape "ELLIPSE";
@@ -34,6 +32,7 @@ CONVOY = [];
 _escort = [];
 
 if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
+    [HQ,"There is an enemy convoy moving not far from your position. You can destroy them to earn some points."] call fnc_talk;
     _roadConnectedTo = roadsConnectedTo _road;
     _connectedRoad = _roadConnectedTo select 0;
     _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
@@ -79,14 +78,22 @@ if (isOnRoad(_roadPos) && _roadPos distance player > 300 )then{
 }else{
  hint "Error ! Not enough road to spawn objective... Restarting...";
  sleep 10;
- [] call fnc_SpawnMainObjective;
+ [30] call fnc_SpawnConvoy;
 };
 
 
-_wpt = createMarker ["initMarker",[0,0,0]];
+deleteMarker "convoyStartMarker";
+_wpt = createMarker ["convoyStartMarker",_roadPos];
 _wpt setMarkerShape "ICON";
 _wpt setMarkerColor "ColorRed";
-_wpt setMarkerType "hd_pickup";
+_wpt setMarkerType "mil_start";
+_wpt setMarkerText "Convoy start";
+
+deleteMarker "convoyEndMarker";
+_wpt = createMarker ["convoyEndMarker",[0,0,0]];
+_wpt setMarkerShape "ICON";
+_wpt setMarkerColor "ColorRed";
+_wpt setMarkerType "hd_ambush";
 _wpt setMarkerText "Convoy destination";
 
 /*

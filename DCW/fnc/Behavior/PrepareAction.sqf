@@ -16,29 +16,29 @@ addActionHandcuff =  {
         sleep .2;
         _man switchMove "";
         sleep .2;
-        // (_this select 1)  action ["WeaponOnBack",  _this select 1];
         (_this select 1) playActionNow "PutDown";
         _man SetBehaviour "CARELESS";
         _man setCaptive true;
         [_man,-4] call fnc_updateRep;
 
-        _rifle = primaryWeapon _man; //get the officers primary weapon
+        //Handle weapon states
+        _rifle = primaryWeapon _man; 
         if (_rifle != "") then {
-        _man action ["dropWeapon", _man, _rifle]; //drop weapon animation (doesn't actually remove the weapon)
-        waitUntil {animationState _man == "amovpercmstpsraswrfldnon_ainvpercmstpsraswrfldnon_putdown" || time > 3}; //waituntil drop weapon animation is complete
-        removeAllWeapons _man; //remove all the officers weapons
+            _man action ["dropWeapon", _man, _rifle];
+            waitUntil {animationState _man == "amovpercmstpsraswrfldnon_ainvpercmstpsraswrfldnon_putdown" || time > 3}; 
+            removeAllWeapons _man; 
         };
 
-        _pistol = handgunWeapon _man; //get the officers primary weapon
+        _pistol = handgunWeapon _man; 
         if (_pistol != "") then {
-            _man action ["dropWeapon", _man, _pistol]; //drop weapon animation (doesn't actually remove the weapon)
-            waitUntil {animationState _man == "amovpercmstpsraswrfldnon_ainvpercmstpsraswrfldnon_putdown" || time > 3}; //waituntil drop weapon animation is complete
-            removeAllWeapons _man; //remove all the officers weapons
+            _man action ["dropWeapon", _man, _pistol];
+            waitUntil {animationState _man == "amovpercmstpsraswrfldnon_ainvpercmstpsraswrfldnon_putdown" || time > 3}; 
+            removeAllWeapons _man; 
         };
 
-        _man action ["Surrender", _man]; //play the surrender animation
-        _man disableai "ANIM"; //disable animation so he doesnt move
-        _man disableAI "MOVE"; //disable move so he doesnt run away
+        _man action ["Surrender", _man]; 
+        _man disableai "ANIM"; 
+        _man disableAI "MOVE"; 
 
         removeAllActions _man;
 
@@ -67,6 +67,8 @@ addActionLiberate =  {
         [_man,2] call fnc_updateRep;
     },nil,1.5,true,true,"","true",3,false,""];
 };
+
+
 addActionLookInventory = {
     _this addAction["Search in gear",{
         private _unit = (_this select 0);
@@ -188,7 +190,7 @@ AddActionFeeling = {
                 _message = "Go away, before I call all my friends to kick your ass!";
             }else{
                 if (CIVIL_REPUTATION  < 20) then {
-                _message = "You crossed a line... I would never help you ! ";
+                _message = "You crossed a line... I would never help you guys ! ";
                 }else{
                     if (CIVIL_REPUTATION  < 30) then {
                     _message = "It's getting really bad... ";
@@ -236,8 +238,6 @@ addActionGetIntel = {
 
         //Suspect
         _isSuspect=_unit getVariable ["DCW_Suspect",false];
-
-      
 
          if (_unit getVariable["DCW_Friendliness",50] < 35 ) exitWith {
             [_unit,-3] call fnc_updateRep;
@@ -304,10 +304,10 @@ addActionGetIntel = {
 
 addActionRally = {
     //Try to make him a friendly
-   _this addAction["Try to rally (30 minutes/30 points)",{
+   _this addAction["Try to rally (30 minutes/5 points)",{
        params["_unit","_talker","_action"];
        
-        if (!([_talker,30] call fnc_afford)) exitWith {[_unit,"You need more money !"] call fnc_talk;false;};
+        if (!([_talker,5] call fnc_afford)) exitWith {[_unit,"You need more money !"] call fnc_talk;false;};
 
         _unit removeAction _action;
         showCinemaBorder true;

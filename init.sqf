@@ -9,9 +9,10 @@
  * You are free to edit or share it
  */
 
-playMusic "ASOTheme";
 
 /*
+nul=execVM "intro.sqf";
+playMusic "ASOTheme";
 titleCut ["Loading Mission...", "BLACK FADED", 999];
 [] Spawn {
     _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;

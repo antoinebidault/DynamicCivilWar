@@ -9,7 +9,7 @@ params["_unit"];
 fnc_ActionRest =  {
     _this addAction ["Rest (3 hours)", {
         params["_unit","_asker","_action"];
-        if(!isNull(_unit findNearestEnemy _unit))exitWith {[_unit,"Impossible untill there is enemies around"] call fnc_talk;};
+        if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around"] call fnc_talk;};
         _unit removeAction _action;
         _newObjs = [getPos _unit,getDir _unit, compo_rest ] call BIS_fnc_ObjectsMapper;
         _camPos = _unit modelToWorld [.3,2.2,2];

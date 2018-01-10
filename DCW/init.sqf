@@ -169,7 +169,7 @@ MARKER_WHITE_LIST pushBack _mp;
 
 
 [] call fnc_PrepareAction;
-[getPos player] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
+[getMarkerPos "marker_base"] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
 [] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
 [] execVM "DCW\fnc\spawn\SpawnRandomEnemies.sqf"; //Enemy patrols
 [] execVM "DCW\fnc\spawn\SpawnRandomCar.sqf"; //Civil & enemy cars
@@ -277,7 +277,7 @@ private ["_mkr","_cacheResult","_ieds"];
 private _timerChaser = time - 360;
 
 while {true} do{
-	
+	_t = time;
 	_playerPos = position player;
 	_isInFlyingVehicle = false;
 	_nbUnitSpawned = count UNITS_SPAWNED;
@@ -290,7 +290,8 @@ while {true} do{
 	_yC = floor((_playerPos select 1)/SIZE_BLOCK);
 	_o = 4;
 
-
+	
+	
 	{
 		private _marker =_x select 0;
 		private _pos =_x select 1;
@@ -310,30 +311,22 @@ while {true} do{
 
 				//Véhicles spawn
 				_units = _units +  ([_pos,_radius,(_peopleToSpawn select 3)] call fnc_SpawnCars);
-
 				//Units
 				_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition] call fnc_SpawnUnits);
-
 				//Units
 				_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlies);
-				
 				//IEDs
 				if (!_isMilitary)then{
 					_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_Ieds);
 				};
-
 				//Outposts
 				_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
-				
 				//Cache
 				_units = _units + ([_pos,_radius,(_peopleToSpawn select 5)] call fnc_cache);
-
 				//Hostages
 				_units = _units + ([_pos,_radius,(_peopleToSpawn select 6)] call fnc_hostage);
-
 				//Meeting points
 				_units = _units + ([_meetingPointPosition] call fnc_SpawnMeetingPoint);
-				
 				//Mortars
 				_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
 
@@ -456,6 +449,6 @@ while {true} do{
 		_timerChaser = time;
 		UNITS_SPAWNED = UNITS_SPAWNED + ([] call fnc_SpawnChaser);
 	};
-
+	hint str (time-_t);
 	sleep REFRESH_TIME;
 };

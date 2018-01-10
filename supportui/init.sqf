@@ -20,6 +20,7 @@ _logicGroup = createGroup _center;
 //Spawn a SupportRequestor module 
 START_SCORE = 150;
 SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",getPosWorld _unit, [], 0, "FORM"]; 
+DRONE_CLASS="rhs_pchela1t_vvsc";
 
 {
 	//[SUPPORT_REQUESTER, _x, 0] call BIS_fnc_limitSupport;
@@ -43,7 +44,7 @@ SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",getPosWorld _unit
 	["Artillery",["rhs_D30_msv"]],
 	["CAS_Heli",[]],
 	["CAS_Bombing",["RHS_Su25SM_vvsc"]],
-	["UAV",["rhs_pchela1t_vvsc"]],
+	["UAV",[DRONE_CLASS]],
 	["Drop",["RHS_TU95MS_vvs_old"]],
 	["Transport",["RHS_Mi8mt_vdv"]]
 ];

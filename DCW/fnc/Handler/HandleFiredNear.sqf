@@ -3,85 +3,83 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License : GNU (GPL)
+ * Catch firednear event => Make up
+ * Thanks to phronk : https://forums.bistudio.com/profile/785811-phronk/
  */
 
 
-
-
-
 _this select 0 addEventHandler["FiredNear",
-	{
-		_civ=_this select 0;	
-		_distance = _this select 2;	
-		_gunner = _this select 7;	
+{
+	_civ=_this select 0;	
+	_distance = _this select 2;	
+	_gunner = _this select 7;	
+	
+	if (_civ distance _gunner > 30 && (random 100) < PERCENTAGE_INSURGENTS)then{
 		
-		if (_civ distance _gunner > 30 && (random 100) < PERCENTAGE_INSURGENTS)then{
-			
-			//Remove the eventHandler to prevent spamming
-			_civ removeAllEventHandlers "FiredNear";
+		//Remove the eventHandler to prevent spamming
+		_civ removeAllEventHandlers "FiredNear";
 
-			[_civ,_gunner] spawn fnc_SpawnAsEnemy;
-		}else{
-			group _unit setspeedmode "FULL";
-			_unit forceWalk false;
-			removeAllActions _civ;
-			switch(round(random 2))do{
-				case 0:{_civ switchMove "ApanPercMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
-				case 1:{_civ playMoveNow "ApanPknlMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
-				case 2:{_civ playMoveNow "ApanPpneMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
-				default{_civ playMoveNow "ApanPknlMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
-			};		
+		[_civ,_gunner] spawn fnc_SpawnAsEnemy;
+	}else{
+		group _civ setspeedmode "FULL";
+		_civ forceWalk false;
+		removeAllActions _civ;
+		switch(round(random 2))do{
+			case 0:{_civ switchMove "ApanPercMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
+			case 1:{_civ playMoveNow "ApanPknlMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
+			case 2:{_civ playMoveNow "ApanPpneMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
+			default{_civ playMoveNow "ApanPknlMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
+		};		
 
-			//nearestObjects[ PositionOrTarget, ["List","Of","Classnames","To","Look","For"], MaxDistanceToSearchAroundTarget ];
-			_nH=nearestObjects [_civ, ["house"], 100];		
+		_nH=nearestObjects [_civ, ["house"], 100];		
 
-			//Pick an object found in the above nearestObjects array		
-			_H=selectRandom _nH;
+		//Pick an object found in the above nearestObjects array		
+		_H=selectRandom _nH;
 
-			//Finds list of all available building positions in the selected building		
-			_HP=_H buildingPos -1;
+		//Finds list of all available building positions in the selected building		
+		_HP=_H buildingPos -1;
 
-			//Picks a building position from the list of building positions		
-			_HP=selectRandom _HP;
+		//Picks a building position from the list of building positions		
+		_HP=selectRandom _HP;
 
-			//Orders the civilian to move to the building position		
-			_civ doMove _HP;
+		//Orders the civilian to move to the building position		
+		_civ doMove _HP;
 
-			if (_distance < 20)then{
-				[_civ] call fnc_shout;
-			};
-			
-			_civ setVariable["civ_affraid",true];
-
-			//Remove the eventHandler to prevent spamming
-			_civ removeAllEventHandlers "FiredNear";
-
-			//Calme le mec
-			_civ addAction["Calm down !",{
-				params["_unit","_asker","_action"];
-				_unit removeAction _action;
-				 if (!weaponLowered _asker)then{
-					_asker  action ["WeaponOnBack", _asker];
-				};
-        		[_asker,"Calm down my friend !"] call fnc_Talk;
-				_unit stop true;
-				_unit  setVariable["civ_affraid",false];
-				sleep .3;
-				_unit switchMove "";
-				sleep .3;
-				[_unit] call fnc_addCivilianAction;
-				[_unit,2] call fnc_UpdateRep;
-				_unit stop false;
-				sleep 10;
-				[_unit] call fnc_handleFiredNear;
-			},nil,1.5,true,true,"","true",2,false,""];
-			if (isPlayer _gunner )then {
-				[_unit,-5] call fnc_UpdateRep;
-			}else{
-				[_unit,1] call fnc_UpdateRep;
-			};
+		//Make unit shout
+		if (_distance < 40)then{
+			[_civ] call fnc_shout;
 		};
+		
+		_civ setVariable["civ_affraid",true];
 
-	}
-];
+		//Remove the eventHandler to prevent spamming
+		_civ removeAllEventHandlers "FiredNear";
+
+		//Action to make him calm down !
+		_civ addAction["Calm down !",{
+			params["_unit","_asker","_action"];
+			_unit removeAction _action;
+				if (!weaponLowered _asker)then{
+				_asker  action ["WeaponOnBack", _asker];
+			};
+			[_asker,"Calm down my friend !"] call fnc_Talk;
+			_unit stop true;
+			_unit  setVariable["civ_affraid",false];
+			sleep .3;
+			_unit switchMove "";
+			sleep .3;
+			[_unit] call fnc_addCivilianAction;
+			[_unit,2] call fnc_UpdateRep;
+			_unit stop false;
+			sleep 10;
+			[_unit] call fnc_handleFiredNear;
+		},nil,1.5,true,true,"","true",2,false,""];
+		if (isPlayer _gunner )then {
+			[_unit,-5] call fnc_UpdateRep;
+		}else{
+			[_unit,1] call fnc_UpdateRep;
+		};
+	};
+
+}];
 

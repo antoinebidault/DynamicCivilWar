@@ -1,7 +1,7 @@
 
 //Global configuration
 //GLOBAL
-DEBUG = true; //Make all units visible on the map
+DEBUG = false; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
 SIDE_CURRENT_PLAYER = side player; //Side player
 NUMBER_RESPAWN = 3;
@@ -11,7 +11,7 @@ HQ setName  ["Major Andrew Lewis","Andrew","Major Lewis"];
 
 //SPAWNING CONFIG
 SIZE_BLOCK = 500; // Size of blocks
-MARKER_WHITE_LIST = ["marker_base"]; //Pass list of marker white list name
+MARKER_WHITE_LIST = ["marker_base","marker_base_2","marker_base_3"]; //Pass list of marker white list name
 SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
 
