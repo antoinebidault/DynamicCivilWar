@@ -14,6 +14,8 @@ _marker setMarkerSize [6,6];
 _marker setMarkerColor "ColorBlack";
 _marker setMarkerBrush "SolidBorder";
 
+
+
 while { alive _leader && alive player }do{
     if (_leader knowsAbout player >= .5) then {
         if (time > LAST_FLARE_TIME + 120)then{
@@ -25,8 +27,14 @@ while { alive _leader && alive player }do{
     }else{
         //Si déclenchement de la recherche
         if (CHASER_TRIGGERED)then{
+            _leader setBehaviour "AWARE";
+            _leader setSpeedMode "FULL";
+            _leader forceWalk false;
             _lastKnownPosition = [position player , 0, 100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
         }else{
+             _leader setBehaviour "SAFE";
+            _leader setSpeedMode "LIMITED";
+            _leader forceWalk true;
             _lastKnownPosition = [position _leader , 0, 500, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
         };
     };
@@ -34,6 +42,6 @@ while { alive _leader && alive player }do{
 
     group _leader move _lastKnownPosition;
     
-    sleep 20;
+    sleep 30;
 };
 

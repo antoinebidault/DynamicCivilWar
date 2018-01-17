@@ -179,6 +179,7 @@ MARKER_WHITE_LIST pushBack _mp;
 [] spawn fnc_SpawnMainObjective;
 [-150] spawn fnc_SpawnConvoy;
 
+
 private _popbase = 0;
 private _nbFriendlies = 0;
 private _nbCars = 0;
@@ -277,7 +278,6 @@ private ["_mkr","_cacheResult","_ieds"];
 private _timerChaser = time - 360;
 
 while {true} do{
-	_t = time;
 	_playerPos = position player;
 	_isInFlyingVehicle = false;
 	_nbUnitSpawned = count UNITS_SPAWNED;
@@ -388,10 +388,11 @@ while {true} do{
 					[_x] spawn {
 						params["_unit"];
 						CHASER_VIEWED = true;
-						sleep (10 + random 5);
+						sleep (15 + random 5);
 						CHASER_VIEWED = false;
 						player call fnc_DisplayScore;
-						if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,player] call fnc_GetVisibility > 20 || _unit knowsAbout player > 2))then{
+						// || _unit knowsAbout player > 2
+						if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,player] call fnc_GetVisibility > 20))then{
 							if (DEBUG) then  {
 								hint "Alarm !";
 							};
@@ -449,6 +450,5 @@ while {true} do{
 		_timerChaser = time;
 		UNITS_SPAWNED = UNITS_SPAWNED + ([] call fnc_SpawnChaser);
 	};
-	hint str (time-_t);
 	sleep REFRESH_TIME;
 };

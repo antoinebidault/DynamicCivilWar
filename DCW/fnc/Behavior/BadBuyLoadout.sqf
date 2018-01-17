@@ -38,26 +38,26 @@ switch (floor(random 3)) do
 case 0:
 {       
         _unit addVest "V_BandollierB_khk";
-        _unit addMagazines ["30Rnd_545x39_Mag_F", 3];
+        _unit addMagazines ["30Rnd_545x39_Mag_F", 5];
         _unit addWeapon "arifle_AKS_F"; 
         _unit addMagazine "HandGrenade";
 };
 case 1:
 {
         _unit addVest "V_Chestrig_oli";
-	_unit addMagazines ["30Rnd_762x39_Mag_F", 3];
+	_unit addMagazines ["30Rnd_762x39_Mag_F", 5];
         _unit addWeapon "arifle_AKM_F";
         _unit addMagazine "HandGrenade";
 };
 case 2:
 {
-      	_unit addMagazines ["30Rnd_762x39_Mag_F", 3];
+      	_unit addMagazines ["30Rnd_762x39_Mag_F", 5];
         _unit addWeapon "arifle_AKM_FL_F";
 };
 case 3:
 {
           _unit addVest "V_BandollierB_oli";
-	_unit addMagazines ["30Rnd_762x39_Mag_F", 3];
+	_unit addMagazines ["30Rnd_762x39_Mag_F", 5];
         _unit addWeapon "arifle_AKM_F";
 };
 };

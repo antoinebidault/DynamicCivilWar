@@ -28,7 +28,7 @@ _null = [_unit,"Good idea ! I'm gonna infiltrate their line."] spawn fnc_talk;
 
 private _idFiredNear = _unit addEventHandler["FiredNear",{
 	params["_unit","_veh","_dist","_weap","_muz","_mode","_am","_gunner"];
-	if (side _gunner == ENEMY_SIDE && _dist < 20)then{
+	if (side _gunner == ENEMY_SIDE && alive _unit && alive _gunner && _dist < 20)then{
 		_unit setVariable["DCW_undercover" , false];
 	};
 }];
@@ -36,14 +36,13 @@ private _idFiredNear = _unit addEventHandler["FiredNear",{
 private _idFired = _unit addEventHandler["Fired",{
 	params["_unit","_weap","_muzz","_mode","_ammo","_mag","_projectile"];
 	 _unit setCaptive false;
-	 if ([_x,_unit] call fnc_getVisibility > 30)then{
-		 _unit setVariable["DCW_undercover" , false];
-	 };
+	 _unit setVariable["DCW_Watched",true];
 	 [_unit]spawn {
 		 params["_unit"];
-		 sleep 5;
-		 if (_unit setVariable["DCW_undercover" , false])then{
+		 sleep 4;
+		 if (_unit getVariable["DCW_undercover" , false])then{
 		 	_unit setCaptive true;
+			_unit setVariable["DCW_Watched",false];
 		 };
 	 };
 }];
@@ -63,7 +62,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 				private _know =  [_x,_unit] call fnc_getVisibility; //[ position _x, getDir _x, 45, position _unit] call BIS_fnc_inAngleSector;
 				private _en = _x;
 				//Check if units is shooting at him
-				if (_know > 20 && !captive _unit && behaviour _en != "SAFE")then{
+				if (_know > 20 && alive _en && !captive _unit && behaviour _en != "SAFE")then{
 					if (!(_en getVariable["DCW_Watching",false])) then{
 						_en setVariable["DCW_Watching",true];
 						_unit setVariable["DCW_Watched",true];
@@ -91,13 +90,13 @@ while {_unit getVariable["DCW_undercover",false]}do{
 					};
 				};
 
-				if (_know > 10 && _unit getVariable["DCW_speak",false])then{
+				if (_know > 10 && alive _en && _en distance _unit < 50   && _unit getVariable["DCW_speak",false])then{
 					hint "Their hear your voice !";
 					_unit setVariable["DCW_undercover", false];
 				};
 
 				//Check if weapon up && low speed && up
-				if (_know > 20 && _en distance _unit < 50 &&  ((weaponLowered _en && !weaponLowered _unit) || (behaviour _en == "SAFE" && stance _unit != "STAND") || (behaviour _en == "SAFE" && speed _unit > 14) ))then{
+				if (_know > 20 && _en distance _unit < 50 && alive _en &&  ((weaponLowered _en && !weaponLowered _unit) || (behaviour _en == "SAFE" && stance _unit != "STAND") || (behaviour _en == "SAFE" && speed _unit > 14) ))then{
 					if (!(_en getVariable["DCW_Watching",false])) then{
 						hint "You're looking suspicious !";
 						_en setVariable["DCW_Watching",true];
@@ -127,7 +126,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 				};
 
 				//Check if too close
-				if (_know > 20 && (_unit distance _en) < 4) then {
+				if (_know > 2 && alive _en  && (_unit distance _en) < 4) then {
 					if (!(_en getVariable["DCW_Watching",false])) then{
 						hint "You're too close !";
 						_en setVariable["DCW_Watching",true];

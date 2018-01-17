@@ -44,6 +44,7 @@ while {count TANKS < NUMBER_TANKS} do{
     }];
     
     TANKS pushback _tank;
+    
 };
 
 TANKS;

@@ -26,7 +26,7 @@ if( ((player getVariable["DCW_SCORE",0]) - _price) >= 0)then {
 	    _pos = [player, 2500, 3000, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
 		_unit = createVehicle [DRONE_CLASS, [_pos select 0, _pos select 1, 300], [], 0,"FLY"];  
 		createVehicleCrew _unit;  
-		_unit setVelocity [60 * (sin (getDir this)), 60 * (cos (getDir this)),10];
+		_unit setCaptive true;
 		_unit move (player modelToWorld[0,0,300]);
 		player connectTerminalToUAV _unit;
 	};

@@ -68,5 +68,5 @@ while{true}do {
 		};
 	}foreach _carPool;
 
-	sleep 50 + random 100;
+	sleep 150;
 };

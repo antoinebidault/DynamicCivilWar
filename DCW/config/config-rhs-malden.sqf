@@ -17,9 +17,7 @@ MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
 
 //FRIENDLIES
 FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses; //Units of your side
-//FRIENDLY_LIST_CARS = ["rhsusf_m1025_d_m2","rhsusf_m1025_d_Mk19","rhsusf_M1220_M153_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1232_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1083A1P2_B_M2_D_fmtv_usarmy","rhsusf_m113d_usarmy_M240"]; //Cars US
 FRIENDLY_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"];
-//FRIENDLY_FLAG = "Flag_US_F"; 
 FRIENDLY_FLAG = "rhs_Flag_Russia_F";//Flag of your side
 
 //CIVILIAN
@@ -53,7 +51,7 @@ ENEMY_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_nat_uaz_dshkm","rhsgref_nat_uaz_
 ENEMY_CHOPPERS = ["rhsgref_cdf_Mi35","rhsgref_cdf_reg_Mi17Sh"];
 ENEMY_ATTACHEDLIGHT_CLASS =  "rhs_acc_2dpZenit"; //default : "acc_flashlight"
 ENEMY_MORTAR_CLASS = "rhsgref_nat_2b14"; //Mortar class
-NUMBER_TANKS = 5;
+NUMBER_TANKS = 0;
 ENEMY_LIST_TANKS = ["rhsgref_ins_g_t72ba","rhsgref_ins_g_bmp2e","rhsgref_ins_g_crew","rhsgref_ins_g_crew"]; //Tanks
 ENEMY_COMMANDER_CLASS = "rhsgref_nat_warlord"; //commander
 ENEMY_CONVOY_CAR_CLASS = "rhsgref_nat_uaz_dshkm"; //commander

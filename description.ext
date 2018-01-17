@@ -98,6 +98,7 @@ class CfgNotifications
 };
 #include "supportui\Defines.hpp"
 #include "supportui\buySupports.hpp"
+#include "DCW\config\config-combo.hpp"
 #include "medevac\support.hpp"
 
 class RscTitles {

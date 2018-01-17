@@ -32,7 +32,12 @@ _cam camSetTarget (_target modelToWorld[.3,-.5,.3]);
 _cam camCommit 0;
 _cam camSetPos (_target modelToWorld[0,0,7]);
 _cam camCommit 10;
-sleep 10;
+sleep 7;
+titleCut ["", "BLACK OUT", 3];
+sleep 3;
+titleCut ["", "BLACK FADED", 2];
+sleep 2;
+titleCut ["", "BLACK IN", 5];
 
 _cam camSetPos (_chopper modelToWorld[3,15,-3]);
 _cam camSetTarget (_chopper modelToWorld[3,0,.5]);
@@ -41,7 +46,7 @@ _null=[_cam,_chopper] spawn{
 	params["_cam","_chopper"];
 	private _loop = 0;
 	while { _loop < 30 } do {
-		_cam camSetPos (_chopper modelToWorld[3,60,2]);
+		_cam camSetPos (_chopper modelToWorld[3,50,2]);
 		_cam camsettarget _chopper modelToWorld[3,0,.5];
 		_cam camSetFov 1.0;
 		_cam camcommit .5;
@@ -52,9 +57,21 @@ _null=[_cam,_chopper] spawn{
 	_cam camsettarget _chopper modelToWorld[0,0,0];
 	_cam camcommit 0;
 	_loop = 0;
-	while { _loop < 30 } do {
+	while { _loop < 15 } do {
 		_cam camSetPos (_chopper modelToWorld[7.5,-30,0]);
 		_cam camsettarget _chopper modelToWorld[0,0,0];
+		_cam camSetFov 1.0;
+		_cam camcommit .5;
+		sleep .2;
+		_loop = _loop+.2;
+	};
+	_cam camSetPos (_chopper modelToWorld[30,7,5]);
+	_cam camsettarget (_chopper modelToWorld[0,0,-2]);
+	_cam camcommit 0;
+	_loop = 0;
+	while { _loop < 30 } do {
+		_cam camSetPos (_chopper modelToWorld[30,7,5]);
+		_cam camsettarget (_chopper modelToWorld[0,0,-2]);
 		_cam camSetFov 1.0;
 		_cam camcommit .5;
 		sleep .2;
@@ -75,9 +92,29 @@ _chopper action ["useWeapon",_chopper,driver _chopper,1];
 sleep 3;
 _chopper action ["useWeapon",_chopper,driver _chopper,1];
 sleep 1;
-sleep 5;
+sleep 12;
+nul = ["Dynamic Civil War",-1,-1,4,1,0] spawn BIS_fnc_dynamicText;
+sleep 8;
 camDestroy _cam;
 showCinemaBorder false;
 _cam cameraeffect ["terminate", "back"];
+
+playMusic "ASOTheme";
+titleCut ["Prepare for landing...", "BLACK FADED", 999];
+["",0,true] call bis_fnc_setppeffecttemplate;
+[] Spawn {
+    _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
+	
+	// Info text
+	[worldName, format["%1km from %2", round(((getPos _loc) distance2D player)/10)/100,text _loc], str(date select 1) + "." + str(date select 2) + "." + str(date select 0)] spawn BIS_fnc_infoText;
+	sleep 5;
+	"dynamicBlur" ppEffectEnable true;  
+	"dynamicBlur" ppEffectAdjust [6];   
+	"dynamicBlur" ppEffectCommit 0;     
+	"dynamicBlur" ppEffectAdjust [0.0];  
+	"dynamicBlur" ppEffectCommit 5;  
+	titleCut ["", "BLACK IN", 5];
+};
+
 
 //endMission "END1";

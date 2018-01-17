@@ -7,9 +7,11 @@
 
 params["_initialPos"];
 
+REMAINING_RESPAWN = NUMBER_RESPAWN;
 RESPAWN_POSITION = _initialPos;
 for "_i" from 0 to NUMBER_RESPAWN do
 {
+	
 	_loadout = getUnitLoadout player;
 	player setUnitTrait ["explosiveSpecialist",true];
 	[player] execVM "DCW\fnc\Behavior\Rest.sqf";
@@ -21,7 +23,7 @@ for "_i" from 0 to NUMBER_RESPAWN do
 	{
 		!alive player;
 	};
-
+	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
 	if (_i == NUMBER_RESPAWN)then{
 		endMission "KILLED";
 	};

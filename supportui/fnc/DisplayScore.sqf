@@ -36,4 +36,4 @@ if (_this getVariable["DCW_undercover",false]) then{
 ("RscStatusBar" call BIS_fnc_rscLayer) cutRsc ["RscStatusBar","PLAIN"];	
 	disableSerialization;
 	((uiNamespace getVariable "RscStatusBar")displayCtrl 55554) ctrlSetStructuredText
-parseText format ["<t shadow='1' shadowColor='#000000' color='#FFFFFF'>Score : %1 points | Lives : %2 | Reinforcements : <t color='%3'>%4</t> | Undercover : <t color='%5'>%6</t></t>",_points,NUMBER_RESPAWN,_colorChaser,_labelChaser,_colorUnd,_statusUnd];
+parseText format ["<t shadow='1' shadowColor='#000000' color='#FFFFFF'>Score : %1 points | Lives : %2 | Reinforcements : <t color='%3'>%4</t> | Undercover : <t color='%5'>%6</t></t>",_points,REMAINING_RESPAWN,_colorChaser,_labelChaser,_colorUnd,_statusUnd];
