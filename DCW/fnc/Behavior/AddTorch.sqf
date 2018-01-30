@@ -11,9 +11,7 @@ BIDASS
 */
 params["_unit"];
 
-_daytime = 0.5 - abs(daytime - 12) / 12;
-
-if (_daytime < 0.5) then {
+if (dayTime < 8 || dayTime > 20) then {
     _unit unassignItem "NVGoggles";
     _unit removeItem "NVGoggles";
     _unit unlinkItem "NVGoggles_OPFOR"; 

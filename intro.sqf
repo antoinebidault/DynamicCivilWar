@@ -4,9 +4,9 @@ private _sniper = missionNamespace getVariable ["cut_sniper",objNull];
 private _target = missionNamespace getVariable ["cut_target",objNull];
 _cam = "camera" camcreate (_sniper modelToWorld[.5,4,.3]);
 _cam cameraeffect ["internal", "back"];
-titleCut ["", "BLACK FADED", 999];
+/*titleCut ["", "BLACK FADED", 999];
+titleCut ["", "BLACK IN", 7];*/
 sleep 3;
-titleCut ["", "BLACK IN", 7];
 _sniper setAmmo [currentWeapon _sniper, 0];
 
 ["RealIsBrown",3,true] call bis_fnc_setppeffecttemplate;
@@ -57,7 +57,7 @@ _null=[_cam,_chopper] spawn{
 	_cam camsettarget _chopper modelToWorld[0,0,0];
 	_cam camcommit 0;
 	_loop = 0;
-	while { _loop < 15 } do {
+	while { _loop < 10 } do {
 		_cam camSetPos (_chopper modelToWorld[7.5,-30,0]);
 		_cam camsettarget _chopper modelToWorld[0,0,0];
 		_cam camSetFov 1.0;
@@ -65,18 +65,15 @@ _null=[_cam,_chopper] spawn{
 		sleep .2;
 		_loop = _loop+.2;
 	};
-	_cam camSetPos (_chopper modelToWorld[30,7,5]);
-	_cam camsettarget (_chopper modelToWorld[0,0,-2]);
+	_cam camSetPos  (_chopper modelToWorld[7.5,-30,0]);
+	_cam camsettarget (_chopper modelToWorld[0,0,0]);
 	_cam camcommit 0;
-	_loop = 0;
-	while { _loop < 30 } do {
-		_cam camSetPos (_chopper modelToWorld[30,7,5]);
-		_cam camsettarget (_chopper modelToWorld[0,0,-2]);
-		_cam camSetFov 1.0;
-		_cam camcommit .5;
-		sleep .2;
-		_loop = _loop+.2;
-	};
+
+	_cam camSetPos [7890.86,11665.3,2];
+	_cam camsettarget _chopper;
+	_cam camSetFov 1.0;
+	_cam camcommit 6;
+	sleep 15;
 };
 
 

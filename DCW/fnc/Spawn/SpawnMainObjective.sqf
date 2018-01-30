@@ -100,23 +100,6 @@ for "_yc" from 1 to 4  do {
     ESCORT pushback _unit;
 };
 
-
-for "_xc" from 1 to 4  do {
-    _unit = _grp createUnit [CIV_LIST_UNITS call BIS_fnc_selectRandom, _initPos,[],ENEMY_SKILLS,"NONE"];
-    _unit addEventHandler ["Killed",{
-        params["_unit","_killer"];
-        if (group _killer == group player)then{
-        []spawn{
-            [player,"Shit ! We killed his civilian escort. The operation is compromised."] call fnc_talk;
-            sleep 10;
-            ["epicFail",false,2] call BIS_fnc_endMission;
-        };
-        };
-        
-    }];
-    ESCORT pushback _unit;
-};
-
 _grp setBehaviour "SAFE";
 _newPos = getPos ENEMY_COMMANDER;
 COMMANDER_LAST_POS = [];
@@ -158,7 +141,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
         (findDisplay 12 displayCtrl 51) ctrlAddEventHandler ["Draw",format["(_this select 0) drawLine [%1,%2,[244, 93, 93,1]];",_initPos,_newPos]];
     };
 
-    waitUntil {sleep 30;ENEMY_COMMANDER distance _newPos < 5};
+    waitUntil {sleep 30; ENEMY_COMMANDER distance _newPos < 5};
 
     _grp setBehaviour "SAFE";
     _grp setSpeedMode "LIMITED";

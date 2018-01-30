@@ -70,8 +70,8 @@ _this select 0 addEventHandler["FiredNear",
 			sleep .3;
 			[_unit] call fnc_addCivilianAction;
 			[_unit,2] call fnc_UpdateRep;
+			sleep 15;
 			_unit stop false;
-			sleep 10;
 			[_unit] call fnc_handleFiredNear;
 		},nil,1.5,true,true,"","true",2,false,""];
 		if (isPlayer _gunner )then {

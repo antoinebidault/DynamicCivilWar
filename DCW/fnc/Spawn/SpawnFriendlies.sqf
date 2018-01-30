@@ -69,12 +69,6 @@ for "_xc" from 1 to _nb  do {
       _unitName = FRIENDLY_LIST_UNITS call BIS_fnc_selectRandom;
       _unit = _grp createUnit [_unitName, _posSelected,[],1,"NONE"];
 
-      if(isNull(_unit findNearestEnemy _unit))then{
-          _unit forceWalk  true;
-          _unit setBehaviour "SAFE";
-      }else{
-          _unit forceWalk  false;
-      };
 
       if (DEBUG)then{
           [_unit,"ColorGreen"] call fnc_addmarker;

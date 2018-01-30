@@ -7,7 +7,7 @@
 
 private _intel = _this select 0;
 private _asker = _this select 1;
-private _withNotif = if (count _this >=3)then{_this select 2}else{true};
+private _withNotif = if (count _this >=2)then{_this select 2}else{true};
 
  _type = _intel getVariable["DCW_Type",""];
  _taskId = "";
@@ -80,6 +80,5 @@ switch (_type) do {
 //Unique ID added to the task id;
 _taskId = format["%1_%2",_taskId,random 20];
 [_asker,  _taskId, [_desc,_title,_title],(getPos _intel),_withNotif] call BIS_fnc_taskCreate;
-_currentTask = [_taskId, _asker] call BIS_fnc_taskReal;
 _intel setVariable["DCW_Bonus",_bonus];
 [_taskId,_message,_messageSuccess,_bonus];

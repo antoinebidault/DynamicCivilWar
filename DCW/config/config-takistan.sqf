@@ -6,9 +6,11 @@ SHOW_SECTOR = true; //Make every sector colored on the map
 SIDE_CURRENT_PLAYER = side player; //Side player
 NUMBER_RESPAWN = 3;
 CIVIL_REPUTATION = 50;
-HQ = (createGroup (side player)) createUnit ["B_RangeMaster_F", [-1000,-1000], [], 0, "FORM"];
-HQ setName  ["Major Andrew Lewis","Andrew","Major Lewis"];
-//HQ hideObject true;
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this", 0.6, "colonel"];
+[]spawn{
+	sleep 1;
+	HQ setName "HQ";
+};
 
 //SPAWNING CONFIG
 SIZE_BLOCK = 350; // Size of blocks
@@ -57,5 +59,4 @@ ENEMY_LIST_TANKS = ["LOP_TKA_T55","LOP_TKA_T72BA"]; //Tanks
 ENEMY_COMMANDER_CLASS = "LOP_TKA_Infantry_Officer"; //commander
 ENEMY_CONVOY_CAR_CLASS = "LOP_AM_OPF_Nissan_PKM"; //commander
 ENEMY_CONVOY_TRUCK_CLASS = "LOP_TKA_Ural"; //commander
-
 

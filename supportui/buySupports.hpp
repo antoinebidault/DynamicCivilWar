@@ -53,12 +53,12 @@ class ICE_DIALOG
          class ICE_BUTTONAMMO: RscButton
          {
           idc = -1;
-          text = "AMMO (-400 points)";
+          text = "AMMO (-200 points)";
           x = 0.4 * safezoneW + safezoneX;
           y = 0.4 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Drop"",400] ExecVM ""supportui\choose.sqf""";
+          action = "_nil=[""Drop"",200] ExecVM ""supportui\choose.sqf""";
         };
          class ICE_BUTTONTRANSPORT: RscButton
          {

@@ -40,7 +40,7 @@ unit addItem  "SmokeShellGreen";
 unit addItem  "SmokeShellGreen";
 unit addItem  "SmokeShellGreen";
 
-SoldiersDead = [];
+private _soldiersDead = [];
 
 {	
 	if (!isPlayer(_x))then{
@@ -55,13 +55,11 @@ _posChopper = objNull;
 while {true} do {
 
 	//Push dead soldiers
-	SoldiersDead = units (group unit) select {_x getVariable["unit_injured",false] };
-
+	_soldiersDead = units (group unit) select {_x getVariable["unit_injured",false] };
 
 	//Launch chopper
 	if (MEDEVAC_FirstTrigger)then{
 
-		{ [_x] joinSilent grpNull; } foreach SoldiersDead;
 
 		MEDEVAC_showMenu = false;
 		MEDEVAC_FirstTrigger = false;
@@ -91,12 +89,11 @@ while {true} do {
 			sleep 1;
 			openMap false;
 
-			if ((count SoldiersDead > 0) && !IsInBound)then {
+			if ((count _soldiersDead > 0) && !IsInBound)then {
 				IsInBound = true;
 				transportHelo = [] call fnc_spawnHelo;
 				_posChopper = position transportHelo;
-				_tmp = SoldiersDead;
-				[group transportHelo,getMarkerPos "medevac_marker",transportHelo,unit,_tmp] call fnc_ChopperPath;
+				[group transportHelo,getMarkerPos "medevac_marker",transportHelo,unit] call fnc_ChopperPath;
 			}else{
 				hint "Impossible to request";
 				MEDEVAC_showMenu = true;
@@ -109,7 +106,7 @@ while {true} do {
 	if(isNull transportHelo)then{ 
 		IsInBound = false;
 		MEDEVAC_FirstTrigger = false;
-		if (count SoldiersDead > 0 && !MEDEVAC_showMenu)then{
+		if (count _soldiersDead > 0 && !MEDEVAC_showMenu)then{
 			MEDEVAC_showMenu = true;
 			[unit, "Medevac"] call BIS_fnc_addCommMenuItem;
 		};

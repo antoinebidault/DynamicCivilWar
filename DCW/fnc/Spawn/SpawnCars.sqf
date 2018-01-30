@@ -40,7 +40,7 @@ private _roadConnectedTo = objNull;
   };
 
   _car setVariable ["DCW_Type","car"];
-  _car setVehicleLock "LOCKED";
+  //_car setVehicleLock "LOCKED";
   _roadConnectedTo = roadsConnectedTo _x;
   ROAD = _roadConnectedTo;
   if (count _roadConnectedTo == 0) then{

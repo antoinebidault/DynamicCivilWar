@@ -5,11 +5,9 @@
  * License : GNU (GPL)
  */
 
+
 //CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
-
-//Switch here the config you need.
-[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-malden.sqf"); 
 
 //SYSTEM
 fnc_GetClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClusters.sqf";
@@ -35,6 +33,7 @@ fnc_SpawnEnemy =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnEn
 fnc_SpawnMortar = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnMortar.sqf";
 fnc_SpawnCars = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnCars.sqf";
 fnc_SpawnMainObjective = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnMainObjective.sqf";
+fnc_SpawnSecondaryObjective= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnSecondaryObjective.sqf";
 fnc_SpawnConvoy = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnConvoy.sqf";
 fnc_SpawnPosition = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnPosition.sqf";
 
@@ -44,6 +43,7 @@ fnc_SimplePatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\Simple
 fnc_LargePatrol = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\LargePatrol.sqf";
 fnc_chase = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\chase.sqf";
 fnc_carPatrol = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\carPatrol.sqf";
+fnc_leutnantPatrol = compile preprocessFileLineNumbers  "DCW\fnc\Patrol\leutnantPatrol.sqf";
 fnc_civilianPatrol = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\civilianPatrol.sqf";
 fnc_gotomeeting =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\gotomeeting.sqf";
 fnc_chopperpatrol = compile preprocessFileLineNumbers  "DCW\fnc\Patrol\ChopperPatrol.sqf";
@@ -75,6 +75,36 @@ fnc_HandleFiredNear = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\H
 fnc_HandleDamaged = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleDamaged.sqf";
 fnc_handlekill = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleKill.sqf";
 fnc_handleAttacked = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleAttacked.sqf";
+
+
+player createDiaryRecord ["Diary",["Main objective",
+"Dynamic Civil War<br/>
+In this singleplayer scenario, you have one major objective : assassinate the enemy general.<br/>
+ We kow that it would considerably put a term to this terrible civil war. We have no intel on his exact position. He is probably hidden in mountains or forests, wandering from place to place very often, far from the conflicts areas. Firstly, you must get intel about his approximate position. For this purpose, you have two options : Find and interrogate enemy leutnant located by our drones. They are oftenly running with mecanized infantry which is very easy to track with our sattelites and drones. The HQ will get you in touch if they've found one.Interrogate the civilian chief located in large cities, talk to civilians, ask them informations about local chief. If you keep a good reputation, they would help us.<br>To accomplish these tasks, you would need resources from the HQ. They could provide you all the supports you need (Choppers, CAS, ammo drops, extractions...). But you must prove them the value of your action down there.<br>That's why, as side objectives, you have to bring back peace in the region. There is a few side mission you can accomplish : Clear IEDs on roadLiberate hostagesDestroy mortarsDestroy weapon cachesDesmantle outpostsKill snipers team Ask civilian to get some more intels.</br><img image='images\enemy-portrait.jpg' width='512 height='250'/> Yous insertion point is already secured and located to <marker name='marker_base'>uphill Zaros</marker> "]];
+
+DCW_START = false;
+[] execVM "DCW\config\config-parameters.sqf"; //Parameters
+[] execVM "DCW\config\config-dialog.sqf"; //Open dialog
+
+//WAiting starting
+waitUntil {DCW_START};
+
+//TIME
+setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
+
+//OVERCAST
+0 setOvercast WEATHER;
+0 setRain (if (WEATHER > .7) then {random 1}else{0});
+setWind [10*WEATHER, 10*WEATHER, true];
+0 setFog [if (WEATHER > .8) then {.15}else{0},if (WEATHER > .8) then {.04}else{0}, 60];
+0 setGusts (WEATHER - .3);
+0 setWaves WEATHER;
+forceWeatherChange;
+//[] execVM "intro.sqf"; 
+
+
+//Switch here the config you need.
+[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-malden.sqf"); 
 
 //composition
 compo_camp1 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp1.sqf");
@@ -168,17 +198,6 @@ _mp setMarkerSize [SIZE_BLOCK,SIZE_BLOCK];
 MARKER_WHITE_LIST pushBack _mp;
 
 
-[] call fnc_PrepareAction;
-[getMarkerPos "marker_base"] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
-[] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
-[] execVM "DCW\fnc\spawn\SpawnRandomEnemies.sqf"; //Enemy patrols
-[] execVM "DCW\fnc\spawn\SpawnRandomCar.sqf"; //Civil & enemy cars
-[] execVM "DCW\fnc\spawn\SpawnRandomCivilian.sqf"; //Civilians walking around
-[] execVM "DCW\fnc\spawn\SpawnChopper.sqf"; //Chopper spawn
-[] execVM "DCW\fnc\spawn\SpawnTank.sqf"; //Tanks
-[] spawn fnc_SpawnMainObjective;
-[-150] spawn fnc_SpawnConvoy;
-
 
 private _popbase = 0;
 private _nbFriendlies = 0;
@@ -188,6 +207,7 @@ private _nbCivilian = 0;
 private _points = 0;
 private _nbSnipers = 0;
 private _nbMortars = 0;
+private _typeObj = "";
 private _clusters = [] call fnc_GetClusters;
 
 {
@@ -198,7 +218,6 @@ private _clusters = [] call fnc_GetClusters;
 	private _isLocation = _x select 3;
 	private _nameLocation = _x select 3;
 	private _isMilitary = _x select 5;
-
 
 	{ 
 		if(_pos inArea _x)exitWith{_return = true;};
@@ -240,15 +259,16 @@ private _clusters = [] call fnc_GetClusters;
 				_nbEnemies = _nbEnemies + 1;
 			}
 		};
-	//	_nbCivilian =  if (_isMilitary)then{0}else{ ceil (_popbase * (PERCENTAGE_CIVILIAN/100)) };
 		_nbFriendlies =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
-		_nbSnipers = if (random 100 > 75) then{ 2 } else{ 0 };
-	//	_nbEnemies = 1 max ((round (_popbase * (PERCENTAGE_ENEMIES/100)))*(if (_isMilitary) then {2}else{1}));
 		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
-		_nbIeds = (1 + floor(random 7));
-		_nbHostages = [0,1] call BIS_fnc_selectRandom;
-		_nbCaches = if (_nbHostages == 0) then {[0,1] call BIS_fnc_selectRandom}else{0};
-		_nbMortars = if (_nbSnipers >= 1) then{[0,1] call BIS_fnc_selectRandom }else{0};
+		_nbIeds = (1 + floor(random 4));
+
+		_typeObj = ["hostage","sniper","cache","mortar","","",""] call BIS_fnc_selectRandom;
+		_nbHostages = if (_typeObj == "hostage" || _popbase > 20) then{ 1 }else {0};
+		_nbSnipers = if (_typeObj == "sniper") then{ 2 } else{ 0 };
+		_nbCaches = if (_typeObj == "cache" || _popbase > 20) then{ 1 }else {0};
+		_nbMortars = if (_typeObj == "mortar") then{ 1 }else {0};
+
 		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
 		_nbFriendlies = 0;
 		_points = _nbEnemies * 10;
@@ -274,6 +294,18 @@ private _clusters = [] call fnc_GetClusters;
 } foreach _clusters;
 
 
+[] call fnc_PrepareAction;
+[getMarkerPos "marker_base"] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
+[] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
+[] execVM "DCW\fnc\spawn\SpawnRandomEnemies.sqf"; //Enemy patrols
+[] execVM "DCW\fnc\spawn\SpawnRandomCar.sqf"; //Civil & enemy cars
+[] execVM "DCW\fnc\spawn\SpawnRandomCivilian.sqf"; //Civilians walking around
+[] execVM "DCW\fnc\spawn\SpawnChopper.sqf"; //Chopper spawn
+[] execVM "DCW\fnc\spawn\SpawnTank.sqf"; //Tanks
+[] spawn fnc_SpawnSecondaryObjective;
+[] spawn fnc_SpawnMainObjective;
+[-150] spawn fnc_SpawnConvoy;
+
 private ["_mkr","_cacheResult","_ieds"];
 private _timerChaser = time - 360;
 
@@ -290,8 +322,6 @@ while {true} do{
 	_yC = floor((_playerPos select 1)/SIZE_BLOCK);
 	_o = 4;
 
-	
-	
 	{
 		private _marker =_x select 0;
 		private _pos =_x select 1;
@@ -331,7 +361,7 @@ while {true} do{
 				_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
 
 				_triggered = true;
-			}
+			};
 
 		}else{
 
@@ -347,13 +377,10 @@ while {true} do{
 				if (_triggered && !_success) then{
 					if ([_playerPos, _marker] call fnc_isInMarker) then{
 						_nben = 0;
-						_enemyInMarker = false;
-						_res  = {
-							if (side _x == ENEMY_SIDE && !_enemyInMarker && alive _x)then {
-								if ([_x,_marker] call fnc_isInMarker) exitWith {_enemyInMarker = true; true; };
-							};
-						} foreach allUnits;
-
+						_enemyInMarker = true;
+						if ({side _x == ENEMY_SIDE && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= round (0.1 * (_peopleToSpawn select 2))) then {
+							_enemyInMarker = false;
+						};
 						//Cleared success
 						if (!_enemyInMarker)then {
 							_success = true;
@@ -368,7 +395,6 @@ while {true} do{
 		}; 
 
 		
-	
 		MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary]]; 
 
 	}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };

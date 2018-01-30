@@ -7,62 +7,105 @@
 
 params["_initialPos"];
 
+if (!RESPAWN_ENABLED)then {
+	NUMBER_RESPAWN = 0;
+};
+
 REMAINING_RESPAWN = NUMBER_RESPAWN;
 RESPAWN_POSITION = _initialPos;
-for "_i" from 0 to NUMBER_RESPAWN do
-{
-	
-	_loadout = getUnitLoadout player;
-	player setUnitTrait ["explosiveSpecialist",true];
-	[player] execVM "DCW\fnc\Behavior\Rest.sqf";
-	[player] execVM "medevac\init.sqf";
-	sleep 3;
-	nul = [player] execVM "supportui\init.sqf";
+PLAYER_ALIVE = true;
 
-	waitUntil
-	{
-		!alive player;
+//Default trait
+player setUnitTrait ["explosiveSpecialist",true];
+
+//Rest animations
+[player] execVM "DCW\fnc\Behavior\Rest.sqf";
+
+// Revive friendlies with chopper pick up
+if (REVIVE_ENABLED) then{
+	[player] execVM "medevac\init.sqf";
+};
+
+//Support UI
+nul = [player] execVM "supportui\init.sqf";
+
+//Damage handler
+player addEventHandler["HandleDamage",{
+    params [
+        "_unit",			// Object the event handler is assigned to.
+        "_hitSelection",	// Name of the selection where the unit was damaged. "" for over-all structural damage, "?" for unknown selections.
+        "_damage",			// Resulting level of damage for the selection.
+        "_source",			// The source unit (shooter) that caused the damage.
+        "_projectile",		// Classname of the projectile that caused inflicted the damage. ("" for unknown, such as falling damage.) (String)
+        "_hitPartIndex",	// Hit part index of the hit point, -1 otherwise.
+        "_instigator",		// Person who pulled the trigger. (Object)
+        "_hitPoint"			// hit point Cfg name (String)
+    ];
+
+	if (_damage > .95 && NUMBER_RESPAWN >= 1 && PLAYER_ALIVE)then{
+		PLAYER_ALIVE = false;
+		_unit setUnconscious true;
+		addCamShake [15, 5, 0.7];
+		[_unit] spawn fnc_HandleRespawn;
+		_damage = .95;
+		_unit setDamage .95;
+	}else{
+		if (!PLAYER_ALIVE)then{
+			_damage = .95;
+			_unit playActionNow "agonyStart";
+			_unit setDamage .95;
+		}
 	};
+	
+	_damage;
+}];
+
+//Respawn handling
+fnc_HandleRespawn =
+{
+	params["_unit"];
+	_loadout = getUnitLoadout _unit;
+
+	waitUntil{!PLAYER_ALIVE};
+
+	//count the remaining lives after death
 	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
-	if (_i == NUMBER_RESPAWN)then{
-		endMission "KILLED";
-	};
+
+	if (REMAINING_RESPAWN == -1)exitWith{endMission "KILLED";};
+	
+	cutText ["You are dead","BLACK OUT", 7];
+	sleep 7;
+	_unit setUnconscious false;
 
 	_timeSkipped = round(6 + random 12);
 	cutText ["You are dead","BLACK FADED", 999];
-	_score = player getVariable ["DCW_SCORE",0];
-	_units = units (group player);
-	[player] joinSilent grpNull;
+	_score = _unit getVariable ["DCW_SCORE",0];
+	_units = units (group _unit);
 	{ if(alive _x) then{_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)}; }foreach _units;
-	(typeof player) createUnit [RESPAWN_POSITION, group player, "newUnit = this; "];
+
 	sleep 1;
+	_unit switchMove "Acts_UnconsciousStandUp_part1";
+
 	//Disable chasing
 	CHASER_TRIGGERED = false; 
+	PLAYER_ALIVE = true;
+    resetCamShake;
 
 	//Set new pos and loadout
-	newUnit setPos RESPAWN_POSITION;
-	newUnit setUnitLoadout _loadout;
-	newUnit setVariable["DCW_SCORE",_score];
-
-	//Switching units
-	addSwitchableUnit newUnit;
-	selectPlayer newUnit;
-
-	//Joint group storeed in var
-	_units joinSilent newUnit;
-	group(newUnit) selectLeader newUnit;
+	_unit setDamage 0;
+	_unit setPos RESPAWN_POSITION;
+	_unit setUnitLoadout _loadout;
 
 	//Black screen with timer...
-	sleep 1;
+	sleep 2;
 	cutText ["You are dead","BLACK FADED", 999];
 	
-	newUnit switchMove "Acts_UnconsciousStandUp_part1";
 	BIS_DeathBlur ppEffectAdjust [0.0];
 	BIS_DeathBlur ppEffectCommit 0;
 	cutText ["You are dead","BLACK FADED", 999];
 	skipTime 6 + random 12;
 	sleep 5;
-	[worldName, "Back to camp",format["%1 hours later...",_timeSkipped], format ["%1 live%2 left",(NUMBER_RESPAWN-_i),if ((NUMBER_RESPAWN-_i) <= 1) then {""}else{"s"}]] call BIS_fnc_infoText;
+	[worldName, "Back to camp",format["%1 hours later...",_timeSkipped], format ["%1 live%2 left",REMAINING_RESPAWN,if (REMAINING_RESPAWN <= 1) then {""}else{"s"}]] call BIS_fnc_infoText;
 	cutText ["","BLACK IN", 4];
 	"dynamicBlur" ppEffectEnable true;   
 	"dynamicBlur" ppEffectAdjust [6];   
@@ -71,6 +114,3 @@ for "_i" from 0 to NUMBER_RESPAWN do
 	"dynamicBlur" ppEffectCommit 5;  
 	[] call PLAYER_KIA;
 };
-
-//Anyway => The end of the mission, we consumed all out lives
-["epicFail",false,2] call BIS_fnc_endMission;

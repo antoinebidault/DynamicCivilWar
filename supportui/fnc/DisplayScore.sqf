@@ -25,10 +25,10 @@ if (_this getVariable["DCW_undercover",false]) then{
 	_colorUnd = "#2f9581";
 	if (_this getVariable["DCW_watched",false]) then{
 		_statusUnd = "watched";
-		_colorUnd = "#e46b6b";
+		_colorUnd = "#e0923a";
 	};
 }else{
-	_statusUnd = "broken";
+	_statusUnd = "Inactive";
 	_colorUnd = "#e46b6b";
 };
 
