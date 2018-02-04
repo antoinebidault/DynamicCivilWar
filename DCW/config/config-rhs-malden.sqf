@@ -15,7 +15,7 @@ CIVIL_REPUTATION = 50;
 
 //SPAWNING CONFIG
 SIZE_BLOCK = 500; // Size of blocks
-MARKER_WHITE_LIST = ["marker_base","marker_base_2","marker_base_3"]; //Pass list of marker white list name
+MARKER_WHITE_LIST = ["marker_base","marker_base_2","marker_base_3","blacklist_1","blacklist_2","blacklist_3","blacklist_4"]; //Pass list of marker white list name
 SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
 

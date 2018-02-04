@@ -12,12 +12,13 @@ private _excludedFromSpawnedUnit = _this select 2;
 private _unitName = ENEMY_LIST_UNITS call BIS_fnc_selectRandom;
 private _unit = _group createUnit [_unitName, _pos,[],ENEMY_SKILLS,"NONE"];
 
+/*
 if(isNull(_unit findNearestEnemy _unit))then{
     _unit forceWalk  true;
     _unit setBehaviour "SAFE";
 }else{
     _unit forceWalk  false;
-};
+};*/
 
 if (DEBUG)then{
     [_unit,"ColorRed"] call fnc_addmarker;

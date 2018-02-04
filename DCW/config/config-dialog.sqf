@@ -130,6 +130,8 @@ _ctrlLoadout lbAdd "Serguei";
 _ctrlLoadout lbSetValue  [2,3];
 _ctrlLoadout lbAdd "Ivanov";
 _ctrlLoadout lbSetValue  [3,4];
+_ctrlLoadout lbAdd "Aleksei";
+_ctrlLoadout lbSetValue  [4,5];
 _ctrlLoadout lbSetCurSel  0;
 _ctrlLoadout ctrlAddEventHandler ["LBSelChanged","((_this select 1) + 1) call fnc_SwitchUnit"];
 

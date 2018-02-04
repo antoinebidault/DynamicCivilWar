@@ -30,17 +30,18 @@ private _roadPos = getPos _road;
 private _roadConnectedTo = roadsConnectedTo _road;
 private _connectedRoad = _roadConnectedTo select 0;
 private _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
-private _truck = [_roadPos, _roadDirection, ENEMY_LEUTNANT_LIST_CARS call bis_fnc_selectrandom, _grp] call BIS_fnc_spawnVehicle select 0;
+private _truck = [_roadPos, _roadDirection, ENEMY_LEUTNANT_LIST_CARS call bis_fnc_selectrandom, createGroup ENEMY_SIDE] call BIS_fnc_spawnVehicle select 0;
 _leutnant moveInAny _truck;
-private _nbUnit = (count (fullCrew [_truck,"cargo",true]))-1;
 
+private _nbUnit = (count (fullCrew [_truck,"cargo",true]))-1;
+private _unit = objNull;
 for "_yc" from 1 to _nbUnit  do {
     _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
     _unit moveInAny _truck;
 };
 
 _grp selectLeader _leutnant;
-[_leutnant,500] spawn fnc_leutnantPatrol;
+[_truck,_leutnant,500] spawn fnc_leutnantPatrol;
 
 _leutnant addEventHandler ["Killed",{
     ["DCW_secondary","FAILED",true] spawn BIS_fnc_taskSetState;
@@ -62,37 +63,47 @@ _leutnant addEventHandler ["HandleDamage",{
 	if (_damage == 0) exitWith {false};
 	
 	if (_damage > .9 && !(_unit getVariable["DCW_isUnconscious",false])) then {
-        (_this select 0) setVariable["DCW_isUnconscious",true];
+        _unit setVariable["DCW_isUnconscious",true];
 		[_unit] spawn fnc_shout;	
 		removeAllActions _unit;
-		_unit setUnconscious true;
 		_unit setDamage .9;
 		_unit setHit ["legs", 1];
+
+        if (vehicle _unit != _unit)then{
+           moveOut _unit;
+        };
+        
+        //Spasm and unconscious state
+        _unit spawn {
+            sleep .2;
+            _this setUnconscious true;
+            waitUntil { vehicle _this != _this || animationState _this == "ainjppnemstpsnonwrfldnon"  }; 
+            _this playAction "GestureSpasm" + str floor random 7; 
+        };	
+
 		_damage = .9;
 
-        [_unit] spawn{
-            params["_unit"];
-            sleep 10;
-            _unit playActionNow "agonyStart";
-        };
 
 		  [ _unit,"Interrogate","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","true","true",{
 			(_this select 1) playActionNow "medicStart";
 		  },{
 		    (_this select 1) playActionNow "medicStart";
 		  },{
-			(_this select 1) playActionNow "medicStop";
+            params["_unit","_player"];
+			_player playActionNow "medicStop";
             ["DCW_secondary","SUCCEEDED",true] spawn BIS_fnc_taskSetState;
-            (_this select 0) setVariable["DCW_interrogated",true];
-            [(_this select 0)]spawn{
+            _unit setVariable["DCW_interrogated",true];
+            _unit removeAllEventHandlers "Killed";
+            
+            [_unit]spawn{
                 params["_unit"];
                 sleep 100;
                 _unit setDamage 1;
             };
-            (_this select 0) call fnc_MainObjectiveIntel;
+            _unit call fnc_MainObjectiveIntel;
 		},{
 		  (_this select 1) playActionNow "medicStop";
-		},[],10,nil,true,false] spawn BIS_fnc_holdActionAdd;
+		},[],3,nil,true,false] spawn BIS_fnc_holdActionAdd;
 
 	}else{
         if (!(_unit getVariable["DCW_interrogated",false]) && _unit getVariable["DCW_isUnconscious",false]) then {
@@ -113,6 +124,7 @@ _marker setMarkerType "mil_warning";
 _leutnant setVariable["marker",_marker];
 LEUTNANT = _leutnant;
 private _firstSpawn = true;
+
 while {sleep 20; alive _leutnant && !(_leutnant getVariable["DCW_interrogated",false]) } do {
     [ "DCW_secondary",player, [format["Our drones give us some informations about an insurgent's leutnant location. Move to his location and try to gather infomration. His name is %1",name _leutnant],"Interrogate the leutnant","Interrogate the leutnant"],getPos _leutnant,"ASSIGNED",1,if (_firstSpawn) then {true}else{false}] call BIS_fnc_setTask;
     private _loc =  nearestLocations [getPosWorld _leutnant, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
@@ -122,7 +134,8 @@ while {sleep 20; alive _leutnant && !(_leutnant getVariable["DCW_interrogated",f
     _firstSpawn = false;
     sleep 300 + random 240;
 };
+
 deleteMArker _marker;
 sleep 100 + random 400;
 [] spawn fnc_SpawnSecondaryObjective;
-_leutnant;
+false;

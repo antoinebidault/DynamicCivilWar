@@ -20,7 +20,7 @@ ESCORT = [];
 _mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
 _mkrToAvoid setMarkerShape "ELLIPSE";
 _mkrToAvoid setMarkerAlpha 0;
-_mkrToAvoid setMarkerSize [1200,1200];
+_mkrToAvoid setMarkerSize [2000,2000];
 _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
 private _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
@@ -28,8 +28,7 @@ _initPos = ((selectBestPlaces[_initPos, 500, _situation, 5, 1]) select 0 )select
 
 //Spawn the commander
 ENEMY_COMMANDER = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],ENEMY_SKILLS,"NONE"];
-removeAllWeapons ENEMY_COMMANDER;
-ENEMY_COMMANDER setBehaviour "SAFE";
+ENEMY_COMMANDER execVM "DCW\loadout\loadout-commander.sqf";
 
 COMMANDER_LAST_POS = [];
 
@@ -61,7 +60,7 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
         _civ forceSpeed 10;
         _dir = [player,_civ] call BIS_fnc_dirTo; 
         _newPos = [(getPos _civ), 2000,_dir] call BIS_fnc_relPos;
-        [_newPos, 0, 1000, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+        [_newPos, 0, 2000, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
         _civ move _newPos;
         [] spawn{
             waitUntil{sleep 1;(player distance ENEMY_COMMANDER) > 500 || !(alive ENEMY_COMMANDER) };
@@ -100,7 +99,6 @@ for "_yc" from 1 to 4  do {
     ESCORT pushback _unit;
 };
 
-_grp setBehaviour "SAFE";
 _newPos = getPos ENEMY_COMMANDER;
 COMMANDER_LAST_POS = [];
 while {leader _grp == ENEMY_COMMANDER}do{
@@ -132,9 +130,9 @@ while {leader _grp == ENEMY_COMMANDER}do{
     _newPos = [_newPos, 600, 1600, 1, 0, 20, 0,_tempList] call BIS_fnc_FindSafePos;
     _newPos = ((selectBestPlaces [_newPos, 200, _situation, 5, 1]) SELECT 0)SELECT 0;
 
-    _grp setBehaviour "AWARE";
-    _grp setSpeedMode "FULL";
+    _grp setBehaviour "SAFE";
     _grp move _newPos;
+    _grp setSpeedMode "FULL";
 
     //trace a line
     if (DEBUG)then{
