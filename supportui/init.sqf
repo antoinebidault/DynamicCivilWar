@@ -22,6 +22,43 @@ START_SCORE = 150;
 SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",getPosWorld _unit, [], 0, "FORM"]; 
 DRONE_CLASS="rhs_pchela1t_vvsc";
 
+fnc_addCrateInventory = {
+	clearWeaponCargoglobal _this;
+	clearmagazinecargoglobal _this;
+	clearitemcargoglobal _this;
+	clearbackpackcargoglobal _this;
+	
+	_this addWeaponCargoGlobal ["rhs_weap_aks74n",2];
+	_this addWeaponCargoGlobal ["rhs_weap_makarov_pm",2];
+	_this addWeaponCargoGlobal ["rhs_weap_rshg2",2];
+	_this addWeaponCargoGlobal ["rhs_weap_rpg7",2];
+
+	_this addMagazineCargoGlobal ["rhs_30Rnd_545x39_AK",40];
+	_this addMagazineCargoGlobal ["rhs_20rnd_9x39mm_SP5",26];
+	_this addMagazineCargoGlobal ["rhs_mag_9x18_8_57N181S",12];
+	_this addMagazineCargoGlobal ["rhs_magazine_rhs_100Rnd_762x54mmR",10];
+	_this addMagazineCargoGlobal ["rhs_rpg7_PG7V_mag",20];
+
+	_this addItemCargoGlobal ["O_UavTerminal",1];
+	_this addItemCargoGlobal ["ToolKit",2];
+	_this addItemCargoGlobal ["Medikit",1];
+	_this addItemCargoGlobal ["FirstAidKit",10];
+	_this addItemCargoGlobal ["DemoCharge_Remote_Mag",20];
+	_this addItemCargoGlobal ["MineDetector",2];
+
+	_this addItemCargoGlobal ["rhs_assault_umbts",10];
+	_this addItemCargoGlobal ["rhs_6b28",1];
+	_this addMagazineCargoGlobal ["rhs_acc_dtk1983",2];
+	_this addItemCargoGlobal ["rhs_acc_ekp1",2];
+	_this addItemCargoGlobal ["rhs_acc_ekp8_02",2];
+	_this addItemCargoGlobal ["rhs_acc_pkas",2];
+	_this addItemCargoGlobal ["rhs_acc_1p78",2];
+	_this addItemCargoGlobal ["rhs_acc_1p29",2];
+	_this addItemCargoGlobal ["rhs_acc_pso1m2",2];
+	_this addItemCargoGlobal ["rhs_1PN138",2];
+};
+
+
 {
 	//[SUPPORT_REQUESTER, _x, 0] call BIS_fnc_limitSupport;
 	//SUPPORT_REQUESTER setVariable [format ["BIS_SUPP_limit_%1_total", _x], -1];
@@ -33,31 +70,7 @@ DRONE_CLASS="rhs_pchela1t_vvsc";
 	}forEach [
 		["BIS_SUPP_crateInit",
 		'
-			ClearWeaponCargo _this;
-			ClearMagazineCargo _this;
-			clearBackpackCargo _this;
-			removeAllItems _this;
-			clearItemCargo _this;
-			_this addMagazineCargoGlobal ["rhs_30Rnd_762x39mm",30];
-			_this addMagazineCargoGlobal ["rhs_30Rnd_545x39_7N10_AK",20];
-			_this addMagazineCargoGlobal ["rhs_30Rnd_545x39_AK_green",20];
-			_this addMagazineCargoGlobal ["rhs_100Rnd_762x54mmR",10];
-			_this addWeaponCargoGlobal ["rhs_rpg26",2];
-			_this addWeaponCargoGlobal ["rhs_rshg2",2];
-			_this addWeaponCargoGlobal ["rhs_igla",1];
-			_this addItemCargoGlobal ["DemoCharge_F",20];
-			_this addItemCargoGlobal ["O_UavTerminal",1];
-			_this addItemCargoGlobal ["ToolKit",1];
-			_this addItemCargoGlobal ["Medikit",1];
-			_this addItemCargoGlobal ["FirstAidKit",10];
-			_this addBackpackCargoGlobal ["rhs_assault_umbts",2];
-			_this addItemCargoGlobal ["rhs_acc_ekp1",2];
-			_this addItemCargoGlobal ["rhs_acc_ekp8_02",2];
-			_this addItemCargoGlobal ["rhs_acc_pkas",2];
-			_this addItemCargoGlobal ["rhs_acc_1p78",2];
-			_this addItemCargoGlobal ["rhs_acc_1p29",2];
-			_this addItemCargoGlobal ["rhs_acc_pso1m2",2];
-			_this addItemCargoGlobal ["FirstAidKit",10];
+			_this call fnc_addCrateInventory
 		'],
 		["BIS_SUPP_vehicles",_x select 1],		//types of vehicles to use
 		["BIS_SUPP_vehicleinit",""],	//init code for vehicle
@@ -88,33 +101,5 @@ if (isPlayer _unit)then{
 	},nil,1.5,false,true,"","true",15,false,""];
 };
 
-_unit call fnc_displayscore;
 
-fnc_addCrateInventory = {
-	clearWeaponCargoglobal _this;
-	clearmagazinecargoglobal _this;
-	clearitemcargoglobal _this;
-	clearbackpackcargoglobal _this;
-	["AmmoboxInit",[_this,true,{true}]] call BIS_fnc_arsenal;
-	_this addItemCargoGlobal ["rhs_weapon_aks74",1];
-	_this addItemCargoGlobal ["rhs_magazine_rhs_30Rnd_762x39mm",20];
-	_this addItemCargoGlobal ["rhs_magazine_rhs_30Rnd_545x39_7N10_AK",20];
-	_this addItemCargoGlobal ["rhs_magazine_rhs_30Rnd_545x39_AK_green",20];
-	_this addItemCargoGlobal ["rhs_weapon_rpg26",2];
-	_this addItemCargoGlobal ["rhs_weapon_rshg2",2];
-	_this addItemCargoGlobal ["rhs_weapon_igla",1];
-	_this addItemCargoGlobal ["DemoCharge_F",20];
-	_this addItemCargoGlobal ["Item_O_UavTerminal",1];
-	_this addItemCargoGlobal ["Item_ToolKit",1];
-	_this addItemCargoGlobal ["Item_Medikit",1];
-	_this addItemCargoGlobal ["Item_FirstAidKit",10];
-	_this addItemCargoGlobal ["rhs_assault_umbts",10];
-	_this addItemCargoGlobal ["rhs_magazine_rhs_100Rnd_762x54mmR",10];
-	_this addItemCargoGlobal ["Item_rhs_acc_ekp1",2];
-	_this addItemCargoGlobal ["Item_rhs_acc_ekp8_02",2];
-	_this addItemCargoGlobal ["Item_rhs_acc_pkas",2];
-	_this addItemCargoGlobal ["Item_rhs_acc_1p78",2];
-	_this addItemCargoGlobal ["Item_rhs_acc_1p29",2];
-	_this addItemCargoGlobal ["Item_rhs_acc_pso1m2",2];
-	_this addItemCargoGlobal ["Item_FirstAidKit",10];
-};
+_unit call fnc_displayscore;

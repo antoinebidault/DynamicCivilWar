@@ -12,16 +12,13 @@ CIVIL_REPUTATION = 50;
 	HQ setName "HQ";
 };
 
-
 //SPAWNING CONFIG
-SIZE_BLOCK = 500; // Size of blocks
-MARKER_WHITE_LIST = ["marker_base","marker_base_2","marker_base_3","blacklist_1","blacklist_2","blacklist_3","blacklist_4"]; //Pass list of marker white list name
 SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
 
 //FRIENDLIES
 FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses; //Units of your side
-FRIENDLY_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"];
+FRIENDLY_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"]; //Friendly cars
 FRIENDLY_FLAG = "rhs_Flag_Russia_F";//Flag of your side
 
 //CIVILIAN
@@ -49,17 +46,15 @@ MAX_CHASERS = POPULATION_INTENSITY*12; //Max hunters who are looking for you !
 MAX_RANDOM_PATROL = 10; //Number of units patroling around the player at the same time
 MAX_RANDOM_CAR = 2; //Max car spawned.
 NUMBER_CHOPPERS = 0; // Number of choppers
-ENEMY_LIST_UNITS = ["rhsgref_nat_specialist_aa","rhsgref_nat_grenadier_rpg","rhsgref_nat_commander","rhsgref_nat_crew","rhsgref_nat_hunter","rhsgref_nat_machinegunner","rhsgref_nat_medic","rhsgref_nat_militiaman_kar98k","rhsgref_nat_rifleman_akms","rhsgref_nat_rifleman_aks74","rhsgref_nat_grenadier","rhsgref_nat_rifleman","rhsgref_nat_rifleman_m92","rhsgref_nat_saboteur","rhsgref_nat_scout","rhsgref_nat_pmil_saboteur","rhsgref_nat_pmil_rifleman_m92","rhsgref_nat_pmil_rifleman","rhsgref_nat_pmil_grenadier","rhsgref_nat_pmil_rifleman_aksu","rhsgref_nat_pmil_medic","rhsgref_nat_pmil_machinegunner","rhsgref_nat_pmil_hunter","rhsgref_nat_pmil_commander","rhsgref_nat_pmil_grenadier_rpg","rhsgref_nat_pmil_specialist_aa","rhsgref_nat_pmil_scout","rhsgref_nat_pmil_crew"];
+ENEMY_LIST_UNITS = ["rhsgref_ins_g_medic","rhsgref_ins_g_spotter","rhsgref_cdf_ngd_squadleader","rhsgref_nat_specialist_aa","rhsgref_nat_grenadier_rpg","rhsgref_nat_commander","rhsgref_nat_hunter","rhsgref_nat_machinegunner","rhsgref_nat_medic","rhsgref_nat_militiaman_kar98k","rhsgref_nat_rifleman_akms","rhsgref_nat_rifleman_aks74","rhsgref_nat_grenadier","rhsgref_nat_rifleman","rhsgref_nat_rifleman_m92","rhsgref_nat_saboteur","rhsgref_nat_scout","rhsgref_nat_pmil_saboteur","rhsgref_nat_pmil_rifleman_m92","rhsgref_nat_pmil_rifleman","rhsgref_nat_pmil_grenadier","rhsgref_nat_pmil_rifleman_aksu","rhsgref_nat_pmil_medic","rhsgref_nat_pmil_machinegunner","rhsgref_nat_pmil_hunter","rhsgref_nat_pmil_commander","rhsgref_nat_pmil_grenadier_rpg","rhsgref_nat_pmil_specialist_aa","rhsgref_nat_pmil_scout"];
 ENEMY_SNIPER_UNITS = ["rhsgref_ins_g_sniper","rhsgref_cdf_para_marksman"];
 ENEMY_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_nat_uaz_dshkm","rhsgref_BRDM2","rhsgref_nat_uaz_open","rhsgref_nat_uaz_ags","rhsgref_nat_uaz_spg9"];
 ENEMY_CHOPPERS = ["rhsgref_cdf_Mi35","rhsgref_cdf_reg_Mi17Sh"];
 ENEMY_ATTACHEDLIGHT_CLASS =  "rhs_acc_2dpZenit"; //default : "acc_flashlight"
 ENEMY_MORTAR_CLASS = "rhsgref_nat_2b14"; //Mortar class
-NUMBER_TANKS = 0;
+NUMBER_TANKS = 0; //Number of tanks
 ENEMY_LIST_TANKS = ["rhsgref_ins_g_t72ba","rhsgref_ins_g_bmp2e","rhsgref_ins_g_crew","rhsgref_ins_g_crew"]; //Tanks
 ENEMY_COMMANDER_CLASS = "rhsgref_nat_warlord"; //commander
 ENEMY_CONVOY_CAR_CLASS = "rhsgref_nat_uaz_dshkm"; //commander
 ENEMY_CONVOY_TRUCK_CLASS = "rhsgref_nat_ural"; //commander
-ENEMY_LEUTNANT_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_BRDM2"]; 
-
-
+ENEMY_LEUTNANT_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_BRDM2"];  //car list used by leutnant

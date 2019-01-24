@@ -13,15 +13,13 @@ CIVIL_REPUTATION = 50;
 };
 
 //SPAWNING CONFIG
-SIZE_BLOCK = 350; // Size of blocks
-MARKER_WHITE_LIST = ["marker_base"]; //Pass list of marker white list name
-SPAWN_DISTANCE = 500 MIN (viewdistance - 350); //Distance uniuts are spawned
+SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
 
 //FRIENDLIES
 FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses;
 FRIENDLY_LIST_CARS = ["rhsusf_m1025_d_m2","rhsusf_m1025_d_Mk19","rhsusf_M1220_M153_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1232_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1083A1P2_B_M2_D_fmtv_usarmy","rhsusf_m113d_usarmy_M240"];
-FRIENDLY_FLAG = "Flag_US_F"
+FRIENDLY_FLAG = "Flag_US_F";
 
 //CIVILIAN
 CIV_SIDE = CIVILIAN; // Side civilian
@@ -31,7 +29,7 @@ HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
 HUMANITAR_LIST_UNITS = ["C_IDAP_Man_AidWorker_06_F","C_IDAP_Man_AidWorker_05_F","C_IDAP_Man_AidWorker_01_F","C_IDAP_Man_AidWorker_08_F","C_IDAP_Man_UAV_06_medical_F","C_IDAP_Man_EOD_01_F","C_IDAP_Man_AidWorker_03_F"];
 MAX_RANDOM_CIVILIAN = 7;
 MAX_SHEEP_HERD = 3; //Number of sheep herd
-RATIO_POPULATION = .2; //Number of unit per building. 0.4 default
+RATIO_POPULATION = .5; //Number of unit per building. 0.4 default
 RATIO_CARS = .02; //Number of empty cars spawned in a city by buidling
 PERCENTAGE_CIVILIAN = 65; //Percentage civilian in a block
 PERCENTAGE_ENEMIES = 35; //Percentage enemies
@@ -59,4 +57,5 @@ ENEMY_LIST_TANKS = ["LOP_TKA_T55","LOP_TKA_T72BA"]; //Tanks
 ENEMY_COMMANDER_CLASS = "LOP_TKA_Infantry_Officer"; //commander
 ENEMY_CONVOY_CAR_CLASS = "LOP_AM_OPF_Nissan_PKM"; //commander
 ENEMY_CONVOY_TRUCK_CLASS = "LOP_TKA_Ural"; //commander
+ENEMY_LEUTNANT_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_BRDM2"];  //car list used by leutnant
 

@@ -32,6 +32,7 @@ _cam camSetTarget (_target modelToWorld[.3,-.5,.3]);
 _cam camCommit 0;
 _cam camSetPos (_target modelToWorld[0,0,7]);
 _cam camCommit 10;
+
 sleep 7;
 titleCut ["", "BLACK OUT", 3];
 sleep 3;

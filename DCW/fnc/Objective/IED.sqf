@@ -33,7 +33,7 @@ while {_i > 0} do {
     _i = _i-1;
 };
 
-
+//hint format["%1",count _roadSelects];
 
 {
 	_x;
@@ -50,7 +50,7 @@ while {_i > 0} do {
 	_iedJunk enableSimulationGlobal false;
 	_iedJunk setVariable ["DCW_Type","ied"];
 	_iedJunk setVariable ["DCW_IsIntel",true];
-	[_iedJunk,"ColorYellow"] call fnc_addMarker;
+	[_iedJunk,"ColorBlue"] call fnc_addMarker;
 
 	_ieds pushBack _iedJunk;
 

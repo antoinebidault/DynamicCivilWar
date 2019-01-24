@@ -30,35 +30,44 @@ if (REVIVE_ENABLED) then{
 nul = [player] execVM "supportui\init.sqf";
 
 //Damage handler
-player addEventHandler["HandleDamage",{
-    params [
-        "_unit",			// Object the event handler is assigned to.
-        "_hitSelection",	// Name of the selection where the unit was damaged. "" for over-all structural damage, "?" for unknown selections.
-        "_damage",			// Resulting level of damage for the selection.
-        "_source",			// The source unit (shooter) that caused the damage.
-        "_projectile",		// Classname of the projectile that caused inflicted the damage. ("" for unknown, such as falling damage.) (String)
-        "_hitPartIndex",	// Hit part index of the hit point, -1 otherwise.
-        "_instigator",		// Person who pulled the trigger. (Object)
-        "_hitPoint"			// hit point Cfg name (String)
-    ];
+if (RESPAWN_ENABLED) then{
+	player addEventHandler["HandleDamage",{
+		params [
+			"_unit",			// Object the event handler is assigned to.
+			"_hitSelection",	// Name of the selection where the unit was damaged. "" for over-all structural damage, "?" for unknown selections.
+			"_damage",			// Resulting level of damage for the selection.
+			"_source",			// The source unit (shooter) that caused the damage.
+			"_projectile",		// Classname of the projectile that caused inflicted the damage. ("" for unknown, such as falling damage.) (String)
+			"_hitPartIndex",	// Hit part index of the hit point, -1 otherwise.
+			"_instigator",		// Person who pulled the trigger. (Object)
+			"_hitPoint"			// hit point Cfg name (String)
+		];
 
-	if (_damage > .95 && NUMBER_RESPAWN >= 1 && PLAYER_ALIVE)then{
-		PLAYER_ALIVE = false;
-		_unit setUnconscious true;
-		addCamShake [15, 5, 0.7];
-		[_unit] spawn fnc_HandleRespawn;
-		_damage = .95;
-		_unit setDamage .95;
-	}else{
-		if (!PLAYER_ALIVE)then{
+		if (_damage > .95 && NUMBER_RESPAWN >= 1 && PLAYER_ALIVE)then{
+			PLAYER_ALIVE = false;
+			_unit setUnconscious true;
+			addCamShake [15, 5, 0.7];
+			[_unit] spawn fnc_HandleRespawn;
 			_damage = .95;
-			_unit playActionNow "agonyStart";
 			_unit setDamage .95;
-		}
-	};
-	
-	_damage;
-}];
+		}else{
+			if (!PLAYER_ALIVE)then{
+				_damage = .95;
+				_unit playActionNow "agonyStart";
+				_unit setDamage .95;
+			}
+		};
+		
+		_damage;
+	}];
+}else{
+	player addEventHandler["Killed",{
+		params [
+			"_unit"			// Object the event handler is assigned to.
+		];
+		PLAYER_ALIVE = false;
+	}];
+};
 
 //Respawn handling
 fnc_HandleRespawn =

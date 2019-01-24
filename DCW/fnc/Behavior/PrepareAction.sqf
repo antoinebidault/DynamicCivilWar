@@ -71,8 +71,8 @@ addActionLiberate =  {
 
 addActionLookInventory = {
     _this addAction["Search in gear",{
-        private _unit = (_this select 0);
-        private _human = (_this select 1);
+        params["_unit","_human","_action"];
+        _unit removeAction _action;
         if (_unit getVariable["DCW_Suspect",false])then{
             for "_i" from 1 to 3 do {_unit addItemToUniform "1Rnd_HE_Grenade_shell";};
             [_human,"Holy shit ! This man is carrying material for IED purposes !"] call fnc_talk;
@@ -100,8 +100,7 @@ addActionHalt = {
             [_unit,"I don't talk to somebody pointing his gun on me ! Go away !"] call fnc_Talk;
             _unit playActionNow "gestureNo";
             [_asker,"I'm sorry, sir !"] call fnc_Talk;
-            [_unit,-1] call fnc_updateRep;
-            [] call CIVIL_DISRESPECT;
+            [_unit,-2] call fnc_updateRep;
             _unit stop false;
             false; 
         };

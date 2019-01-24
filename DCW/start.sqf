@@ -5,6 +5,29 @@
  * License : GNU (GPL)
  */
 
+
+//Default white list marker;
+titleCut ["Mission loading...", "BLACK FADED", 999];
+SIZE_BLOCK = 500; // Size of blocks
+GAME_ZONE_SIZE=5000;
+MARKER_WHITE_LIST = []; //Pass list of marker white list name
+{  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
+
+private _mp = createMarker ["playerMarker",getPos player ];
+_mp setMarkerShape "ELLIPSE";
+_mp setMarkerAlpha 0;
+_mp setMarkerSize [SIZE_BLOCK,SIZE_BLOCK];
+MARKER_WHITE_LIST pushBack _mp;
+
+private _gameZone = createMarker ["gameZone",getPos player ];
+_gameZone setMarkerShape "ELLIPSE";
+_gameZone setMarkerAlpha 0;
+_gameZone setMarkerSize [GAME_ZONE_SIZE,GAME_ZONE_SIZE];
+
+
+//Consuming work => getAllClusters
+private _clusters = [] call fnc_GetClusters;
+
 //Briefing
 player createDiaryRecord ["Diary",["Keep a good reputation",
 "The civilian in the sector would be very sensitive to the way you talk to them. Some of them are definitly hostiles to our intervention. You are free to take them in custody, that's a good point to track the potential insurgents in the region. You must avoid any mistakes, because it could have heavy consequences on the reputation of our troops in the sector. More you hurt them, more they might join the insurgents. If you are facing some difficulties, it is possible to convince some of them to join your team (it would costs you some credits...). Keep in mind the rules of engagements and it would be alright."]];
@@ -25,10 +48,18 @@ DCW_START = false;
 
 //Starting params and dialogs
 [] execVM "DCW\config\config-parameters.sqf"; //Parameters
-[] execVM "DCW\config\config-dialog.sqf"; //Open dialog
+
+//Switch here the config you need.
+[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-takistan.sqf"); 
+
+//[] execVM "DCW\config\config-dialog.sqf"; //Open dialog
+sleep 1;
+DCW_START = true;
 
 //WAiting starting
 waitUntil {DCW_START};
+
+titleCut ["", "BLACK IN", 2];
 
 //TIME
 setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
@@ -43,8 +74,6 @@ setWind [10*WEATHER, 10*WEATHER, true];
 forceWeatherChange;
 //[] execVM "intro.sqf"; 
 
-//Switch here the config you need.
-[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-malden.sqf"); 
 
 
 //Variable in Global scope
@@ -61,7 +90,7 @@ LAST_FLARE_TIME = time;
 REFRESH_TIME = 10;
 
 
-//EVENT LIST
+//On civilian killed
 CIVILIAN_KILLED = { 
 	params["_unit","_killer"]; 
 	hint format ["%1 %2 was killed by %3",name (_unit),side _unit,name (_killer)];
@@ -70,11 +99,13 @@ CIVILIAN_KILLED = {
 	[player,-20] call fnc_updateScore;
 };
 
+//On enemy killed => 2 points
 ENEMY_KILLED = {
 	params["_type","_unit"]; 
 	[player,2,true] call fnc_updateScore;
  };
 
+//On compound secured
 COMPOUND_SECURED = { 
 	params["_marker","_radius","_units","_points"]; 
 
@@ -83,6 +114,7 @@ COMPOUND_SECURED = {
 	[player,_points] call fnc_updateScore;
 };
 
+//On success
 OBJECTIVE_ACCOMPLISHED = { 
 	params["_type","_unit","_bonus"]; 
 	if (_bonus > 0) then{
@@ -90,42 +122,30 @@ OBJECTIVE_ACCOMPLISHED = {
 	};
 };
 
+//If civilian is healed by player
 CIVIL_HEALED = { 
-	params["_civ","_unit"];
 	[player,20] call fnc_updateScore;
  };
 
+//If civil is captured
  CIVIL_CAPTURED = { 
 	[player,-5] call fnc_updateScore;
  };
 
+// If player is killed
  PLAYER_KIA = { 
 	[player,-20] call fnc_updateScore;
  };
 
- CIVIL_DISRESPECT = { 
+//If player did not respect a civilian
+CIVIL_DISRESPECT = { 
 	[player,-5] call fnc_updateScore;
- };
+};
 
+//On enemy search.
 ENEMY_SEARCHED = {
 	[player,ceil (random 5)] call fnc_updateScore;
 };
-
-
-
-private _unitsSpawned = [];
-private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
-private _worldCenter = [_worldSize/2,_worldSize/2,0];
-private _worldNbBlocks = floor(_worldSize/SIZE_BLOCK);
-
-//Default white list marker;
-private _mp = createMarker ["playerMarker",getPosWorld player ];
-_mp setMarkerShape "ELLIPSE";
-_mp setMarkerAlpha 0;
-_mp setMarkerSize [SIZE_BLOCK,SIZE_BLOCK];
-MARKER_WHITE_LIST pushBack _mp;
-
-
 
 private _popbase = 0;
 private _nbFriendlies = 0;
@@ -136,7 +156,6 @@ private _points = 0;
 private _nbSnipers = 0;
 private _nbMortars = 0;
 private _typeObj = "";
-private _clusters = [] call fnc_GetClusters;
 
 {
 	private _return = false;
@@ -147,9 +166,13 @@ private _clusters = [] call fnc_GetClusters;
 	private _nameLocation = _x select 3;
 	private _isMilitary = _x select 5;
 
+	// If in white list exit loop
 	{ 
 		if(_pos inArea _x)exitWith{_return = true;};
 	} foreach MARKER_WHITE_LIST;
+
+	// If not in game zone => exit loop
+	if(!(_pos inArea _gameZone))exitWith{_return = true;};
 
 	if (isNil{_return})then{_return = false;};
 	if (!_return)then
@@ -238,9 +261,10 @@ private _timerChaser = time - 360;
 
 while {true} do{
 	_playerPos = position player;
-	_isInFlyingVehicle = false;
 	_nbUnitSpawned = count UNITS_SPAWNED;
 
+	//Catch flying player
+	_isInFlyingVehicle = false;
 	if( (vehicle player) != player && ((vehicle player) isKindOf "Air" && (_playerPos select 2) > 4))then{
 		_isInFlyingVehicle = true;
 	};
@@ -403,5 +427,6 @@ while {true} do{
 		_timerChaser = time;
 		UNITS_SPAWNED = UNITS_SPAWNED + ([] call fnc_SpawnChaser);
 	};
+
 	sleep REFRESH_TIME;
 };

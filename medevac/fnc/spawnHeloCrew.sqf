@@ -10,7 +10,7 @@ _transportHelo = _this select 0;
 _side = _this select 1;
 
 _interventionGroup = createGroup _side;
-_className = "rhs_vdv_flora_medic";// "rhsusf_socom_swcc_crewman";// "rhsusf_socom_marsoc_jtac";
+_className = "rhsusf_socom_swcc_crewman";// "rhs_vdv_flora_medic";// "rhsusf_socom_marsoc_jtac";
 
 for "_xc" from 0 to 1 do {
 	_unit = _interventionGroup createUnit [_className, position _transportHelo, [], 0, "FORM"];

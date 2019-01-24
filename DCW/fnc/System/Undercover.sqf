@@ -1,3 +1,12 @@
+
+/**
+ * DYNAMIC CIVIL WAR
+ * Created: 2017-11-29
+ * Author: BIDASS
+ * License : GNU (GPL)
+ * Undercover loop triggered on disguise action on enemy dead bodies
+ */
+
 private["_unit","_enemy"];
 params["_unit","_enemy"];
 

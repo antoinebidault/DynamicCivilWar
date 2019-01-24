@@ -20,11 +20,13 @@ ESCORT = [];
 _mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
 _mkrToAvoid setMarkerShape "ELLIPSE";
 _mkrToAvoid setMarkerAlpha 0;
-_mkrToAvoid setMarkerSize [2000,2000];
+_mkrToAvoid setMarkerSize [1000,1000];
 _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
-private _initPos = [_worldCenter, (_worldSize/2)*0, (_worldSize/2)*1.2, 4, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
+
+private _initPos = [_worldCenter, 300, 1000, 4, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
 _initPos = ((selectBestPlaces[_initPos, 500, _situation, 5, 1]) select 0 )select 0;
+
 
 //Spawn the commander
 ENEMY_COMMANDER = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],ENEMY_SKILLS,"NONE"];

@@ -59,6 +59,25 @@ fnc_SwitchUnit = {
 	//Weather
 	UNIT_SHOWCASE execVM format["DCW\loadout\loadout-%1.sqf",_this];
 	player execVM format["DCW\loadout\loadout-%1.sqf",_this];
+
+	sleep .3;
+
+	disableSerialization;
+	private _display = findDisplay 5001;
+
+	private _ctrl =  _display displayCtrl 2200;
+	private _image = getText (configfile >> "CfgWeapons" >> primaryWeapon player >> "picture");
+	_ctrl ctrlSetText _image;
+
+		
+	private _ctrl =  _display displayCtrl 2201;
+	private _image = getText (configfile >> "CfgWeapons" >> secondaryWeapon player >> "picture");
+	_ctrl ctrlSetText _image;
+		
+	private _ctrl =  _display displayCtrl 2202;
+	private _image = getText (configfile >> "CfgWeapons" >> handgunWeapon player >> "picture");
+	_ctrl ctrlSetText _image;
+
 };
 
 titleCut ["", "BLACK FADED", 999];
@@ -66,7 +85,6 @@ titleCut ["", "BLACK FADED", 999];
 UNIT_SHOWCASE =  (createGroup EAST) createUnit ["O_Soldier_AAT_F",[7896.11,11684.8,0.0523224], [], 0, "NONE"]; 
 UNIT_SHOWCASE disableAI "MOVE";
 UNIT_SHOWCASE disableAI "FSM";
-1 call fnc_SwitchUnit; 
 
 UNIT_SHOWCASE_CAMERA = "camera" camcreate (getPos UNIT_SHOWCASE);
 UNIT_SHOWCASE_CAMERA cameraeffect ["internal", "back"];
@@ -80,6 +98,9 @@ showCinemaBorder false;
  
 private _ok = createDialog "PARAMETERS_DIALOG"; 
 private _display = findDisplay 5001;
+
+1 call fnc_SwitchUnit; 
+
 
 noesckey = _display displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
@@ -133,7 +154,7 @@ _ctrlLoadout lbSetValue  [3,4];
 _ctrlLoadout lbAdd "Aleksei";
 _ctrlLoadout lbSetValue  [4,5];
 _ctrlLoadout lbSetCurSel  0;
-_ctrlLoadout ctrlAddEventHandler ["LBSelChanged","((_this select 1) + 1) call fnc_SwitchUnit"];
+_ctrlLoadout ctrlAddEventHandler ["LBSelChanged","((_this select 1) + 1) spawn fnc_SwitchUnit"];
 
 
 //Data

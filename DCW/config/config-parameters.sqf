@@ -1,11 +1,10 @@
 
 
 
-
-SPAWN_DISTANCE = .5;
-MAX_NUMBER_UNITS = .5;
-POPULATION_INTENSITY = .5;
-TIME_OF_DAYS = 12;
-WEATHER = 0.5;
-REVIVE_ENABLED = true;
-RESPAWN_ENABLED =  true;
+POPULATION_INTENSITY = .5; //Population
+TIME_OF_DAYS = 12; //Time
+WEATHER = 0.5; //Weather forecast global indicator
+REVIVE_ENABLED = true; //Reviving
+RESPAWN_ENABLED =  true; //Respawn when hit
+SHOW_SECTOR = true;
+DEBUG = true;

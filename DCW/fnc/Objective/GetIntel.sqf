@@ -26,7 +26,7 @@ private _potentialIntel = [];
 if (count _potentialIntel == 0 || random 100 > _probability) exitWith { [false,"I have nothing to tell you ! Leave me alone !"];};
 
 private _intel = _potentialIntel call BIS_fnc_selectRandom;
-_task = [_intel,_asker] call fnc_createTask;
+_task = [_intel,_asker,true] call fnc_createTask;
 _taskId = _task select 0;
 _message = _task select 1;
 _intel setVariable["DCW_IsIntelRevealed",true];
