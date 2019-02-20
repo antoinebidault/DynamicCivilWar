@@ -21,7 +21,6 @@ _this addAction["Interrogate",{
 
 _this addAction["Set up camp here (200 points, 6 hours)",{
     params["_unit","_asker","_action"];
-
     //Talk
     [_asker,"Is it possible to set up our camp here ?"] spawn fnc_talk;
 
@@ -39,6 +38,9 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     private _meetingPointPosition =_curr select 7;
     private _points =_curr select 8;
     private _isLocation =_curr select 9;
+    private _randomnumber = floor random 100000;
+    private _mkrToAvoid = createMarker ["mkr-to-avoid" + (str _randomnumber),getPos player];
+
 
     if(!_triggered) exitWith{[_unit,"No way man..."] spawn fnc_talk;false;};
     if(!_success) exitWith{[_unit,"Secure our position first"] spawn fnc_talk;false;};
@@ -56,8 +58,7 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
         };
     } foreach _buildings;
 
-     //Put in whitelisty
-    _mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
+     // Put in whitelisty
     _mkrToAvoid setMarkerAlpha 0;
     _mkrToAvoid setMarkerSize [500,500];
     MARKER_WHITE_LIST pushback _mkrToAvoid;

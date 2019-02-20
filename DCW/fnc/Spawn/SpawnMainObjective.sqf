@@ -9,22 +9,23 @@ _nbTrucks = 2;
 _roadRadius = 40;
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 _worldCenter = [_worldSize/2,_worldSize/2,0];
-private _compos = [compo_commander1,compo_commander2];
+private _compos = [compo_commander1, compo_commander2];
 private _situation = "+trees +forest*10 -meadow";
-private _newPos = [];
+private _commanderPos = [];
+private _mkrToAvoid = ["mkr-cmdr-remove", position player];
+private _tempList = [];
 
 ENEMY_COMMANDER = objNull;
 _grp = createGroup ENEMY_SIDE;
 ESCORT = [];
 
-_mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
-_mkrToAvoid setMarkerShape "ELLIPSE";
+/*
+_mkrToAvoid = createMarker ["mkrToAvoid",position player];
+_mkrToAvoid setMarkerShape "SQUARE";
 _mkrToAvoid setMarkerAlpha 0;
-_mkrToAvoid setMarkerSize [1000,1000];
-_tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
+_mkrToAvoid setMarkerSize [400,400];*/
 
-
-private _initPos = [_worldCenter, 300, 1000, 4, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
+private _initPos = [_worldCenter, 600, 1600, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 _initPos = ((selectBestPlaces[_initPos, 500, _situation, 5, 1]) select 0 )select 0;
 
 
@@ -36,7 +37,7 @@ COMMANDER_LAST_POS = [];
 
 //Custom variable
 if (DEBUG) then {
-    _marker = createMarker ["commanderMarker",getPos ENEMY_COMMANDER];
+    _marker = createMarker ["commanderMarker",position ENEMY_COMMANDER];
     _marker setMarkerShape "ICON";
     _marker setMarkerColor "ColorRed";
     _marker setMarkerType "o_motor_inf";
@@ -49,21 +50,21 @@ ESCORT pushBack ENEMY_COMMANDER;
 
 //When the commander is attacked by the player group, he would try to flee. If he is far from the player, he would disappear and got respawned in another sector
 ENEMY_COMMANDER addEventHandler ["FiredNear",{
-    _civ=_this select 0;	
+    _commander= _this select 0;	
     _distance = _this select 2;	
     _gunner = _this select 7;	
 
     if (group _gunner == group player && _distance < 50)then{
         [player,"Shit ! this asshole is fleeing."] spawn fnc_talk;
-        _civ removeAllEventHandlers "FiredNear";
-        [_civ] joinSilent (createGroup ENEMY_SIDE);
-        _civ setBehaviour "CARELESS";
-        _civ forceWalk false;
-        _civ forceSpeed 10;
-        _dir = [player,_civ] call BIS_fnc_dirTo; 
-        _newPos = [(getPos _civ), 2000,_dir] call BIS_fnc_relPos;
-        [_newPos, 0, 2000, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
-        _civ move _newPos;
+        _commander removeAllEventHandlers "FiredNear";
+        [_commander] joinSilent (createGroup ENEMY_SIDE);
+        _commander setBehaviour "CARELESS";
+        _commander forceWalk false;
+        _commander forceSpeed 10;
+        _dir = [player,_commander] call BIS_fnc_dirTo; 
+        _commanderPos = [(getPos _commander), 2000,_dir] call BIS_fnc_relPos;
+        [_commanderPos, 0, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+        _commander move _commanderPos;
         [] spawn{
             waitUntil{sleep 1;(player distance ENEMY_COMMANDER) > 500 || !(alive ENEMY_COMMANDER) };
             if (!alive ENEMY_COMMANDER)exitWith{false};
@@ -87,7 +88,8 @@ ENEMY_COMMANDER addEventHandler ["Killed",{
         };
     }else{
         //Start over
-        { ESCORT = ESCORT - [_x]; deleteMarker (_x getVariable["marker",""]);deleteVehicle _x;} forEach CONVOY;
+        hint "restart...";
+        { ESCORT = ESCORT - [_x]; deleteMarker (_x getVariable["marker",""]);deleteVehicle _x;} forEach ESCORT;
         [] spawn fnc_SpawnMainObjective;
     };
 }];
@@ -101,12 +103,15 @@ for "_yc" from 1 to 4  do {
     ESCORT pushback _unit;
 };
 
-_newPos = getPos ENEMY_COMMANDER;
+sleep 1;
+
+_commanderPos = getPos ENEMY_COMMANDER;
 COMMANDER_LAST_POS = [];
+
 while {leader _grp == ENEMY_COMMANDER}do{
 
     //Push indication
-    _newObjs = [_newPos,random 360, _compos call bis_fnc_selectrandom] call BIS_fnc_ObjectsMapper;
+    _newObjs = [_commanderPos, random 360, _compos call bis_fnc_selectrandom] call BIS_fnc_ObjectsMapper;
     _mainObj = _newObjs select 0;
 
     _trig = createTrigger["EmptyDetector",getPosATL _mainObj];
@@ -120,28 +125,29 @@ while {leader _grp == ENEMY_COMMANDER}do{
     ];
 
     //Push to the global variable
-    COMMANDER_LAST_POS pushback _newPos;  
+    COMMANDER_LAST_POS pushback _commanderPos;  
 
     //Blacklist du joueur
-    _mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
+    deleteMarker "mkr-cmdr-remove";
+    _mkrToAvoid = createMarker ["mkr-cmdr-remove", position player];
     _mkrToAvoid setMarkerAlpha 0;
-    _mkrToAvoid setMarkerSize [1500,1500];
+    _mkrToAvoid setMarkerSize [500,500];
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
-    _initPos = _newPos;
-    _newPos = [_newPos, 600, 1600, 1, 0, 20, 0,_tempList] call BIS_fnc_FindSafePos;
-    _newPos = ((selectBestPlaces [_newPos, 200, _situation, 5, 1]) SELECT 0)SELECT 0;
+    _initPos = _commanderPos;
+    _commanderPos = [_commanderPos, 500, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+    _commanderPos = ((selectBestPlaces[_commanderPos, 500, _situation, 5, 1]) select 0 )select 0;
 
     _grp setBehaviour "SAFE";
-    _grp move _newPos;
+    _grp move _commanderPos;
     _grp setSpeedMode "FULL";
 
     //trace a line
     if (DEBUG)then{
-        (findDisplay 12 displayCtrl 51) ctrlAddEventHandler ["Draw",format["(_this select 0) drawLine [%1,%2,[244, 93, 93,1]];",_initPos,_newPos]];
+        (findDisplay 12 displayCtrl 51) ctrlAddEventHandler ["Draw",format["(_this select 0) drawLine [%1,%2,[244, 93, 93,1]];",_initPos, _commanderPos]];
     };
 
-    waitUntil {sleep 30; ENEMY_COMMANDER distance _newPos < 5};
+    waitUntil {sleep 30; ENEMY_COMMANDER distance _commanderPos < 5};
 
     _grp setBehaviour "SAFE";
     _grp setSpeedMode "LIMITED";

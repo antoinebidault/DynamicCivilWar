@@ -14,7 +14,7 @@ private _grp = createGroup ENEMY_SIDE;
 private _posSelected = [position player ,SPAWN_DISTANCE,SPAWN_DISTANCE+100, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
 
  for "_xc" from 1 to _nbUnit do {
-    _enemy = [_grp,_posSelected,false] call fnc_spawnEnemy;
+    _enemy = [_grp,_posSelected, false] call fnc_spawnEnemy;
     _enemy setVariable["DCW_Type","chaser"];
     _enemy setDir random 360;
     _units pushback _enemy;

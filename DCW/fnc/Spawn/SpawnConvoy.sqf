@@ -13,7 +13,7 @@ private _nbVeh = 3;
 private _nbTrucks = _nbVeh - 1;
 private _roadRadius = 40;
 
-private _mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
+private _mkrToAvoid = createMarker ["mkr-to-avoid",getPos player];
 _mkrToAvoid setMarkerShape "ELLIPSE";
 _mkrToAvoid setMarkerAlpha 0;
 _mkrToAvoid setMarkerSize [500,500];

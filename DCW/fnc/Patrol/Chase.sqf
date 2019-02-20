@@ -15,7 +15,6 @@ _marker setMarkerColor "ColorBlack";
 _marker setMarkerBrush "SolidBorder";
 
 
-
 while { alive _leader && alive player }do{
     if (_leader knowsAbout player >= .5) then {
         if (time > LAST_FLARE_TIME + 120)then{

@@ -82,12 +82,12 @@ fnc_HandleRespawn =
 
 	if (REMAINING_RESPAWN == -1)exitWith{endMission "KILLED";};
 	
-	cutText ["You are dead","BLACK OUT", 7];
+	cutText ["You are severly injured","BLACK OUT", 7];
 	sleep 7;
 	_unit setUnconscious false;
 
 	_timeSkipped = round(6 + random 12);
-	cutText ["You are dead","BLACK FADED", 999];
+	cutText ["You are severly injured","BLACK FADED", 999];
 	_score = _unit getVariable ["DCW_SCORE",0];
 	_units = units (group _unit);
 	{ if(alive _x) then{_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)}; }foreach _units;
@@ -107,11 +107,11 @@ fnc_HandleRespawn =
 
 	//Black screen with timer...
 	sleep 2;
-	cutText ["You are dead","BLACK FADED", 999];
+	cutText ["You are severly injured","BLACK FADED", 999];
 	
 	BIS_DeathBlur ppEffectAdjust [0.0];
 	BIS_DeathBlur ppEffectCommit 0;
-	cutText ["You are dead","BLACK FADED", 999];
+	cutText ["You are severly injured","BLACK FADED", 999];
 	skipTime 6 + random 12;
 	sleep 5;
 	[worldName, "Back to camp",format["%1 hours later...",_timeSkipped], format ["%1 live%2 left",REMAINING_RESPAWN,if (REMAINING_RESPAWN <= 1) then {""}else{"s"}]] call BIS_fnc_infoText;

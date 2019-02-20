@@ -11,7 +11,7 @@ params ["_unit"];
 _unit setSpeedMode "LIMITED";
 _unit forceWalk  true;
 
-while { alive _unit }do{
+while { alive _unit && group _unit != group player }do{
 
     _newPos = [getPos player, 1, 250, 3, 0, 20, 0] call BIS_fnc_FindSafePos;
     group _unit move _newPos;
@@ -49,3 +49,5 @@ while { alive _unit }do{
 	[_unit] call fnc_gotomeeting;
     sleep 5;
 };
+
+_unit forceWalk false;

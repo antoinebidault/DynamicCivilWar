@@ -24,4 +24,4 @@ _transporthelo addEventHandler["Killed",{
     [transportHelo] call fnc_abortMedevac;
 }];
 
-_transporthelo;
+_transporthelo; 

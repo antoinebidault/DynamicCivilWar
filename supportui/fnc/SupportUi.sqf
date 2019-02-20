@@ -5,8 +5,8 @@
  * License : GNU (GPL)
  */
 
-_unit = _this;
-_points = _this getVariable["DCW_SCORE",0];
+private _unit = _this;
+private _points = _this getVariable["DCW_SCORE",0];
 
 private["_ok","_ctrlList"];
 _ok = createDialog "ICE_DIALOG";

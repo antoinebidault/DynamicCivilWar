@@ -55,7 +55,7 @@ _posChopper = objNull;
 while {true} do {
 
 	//Push dead soldiers
-	_soldiersDead = units (group unit) select {_x getVariable["unit_injured",false] };
+	_soldiersDead = units (group unit) select { _x getVariable["unit_injured",false] };
 
 	//Launch chopper
 	if (MEDEVAC_FirstTrigger)then{

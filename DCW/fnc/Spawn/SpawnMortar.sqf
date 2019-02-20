@@ -15,7 +15,7 @@ private _units = [];
 
 if (_nb == 0)exitWith{_units;};
 
-_mkrToAvoid = createMarker ["mkrToAvoid",getPos player];
+private _mkrToAvoid = createMarker ["mkr-to-avoid-" + str(floor random 100000),getPos player];
 _mkrToAvoid setMarkerShape "ELLIPSE";
 _mkrToAvoid setMarkerAlpha 0;
 _mkrToAvoid setMarkerSize [150,150];

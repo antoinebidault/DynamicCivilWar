@@ -8,7 +8,8 @@
 
 //Default white list marker;
 titleCut ["Mission loading...", "BLACK FADED", 999];
-SIZE_BLOCK = 500; // Size of blocks
+
+SIZE_BLOCK = 300; // Size of blocks
 GAME_ZONE_SIZE=5000;
 MARKER_WHITE_LIST = []; //Pass list of marker white list name
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
@@ -19,14 +20,17 @@ _mp setMarkerAlpha 0;
 _mp setMarkerSize [SIZE_BLOCK,SIZE_BLOCK];
 MARKER_WHITE_LIST pushBack _mp;
 
-private _gameZone = createMarker ["gameZone",getPos player ];
+_worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
+_worldCenter = [_worldSize/2,_worldSize/2,0];
+
+private _gameZone = createMarker ["gameZone", _worldCenter ];
 _gameZone setMarkerShape "ELLIPSE";
 _gameZone setMarkerAlpha 0;
-_gameZone setMarkerSize [GAME_ZONE_SIZE,GAME_ZONE_SIZE];
+_gameZone setMarkerSize [_worldSize/2,_worldSize/2];
 
 
 //Consuming work => getAllClusters
-private _clusters = [] call fnc_GetClusters;
+private _clusters = [_gameZone] call fnc_GetClusters;
 
 //Briefing
 player createDiaryRecord ["Diary",["Keep a good reputation",
@@ -50,7 +54,7 @@ DCW_START = false;
 [] execVM "DCW\config\config-parameters.sqf"; //Parameters
 
 //Switch here the config you need.
-[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-takistan.sqf"); 
+[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-stratis.sqf"); 
 
 //[] execVM "DCW\config\config-dialog.sqf"; //Open dialog
 sleep 1;
@@ -87,8 +91,9 @@ CHASER_TRIGGERED = false;
 CHASER_VIEWED = false;
 MESS_SHOWN = false;
 LAST_FLARE_TIME = time;
-REFRESH_TIME = 10;
-
+REFRESH_TIME = 10; // Refresh time
+CONVOY = []; // Current convoy
+ESCORT = []; // List of escorts guys with the commandant
 
 //On civilian killed
 CIVILIAN_KILLED = { 
@@ -172,7 +177,7 @@ private _typeObj = "";
 	} foreach MARKER_WHITE_LIST;
 
 	// If not in game zone => exit loop
-	if(!(_pos inArea _gameZone))exitWith{_return = true;};
+	//if(!(_pos inArea _gameZone))exitWith{_return = true;};
 
 	if (isNil{_return})then{_return = false;};
 	if (!_return)then
@@ -198,7 +203,7 @@ private _typeObj = "";
 		};
 
 		//Nb units to spawn per block
-		_popbase = 30 MIN (ceil((_nbBuildings)*(RATIO_POPULATION)  + (round random 1)));
+		_popbase = 1 MAX (30 MIN (ceil((_nbBuildings)*(RATIO_POPULATION)  + (round random 1))));
 		_nbEnemies = 0;
 		_nbCivilian = 0;
 		for "_x" from 1 to _popbase  do
@@ -258,6 +263,24 @@ private _typeObj = "";
 
 private ["_mkr","_cacheResult","_ieds"];
 private _timerChaser = time - 360;
+
+[] spawn {
+	if (DEBUG)then{
+		while {true} do{
+			{
+				//Update marker position
+				_mkr = _x getVariable["marker",""];
+				if (_mkr!="")then{
+					_mkr setMarkerPos (getPos _x);
+					if (!alive _x) then{
+						deleteMarker (_x getVariable["marker",""]);
+					}
+				};
+			} foreach UNITS_SPAWNED + ESCORT + CONVOY;
+			sleep 1;
+		};
+	};
+};
 
 while {true} do{
 	_playerPos = position player;
@@ -402,13 +425,6 @@ while {true} do{
 				};
 			};
 
-			//Update marker position
-			if (DEBUG)then{
-				_mkr = _x getVariable["marker",""];
-				if (_mkr!="")then{
-					_mkr setMarkerPos (getPosWorld _x);
-				};
-			};
 
 
 		} foreach UNITS_SPAWNED;
