@@ -4,23 +4,40 @@
  * Author: BIDASS
  * License : GNU (GPL)
  */
-
+ 
 params ["_unit"];
+waitUntil { time > 0 };
+grpNetID = group _unit call BIS_fnc_netId;
+
 fnc_updatescore = compile preprocessFileLineNumbers  "supportui\fnc\UpdateScore.sqf";
 fnc_afford = compile preprocessFileLineNumbers  "supportui\fnc\Afford.sqf";
 fnc_supportui = compile preprocessFileLineNumbers  "supportui\fnc\SupportUI.sqf";
 fnc_displayscore = compile preprocessFileLineNumbers  "supportui\fnc\DisplayScore.sqf";
 
-sleep 14;
 
  //Create a side logic 
-_center = createCenter sideLogic; 
+private _center = createCenter sideLogic; 
 //Create a group for our modules 
-_logicGroup = createGroup _center; 
+private _logicGroup = createGroup _center; 
 //Spawn a SupportRequestor module 
 START_SCORE = 150;
-SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",getPosWorld _unit, [], 0, "FORM"]; 
-DRONE_CLASS="rhs_pchela1t_vvsc";
+
+private _pos = [_unit, 1000, (floor (random 360))] call BIS_fnc_relPos;
+SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",_pos, [], 0, "FORM"]; 
+
+{
+	[SUPPORT_REQUESTER, _x, 0] remoteExec ["BIS_fnc_limitSupport", 0, true];
+} forEach [
+	"Artillery",
+	"CAS_Heli",
+	"CAS_Bombing",
+	"UAV",
+	"Drop",
+	"Transport"
+];
+
+SUPPORT_REQUESTER setVariable[ "BIS_fnc_initModules_disableAutoActivation", false ];
+
 
 fnc_addCrateInventory = {
 	clearWeaponCargoglobal _this;
@@ -58,15 +75,16 @@ fnc_addCrateInventory = {
 	_this addItemCargoGlobal ["rhs_1PN138",2];
 };
 
+private _logicGroupSupportProvider = createGroup _center;
 
 {
 	//[SUPPORT_REQUESTER, _x, 0] call BIS_fnc_limitSupport;
 	//SUPPORT_REQUESTER setVariable [format ["BIS_SUPP_limit_%1_total", _x], -1];
-	_supportProvider =  _logicGroup createUnit [format["SupportProvider_Virtual_%1",_x select 0],[0,0,0], [], 0, "FORM"]; 
+	_supportProvider =  _logicGroupSupportProvider createUnit [format["SupportProvider_Virtual_%1",_x select 0],_pos, [], 0, "FORM"]; 
 	
 	//Setup provider values
 	{
-		_supportProvider setVariable [(_x select 0),(_x select 1)];
+		_supportProvider setVariable [(_x select 0),(_x select 1),true];
 	}forEach [
 		["BIS_SUPP_crateInit",
 		'
@@ -76,21 +94,22 @@ fnc_addCrateInventory = {
 		["BIS_SUPP_vehicleinit",""],	//init code for vehicle
 		["BIS_SUPP_filter","SIDE"]		//whether default vehicles comes from "SIDE" or "FACTION"
 	];
+	//ENABLE ACTIVATION
+	_supportProvider setVariable["BIS_fnc_initModules_disableAutoActivation", false];
 
-	[SUPPORT_REQUESTER, _x select 0, 0] call BIS_fnc_limitSupport;
-	[_unit, SUPPORT_REQUESTER, _supportProvider] call BIS_fnc_addSupportLink;
+	[SUPPORT_REQUESTER, _x select 0, 0] remoteExec ["BIS_fnc_limitSupport", 0, true];
+	{
+		[_x, SUPPORT_REQUESTER, _supportProvider] remoteExec ["BIS_fnc_addSupportLink", 0, true];
+	} forEach (units (grpNetId call BIS_fnc_groupFromNetId));
 
 }forEach [
-	["Artillery",["rhs_D30_msv"]],
+	["Artillery",[SUPPORT_ARTILLERY_CLASS]],
 	["CAS_Heli",[]],
-	["CAS_Bombing",["RHS_Su25SM_vvsc"]],
-	["UAV",[DRONE_CLASS]],
-	["Drop",["RHS_Mi8mt_vdv"]],
-	["Transport",["RHS_Mi8mt_vdv"]]
+	["CAS_Bombing",[SUPPORT_BOMBING_AIRCRAFT_CLASS]],
+	["UAV",[SUPPORT_DRONE_CLASS]],
+	["Drop",[SUPPORT_DROP_AIRCRAFT_CLASS]],
+	["Transport",[SUPPORT_TRANSPORT_CHOPPER_CLASS]]
 ];
-
-
-
 
 _unit setVariable ["DCW_SCORE",_unit getVariable ["DCW_SCORE",START_SCORE]];
 

@@ -9,9 +9,25 @@
 //Default white list marker;
 titleCut ["Mission loading...", "BLACK FADED", 999];
 
+//Variable in Global scope
 SIZE_BLOCK = 300; // Size of blocks
 GAME_ZONE_SIZE=5000;
 MARKER_WHITE_LIST = []; //Pass list of marker white list name
+UNITS_SPAWNED = [];
+INTELS = [];
+UNITS_CACHED = [];
+MARKERS = [];
+SHEEP_POOL = [];
+UNITS_CHASERS = [];
+CHASER_TRIGGERED = false;
+CHASER_VIEWED = false;
+MESS_SHOWN = false;
+LAST_FLARE_TIME = time;
+REFRESH_TIME = 10; // Refresh time
+CONVOY = []; // Current convoy
+ESCORT = []; // List of escorts guys with the commandant
+
+
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 
 private _mp = createMarker ["playerMarker",getPos player ];
@@ -56,6 +72,9 @@ DCW_START = false;
 //Switch here the config you need.
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-stratis.sqf"); 
 
+// init user respawn
+[getMarkerPos "marker_base"] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
+
 //[] execVM "DCW\config\config-dialog.sqf"; //Open dialog
 sleep 1;
 DCW_START = true;
@@ -78,22 +97,6 @@ setWind [10*WEATHER, 10*WEATHER, true];
 forceWeatherChange;
 //[] execVM "intro.sqf"; 
 
-
-
-//Variable in Global scope
-UNITS_SPAWNED = [];
-INTELS = [];
-UNITS_CACHED = [];
-MARKERS = [];
-SHEEP_POOL = [];
-UNITS_CHASERS = [];
-CHASER_TRIGGERED = false;
-CHASER_VIEWED = false;
-MESS_SHOWN = false;
-LAST_FLARE_TIME = time;
-REFRESH_TIME = 10; // Refresh time
-CONVOY = []; // Current convoy
-ESCORT = []; // List of escorts guys with the commandant
 
 //On civilian killed
 CIVILIAN_KILLED = { 
@@ -250,7 +253,6 @@ private _typeObj = "";
 } foreach _clusters;
 
 [] call fnc_PrepareAction;
-[getMarkerPos "marker_base"] execVM "DCW\fnc\Spawn\Respawn.sqf"; //Respawn loop
 [] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
 [] execVM "DCW\fnc\spawn\SpawnRandomEnemies.sqf"; //Enemy patrols
 [] execVM "DCW\fnc\spawn\SpawnRandomCar.sqf"; //Civil & enemy cars
@@ -259,7 +261,7 @@ private _typeObj = "";
 [] execVM "DCW\fnc\spawn\SpawnTank.sqf"; //Tanks
 [] spawn fnc_SpawnSecondaryObjective;
 [] spawn fnc_SpawnMainObjective;
-[-150] spawn fnc_SpawnConvoy;
+[30] spawn fnc_SpawnConvoy;
 
 private ["_mkr","_cacheResult","_ieds"];
 private _timerChaser = time - 360;
@@ -318,7 +320,7 @@ while {true} do{
 				//Units
 				_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition] call fnc_SpawnUnits);
 				//Units
-				_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlies);
+				_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlyOutpost);
 				//IEDs
 				if (!_isMilitary)then{
 					_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_Ieds);

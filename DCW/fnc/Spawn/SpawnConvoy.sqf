@@ -7,22 +7,16 @@
 
 //Stand by during a long period
 
-//SLEEP (200+(RANDOM 500)) + (_this select 0);
+SLEEP (_this select 0);
 
 private _nbVeh = 3;
 private _nbTrucks = _nbVeh - 1;
 private _roadRadius = 40;
-
-private _mkrToAvoid = createMarker ["mkr-to-avoid",getPos player];
-_mkrToAvoid setMarkerShape "ELLIPSE";
-_mkrToAvoid setMarkerAlpha 0;
-_mkrToAvoid setMarkerSize [500,500];
-private _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
+private _tempList = MARKER_WHITE_LIST;
 private _initPos = [getPos player,2500,3000, 5, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
 
 private _road = [_initPos,1000] call BIS_fnc_nearestRoad;
 private _roadPos = getPos _road;
-
 
 private _grp = createGroup ENEMY_SIDE;
 private _car = objNull;
@@ -118,7 +112,7 @@ waitUntil {sleep 5; CAR_DESTROYED == _nbVeh || (leader _grp)  distance _nextPos 
 
 if (CAR_DESTROYED == _nbVeh) exitWith {
     [HQ,"You successfully ambushed the convoy ! Well done !"] call fnc_talk;
-    [600] spawn fnc_SpawnMainObjective;
+    [100] spawn fnc_spawnConvoy;
 };
 
 sleep 100;
@@ -128,5 +122,5 @@ waitUntil {sleep 5;CAR_DESTROYED == _nbVeh || player distance (leader _grp) > 70
 {deleteVehicle _x; CONVOY = CONVOY - [_x];} forEach CONVOY;
 
 [HQ,"You missed the convoy ! Out !"] call fnc_talk;
-[0] spawn fnc_SpawnMainObjective;
+[100] spawn fnc_spawnConvoy;
 false;

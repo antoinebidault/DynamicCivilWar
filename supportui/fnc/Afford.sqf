@@ -16,6 +16,3 @@
 		[_unit,-_price] spawn fnc_updatescore;
 		true;
 	};
-	
-
-	

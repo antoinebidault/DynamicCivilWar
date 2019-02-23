@@ -28,7 +28,9 @@ _leutnant execVM "DCW\loadout\loadout-officer.sqf";
 private _road = [_initPos,3000] call BIS_fnc_nearestRoad;
 private _roadPos = getPos _road;
 private _roadConnectedTo = roadsConnectedTo _road;
+if (count _roadConnectedTo == 0) exitWith { hint "restart";[] spawn fnc_SpawnSecondaryObjective; };
 private _connectedRoad = _roadConnectedTo select 0;
+
 private _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
 private _truck = [_roadPos, _roadDirection, ENEMY_LEUTNANT_LIST_CARS call bis_fnc_selectrandom, createGroup ENEMY_SIDE] call BIS_fnc_spawnVehicle select 0;
 _leutnant moveInAny _truck;

@@ -43,12 +43,12 @@ class ICE_DIALOG
         class ICE_BUTTONCAS: RscButton
          {
           idc = -1;
-          text = "CAS (-800 points)";
+          text = "CAS (-300 points)";
           x = 0.4 * safezoneW + safezoneX;
           y = 0.45 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""CAS_Bombing"",800] ExecVM ""supportui\choose.sqf""";
+          action = "_nil=[""CAS_Bombing"",300] ExecVM ""supportui\choose.sqf""";
         };
          class ICE_BUTTONAMMO: RscButton
          {

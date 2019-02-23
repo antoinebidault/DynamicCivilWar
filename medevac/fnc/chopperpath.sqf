@@ -97,6 +97,13 @@ waitUntil{{_x in TRANSPORTHELO} count units  replacementGroup == 0 && {_x in TRA
 
 replacementGroup move position player;
 {_x setUnitPos "MIDDLE"; _x setBehaviour "MIDDLE"; } foreach (units replacementGroup);
+
+//Make replacementGroup join player
+{unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);
+(units replacementGroup) join group _unit;
+HQ sideChat "Reinforcments arriving.";
+
+// Save units
 [interventionGroup,_soldiersDead,TRANSPORTHELO] call fnc_save;
 HQ sideChat format["We're starting the %1 injured's evacuations.",count _soldiersDead];
 
@@ -112,9 +119,7 @@ if (MEDEVAC_ISABORTED) then {
 	} forEach _allUnits ;
 	TRANSPORTHELO move _startPos;
 }else{
-	{unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);
-	(units replacementGroup) join group _unit;
-	HQ sideChat "Reinforcments arriving.";
+
 	TRANSPORTHELO move _startPos;
 };
 

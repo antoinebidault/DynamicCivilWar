@@ -39,10 +39,8 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     private _points =_curr select 8;
     private _isLocation =_curr select 9;
     private _randomnumber = floor random 100000;
-    private _mkrToAvoid = createMarker ["mkr-to-avoid" + (str _randomnumber),getPos player];
-
-
-    if(!_triggered) exitWith{[_unit,"No way man..."] spawn fnc_talk;false;};
+    private _mkrToAvoid = createMarker ["friendly-outpost-" + (str _randomnumber), getPos player];
+    
     if(!_success) exitWith{[_unit,"Secure our position first"] spawn fnc_talk;false;};
 
         //[_unit,] call fnc_updateRep;
@@ -108,7 +106,7 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     _curr  set [6,_peopleToSpawn];
 
     _units = _curr select 5;
-	_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlies);
+	_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlyOutpost);
 
     _marker = createMarker ["marker",_pos];
     _marker setMarkerShape "ICON";

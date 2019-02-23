@@ -16,10 +16,19 @@ CIVIL_REPUTATION = 50;
 SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  450; //Units can't spawn before this distance
 
+// SUPPORT CLASSES
+SUPPORT_ARTILLERY_CLASS = "RHS_M119_D";
+SUPPORT_BOMBING_AIRCRAFT_CLASS = "RHS_A10";
+SUPPORT_DROP_AIRCRAFT_CLASS = "RHS_C130J";
+SUPPORT_TRANSPORT_CHOPPER_CLASS = "UK3CB_BAF_Merlin_HC3_18_GPMG_MTP";
+SUPPORT_MEDEVAC_CHOPPER_CLASS = "UK3CB_BAF_Merlin_HC3_18_GPMG_MTP";
+SUPPORT_MEDEVAC_CREW_CLASS = "UK3CB_BAF_Medic_MTP_RM_H";
+SUPPORT_DRONE_CLASS = "B_UAV_02_dynamicLoadout_F";
+
 //FRIENDLIES
 FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses; //Units of your side
-FRIENDLY_LIST_CARS = ["UK3CB_BAF_LandRover_Soft_FFR_Green_A"]; //Friendly cars
-FRIENDLY_FLAG = "rhs_Flag_Uk_F";//Flag of your side
+FRIENDLY_LIST_CARS = ["UK3CB_BAF_LandRover_WMIK_GMG_FFR_Green_A_MTP"]; //Friendly cars
+FRIENDLY_FLAG = "Flag_UK_F";//Flag of your side
 
 //CIVILIAN
 CIV_SIDE = CIVILIAN; // Side civilian

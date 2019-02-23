@@ -116,7 +116,7 @@ addActionHalt = {
         _unit stop false;
         _unit enableAI "MOVE";
         _unit call addActionHalt;
-    },nil,1.5,true,true,"","true",20,false,""];
+    },nil,2.5,true,true,"","true",20,false,""];
 };
 
 addActionDidYouSee = {
@@ -391,6 +391,6 @@ addActionLeave = {
         _unit forceWalk false;
         _unit forceSpeed 10;
         _unit move _pos;
-    }];
+    },nil,3.5,true,true,"","true",3,false,""];
 };
 
