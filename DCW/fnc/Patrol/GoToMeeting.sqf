@@ -24,8 +24,8 @@ _timer = time;
 
 sleep 1;
 
-waitUntil {unitReady _unit || _unit distance _newPos < 2 || time > _timer + 500};
-if (time > _timer + 149) exitWith{false;}; 
+waitUntil {unitReady _unit || _unit distance _newPos < 2 || !alive _unit || time > _timer + 500 };
+if (time > _timer + 149 || !alive _unit) exitWith{false;}; 
 sleep 5;
 _unit setPos _newPos;
 

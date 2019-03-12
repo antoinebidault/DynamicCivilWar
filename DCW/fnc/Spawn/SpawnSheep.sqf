@@ -10,13 +10,15 @@ private _minRange = 300;
 private _firstTrigger = true;
 while{true}do {
 	if (count SHEEP_POOL < MAX_SHEEP_HERD)then{
-
+	
 		//Get random pos
 		if (_firstTrigger) then {_minRange = 20; _firstTrigger = false;}else{_minRange = 300;};
-		_pos = [position player, _minRange, 350, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
+
+		// Pick up a random position around a random player
+		_pos = [position (allPlayers call BIS_fnc_selectRandom), _minRange, 350, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
 
 		_numberOfmen = round(random 2);
-		_numberOfSheep = 3 + floor(random 7);
+		_numberOfSheep = 3 + floor(random 4	);
 
 		_goatgroup = createGroup CIV_SIDE; 
 
@@ -54,11 +56,11 @@ while{true}do {
 		for "_j" from 1 to _numberOfSheep  do {
 	
 			_goat= _goatgroup createUnit [_type,_pos,[],0,"NONE"];
-			_goat addEventHandler ["Killed", {
+			_goat addMPEventHandler ["MPKilled", {
 				_man = leader (group (_this select 0));
-				if (  ( group(_this select 1) == (group player)) && alive _man && _man isKindOf "Man") then{
+				if (group(_this select 1) == GROUP_PLAYERS && alive _man && _man isKindOf "Man") then{
 					[_man,-2] call fnc_updateRep;
-                	[_man,"Damn ! Don't touch my sheep !"] spawn fnc_talk;
+                	[_man,"Damn ! Don't touch my sheep !", false] spawn fnc_talk;
 				};
 			}];
 			if (DEBUG)then{
@@ -70,13 +72,11 @@ while{true}do {
 	};	
 
 	{
-		if( (leader (_x)) distance player > 400)then{
+		// Delete all sheeps when all players are away !
+		if(  ({(leader _x) distance _x > 400 } count allPlayers) == count allPlayers)then {
 			SHEEP_POOL = SHEEP_POOL - [_x];
 			{
-				if (DEBUG)then{
-					
-					deleteMarker (_x getVariable["marker",""]);
-				};
+				_x call fnc_deleteMarker;
 				UNITS_SPAWNED = UNITS_SPAWNED - [_x];
 				deleteVehicle _x;
 			}foreach units (_x);

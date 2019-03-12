@@ -96,11 +96,13 @@ class CfgNotifications
     priority = 7;
   };
 };
-#include "supportui\Defines.hpp"
-#include "supportui\buySupports.hpp"
+
+#include "DCW\mission-parameters.hpp"
+#include "DCW\supportui\Defines.hpp"
+#include "DCW\supportui\buySupports.hpp"
 #include "DCW\config\config-combo.hpp"
-#include "medevac\support.hpp"
+#include "DCW\medevac\support.hpp"
 
 class RscTitles {
-  #include "supportui\statusBar.hpp"
+  #include "DCW\supportui\statusBar.hpp"
 };

@@ -12,6 +12,7 @@ private _nb = _this select 2;
 private _cars = [];
 
 private _roads = _pos nearRoads _radius;
+
 _roadSelects = [];
 //_i = floor(_radius/100);
 _i = _nb;
@@ -23,7 +24,6 @@ while {_i > 0} do {
     _roads = _roads - [_rnd];
     _i = _i-1;
 };
-
 
 private _connectedRoad = objNull;
 private _car = objNull;

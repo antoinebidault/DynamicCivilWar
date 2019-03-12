@@ -104,8 +104,8 @@ replacementGroup move position player;
 HQ sideChat "Reinforcments arriving.";
 
 // Save units
-[interventionGroup,_soldiersDead,TRANSPORTHELO] call fnc_save;
 HQ sideChat format["We're starting the %1 injured's evacuations.",count _soldiersDead];
+[interventionGroup,_soldiersDead,TRANSPORTHELO] spawn fnc_save;
 
 waitUntil{ MEDEVAC_ISABORTED || ({_x in TRANSPORTHELO} count (units  interventionGroup) == count (units  interventionGroup)) };
  

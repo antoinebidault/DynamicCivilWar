@@ -9,8 +9,8 @@
 
 private _compos = [compo_commander1,compo_commander2];
 private _newPos = [];
-private _radiusSpawnRange = [2400,3400];
-private _playerPos = getPos player;
+private _radiusSpawnRange = [1000,5400];
+private _playerPos = getPos LEADER_PLAYERS;
 private _initPos = [_playerPos,_radiusSpawnRange select 0, _radiusSpawnRange select 1, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 private _grp = createGroup ENEMY_SIDE;
 private _leutnant = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],ENEMY_SKILLS,"NONE"];
@@ -19,13 +19,8 @@ removeAllWeapons _leutnant;
 _leutnant setBehaviour "SAFE";
 _leutnant execVM "DCW\loadout\loadout-officer.sqf";
 
-
-//Push to units-spawned to update the marker pos
-//UNITS_SPAWNED pushback _leutnant;
-
-
 //Trucks
-private _road = [_initPos,3000] call BIS_fnc_nearestRoad;
+private _road = [_initPos,3000, MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 private _roadPos = getPos _road;
 private _roadConnectedTo = roadsConnectedTo _road;
 if (count _roadConnectedTo == 0) exitWith { hint "restart";[] spawn fnc_SpawnSecondaryObjective; };
@@ -38,14 +33,14 @@ _leutnant moveInAny _truck;
 private _nbUnit = (count (fullCrew [_truck,"cargo",true]))-1;
 private _unit = objNull;
 for "_yc" from 1 to _nbUnit  do {
-    _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
+    _unit = [_grp, _initPos, true] call fnc_spawnEnemy;
     _unit moveInAny _truck;
 };
 
 _grp selectLeader _leutnant;
 [_truck,_leutnant,500] spawn fnc_leutnantPatrol;
 
-_leutnant addEventHandler ["Killed",{
+_leutnant addMPEventHandler ["MPKilled",{
     ["DCW_secondary","FAILED",true] spawn BIS_fnc_taskSetState;
 }];
 
@@ -95,7 +90,7 @@ _leutnant addEventHandler ["HandleDamage",{
 			_player playActionNow "medicStop";
             ["DCW_secondary","SUCCEEDED",true] spawn BIS_fnc_taskSetState;
             _unit setVariable["DCW_interrogated",true];
-            _unit removeAllEventHandlers "Killed";
+            _unit removeAllMPEventHandlers "Killed";
             
             [_unit]spawn{
                 params["_unit"];
@@ -128,16 +123,18 @@ LEUTNANT = _leutnant;
 private _firstSpawn = true;
 
 while {sleep 20; alive _leutnant && !(_leutnant getVariable["DCW_interrogated",false]) } do {
-    [ "DCW_secondary",player, [format["Our drones give us some informations about an insurgent's leutnant location. Move to his location and try to gather infomration. His name is %1",name _leutnant],"Interrogate the leutnant","Interrogate the leutnant"],getPos _leutnant,"ASSIGNED",1,if (_firstSpawn) then {true}else{false}] call BIS_fnc_setTask;
+    [ "DCW_secondary",LEADER_PLAYERS, [format["Our drones give us some informations about an insurgent's leutnant location. Move to his location and try to gather infomration. His name is %1",name _leutnant],"Interrogate the leutnant","Interrogate the leutnant"],getPos _leutnant,"ASSIGNED",1,if (_firstSpawn) then {true}else{false}] call BIS_fnc_setTask;
     private _loc =  nearestLocations [getPosWorld _leutnant, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	// Info text
-    HQ sideChat format["We have some new intels on the enemy leutnant : %1, he is located %2km from %3",name _leutnant,round(((getPos _loc) distance2D player)/10)/100,text _loc];
+    
+    [HQ,format["We have some new intels on the enemy leutnant : %1, he is located %2km from %3",name _leutnant,round(((getPos _loc) distance2D player)/10)/100,text _loc], true] remoteExec ["fnc_talk"];
     _marker setMarkerPos (getPos _leutnant);
     _firstSpawn = false;
     sleep 300 + random 240;
 };
 
-deleteMArker _marker;
+deleteMarker _marker;
 sleep 100 + random 400;
+
 [] spawn fnc_SpawnSecondaryObjective;
 false;

@@ -20,7 +20,7 @@ MIN_SPAWN_DISTANCE =  550; //Units can't spawn before this distance
 FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses; //Units of your side
 FRIENDLY_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"]; //Friendly cars
 FRIENDLY_FLAG = "rhs_Flag_Russia_F";//Flag of your side
-DRONE_CLASS="rhs_pchela1t_vvsc";
+SUPPORT_DRONE_CLASS="rhs_pchela1t_vvsc";
 
 //CIVILIAN
 CIV_SIDE = CIVILIAN; // Side civilian

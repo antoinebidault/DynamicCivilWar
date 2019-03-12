@@ -12,10 +12,10 @@ _unit addWeapon "Binocular";
 
 
 if(isNull(_unit findNearestEnemy _unit))then{
-    _unit forceWalk true;
+   // _unit forceWalk true;
     _unit setBehaviour "SAFE";
 }else{
-    _unit forceWalk false;
+   // _unit forceWalk false;
     _unit setBehaviour "AWARE";
 };
 

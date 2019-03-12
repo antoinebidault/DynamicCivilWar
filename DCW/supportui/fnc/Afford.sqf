@@ -5,14 +5,14 @@
  * License : GNU (GPL)
  */
 
-	params ["_unit","_price"];
+	params ["_group","_price"];
 
-	_score = _unit getVariable ["DCW_SCORE",0];
+	_score = _group getVariable ["DCW_SCORE",0];
 	_score = (_score - _price);
 	if (_score < 0) then{
 		hint "Can't afford this";
 		false;
 	}else{
-		[_unit,-_price] spawn fnc_updatescore;
+		[_group,-_price] spawn fnc_updatescore;
 		true;
 	};

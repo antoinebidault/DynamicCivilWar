@@ -8,6 +8,7 @@
  */
 private _talker = _this select 0;
 private _say = _this select 1;
+private _sound = _this select 2;
 
 private _side = side _talker;
 private _color = "#E0E0E0";
@@ -25,6 +26,10 @@ if (_side == CIVILIAN) then {
 			};
 		};
 	};
+};
+
+if (_sound) then {
+	[] spawn { playSound (RADIO_CHAT_LIST call BIS_fnc_selectRandom); };
 };
 
 _talker setVariable["DCW_speak",true];

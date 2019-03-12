@@ -14,15 +14,16 @@ removeHeadgear _this;
 _this addGoggles (["G_Spectacles_Tinted","G_Aviator"] call BIS_fnc_selectRandom);
 _this addHeadgear "H_Beret_blk";
 
-_this addAction["Interrogate",{
+[_this,["Interrogate",{
     (_this select 0) RemoveAction (_this select 2);
     (_this select 0) call fnc_MainObjectiveIntel;
-}];
+}]] remoteExec ["addAction"];
 
-_this addAction["Set up camp here (200 points, 6 hours)",{
+[_this,["Set up camp here (200 points, 6 hours)",{
     params["_unit","_asker","_action"];
+    
     //Talk
-    [_asker,"Is it possible to set up our camp here ?"] spawn fnc_talk;
+    [_asker,"Is it possible to set up our camp here ?", false] spawn fnc_talk;
 
     //Populate with friendlies
     _curr = ([position _unit,false] call fnc_findNearestMarker);
@@ -41,10 +42,9 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     private _randomnumber = floor random 100000;
     private _mkrToAvoid = createMarker ["friendly-outpost-" + (str _randomnumber), getPos player];
     
-    if(!_success) exitWith{[_unit,"Secure our position first"] spawn fnc_talk;false;};
+    if(!_success) exitWith{[_unit,"Secure our position first", false] spawn fnc_talk;false;};
 
-        //[_unit,] call fnc_updateRep;
-    if (!([_asker,200] call fnc_afford)) exitWith {[_unit,"You need more money !"] spawn fnc_talk;false;};
+    if (!([GROUP_PLAYER,200] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
 
     _unit RemoveAction _action;
     _buildings = nearestObjects [_pos, ["house"], 300];
@@ -58,6 +58,7 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
 
      // Put in whitelisty
     _mkrToAvoid setMarkerAlpha 0;
+    _mkrToAvoid setMarkerShape "RECTANGLE";
     _mkrToAvoid setMarkerSize [500,500];
     MARKER_WHITE_LIST pushback _mkrToAvoid;
 
@@ -81,12 +82,12 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     _unit doWatch _asker;
     _asker doWatch _unit;
 
-    [_unit,"You're welcome here ! We need help. You can set up your camp here."] call fnc_talk;
+    [_unit,"You're welcome here ! We need help. You can set up your camp here.", false] call fnc_talk;
 
     _cam camSetPos (_unit modelToWorld [-1,-0.2,1.9]);
     _cam camSetTarget _asker;
 
-    [_unit,"Okay, I'll send you some reinforcements"] call fnc_talk;
+    [_unit,"Okay, I'll send you some reinforcements", false] call fnc_talk;
     
     titleCut ["6 hours later...", "BLACK OUT", 3];
     sleep 3;
@@ -141,4 +142,4 @@ _this addAction["Set up camp here (200 points, 6 hours)",{
     
     hint "Next time, you'll respawn at this position.";
 
-}];
+}]] remoteExec["addAction", LEADER_PLAYERS];

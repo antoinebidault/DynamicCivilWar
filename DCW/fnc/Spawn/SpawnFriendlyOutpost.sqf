@@ -25,7 +25,7 @@ if (_nb < 1) exitWith { _units };
 
 
 //Spawn an armed vehicke
-private _road = [_pos,4*_radius] call BIS_fnc_nearestRoad;
+private _road = [_pos,4*_radius,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 if (!isNil '_road')then{
     _car = ([getPos _road, 0,FRIENDLY_LIST_CARS call BIS_fnc_selectRandom, SIDE_CURRENT_PLAYER] call bis_fnc_spawnvehicle)  select 0;
     _car setVehicleLock "LOCKED";

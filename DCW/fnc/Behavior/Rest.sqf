@@ -9,7 +9,7 @@ params["_unit"];
 fnc_ActionRest =  {
     _this addAction ["Rest (3 hours)", {
         params["_unit","_asker","_action"];
-        if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around"] call fnc_talk;};
+        if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around",false] call fnc_talk;};
         _unit removeAction _action;
         _newObjs = [getPos _unit,getDir _unit, compo_rest ] call BIS_fnc_ObjectsMapper;
         _camPos = _unit modelToWorld [.3,2.2,2];
@@ -28,7 +28,7 @@ fnc_ActionRest =  {
         setAccTime 1;
         skipTime 3;
         sleep 3;
-        [_unit,"Ok, let's go back to work !"] call fnc_Talk;
+        [_unit,"Ok, let's go back to work !",false] call fnc_Talk;
         _unit action ["sitdown",_unit];
 
         _cam cameraeffect ["terminate", "back"];

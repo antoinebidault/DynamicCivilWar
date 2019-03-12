@@ -13,7 +13,7 @@ _unit addEventHandler["FiredNear",
 		_gunner = _this select 7;	
 		_silencer = _gunner weaponAccessories currentMuzzle _gunner select 0;
 		_hasSilencer = !isNil "_silencer" && {_silencer != ""};
-		if (_hasSilencer || _distance > 160 || _gunner != player) exitWith { true };
+		if (_hasSilencer || _distance > 160 || !isPlayer _gunner ) exitWith { true };
 		_unit setBehaviour "AWARE";
 		_unit forceWalk false;
 		_unit forceSpeed (0-1);

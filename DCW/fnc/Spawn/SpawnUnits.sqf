@@ -37,10 +37,7 @@ if (_nbSnipers > 0)then{
         _unitName = ENEMY_SNIPER_UNITS call BIS_fnc_selectRandom;
         _unit = _grp createUnit [_unitName, _pos,[],ENEMY_SKILLS,"NONE"];
 
-        if (DEBUG)then{
-            [_unit,"ColorRed"] call fnc_addmarker;
-        };
-
+        [_unit,"ColorRed"] call fnc_addmarker;
         [_unit] call fnc_AddTorch;
         [_unit] call fnc_handlekill;
 
@@ -55,13 +52,13 @@ if (_nbSnipers > 0)then{
           _unit selectWeapon "Binocular";
 
           //Handle success of the mission
-          _unit addeventhandler ["Killed",
+          _unit addMPEventHandler ["MPKilled",
             { 
               params["_unit","_killer"];
-               if (group _killer == group player) then{
+               if (group _killer == GROUP_PLAYERS) then{
                   _unit call fnc_success;
                 };
-                deleteMarker (_unit getVariable["marker",""]);
+                _unit call fnc_deleteMarker;
                 UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
             }
           ];

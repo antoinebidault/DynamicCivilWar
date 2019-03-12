@@ -93,7 +93,7 @@ if (alive _injured) then {
 
 	deleteMarker (_injured getVariable ["unit_marker", ""]) ;
 	_injured removeEventHandler ["HandleDamage",0];
-	_injured addEventHandler ["Killed",{ [transportHelo] call fnc_abortMedevac; }];
+	_injured addMPEventHandler ["MPKilled",{ [transportHelo] call fnc_abortMedevac; }];
 	
     sleep 3;
 

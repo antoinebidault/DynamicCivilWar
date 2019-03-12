@@ -5,7 +5,7 @@
  * License : GNU (GPL)
  */
 
-params["_initialPos"];
+params["_initialPos","_player"];
 
 if (!RESPAWN_ENABLED)then {
 	NUMBER_RESPAWN = 0;
@@ -16,22 +16,25 @@ RESPAWN_POSITION = _initialPos;
 PLAYER_ALIVE = true;
 
 //Default trait
-player setUnitTrait ["explosiveSpecialist",true];
-
-//Rest animations
-[player] execVM "DCW\fnc\Behavior\Rest.sqf";
-
-// Revive friendlies with chopper pick up
-if (REVIVE_ENABLED) then{
-	[player] execVM "medevac\init.sqf";
-};
+_player setUnitTrait ["explosiveSpecialist",true];
 
 //Support UI
-nul = [player] execVM "supportui\init.sqf";
+if (LEADER_PLAYERS == _player) then {
+
+	//Rest animations
+	[_player] execVM "DCW\fnc\Behavior\Rest.sqf";
+
+	// Revive friendlies with chopper pick up
+	if (REVIVE_ENABLED) then{
+		[_player] execVM "DCW\medevac\init.sqf";
+	};
+
+	nul = [LEADER_PLAYERS] call fnc_supportuiInit;
+};
 
 //Damage handler
 if (RESPAWN_ENABLED) then{
-	player addEventHandler["HandleDamage",{
+	_player addEventHandler["HandleDamage",{
 		params [
 			"_unit",			// Object the event handler is assigned to.
 			"_hitSelection",	// Name of the selection where the unit was damaged. "" for over-all structural damage, "?" for unknown selections.
@@ -61,7 +64,7 @@ if (RESPAWN_ENABLED) then{
 		_damage;
 	}];
 }else{
-	player addEventHandler["Killed",{
+	_player addMPEventHandler ["MPKilled",{
 		params [
 			"_unit"			// Object the event handler is assigned to.
 		];
@@ -88,9 +91,13 @@ fnc_HandleRespawn =
 
 	_timeSkipped = round(6 + random 12);
 	cutText ["You are severly injured","BLACK FADED", 999];
-	_score = _unit getVariable ["DCW_SCORE",0];
-	_units = units (group _unit);
-	{ if(alive _x) then{_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)}; }foreach _units;
+
+	// Move the alive AI unit back to position
+	{ 
+		if(alive _x && !isPlayer _x && LEADER_PLAYERS == _player) then{
+			_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)
+		}; 
+	}foreach  units (group _unit);
 
 	sleep 1;
 	_unit switchMove "Acts_UnconsciousStandUp_part1";

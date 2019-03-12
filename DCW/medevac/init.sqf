@@ -9,23 +9,23 @@
 unit = _this select 0;
 REVIVETIME_INSECONDS = 10;
 
-fnc_spawnHelo = compile preprocessFileLineNumbers  "medevac\fnc\SpawnHelo.sqf";
-fnc_SpawnHeloCrew = compile preprocessFileLineNumbers  "medevac\fnc\SpawnHeloCrew.sqf";
-fnc_SpawnHeloReplacement = compile preprocessFileLineNumbers  "medevac\fnc\SpawnHeloReplacement.sqf";
-fnc_HandleDamage = compile preprocessFileLineNumbers  "medevac\fnc\HandleDamage.sqf";
-fnc_HandleKilled = compile preprocessFileLineNumbers  "medevac\fnc\HandleKilled.sqf";
-fnc_Heal = compile preprocessFileLineNumbers "medevac\fnc\heal.sqf";
-fnc_Save = compile preprocessFileLineNumbers "medevac\fnc\save.sqf";
-fnc_Carry = compile preprocessFileLineNumbers "medevac\fnc\carry.sqf";
-fnc_ChopperPath = compile preprocessFileLineNumbers "medevac\fnc\chopperpath.sqf";
-fnc_calculateTimeToHeal = compile preprocessFileLineNumbers "medevac\fnc\calculateTimeToHeal.sqf";
-fnc_spawnHealEquipement = compile preprocessFileLineNumbers "medevac\fnc\spawnHealEquipement.sqf";
-fnc_spawnObject = compile preprocessFileLineNumbers "medevac\fnc\spawnObject.sqf";
-fnc_dropInHelo = compile preprocessFileLineNumbers "medevac\fnc\dropInHelo.sqf";
-fnc_help = compile preprocessFileLineNumbers "medevac\fnc\help.sqf";
-fnc_abortMedevac = compile preprocessFileLineNumbers "medevac\fnc\abortMedevac.sqf";
-fnc_removeFAKS = compile preprocessFileLineNumbers "medevac\fnc\removeFAKS.sqf";
-fnc_deleteMedevac = compile preprocessFileLineNumbers "medevac\fnc\deleteMedevac.sqf";
+fnc_spawnHelo = compile preprocessFileLineNumbers  "DCW\medevac\fnc\SpawnHelo.sqf";
+fnc_SpawnHeloCrew = compile preprocessFileLineNumbers  "DCW\medevac\fnc\SpawnHeloCrew.sqf";
+fnc_SpawnHeloReplacement = compile preprocessFileLineNumbers  "DCW\medevac\fnc\SpawnHeloReplacement.sqf";
+fnc_HandleDamage = compile preprocessFileLineNumbers  "DCW\medevac\fnc\HandleDamage.sqf";
+fnc_HandleKilled = compile preprocessFileLineNumbers  "DCW\medevac\fnc\HandleKilled.sqf";
+fnc_Heal = compile preprocessFileLineNumbers "DCW\medevac\fnc\heal.sqf";
+fnc_Save = compile preprocessFileLineNumbers "DCW\medevac\fnc\save.sqf";
+fnc_Carry = compile preprocessFileLineNumbers "DCW\medevac\fnc\carry.sqf";
+fnc_ChopperPath = compile preprocessFileLineNumbers "DCW\medevac\fnc\chopperpath.sqf";
+fnc_calculateTimeToHeal = compile preprocessFileLineNumbers "DCW\medevac\fnc\calculateTimeToHeal.sqf";
+fnc_spawnHealEquipement = compile preprocessFileLineNumbers "DCW\medevac\fnc\spawnHealEquipement.sqf";
+fnc_spawnObject = compile preprocessFileLineNumbers "DCW\medevac\fnc\spawnObject.sqf";
+fnc_dropInHelo = compile preprocessFileLineNumbers "DCW\medevac\fnc\dropInHelo.sqf";
+fnc_help = compile preprocessFileLineNumbers "DCW\medevac\fnc\help.sqf";
+fnc_abortMedevac = compile preprocessFileLineNumbers "DCW\medevac\fnc\abortMedevac.sqf";
+fnc_removeFAKS = compile preprocessFileLineNumbers "DCW\medevac\fnc\removeFAKS.sqf";
+fnc_deleteMedevac = compile preprocessFileLineNumbers "DCW\medevac\fnc\deleteMedevac.sqf";
 
 
 transportHelo = objNull;
@@ -45,7 +45,7 @@ private _soldiersDead = [];
 {	
 	if (!isPlayer(_x))then{
 		_x addEventHandler ["HandleDamage",{_this call fnc_HandleDamage;}];
-		_x addEventHandler ["Killed",{_this call fnc_HandleKilled;}];
+		_x addMPEventHandler ["MPKilled",{_this call fnc_HandleKilled;}];
 	};
 }foreach (units (group unit));
 
@@ -60,7 +60,6 @@ while {true} do {
 	//Launch chopper
 	if (MEDEVAC_FirstTrigger)then{
 
-
 		MEDEVAC_showMenu = false;
 		MEDEVAC_FirstTrigger = false;
 		MEDEVAC_marker = "";
@@ -69,7 +68,7 @@ while {true} do {
 		HQ sideChat "We're waiting now for your mark !";
 
 		//open the map
-		if (player == unit) then {
+		if (isPlayer unit) then {
 
 	    	openMap true;
 
@@ -91,9 +90,13 @@ while {true} do {
 
 			if ((count _soldiersDead > 0) && !IsInBound)then {
 				IsInBound = true;
+
+				// Chopper spawning
 				transportHelo = [] call fnc_spawnHelo;
 				_posChopper = position transportHelo;
-				[group transportHelo,getMarkerPos "medevac_marker",transportHelo,unit] call fnc_ChopperPath;
+
+				// Startup the chopper path
+				[group transportHelo,getMarkerPos "medevac_marker",transportHelo,unit] spawn fnc_ChopperPath;
 			}else{
 				hint "Impossible to request";
 				MEDEVAC_showMenu = true;
@@ -111,7 +114,6 @@ while {true} do {
 			[unit, "Medevac"] call BIS_fnc_addCommMenuItem;
 		};
 	}else{
-
 		if (MEDEVAC_ISABORTED)then{
 			transportHelo move _posChopper;
 			sleep 150;
@@ -119,12 +121,13 @@ while {true} do {
 			IsInBound = false;
 		}else{
 			if (!alive transportHelo || damage transportHelo > .6)then{
-				hint "Chopper is destroyed ! Transport available in 150s";
-				sleep 150;
+				hint "The chopper is destroyed ! MEDEVAC helicopter available in 5 minutes";
+				sleep 5*60;
 				[transportHelo] call fnc_deleteMedevac;
 				IsInBound = false;
 			};
 		}
+
 	};
 
 

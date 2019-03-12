@@ -31,17 +31,13 @@ _unitsToRemove = [];
     _type = _x getVariable["DCW_Type",""];
 
     if (_type == "") then{
-        if (DEBUG)then{ 
-            deleteMarker (_x getVariable["marker",""]);
-        };
+        _x call fnc_deleteMarker;
         deleteVehicle _x;
     }else{
         
         //If dead, we remove him
         if (!alive _x)then{
-            if (DEBUG)then{ 
-                deleteMarker (_x getVariable["marker",""]);
-            };
+             _x call fnc_deleteMarker;
             _unitsToRemove pushBack _x;
             deleteVehicle _x;
         }else{
@@ -86,9 +82,7 @@ _unitsToRemove = [];
                         };
                     };
                 };
-            if (DEBUG)then{ 
-                deleteMarker (_x getVariable["marker",""]);
-            };
+             _x call fnc_deleteMarker;
             deleteVehicle _x;
         };
    };

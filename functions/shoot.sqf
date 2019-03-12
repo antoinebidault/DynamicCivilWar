@@ -10,7 +10,6 @@ Target shooting with a random timer
 Bidass
 */
 
-
 _unit = (_this select 0);
 _target = (_this select 1);
 

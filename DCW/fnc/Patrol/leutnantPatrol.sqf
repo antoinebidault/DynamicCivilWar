@@ -17,7 +17,7 @@ while {sleep 5;  alive _unit}do{
     _driver setSpeedMode "NORMAL";
     _curPos = getPos _truck;
     _pos = [_curPos, _radius/2, _radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
-    _newPos = getPos([_pos,_radius] call BIS_fnc_nearestRoad);
+    _newPos = getPos([_pos,_radius,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
     _truck move _newPos;
     sleep 2;
 
@@ -27,7 +27,6 @@ while {sleep 5;  alive _unit}do{
     _marker setMarkerColor "ColorWhite";
     _marker setMarkerBrush "SolidBorder";
 
-
     _timer = time;
     waitUntil {sleep 5;  !alive(_unit)  || _driver distance2D _newPos < 5 || time > _timer + 150};
     if (!alive _unit) exitWith{false}; 
@@ -35,7 +34,7 @@ while {sleep 5;  alive _unit}do{
 
     _curPos =  getPos _driver;
     _newPos = getMarkerPos(([_curPos] call fnc_findNearestMarker) select 0);
-    _newPos = getPos([_newPos,1000] call BIS_fnc_nearestRoad);
+    _newPos = getPos([_newPos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
 
     private _marker = createMarker [format["sold%1",random 13100], _newPos];
     _marker setMarkerShape "ELLIPSE";

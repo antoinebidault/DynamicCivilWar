@@ -52,9 +52,9 @@ for "_j" from 1 to _nb do {
     [_hostage,"ColorBlue"] call fnc_addMarker;
     _hostage setVariable["DCW_Type","hostage"];
 
-    _hostage addEventHandler ["Killed",{
+    _hostage addMPEventHandler ["MPKilled", {
         [_this select 0, (_this select 0) getVariable["DCW_Act",0]]call BIS_fnc_holdActionRemove;
-        [player,"Hostage down... Mission failed"] spawn fnc_talk;
+        [_this select 1,"HQ, we have an hostage down here...", true] spawn fnc_talk;
         (_this select 0) spawn fnc_failed;
     }];
 
@@ -75,8 +75,8 @@ for "_j" from 1 to _nb do {
         _pos = [getPosASL _hostage, 1000, 1200, 3, 0, 20, 0] call BIS_fnc_FindSafePos;
         _hostage move _pos;
         
-        [_hostage,"Thank you !"] call fnc_talk;
-        [(_this select 1),"HQ, this is bravo team, we've liberated a hostage held down in a compound."] call fnc_talk;
+        [_hostage,"Thank you !", false] call fnc_talk;
+        [(_this select 1),"HQ, this is bravo team, we've liberated a hostage held down in a compound.", true] call fnc_talk;
 
         //Task success
         _hostage call fnc_success;

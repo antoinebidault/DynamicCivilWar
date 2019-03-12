@@ -14,6 +14,7 @@ fnc_GetClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClu
 fnc_isInMarker= compileFinal preprocessFileLineNumbers  "DCW\fnc\System\isinMarker.sqf";
 fnc_findBuildings= compileFinal preprocessFileLineNumbers  "DCW\fnc\System\findBuildings.sqf";
 fnc_addMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\addMarker.sqf";
+fnc_deleteMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\deleteMarker.sqf";
 fnc_findNearestMarker = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\findNearestMarker.sqf";
 fnc_CachePut = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\CachePut.sqf";
 fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\ShowIndicator.sqf"; 
@@ -22,6 +23,7 @@ fnc_GetVisibility = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetV
 fnc_Undercover = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Undercover.sqf";
 
 //SPAWN
+fnc_Respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
 fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnUnits.sqf";
 fnc_SpawnAsEnemy = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnAsEnemy.sqf";
 fnc_SpawnFriendly = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnFriendly.sqf";
@@ -77,6 +79,14 @@ fnc_HandleDamaged = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\Han
 fnc_handlekill = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleKill.sqf";
 fnc_handleAttacked = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleAttacked.sqf";
 
+// Support UI
+fnc_supportuiInit = compile preprocessFileLineNumbers  "DCW\supportui\init.sqf";
+fnc_updatescore = compile preprocessFileLineNumbers  "DCW\supportui\fnc\UpdateScore.sqf";
+fnc_afford = compile preprocessFileLineNumbers  "DCW\supportui\fnc\Afford.sqf";
+fnc_supportui = compile preprocessFileLineNumbers  "DCW\supportui\fnc\SupportUI.sqf";
+fnc_displayscore = compile preprocessFileLineNumbers  "DCW\supportui\fnc\DisplayScore.sqf";
+fnc_fillcrate = compile preprocessFileLineNumbers  "DCW\supportui\fnc\FillCrate.sqf";
+fnc_getCrateItems = compile preprocessFileLineNumbers  "DCW\supportui\fnc\GetCrateItems.sqf";
 
 //composition
 compo_camp1 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp1.sqf");
@@ -89,4 +99,16 @@ compo_commander2 =  call (compileFinal preprocessFileLineNumbers "DCW\compositio
 compos = [compo_camp1,compo_camp2,compo_camp3,compo_camp4,compo_camp5];
 compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest.sqf");
 
-[] execVM "DCW\start.sqf";
+
+
+//Switch here the config you need.
+[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-kunduz.sqf"); 
+[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
+//[] execVM "DCW\config\config-dialog.sqf";
+
+// global scope variables
+GROUP_PLAYERS = group (allPlayers select 0); 
+LEADER_PLAYERS = leader GROUP_PLAYERS; 
+
+[] execVM "DCW\server.sqf";
+[] execVM "DCW\client.sqf";

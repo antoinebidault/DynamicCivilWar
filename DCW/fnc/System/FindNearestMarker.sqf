@@ -12,6 +12,7 @@ private _nearest = "";
 private _return = [];
 if(count(MARKERS)>0) then {
 	_nearest = (MARKERS select 0) select 0;
+	_return = _nearest;
 	{
 		private _m = _x select 0;
 		if(  ((getmarkerpos _m) distance _pos < (getmarkerpos _nearest) distance _pos) &&  (!_excludeTheClosest || ((getmarkerpos _m) distance _pos > 300)) ) then
@@ -21,4 +22,7 @@ if(count(MARKERS)>0) then {
 		};
 	} forEach MARKERS;
 };
+
+if (count _return == 0) then { _return = MARKERS select 0; };
+
 _return;

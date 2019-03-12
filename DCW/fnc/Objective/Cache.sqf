@@ -35,7 +35,7 @@ for "_j" from 1 to _nb do {
     
     _unit addEventHandler["Killed",{ 
         params["_cache","_killer"];
-        if (group(_killer) == group player) then {
+        if (group(_killer) == GROUP_PLAYERS) then {
             _cache call fnc_success; 
          }else{
             _cache call fnc_failed;

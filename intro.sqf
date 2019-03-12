@@ -11,15 +11,12 @@ _sniper setAmmo [currentWeapon _sniper, 0];
 
 ["RealIsBrown",3,true] call bis_fnc_setppeffecttemplate;
 
-
 _cam camSetPos (_sniper modelToWorld[.5,4,.3]);
 _cam camSetTarget (_sniper modelToWorld[-100,500,-20]);
 _cam camCommit 0;
 
 _cam camSetPos (_sniper modelToWorld[1,-.5,.3]);
 _cam camCommit 20;
-sleep 10;
-playSound "rhs_rus_land_rc_08";
 sleep 14;
 _sniper doTarget _target;
 _sniper setAmmo [currentWeapon _sniper, 10];
@@ -113,6 +110,3 @@ titleCut ["Prepare for landing...", "BLACK FADED", 999];
 	"dynamicBlur" ppEffectCommit 5;  
 	titleCut ["", "BLACK IN", 5];
 };
-
-
-//endMission "END1";

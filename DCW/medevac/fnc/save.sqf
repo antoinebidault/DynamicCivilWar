@@ -32,10 +32,16 @@ _grp setBehaviour "CARELESS";
 waitUntil{_nbUnitSaved == count _deaths};
 
 _deaths joinSilent _grp;
+
+sleep 1;
+
 {unassignVehicle _x} forEach units _grp;
 {
 	_x assignAsCargoIndex [_helo, _forEachIndex];
 } foreach  units _grp;
+
+sleep 1;
+
 (units _grp) orderGetIn true;
 
 

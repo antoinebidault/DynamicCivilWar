@@ -28,11 +28,11 @@ deleteVehicle _refUnit;
 private _mag = (magazines _mortar) select 0;  // def = 8Rnd_82mm_Mo_shells
 
 if ({alive _x} count crew(_mortar) == count crew(_mortar))  then{
-    [_targetedUnit,format["Mortar incoming ! Bearing %1",_dir]] spawn fnc_talk;
+    [_targetedUnit,format["Mortar incoming ! Bearing %1",_dir], true] remoteExec ["fnc_talk"];
     while{alive _mortar && alive _targetedUnit }do{
         _shootingPos = [getPos _targetedUnit, 17, 160, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
         _mortar doArtilleryFire [_shootingPos, _mag, 1];
-        if (getPos player distance _pos > (_radius + 150)) exitWith{false};
+        if (getPos _targetedUnit distance _pos > (_radius + 150)) exitWith{false};
         sleep 8;
     };
 };

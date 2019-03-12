@@ -10,12 +10,12 @@ private _minRange = 300;
 private _carPool = [];
 private _firstTrigger = true;
 CAR = objNull;
-while{true}do {
+while{ true }do {
 	if (count _carPool < MAX_RANDOM_CAR)then{
 		//Get random pos
 		// get the next connected roadsegements to determine the direction of the road
-		_pos = [position player, 500, 580, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
-		_road = [_pos,1000] call BIS_fnc_nearestRoad;
+		_pos = [position (allPlayers call BIS_fnc_selectRandom), 500, 700, 0, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+		_road = [_pos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 		if (isOnRoad(getPos _road) && (getPos _road) distance player > 400 )then{
 			_roadConnectedTo = roadsConnectedTo _road;
 			_connectedRoad = _roadConnectedTo select 0;
@@ -47,9 +47,10 @@ while{true}do {
 				_unit = _x;
 				[_unit] call fnc_handlekill;
 				[_unit] call fnc_addTorch;
-				[_unit,if(side _unit == CIV_SIDE)then {"ColorBlue"}else{"ColorRed"}] call fnc_addMarker;
+				[_unit, if(side _unit == CIV_SIDE) then { "ColorBlue" } else { "ColorRed" } ] call fnc_addMarker;
 				UNITS_SPAWNED pushBack _unit;
 			} foreach (crew _car);
+
 			[driver _car, 1500] spawn fnc_carPatrol;
 			
 		};
@@ -61,12 +62,14 @@ while{true}do {
 		};
 		if(_x distance player > 1500)then{
 			_carPool = _carPool - [_x];
-			if (DEBUG)then{
-				deleteMarker (_x getVariable["marker",""]);
-			};
+			{
+				_x call fnc_deleteMarker;
+				deleteVehicle _x;
+			} foreach (crew _x);
+		     _x call fnc_deleteMarker;
 			deleteVehicle _x;
 		};
 	}foreach _carPool;
 
-	sleep 150;
+	sleep 150 + random 100;
 };

@@ -14,7 +14,7 @@ private _inventory = getUnitLoadout _enemy;
 private _inventoryBackUp = getUnitLoadout _unit;
 
 
-if (CHASER_TRIGGERED || CHASER_VIEWED || _unit getVariable["DCW_undercover",false]) exitWith{[_unit,"I can't do this..."] spawn fnc_talk;false;};
+if (CHASER_TRIGGERED || CHASER_VIEWED || _unit getVariable["DCW_undercover",false]) exitWith{[_unit,"I can't do this...", false] spawn fnc_talk;false;};
 
 private _grpUnit = group _unit;
 
@@ -33,7 +33,7 @@ sleep 1;
 
 private _clothes = [uniform _unit,vest _unit,headgear _unit];
 
-_null = [_unit,"Good idea ! I'm gonna infiltrate their line."] spawn fnc_talk; 
+_null = [_unit,"Good idea ! I'm gonna infiltrate their line.", false] spawn fnc_talk; 
 
 private _idFiredNear = _unit addEventHandler["FiredNear",{
 	params["_unit","_veh","_dist","_weap","_muz","_mode","_am","_gunner"];

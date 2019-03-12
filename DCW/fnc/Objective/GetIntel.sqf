@@ -22,7 +22,6 @@ private _potentialIntel = [];
     };
 } forEach MARKERS;
 
-
 if (count _potentialIntel == 0 || random 100 > _probability) exitWith { [false,"I have nothing to tell you ! Leave me alone !"];};
 
 private _intel = _potentialIntel call BIS_fnc_selectRandom;

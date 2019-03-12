@@ -56,13 +56,13 @@ _this select 0 addEventHandler["FiredNear",
 		_civ removeAllEventHandlers "FiredNear";
 
 		//Action to make him calm down !
-		_civ addAction["Calm down !",{
+		[_civ,["Calm down !",{
 			params["_unit","_asker","_action"];
 			_unit removeAction _action;
 				if (!weaponLowered _asker)then{
 				_asker  action ["WeaponOnBack", _asker];
 			};
-			[_asker,"Calm down my friend !"] call fnc_Talk;
+			[_asker,"Calm down my friend !",false] call fnc_Talk;
 			_unit stop true;
 			_unit  setVariable["civ_affraid",false];
 			sleep .3;
@@ -73,7 +73,7 @@ _this select 0 addEventHandler["FiredNear",
 			sleep 15;
 			_unit stop false;
 			[_unit] call fnc_handleFiredNear;
-		},nil,1.5,true,true,"","true",2,false,""];
+		},nil,1.5,true,true,"","true",2,false,""]] remoteExec ["addAction"];
 		if (isPlayer _gunner )then {
 			[_unit,-5] call fnc_UpdateRep;
 		}else{

@@ -25,9 +25,8 @@ _mkrToAvoid setMarkerShape "SQUARE";
 _mkrToAvoid setMarkerAlpha 0;
 _mkrToAvoid setMarkerSize [400,400];*/
 
-private _initPos = [_worldCenter, 600, 1600, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
-_initPos = ((selectBestPlaces[_initPos, 500, _situation, 5, 1]) select 0 )select 0;
-
+private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+_initPos = ((selectBestPlaces[_initPos, 100, _situation, 5, 1]) select 0 )select 0;
 
 //Spawn the commander
 ENEMY_COMMANDER = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],ENEMY_SKILLS,"NONE"];
@@ -54,8 +53,8 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
     _distance = _this select 2;	
     _gunner = _this select 7;	
 
-    if (group _gunner == group player && _distance < 50)then{
-        [player,"Shit ! this asshole is fleeing."] spawn fnc_talk;
+    if (group _gunner == GROUP_PLAYERS && _distance < 50)then{
+        [player,"Shit ! this asshole is fleeing.",false] remoteExec fnc_talk;
         _commander removeAllEventHandlers "FiredNear";
         [_commander] joinSilent (createGroup ENEMY_SIDE);
         _commander setBehaviour "CARELESS";
@@ -63,34 +62,34 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
         _commander forceSpeed 10;
         _dir = [player,_commander] call BIS_fnc_dirTo; 
         _commanderPos = [(getPos _commander), 2000,_dir] call BIS_fnc_relPos;
-        [_commanderPos, 0, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+        [_commanderPos, 200, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+
         _commander move _commanderPos;
         [] spawn{
             waitUntil{sleep 1;(player distance ENEMY_COMMANDER) > 500 || !(alive ENEMY_COMMANDER) };
             if (!alive ENEMY_COMMANDER)exitWith{false};
-            deleteMarker ENEMY_COMMANDER getVariable["marker",""];
+            ENEMY_COMMANDER call fnc_deleteMarker;
             deleteVehicle ENEMY_COMMANDER;
-            [player,"He has definitely left the area... Mission compromised. Maybe we would catch him later..."] call fnc_talk;
-            //{ESCORT = ESCORT - [_x];deleteVehicle _x; } forEach ESCORT;
+            [player ,"He has definitely left the area... Mission compromised. Maybe we would catch him later..." ,true ] call fnc_talk;
             [] call fnc_SpawnMainObjective;
         };
     };
 }];
 
-ENEMY_COMMANDER addEventHandler ["Killed",{
+ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
     params["_unit","_killer"];
 
-    if (group _killer == group player)then{
+    if (group _killer == GROUP_PLAYERS)then{
         []spawn{
-            [player,"HQ ! This is charlie team, the enemy commander is KIA ! Out."] call fnc_talk;
+            [player,"HQ ! This is charlie team, the enemy commander is KIA ! Out.",true] call fnc_talk;
             sleep 14;
-            ["END1",true,2] call BIS_fnc_endMission;
+            ["END1" ,true ,2 ] call BIS_fnc_endMission;
         };
     }else{
         //Start over
         hint "restart...";
-        { ESCORT = ESCORT - [_x]; deleteMarker (_x getVariable["marker",""]);deleteVehicle _x;} forEach ESCORT;
-        [] spawn fnc_SpawnMainObjective;
+        { ESCORT = ESCORT - [_x]; _x call fnc_deleteMarker;deleteVehicle _x;} forEach ESCORT;
+        [] spawn fnc_SpawnMainObjective; 
     };
 }];
 
@@ -120,7 +119,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 	_trig setTriggerTimeout[1,1,1,true];
     _trig setTriggerStatements[
         "this",
-        "playMUsic ""BackgroundTrack02_F"";[player,""HQ, this is bravo team, we've found the presumed camp where the commander went. We are at the last known position. We'll investigate the compound around""] spawn fnc_talk;",
+        "playMUsic ""BackgroundTrack02_F"";[player,""HQ, this is bravo team, we've found the presumed camp where the commander went. We are at the last known position. We'll investigate the compound around"", true] spawn fnc_talk;",
         "deleteVehicle thisTrigger"
     ];
 
@@ -135,7 +134,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
     _initPos = _commanderPos;
-    _commanderPos = [_commanderPos, 500, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+    _commanderPos = [_commanderPos, 400, 3000, 1, 0, 5, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
     _commanderPos = ((selectBestPlaces[_commanderPos, 500, _situation, 5, 1]) select 0 )select 0;
 
     _grp setBehaviour "SAFE";

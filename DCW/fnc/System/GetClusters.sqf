@@ -36,7 +36,7 @@ fnc_getRadiusLocation = {
 	private _count = 0;
 	private _houses = []; 
 	private _totalHouses  = [];
-	for "_radius" from 50 to 150 step 50 do
+	for "_radius" from 50 to MAX_CLUSTER_SIZE step 50 do
 	{
 		_houses = []; 
 		_houses = nearestObjects [_locPos, ["house"], _radius];

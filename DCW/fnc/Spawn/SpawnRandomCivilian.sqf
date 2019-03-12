@@ -36,9 +36,7 @@ while{true}do {
 		if(_x distance player > 600)then{
 			UNITS_SPAWNED - [_x];
 			_unitPool = _unitPool - [_x];
-			if (DEBUG)then{
-				deleteMarker (_x getVariable["marker",""]);
-			};
+			_x call fnc_deleteMarker;
 			deleteVehicle _x;
 		}
 	}foreach _unitPool;

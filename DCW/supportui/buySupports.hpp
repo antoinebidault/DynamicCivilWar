@@ -32,23 +32,23 @@ class ICE_DIALOG
          class ICE_BUTTONARTILLERY: RscButton
          {
           idc = -1;
-          text = "ARTILLERY (-400 points)";
+          text = "ARTILLERY (-300 points)";
           x = 0.4 * safezoneW + safezoneX;
           y = 0.5 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Artillery"",400] ExecVM ""supportui\choose.sqf""";
+          action = "_nil=[""Artillery"",300] ExecVM ""DCW\supportui\choose.sqf""";
         };
 
         class ICE_BUTTONCAS: RscButton
          {
           idc = -1;
-          text = "CAS (-300 points)";
+          text = "CAS Helicopter (-400 points)";
           x = 0.4 * safezoneW + safezoneX;
           y = 0.45 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""CAS_Bombing"",300] ExecVM ""supportui\choose.sqf""";
+          action = "_nil=[""CAS_Heli"",400] ExecVM ""DCW\supportui\choose.sqf""";
         };
          class ICE_BUTTONAMMO: RscButton
          {
@@ -58,7 +58,7 @@ class ICE_DIALOG
           y = 0.4 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Drop"",200] ExecVM ""supportui\choose.sqf""";
+          action = "_nil=[""Drop"",200] ExecVM ""DCW\supportui\choose.sqf""";
         };
          class ICE_BUTTONTRANSPORT: RscButton
          {
@@ -68,7 +68,7 @@ class ICE_DIALOG
           y = 0.35 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Transport"",150]ExecVM ""supportui\choose.sqf""";
+          action = "_nil=[""Transport"",150]ExecVM ""DCW\supportui\choose.sqf""";
         };
          class ICE_BUTTONUAV: RscButton
          {
@@ -78,7 +78,7 @@ class ICE_DIALOG
           y = 0.55 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""UAV"",100]ExecVM ""supportui\choose.sqf""";
+          action = "_nil=[""UAV"",100]ExecVM ""DCW\supportui\choose.sqf""";
         };
 
         class ICE_BUTTONNO: RscButton

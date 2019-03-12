@@ -8,7 +8,7 @@
 private _unit = _this;
 
 if(!alive ENEMY_COMMANDER)exitWith {false};
-if(count COMMANDER_LAST_POS == 0) exitWith {[_unit,"I don't know where he is."] spawn fnc_Talk;false;};
+if(count COMMANDER_LAST_POS == 0) exitWith {[_unit,"I don't know where he is.",false] remoteExec ["fnc_Talk"];false;};
 
 private _initPos = COMMANDER_LAST_POS call BIS_fnc_selectRandom;
 COMMANDER_LAST_POS = COMMANDER_LAST_POS - [_initPos];
@@ -45,11 +45,13 @@ for "_j" from 1 to _nb do {
 //Unique ID added to the task id;
 _taskId = "maintask";
 
-[_unit,"I marked you on the map where I think he is."] call fnc_Talk;
-[_taskId, player,[ "Investigate the sector where the commander is possibly located","Investigate the sector","Investigate the sector"], _pos, "ASSIGNED", 1, true, true,""] call BIS_fnc_setTask;
-[player,"Thank you, we'll investigate this place."] call fnc_Talk;
-[player,"HQ, we've caught informations about the possible enemy commander last position."] call fnc_Talk;
-[HQ,"Copy ! We'll send you extra credits in order to accomplish your task. Good luck ! Out."] call fnc_Talk;
+{
+  [_unit,"I marked you on the map where I think he is.",true] call fnc_Talk;
+  [_taskId, LEADER_PLAYERS,[ "Investigate the sector where the commander is possibly located","Investigate the sector","Investigate the sector"], _pos, "ASSIGNED", 1, true, true,""] call BIS_fnc_setTask;
+  [LEADER_PLAYERS,"Thank you, we'll investigate this place.",true] call fnc_Talk;
+  [LEADER_PLAYERS,"HQ, we've caught informations about the possible enemy commander last position.",false] call fnc_Talk;
+  [HQ,"Copy ! We'll send you extra credits in order to accomplish your task. Good luck ! Out.",false] call fnc_Talk;
+  [GROUP_PLAYERS,250] call fnc_updatescore;
+} remoteExec["spawn"];
 
-[player,250] call fnc_updatescore;
 true;

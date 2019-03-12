@@ -31,17 +31,11 @@ private _timer = 0;
 
 //private _anims = ["STAND","STAND_IA","SIT_LOW","WATCH","WATCH1","WATCH2"];
 
+//_unit forceWalk true;
+_unit setBehaviour "SAFE";
 
-while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
+while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariable ["civ_insurgent",false]) }do{
 
-
-    if(isNull(_unit findNearestEnemy _unit))then{
-        _unit forceWalk true;
-        _unit setBehaviour "SAFE";
-    }else{
-        _unit forceWalk false;
-        _unit setBehaviour "AWARE";
-    };
 
     _bPoss = [];
 	_i = 0;
@@ -63,10 +57,10 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
 
             _newPos = (floor(random(count _bPoss)));
             _newPos = _bPoss select _newPos;
-            waitUntil {sleep 4;unitReady _unit || _unit distance _newPos < 2};
+            waitUntil {sleep 4;unitReady _unit || !isNull(_unit findNearestEnemy _unit) || _unit distance _newPos < 2};
             _unit doMove _newPos;
             _timer = time;
-            waitUntil {sleep 4;unitReady _unit || _unit distance _newPos < 2 || time > _timer + 150};
+            waitUntil {sleep 4;unitReady _unit || _unit distance _newPos < 2 || !isNull(_unit findNearestEnemy _unit) || time > _timer + 150};
             if (_unit getVariable ["civ_insurgent",false])exitWith{false};
 
             /*if (side _unit != CIV_SIDE) then{
@@ -92,7 +86,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
                 _timer = time;
 
 
-                waitUntil {sleep 4; unitReady _unit || _unit distance _newPos < 2 || time > _timer + 150};
+                waitUntil {sleep 4; unitReady _unit || _unit distance _newPos < 2 || !isNull(_unit findNearestEnemy _unit) || time > _timer + 150};
 
                 //Sit or not
                 if (round(random 1)==1)then{
@@ -120,3 +114,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
         };
     };
 };
+
+_unit forceWalk false;
+_unit setBehaviour "AWARE";
+_unit setSpeedMode "NORMAL";

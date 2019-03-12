@@ -15,13 +15,17 @@ private _units = [];
 
 if (_nb == 0)exitWith{_units;};
 
-private _mkrToAvoid = createMarker ["mkr-to-avoid-" + str(floor random 100000),getPos player];
-_mkrToAvoid setMarkerShape "ELLIPSE";
-_mkrToAvoid setMarkerAlpha 0;
-_mkrToAvoid setMarkerSize [150,150];
-_tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
+private _tempList = MARKER_WHITE_LIST;
 
-_posToSpawn = [_pos, 350 min (1.5*_radius) , 500 min (3*_radius), 3, 0, 2, 0,_tempList] call BIS_fnc_FindSafePos;
+{
+    _mkrToAvoid = createMarker ["mkr-to-avoid-" + str(floor random 100000),getPos _x];
+    _mkrToAvoid setMarkerShape "ELLIPSE";
+    _mkrToAvoid setMarkerAlpha 0;
+    _mkrToAvoid setMarkerSize [150,150];
+    _tempList pushback _mkrToAvoid;
+} foreach allPlayers;
+
+_posToSpawn = [_pos, 350 min (1.5*_radius) , 500 min (3*_radius), 3, 0, 2, 0, _tempList] call BIS_fnc_FindSafePos;
 
 for "_j" from 1 to _nb do {
     _mortar = ENEMY_MORTAR_CLASS createVehicle _posToSpawn ; 
@@ -29,16 +33,15 @@ for "_j" from 1 to _nb do {
     _mortar setVariable["DCW_IsIntel",true];
     _mortar setVariable["DCW_Type","mortar"];
 
-    _mortar addEventHandler["Killed",{ 
+    _mortar addMPEventHandler ["MPKilled",{ 
         params["_mortar","_killer"];
-        if (group(_killer) == group player) then {
+        if (isPlayer _killer) then {
             hint "Mortar destroyed";
             _mortar call fnc_success; 
          }else{
             _mortar call fnc_failed;
         }; 
     }];
-
 
     _mortar setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
     [_mortar,"ColorPink"] call fnc_addMarker;
@@ -50,8 +53,8 @@ for "_j" from 1 to _nb do {
     //Déclenchement du bombardement
     [_pos,_radius,_mortar] spawn {
         params["_pos","_radius","_mortar"];
-        waitUntil{sleep 15; getPosATL player distance _pos < _radius };
-        [_mortar,player,_pos,_radius] call fnc_mortarbombing;
+        waitUntil{sleep 15; { getPosATL _x distance _pos < _radius } count allPlayers > 0 };
+        [_mortar,LEADER_PLAYERS,_pos,_radius] call fnc_mortarbombing;
     };
                     
     for "_i" from 1 to _nbGuards do {

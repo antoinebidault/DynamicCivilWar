@@ -24,7 +24,7 @@ switch (_type) do {
         _title = "disarm the IED";
         _message = "I know something about an IED planted on this road. I can mark it on your map.";
         _messageSuccess = "This IED will no more cause trouble.";
-        _bonus = 10;
+        _bonus = 20;
      };
     case "hostage": {   
          _taskId = "hostage";
@@ -32,7 +32,7 @@ switch (_type) do {
         _title = "Free the hostage";
         _message = "I know something about a hostage detained in this compound";
         _messageSuccess = "We've liberated a hostage located in this compound.";
-        _bonus = 75;
+        _bonus = 200;
      };
      case "outpost": {   
         _taskId = "outpost";
@@ -40,7 +40,7 @@ switch (_type) do {
         _title = "Clear the outpost";
         _message = "I've located an outpost with a few insurgents here.";
         _messageSuccess = "Outpost clear ! Good job !";
-        _bonus = 15;
+        _bonus = 50;
      };
      case "cache": {   
         _taskId = "cachedestroy";
@@ -48,7 +48,7 @@ switch (_type) do {
         _title = "Destroy the cache";
         _message = "I've located a weapon cache in this building.";
         _messageSuccess = "We have successfully destroyed the cache";
-        _bonus = 50;
+        _bonus = 100;
      };
      case "sniper": {   
         _taskId = "snipers";
@@ -56,7 +56,7 @@ switch (_type) do {
         _title = "Kill the snipers";
         _message = "I've located a sniper team in this sector.";
         _messageSuccess = "The sniper team has been eliminated.";
-        _bonus = 30;
+        _bonus = 120;
      };
      case "tank": {   
         _taskId = "tank";
@@ -64,7 +64,7 @@ switch (_type) do {
         _title = "Destroy the tank";
         _message = "There is a heavy armor in this sector.";
         _messageSuccess = "Good job ! The tank has been destroyed.";
-        _bonus = 100;
+        _bonus = 200;
      };
       case "mortar": { 
         _taskId = "Mortar";
@@ -72,7 +72,7 @@ switch (_type) do {
         _title = "Destroy the mortar";
         _message = "There is a mortar position over here !";
         _messageSuccess = "This mortar won't cause any trouble.";
-        _bonus = 10;
+        _bonus = 50;
      };
     default { };
 };
