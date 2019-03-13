@@ -49,6 +49,7 @@ while{ true }do {
 				[_unit] call fnc_handlekill;
 				[_unit] call fnc_addTorch;
 				[_unit, if(side _unit == CIV_SIDE) then { "ColorBlue" } else { "ColorRed" } ] call fnc_addMarker;
+				_unit setVariable["DCW_type","carpatrol"];
 				UNITS_SPAWNED pushBack _unit;
 			} foreach (crew _car);
 

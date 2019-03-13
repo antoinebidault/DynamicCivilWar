@@ -1,3 +1,15 @@
+respawn = 3;
+respawndelay = 10;
+disabledAI=0;
+joinUnassigned = 0;
+enableDebugConsole = 1;
+allowFunctionsLog = 1;
+author = "Bidass";
+loadScreen = "images\loadScreen.paa"; 
+overviewPicture = "images\loadScreen.paa"; 
+overviewText = "You lead the FOXHOUND team, a 6 men british army team. ";
+overviewTextLocked = "You lead the FOXHOUND team, a 5 men US SOCOM team. Your mission is to bring back the Apaches crew. You must investigate the crash site. The whole region is controlled by insurgents. You can find intel when interrogating the civilian. Be careful, because sometimes they become hostiles... This scenario consists in one primary objective with side objectives consisting in weapon cache and patrol elimination. The purpose is to get something a bit dynamic with a linear scenario.  Hope you enjoy it... I put a lot of effort in this mission. I hope you would understand the english scenario I wrote with my  bad english. ";
+
 
 //--------------------------------------------------------------
 //------------------------MUSICS----------------------------

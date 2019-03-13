@@ -11,7 +11,7 @@ _silent = if (isNil '_silent' ) then{false}else{true};
 _score = _group getVariable ["DCW_SCORE",0];
 _score = (_score + _bonus);
 
-_group setVariable ["DCW_SCORE",_score];
+_group setVariable ["DCW_SCORE",_score, true];
 private _scoreType = if (_bonus > 0) then {"+"}else{""};
 
 if (!_silent)then{

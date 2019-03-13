@@ -22,6 +22,7 @@ while{true}do {
 
 		for "_j" from 1 to _numberOfmen do {
 			_unit = [_group,_pos] call fnc_SpawnCivil;
+			_unit setVariable["DCW_type","civpatrol"]; // overload
 			_unitPool pushBack _unit;
 			_unit setBehaviour "SAFE";
 			sleep .4;
@@ -29,7 +30,8 @@ while{true}do {
 		[leader _group] spawn fnc_civilianPatrol;
 	};	
 
-	// Garbage collector
+	// Garbage collector => moved to main loop
+	/*
 	{
 		_player = _x;
 		{
@@ -41,6 +43,7 @@ while{true}do {
 			}
 		}foreach _unitPool;
 	} foreach allPlayers;
+	*/
 
 	sleep 12;
 };

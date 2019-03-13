@@ -12,8 +12,8 @@ private _pos = _this select 0;
 private _radius = _this select 1;
 private _nb = _this select 2;
 private _meetingPointPosition = _this select 3;
+private _buildings = _this select 4;
 private _units = [];
-
 
 //List positions;
 private _posResult = [];
@@ -23,8 +23,6 @@ private _enterable = _posResult select 1;
 private _cancel = true;
 
 if (_nb < 1) exitWith { _units };
-
-
 
 //Spawn an armed vehicke
 private _road = [_pos,4*_radius,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
@@ -49,21 +47,14 @@ _units pushBack _unit;
 //Ajout des enemis 
 for "_xc" from 1 to _nb  do {
 
-    _isPatrol = false;
     _cancel = false;
     _posSelected = [];
 
-    //if (random 100 > 75) then{_nbUnit = ((PATROL_SIZE select 0) + floor random (PATROL_SIZE select 1)); _isPatrol = true; };
-
-    if (_isPatrol)then{
-      _posSelected = [_pos,1, _radius, 5, 0, 20, 0] call BIS_fnc_FindSafePos;
+    if (count _posSelects > 0)then{
+        _posSelected = _posSelects call BIS_fnc_selectRandom;
+      _posSelects = _posSelects - [_posSelected];
     }else{
-      if (count _posSelects > 0)then{
-         _posSelected = _posSelects call BIS_fnc_selectRandom;
-        _posSelects = _posSelects - [_posSelected];
-      }else{
-         _cancel = true;
-      }
+        _cancel = true;
     };
 
     if (!_cancel) then {
@@ -83,7 +74,7 @@ for "_xc" from 1 to _nb  do {
       _units pushBack _unit;
 
       //Si c'est une patrouille
-      [leader _grp,_radius,_meetingPointPosition] spawn fnc_patrol;
+      [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_patrol;
       
     };
 };

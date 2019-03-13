@@ -11,6 +11,7 @@ private _radius = _this select 1;
 private _isCleared = _this select 2;
 private _people = _this select 3;
 private _meetingPointPosition = _this select 4;
+private _buildings = _this select 5;
 private _units = [];
 private _population = _people select 0; 
 private _nbSnipers = _people select 1; 
@@ -96,7 +97,7 @@ for "_xc" from 1 to _nbenemies  do {
       _units pushBack _enemy;
     };
 
-    [leader _grp,_radius,_meetingPointPosition] spawn fnc_patrol;
+    [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_patrol;
 };
 
 
@@ -127,7 +128,7 @@ for "_xc" from 1 to _population do {
           _units pushBack _civ;
         }else{
           _civ = [_grp,_posSelected,_chief,true] call fnc_SpawnCivil;
-          [_civ,_radius,_meetingPointPosition] spawn fnc_patrol;
+          [_civ,_radius,_meetingPointPosition,_buildings] spawn fnc_patrol;
           _units pushBack _civ;
         };
       };

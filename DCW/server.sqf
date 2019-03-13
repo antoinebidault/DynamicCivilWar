@@ -161,6 +161,7 @@ private _typeObj = "";
 	private _isLocation = _x select 3;
 	private _nameLocation = _x select 3;
 	private _isMilitary = _x select 5;
+	private _buildings = _x select 6;
 
 	// If in white list exit loop
 	{ 
@@ -235,7 +236,7 @@ private _typeObj = "";
 		};
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
-		MARKERS pushBack  [_m,_pos,false,false,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary];
+		MARKERS pushBack  [_m,_pos,false,false,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings];
 	};
 	
 } foreach _clusters;
@@ -247,6 +248,7 @@ private _typeObj = "";
 [] execVM "DCW\fnc\spawn\SpawnRandomCivilian.sqf"; //Civilians walking around
 [] execVM "DCW\fnc\spawn\SpawnChopper.sqf"; //Chopper spawn
 [] execVM "DCW\fnc\spawn\SpawnTank.sqf"; //Tanks
+[] spawn fnc_SpawnCrashSite; //Chopper spawn
 [] spawn fnc_SpawnSecondaryObjective;
 [] spawn fnc_SpawnMainObjective;
 [30] spawn fnc_SpawnConvoy;
@@ -275,7 +277,7 @@ private ["_mkr","_cacheResult","_ieds"];
 waitUntil {count allPlayers > 0};
 
 // Initial score
-GROUP_PLAYERS setVariable ["DCW_SCORE",GROUP_PLAYERS getVariable ["DCW_SCORE",START_SCORE]];
+GROUP_PLAYERS setVariable ["DCW_SCORE",GROUP_PLAYERS getVariable ["DCW_SCORE",START_SCORE], true];
 LEADER_PLAYERS remoteExec ["fnc_displayscore"];
 
 // Initial timer for the hunters
@@ -286,98 +288,104 @@ while { true } do {
 	// foreach players
 	{
 		_player = _x;
+
 		_playerPos = position _player;
-		_nbUnitSpawned = count UNITS_SPAWNED;
+		
+		if (!isNil '_playerPos' && alive _x) then{
 
-		//Catch flying player
-		_isInFlyingVehicle = false;
-		if( (vehicle _player) != _player && ((vehicle player) isKindOf "Air" && (_playerPos select 2) > 4))then{
-			_isInFlyingVehicle = true;
-		};
+			_nbUnitSpawned = count UNITS_SPAWNED;
 
-		_xC = floor((_playerPos select 0)/SIZE_BLOCK);
-		_yC = floor((_playerPos select 1)/SIZE_BLOCK);
-		_o = 4;
+			//Catch flying player
+			_isInFlyingVehicle = false;
+			if( (vehicle _player) != _player && ((vehicle player) isKindOf "Air" && (_playerPos select 2) > 4))then{
+				_isInFlyingVehicle = true;
+			};
 
-		// foreach markers
-		{
-			private _marker =_x select 0;
-			private _pos =_x select 1;
-			private _triggered =_x select 2;
-			private _success =_x select 3;
-			private _radius =_x select 4;
-			private _units =_x select 5;
-			private _peopleToSpawn =_x select 6;
-			private _meetingPointPosition =_x select 7;
-			private _points =_x select 8;
-			private _isLocation = _x select 9;
-			private _isMilitary = _x select 10;
+			_xC = floor((_playerPos select 0)/SIZE_BLOCK);
+			_yC = floor((_playerPos select 1)/SIZE_BLOCK);
+			_o = 4;
 
-			if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE) then{
-			
-				if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
+			// foreach markers
+			{
+				private _marker =_x select 0;
+				private _pos =_x select 1;
+				private _triggered =_x select 2;
+				private _success =_x select 3;
+				private _radius =_x select 4;
+				private _units =_x select 5;
+				private _peopleToSpawn =_x select 6;
+				private _meetingPointPosition =_x select 7;
+				private _points =_x select 8;
+				private _isLocation = _x select 9;
+				private _isMilitary = _x select 10;
+				private _buildings = _x select 11;
 
-					//Véhicles spawn
-					_units = _units +  ([_pos,_radius,(_peopleToSpawn select 3)] call fnc_SpawnCars);
-					//Units
-					_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition] call fnc_SpawnUnits);
-					//Units
-					_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlyOutpost);
-					//IEDs
-					if (!_isMilitary)then{
-						_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_Ieds);
+				if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE) then{
+				
+					if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
+
+						//Véhicles spawn
+						_units = _units +  ([_pos,_radius,(_peopleToSpawn select 3)] call fnc_SpawnCars);
+						//Units
+						_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition,_buildings] call fnc_SpawnUnits);
+						//Units
+						_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition,_buildings] call fnc_SpawnFriendlyOutpost);
+						//IEDs
+						if (!_isMilitary)then{
+							_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_spawnIED);
+						};
+						//Outposts
+						_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
+						//Cache
+						_units = _units + ([_pos,_radius,(_peopleToSpawn select 5)] call fnc_cache);
+						//Hostages
+						_units = _units + ([_pos,_radius,(_peopleToSpawn select 6)] call fnc_hostage);
+						//Meeting points
+						_units = _units + ([_meetingPointPosition] call fnc_SpawnMeetingPoint);
+						//Mortars
+						_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
+
+						_triggered = true;
+
+						//Add a little breath
+						sleep 2;
 					};
-					//Outposts
-					_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
-					//Cache
-					_units = _units + ([_pos,_radius,(_peopleToSpawn select 5)] call fnc_cache);
-					//Hostages
-					_units = _units + ([_pos,_radius,(_peopleToSpawn select 6)] call fnc_hostage);
-					//Meeting points
-					_units = _units + ([_meetingPointPosition] call fnc_SpawnMeetingPoint);
-					//Mortars
-					_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
-
-					_triggered = true;
-
-					//Add a little breath
-					sleep 2;
-				};
 
 
-			}else{
+				}else{
 
-				//Gestion du cache
-				if(_playerPos distance _pos > (SPAWN_DISTANCE + 100) && _triggered)then {
-					_cacheResult = [_units] call fnc_CachePut;
-					_peopleToSpawn = _cacheResult select 0;
-					_units = _units - [_cacheResult select 1];
-					_triggered = false;
-				} else {
+					//Gestion du cache
+					if(_playerPos distance _pos > (SPAWN_DISTANCE + 100) && _triggered)then {
+						_cacheResult = [_units] call fnc_CachePut;
+						_peopleToSpawn = _cacheResult select 0;
+						_units = _units - [_cacheResult select 1];
+						_triggered = false;
+					} else {
 
-					// Check if enemies remains in the area;
-					if (_triggered && !_success) then{
-						if ([_playerPos, _marker] call fnc_isInMarker) then{
-							_nben = 0;
-							_enemyInMarker = true;
-							if ({side _x == ENEMY_SIDE && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= round (0.1 * (_peopleToSpawn select 2))) then {
-								_enemyInMarker = false;
+						// Check if enemies remains in the area;
+						if (_triggered && !_success) then{
+							if ([_playerPos, _marker] call fnc_isInMarker) then{
+								_nben = 0;
+								_enemyInMarker = true;
+								if ({side _x == ENEMY_SIDE && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= round (0.1 * (_peopleToSpawn select 2))) then {
+									_enemyInMarker = false;
+								};
+								//Cleared success
+								if (!_enemyInMarker)then {
+									_success = true;
+									[_marker,_radius,_units,_points] remoteExec ["COMPOUND_SECURED"];
+									[_player,"This compound is cleared ! Great job.", true] remoteExec ["fnc_talk"];
+									_marker setMarkerColor "ColorGreen";
+								};
+
 							};
-							//Cleared success
-							if (!_enemyInMarker)then {
-								_success = true;
-								[_marker,_radius,_units,_points] remoteExec ["COMPOUND_SECURED"];
-								[_player,"This compound is cleared ! Great job.", true] remoteExec ["fnc_talk"];
-								_marker setMarkerColor "ColorGreen";
-							};
-
 						};
 					};
-				};
-			}; 
-			MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary]]; 
-		}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
-		sleep 3;
+				}; 
+				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings]]; 
+			}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
+		};
+		sleep 1;
 	} foreach allPlayers;
 
 		_civilReputationSum = 0;
@@ -439,6 +447,43 @@ while { true } do {
 						};
 					};
 				};
+
+
+				// Garbage collection
+				if (_unit getVariable["DCW_Type",""] == "patrol")then{
+					if (_unit distance _x > SPAWN_DISTANCE + 300)then {
+						UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
+						_unit call fnc_deleteMarker;
+						deleteVehicle _unit;
+					};
+				} else {
+					if (_unit getVariable["DCW_Type",""] == "chaser")then{
+						if (_unit distance _x > SPAWN_DISTANCE + 300)then {
+							UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
+							_unit call fnc_deleteMarker;
+							deleteVehicle _unit;
+						};
+					} else {
+						if (_unit getVariable["DCW_Type",""] == "carpatrol")then{
+							if (_unit distance _x > 1500)then {
+								UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
+								_unit call fnc_deleteMarker;
+								deleteVehicle _unit;
+							};
+						} else {
+							if (_unit getVariable["DCW_Type",""] == "civpatrol")then{
+								if (_unit distance _x > 1500)then {
+									UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
+									_unit call fnc_deleteMarker;
+									deleteVehicle _unit;
+								};
+							};
+						};
+					};
+				};
+
+				
+
 			} foreach allPlayers;
 
 			//Calcul du score
@@ -447,12 +492,6 @@ while { true } do {
 				_civilReputationNb = _civilReputationNb + 1;
 			};
 
-			if (_unit getVariable["DCW_Type",""] == "chaser")then{
-				if (_unit distance _playerPos > SPAWN_DISTANCE + 300)then {
-					_unit call fnc_deleteMarker;
-					deleteVehicle _unit;
-				};
-			};
 
 		} foreach UNITS_SPAWNED;
 		

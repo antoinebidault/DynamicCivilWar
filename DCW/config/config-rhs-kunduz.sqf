@@ -34,6 +34,7 @@ FRIENDLY_LIST_CARS = ["UK3CB_TKA_B_M113_M2",
 "UK3CB_TKA_B_M1025_M2",
 "UK3CB_TKA_B_MaxxPro_M2"]; //Friendly cars
 FRIENDLY_FLAG = "Flag_AFG_13";//Flag of your side
+FRIENDLY_CHOPPER_CLASS = ["UK3CB_BAF_Apache_AH1_CAS_MTP","UK3CB_BAF_Merlin_HC3_18_GPMG_MTP"];
 
 //CIVILIAN
 CIV_SIDE = CIVILIAN; // Side civilian
@@ -67,6 +68,7 @@ ENEMY_CHOPPERS = ["UK3CB_TKA_O_UH1H_M240"];
 ENEMY_ATTACHEDLIGHT_CLASS =  "rhs_acc_2dpZenit"; //default : "acc_flashlight"
 ENEMY_MORTAR_CLASS = "UK3CB_TKM_O_2b14_82mm"; //Mortar class
 NUMBER_TANKS = 2; //Number of tanks
+NUMBER_CRASHSITES = 2;
 ENEMY_LIST_TANKS = ["UK3CB_TKM_O_T34","UK3CB_TKM_O_T55"]; //Tanks
 ENEMY_COMMANDER_CLASS = "UK3CB_TKM_O_WAR"; //commander
 ENEMY_CONVOY_CAR_CLASS = "UK3CB_TKM_O_Datsun_Pkm"; //commander

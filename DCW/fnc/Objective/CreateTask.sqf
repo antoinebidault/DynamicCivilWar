@@ -26,6 +26,14 @@ switch (_type) do {
         _messageSuccess = "This IED will no more cause trouble.";
         _bonus = 20;
      };
+     case "wreck": { 
+        _taskId = "WreckInvestigation";
+        _desc = "Investigate the crashsite and neutralize the wreck with an explosive charge .";
+        _title = "Chopper crash site";
+        _message = "There is a chopper crash site in this sector.";
+        _messageSuccess = "HQ, we cleaned up the crash site.";
+        _bonus = 400;
+     };
     case "hostage": {   
          _taskId = "hostage";
         _desc = "Find the hostage and liverate him.";
@@ -79,6 +87,6 @@ switch (_type) do {
 
 //Unique ID added to the task id;
 _taskId = format["%1_%2",_taskId,random 20];
-[_asker,  _taskId, [_desc,_title,_title],(getPos _intel),_withNotif] call BIS_fnc_taskCreate;
+[GROUP_PLAYERS,  _taskId, [_desc,_title,_title],(getPos _intel),_withNotif] call BIS_fnc_taskCreate;
 _intel setVariable["DCW_Bonus",_bonus];
 [_taskId,_message,_messageSuccess,_bonus];

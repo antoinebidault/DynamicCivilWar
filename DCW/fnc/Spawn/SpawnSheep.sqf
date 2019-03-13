@@ -71,6 +71,7 @@ while{true}do {
 	  	SHEEP_POOL pushBack _goatgroup;
 	};	
 
+	// garbage collection
 	{
 		// Delete all sheeps when all players are away !
 		if(  ({(leader _x) distance _x > 400 } count allPlayers) == count allPlayers)then {
@@ -82,7 +83,7 @@ while{true}do {
 			}foreach units (_x);
 			deleteGroup (_x);
 		}
-	}foreach SHEEP_POOL;
+	} foreach SHEEP_POOL;
 
 	sleep 15;
 };

@@ -43,7 +43,7 @@ while{true}do {
 			  _unit = [_grp,_pos,false] call fnc_spawnEnemy;
 			};
 
-			_unit setVariable["DCW_Type",""];
+			_unit setVariable["DCW_Type","patrol"];
 			_unit setDir random 360;
 			_unitPool pushBack _unit;
 			_unit setBehaviour "SAFE";
@@ -51,7 +51,8 @@ while{true}do {
 		};
 		[leader _grp, 500] spawn fnc_simplePatrol;
 	};	
-
+	
+	/* moved to server.sqf for performance
 	{
 		_player= _x;
 		{
@@ -62,7 +63,7 @@ while{true}do {
 				deleteVehicle _x;
 			}
 		}foreach _unitPool;
-	} foreach allPlayers;
+	} foreach allPlayers;*/
 
 	sleep 12;
 };

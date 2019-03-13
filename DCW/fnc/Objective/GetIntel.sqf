@@ -35,6 +35,4 @@ _marker setMarkerColor "ColorBlack";
 _marker setMarkerType "hd_objective";
 _intel setVariable["DCW_MarkerIntel",_marker];
 _intel setVariable["DCW_Task",_taskId];
- //_currentTask setTaskState "SUCCEEDED";
-//["destroyMissile", "SUCCEEDED"] call BIS_fnc_taskHint;
 [true,_message];

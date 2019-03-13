@@ -24,7 +24,6 @@ _startPos = getPosASL _unit;
 
 while { alive _unit }do{
 
- 
     if (_unit getVariable ["civ_insurgent",false] || _unit getVariable["follow_player",false])exitWith{false};
 
     _dir = random 360;

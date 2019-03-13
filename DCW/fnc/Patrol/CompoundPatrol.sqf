@@ -11,12 +11,16 @@
 private _unit = _this select 0;
 private _radius = _this select 1;
 private _meetPoint = _this select 2;
+private _buildings = _this select 3;
 
-private _buildings = [getPos _unit,_radius] call fnc_findBuildings;
-if(isNil("_buildings"))exitWith{};
+// If no building exit loop and do a basic patrol
+if (count _buildings == 0) exitWith {[_unit,_radius] call fnc_simplePatrol;};
+
+//private _buildings = [getPos _unit,_radius] call fnc_findBuildings;
+//if(isNil("_buildings"))exitWith{};
 
 private _building = _buildings select 0; 
-if (isNil "_building")exitWith{};
+//if (isNil "_building")exitWith{};
 
 private _bPoss = [];
 private _i = 0;
@@ -29,10 +33,8 @@ private _bPoss = [];
 private _rd = 0;
 private _timer = 0;
 
-//private _anims = ["STAND","STAND_IA","SIT_LOW","WATCH","WATCH1","WATCH2"];
-
-//_unit forceWalk true;
 _unit setBehaviour "SAFE";
+
 
 while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariable ["civ_insurgent",false]) }do{
 
@@ -43,6 +45,7 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
     	_bPoss set [count (_bPoss), (_building buildingPos _i)];
 		_i = _i + 1;
 	};
+
 
 	_i2 = 0;
     while{_i2 < (count _bPoss)}do{
@@ -84,7 +87,6 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
                 _newPos = [_curPos ,_range,_range + 30, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
                 _unit doMove _newPos;
                 _timer = time;
-
 
                 waitUntil {sleep 4; unitReady _unit || _unit distance _newPos < 2 || !isNull(_unit findNearestEnemy _unit) || time > _timer + 150};
 
