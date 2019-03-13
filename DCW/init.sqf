@@ -108,7 +108,10 @@ compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest
 
 // global scope variables
 GROUP_PLAYERS = group (allPlayers select 0); 
+publicVariable "GROUP_PLAYERS";
+
 LEADER_PLAYERS = leader GROUP_PLAYERS; 
+publicVariable "LEADER_PLAYERS";
 
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";

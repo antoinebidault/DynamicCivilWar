@@ -7,6 +7,7 @@
  */
 
 
+if (!isServer) exitWith{false};
 private _compos = [compo_commander1,compo_commander2];
 private _newPos = [];
 private _radiusSpawnRange = [1000,5400];
@@ -127,7 +128,7 @@ while {sleep 20; alive _leutnant && !(_leutnant getVariable["DCW_interrogated",f
     private _loc =  nearestLocations [getPosWorld _leutnant, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	// Info text
     
-    [HQ,format["We have some new intels on the enemy leutnant : %1, he is located %2km from %3",name _leutnant,round(((getPos _loc) distance2D player)/10)/100,text _loc], true] remoteExec ["fnc_talk"];
+    [HQ,format["We have some new intels on the enemy leutnant : %1, he is located %2km from %3",name _leutnant,round(((getPos _loc) distance2D LEADER_PLAYERS)/10)/100,text _loc], true] remoteExec ["fnc_talk"];
     _marker setMarkerPos (getPos _leutnant);
     _firstSpawn = false;
     sleep 300 + random 240;

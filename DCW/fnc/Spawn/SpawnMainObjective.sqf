@@ -5,6 +5,7 @@
  * License : GNU (GPL)
  */
 
+if (!isServer) exitWith{false};
 _nbTrucks = 2;
 _roadRadius = 40;
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
@@ -12,18 +13,11 @@ _worldCenter = [_worldSize/2,_worldSize/2,0];
 private _compos = [compo_commander1, compo_commander2];
 private _situation = "+trees +forest*10 -meadow";
 private _commanderPos = [];
-private _mkrToAvoid = ["mkr-cmdr-remove", position player];
 private _tempList = [];
 
 ENEMY_COMMANDER = objNull;
 _grp = createGroup ENEMY_SIDE;
 ESCORT = [];
-
-/*
-_mkrToAvoid = createMarker ["mkrToAvoid",position player];
-_mkrToAvoid setMarkerShape "SQUARE";
-_mkrToAvoid setMarkerAlpha 0;
-_mkrToAvoid setMarkerSize [400,400];*/
 
 private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 _initPos = ((selectBestPlaces[_initPos, 100, _situation, 5, 1]) select 0 )select 0;
@@ -54,23 +48,24 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
     _gunner = _this select 7;	
 
     if (group _gunner == GROUP_PLAYERS && _distance < 50)then{
-        [player,"Shit ! this asshole is fleeing.",false] remoteExec fnc_talk;
+        [_gunner,"Shit ! this asshole is fleeing.",false]  remoteExec ["fnc_talk"];
         _commander removeAllEventHandlers "FiredNear";
         [_commander] joinSilent (createGroup ENEMY_SIDE);
         _commander setBehaviour "CARELESS";
         _commander forceWalk false;
         _commander forceSpeed 10;
-        _dir = [player,_commander] call BIS_fnc_dirTo; 
+        _dir = [_gunner,_commander] call BIS_fnc_dirTo; 
         _commanderPos = [(getPos _commander), 2000,_dir] call BIS_fnc_relPos;
         [_commanderPos, 200, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 
         _commander move _commanderPos;
-        [] spawn{
-            waitUntil{sleep 1;(player distance ENEMY_COMMANDER) > 500 || !(alive ENEMY_COMMANDER) };
+        [_gunner] spawn{
+            params["_gunner"];
+            waitUntil{sleep 1;(_gunner distance ENEMY_COMMANDER) > 500 || !(alive ENEMY_COMMANDER) };
             if (!alive ENEMY_COMMANDER)exitWith{false};
             ENEMY_COMMANDER call fnc_deleteMarker;
             deleteVehicle ENEMY_COMMANDER;
-            [player ,"He has definitely left the area... Mission compromised. Maybe we would catch him later..." ,true ] call fnc_talk;
+            [_gunner ,"He has definitely left the area... Mission compromised. Maybe we would catch him later..." ,true ] remoteExec ["fnc_talk"];
             [] call fnc_SpawnMainObjective;
         };
     };
@@ -81,9 +76,9 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
 
     if (group _killer == GROUP_PLAYERS)then{
         []spawn{
-            [player,"HQ ! This is charlie team, the enemy commander is KIA ! Out.",true] call fnc_talk;
-            sleep 14;
-            ["END1" ,true ,2 ] call BIS_fnc_endMission;
+            [_killer,format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _killer],true] remoteExec ["fnc_talk"];
+            sleep 60;
+            ["END1" ,true ,2 ] remoteExec ["BIS_fnc_endMission"];
         };
     }else{
         //Start over
@@ -119,7 +114,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 	_trig setTriggerTimeout[1,1,1,true];
     _trig setTriggerStatements[
         "this",
-        "playMUsic ""BackgroundTrack02_F"";[player,""HQ, this is bravo team, we've found the presumed camp where the commander went. We are at the last known position. We'll investigate the compound around"", true] spawn fnc_talk;",
+        "playMUsic ""BackgroundTrack02_F"";[LEADER_PLAYERS,""HQ, this is bravo team, we've found the presumed camp where the commander went. We are at the last known position. We'll investigate the compound around"", true] spawn fnc_talk;",
         "deleteVehicle thisTrigger"
     ];
 
@@ -128,7 +123,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 
     //Blacklist du joueur
     deleteMarker "mkr-cmdr-remove";
-    _mkrToAvoid = createMarker ["mkr-cmdr-remove", position player];
+    _mkrToAvoid = createMarker ["mkr-cmdr-remove", position LEADER_PLAYERS];
     _mkrToAvoid setMarkerAlpha 0;
     _mkrToAvoid setMarkerSize [500,500];
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];

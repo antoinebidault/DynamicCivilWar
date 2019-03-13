@@ -44,7 +44,7 @@ _this addHeadgear "H_Beret_blk";
     
     if(!_success) exitWith{[_unit,"Secure our position first", false] spawn fnc_talk;false;};
 
-    if (!([GROUP_PLAYER,200] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
+    if (!([GROUP_PLAYERS,200] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
 
     _unit RemoveAction _action;
     _buildings = nearestObjects [_pos, ["house"], 300];
@@ -116,7 +116,9 @@ _this addHeadgear "H_Beret_blk";
 
     MARKERS pushback _curr;
 
-    skipTime 6;
+    if (!isMultiplayer) then {
+        skipTime 6;
+    };
     sleep 1;
     titleCut ["6 hours later...", "BLACK IN", 4];
     

@@ -8,7 +8,7 @@
 params ["_unit"];
 waitUntil { time > 0 };
 grpNetID = group _unit call BIS_fnc_netId;
-CRATE_ITEMS = player call fnc_getCrateItems;
+CRATE_ITEMS = _unit call fnc_getCrateItems;
 
  //Create a side logic 
 private _center = createCenter sideLogic; 
@@ -16,7 +16,7 @@ private _center = createCenter sideLogic;
 private _logicGroup = createGroup _center; 
 //Spawn a SupportRequestor module 
 
-private _pos = [_unit, 1000, (floor (random 360))] call BIS_fnc_relPos;
+private _pos = [_unit, 3000, (floor (random 360))] call BIS_fnc_relPos;
 SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",_pos, [], 0, "FORM"]; 
 
 {

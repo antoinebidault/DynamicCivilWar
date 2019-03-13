@@ -65,7 +65,7 @@ while {true} do {
 		MEDEVAC_marker = "";
 		deleteMarker "medevac_marker";
 
-		HQ sideChat "We're waiting now for your mark !";
+		[HQ,"We're waiting now for your mark on the map !",true] remoteExec ["fnc_talk"];
 
 		//open the map
 		if (isPlayer unit) then {

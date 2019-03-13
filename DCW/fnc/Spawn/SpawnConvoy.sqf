@@ -6,19 +6,19 @@
  */
 
 //Stand by during a long period
+if (!isServer) exitWith{false};
 
 SLEEP (_this select 0);
 
 private _nbVeh = 3;
 private _nbTrucks = _nbVeh - 1;
 private _roadRadius = 40;
-private _tempList = MARKER_WHITE_LIST;
 
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
 
-private _initPos = [_worldCenter,0,_worldSize/2, 5, 0, 20, 0, _tempList] call BIS_fnc_FindSafePos;
-private _road = [_initPos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
+private _initPos = [_worldCenter,0,_worldSize/2, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+private _road = [_initPos,500,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 private _roadPos = getPos _road;
 
 private _grp = createGroup ENEMY_SIDE;
@@ -34,7 +34,7 @@ if (isOnRoad(_roadPos) && _roadPos distance LEADER_PLAYERS > 300 )then{
     _car = [_roadPos, _roadDirection, ENEMY_CONVOY_CAR_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
 
     _car addMPEventHandler ["MPKilled",{
-        [LEADER_PLAYERS,100] spawn fnc_updatescore;
+        [GROUP_PLAYERS,100] spawn fnc_updatescore;
         CAR_DESTROYED = CAR_DESTROYED + 1;
     }];
 
@@ -69,7 +69,7 @@ if (isOnRoad(_roadPos) && _roadPos distance LEADER_PLAYERS > 300 )then{
          };
 
          _truck addMPEventHandler ["MPKilled",{
-             [LEADER_PLAYERS,100] spawn fnc_updatescore;
+             [GROUP_PLAYERS,100] spawn fnc_updatescore;
             CAR_DESTROYED = CAR_DESTROYED + 1;
          }];
     };
@@ -114,16 +114,16 @@ _nextPos = _initPos;
 waitUntil {sleep 5; CAR_DESTROYED == _nbVeh || (leader _grp)  distance _nextPos < 10 };
 
 if (CAR_DESTROYED == _nbVeh) exitWith {
-    [HQ,"You successfully ambushed the convoy ! Well done !",true] call fnc_talk;
+    [HQ,"You successfully ambushed the convoy ! Well done !",true] remoteExec ["fnc_talk"];
     [100] spawn fnc_spawnConvoy;
 };
 
 sleep 100;
 
 //Unspawn unit
-waitUntil {sleep 5;CAR_DESTROYED == _nbVeh || player distance (leader _grp) > 700};
+waitUntil {sleep 12;CAR_DESTROYED == _nbVeh || {_x distance (leader _grp) > 700}count allPlayers == count allPlayers};
 {CONVOY = CONVOY - [_x]; _x call fnc_deleteMarker; deleteVehicle _x; } forEach CONVOY;
 
-[HQ,"You missed the convoy ! Out !",true] call fnc_talk;
+[HQ,"You missed the convoy ! Out !",true] remoteExec ["fnc_talk"];
 [100] spawn fnc_spawnConvoy;
 false;

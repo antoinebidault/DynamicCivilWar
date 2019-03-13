@@ -26,7 +26,9 @@ MARKERS = [];
 SHEEP_POOL = [];
 UNITS_CHASERS = [];
 CHASER_TRIGGERED = false;
+publicVariable "CHASER_TRIGGERED";
 CHASER_VIEWED = false;
+publicVariable "CHASER_VIEWED";
 MESS_SHOWN = false;
 LAST_FLARE_TIME = time;
 REFRESH_TIME = 10; // Refresh time
@@ -34,9 +36,6 @@ WEATHER = .5;
 CONVOY = []; // Current convoy
 ESCORT = []; // List of escorts guys with the commandant
 START_SCORE = 150;
-
-// Initial score
-GROUP_PLAYERS setVariable ["DCW_SCORE",GROUP_PLAYERS getVariable ["DCW_SCORE",START_SCORE]];
 
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 
@@ -91,7 +90,7 @@ CIVILIAN_KILLED = {
 	hint format ["%1 %2 was killed by %3",name (_unit),side _unit,name (_killer)];
 	_friends = nearestObjects [position _unit,["Man"],50];
 	{  if (side _x == CIV_SIDE) then { [_x,-4] call fnc_UpdateRep}; }foreach _friends;
-	[GROUP_PLAYERS,-50] call fnc_updateScore;
+	[GROUP_PLAYERS,-50,false,_killer] call fnc_updateScore;
 };
 
 //On enemy killed => 2 points
@@ -106,40 +105,42 @@ COMPOUND_SECURED = {
 
 	//Misa à jour de l'amitié
 	{  if (side _x == CIV_SIDE && _x getVariable["DCW_Friendliness",-1] != -1) then { [_x,6] call fnc_UpdateRep;}; }foreach _units;
-	[GROUP_PLAYERS,_points] call fnc_updateScore;
+	[GROUP_PLAYERS,_points,false,LEADER_PLAYERS] call fnc_updateScore;
 };
 
 //On success
 OBJECTIVE_ACCOMPLISHED = { 
 	params["_type","_unit","_bonus"]; 
 	if (_bonus > 0) then{
-		[GROUP_PLAYERS,_bonus] call fnc_updateScore;
+		[GROUP_PLAYERS,_bonus,false,_unit] call fnc_updateScore;
 	};
 };
 
 //If civilian is healed by player
 CIVIL_HEALED = { 
-	[GROUP_PLAYERS,30] call fnc_updateScore;
+	[GROUP_PLAYERS,30,false,LEADER_PLAYERS] call fnc_updateScore;
  };
 
 //If civil is captured
  CIVIL_CAPTURED = { 
-	//[player,-5] call fnc_updateScore;
+	//[GROUP_PLAYERS,-5] call fnc_updateScore;
  };
 
 // If player is killed
  PLAYER_KIA = { 
-	[GROUP_PLAYERS,-20] call fnc_updateScore;
+	[GROUP_PLAYERS,-20,false,LEADER_PLAYERS] call fnc_updateScore;
  };
 
 //If player did not respect a civilian
 CIVIL_DISRESPECT = { 
-	[GROUP_PLAYERS,-5] call fnc_updateScore;
+	params["_unit"];
+	[GROUP_PLAYERS,-5,false,_unit] call fnc_updateScore;
 };
 
 //On enemy search.
 ENEMY_SEARCHED = {
-	[GROUP_PLAYERS,ceil (random 10)] call fnc_updateScore;
+	params["_unit","_player"];
+	[GROUP_PLAYERS,ceil (random 10),false,_player] call fnc_updateScore;
 };
 
 private _popbase = 0;
@@ -251,7 +252,6 @@ private _typeObj = "";
 [30] spawn fnc_SpawnConvoy;
 
 private ["_mkr","_cacheResult","_ieds"];
-private _timerChaser = time - 360;
 
 [] spawn {
 	if (DEBUG)then{
@@ -271,6 +271,16 @@ private _timerChaser = time - 360;
 	};
 };
 
+// Wait until this var is on
+waitUntil {count allPlayers > 0};
+
+// Initial score
+GROUP_PLAYERS setVariable ["DCW_SCORE",GROUP_PLAYERS getVariable ["DCW_SCORE",START_SCORE]];
+LEADER_PLAYERS remoteExec ["fnc_displayscore"];
+
+// Initial timer for the hunters
+_timerChaser = time - 360;
+				   
 while { true } do {
 
 	// foreach players
@@ -374,7 +384,7 @@ while { true } do {
 		_civilReputationNb = 0;
 
 		//If all players are killed => Finish the mission
-		if ({alive _x} count allPlayers == 0) then {
+		if ({ alive _x } count allPlayers == 0) then {
 			["End1", true, true] remoteExecCall ["BIS_FNC_EndMission"];
 		};
 
@@ -389,15 +399,19 @@ while { true } do {
 			
 			// foreach players
 			{
+				if (CHASER_TRIGGERED) then {
+				   _timerChaser = time;
+				};
+
 				//Detection
 				if (!CHASER_TRIGGERED && !CHASER_VIEWED && side _unit == ENEMY_SIDE && _unit knowsAbout _x > 1 && !(_x getVariable["DCW_undercover",false]) ) then 
 				{
-					[_unit,_x] spawn {
-						params["_unit","_player"];
+					[_unit,_x,_timerChaser] spawn {
+						params["_unit","_player","_timerChaser"];
 						CHASER_VIEWED = true;
 						sleep (15 + random 5);
 						CHASER_VIEWED = false;
-						_player call fnc_DisplayScore;
+						_player remoteExec ["fnc_DisplayScore",_player, false];
 						// || _unit knowsAbout player > 2
 						if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,_player] call fnc_GetVisibility > 20))then{
 							if (DEBUG) then  {
@@ -407,11 +421,11 @@ while { true } do {
 							CHASER_TRIGGERED = true;
 							//Chasers
 							if (CHASER_TRIGGERED && time > (_timerChaser + 20))then{
-								_timerChaser = time;
+								_timerChaser = time - 1;
 								UNITS_SPAWNED = UNITS_SPAWNED + ([_player] call fnc_SpawnChaser);
 							};
 							
-							_player call fnc_DisplayScore;
+							_player remoteExec ["fnc_DisplayScore",_player, false];
 							[_player] spawn {
 								params["_player"];
 								sleep 250;
@@ -420,7 +434,7 @@ while { true } do {
 								};
 								sleep 200;
 								CHASER_TRIGGERED = false;
-								_player call fnc_DisplayScore;
+								_player remoteExec ["fnc_DisplayScore",_player, false];
 							};
 						};
 					};

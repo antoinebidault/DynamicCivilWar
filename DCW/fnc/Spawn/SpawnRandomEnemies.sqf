@@ -6,6 +6,7 @@
  */
 
 
+if (!isServer) exitWith{false};
 private _numberOfmen = 1;
 private _minRange = 300;
 private _unitPool = [];
@@ -52,13 +53,16 @@ while{true}do {
 	};	
 
 	{
-		if(_x distance player > 600)then{
-			UNITS_SPAWNED - [_x];
-			_unitPool = _unitPool - [_x];
-			_x call fnc_deleteMarker;
-			deleteVehicle _x;
-		}
-	}foreach _unitPool;
+		_player= _x;
+		{
+			if(_x distance _player > 600)then{
+				UNITS_SPAWNED - [_x];
+				_unitPool = _unitPool - [_x];
+				_x call fnc_deleteMarker;
+				deleteVehicle _x;
+			}
+		}foreach _unitPool;
+	} foreach allPlayers;
 
 	sleep 12;
 };

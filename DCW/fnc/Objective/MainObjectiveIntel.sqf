@@ -51,7 +51,7 @@ _taskId = "maintask";
   [LEADER_PLAYERS,"Thank you, we'll investigate this place.",true] call fnc_Talk;
   [LEADER_PLAYERS,"HQ, we've caught informations about the possible enemy commander last position.",false] call fnc_Talk;
   [HQ,"Copy ! We'll send you extra credits in order to accomplish your task. Good luck ! Out.",false] call fnc_Talk;
-  [GROUP_PLAYERS,250] call fnc_updatescore;
+  [GROUP_PLAYERS,250,false,LEADER_PLAYERS] call fnc_updatescore;
 } remoteExec["spawn"];
 
 true;

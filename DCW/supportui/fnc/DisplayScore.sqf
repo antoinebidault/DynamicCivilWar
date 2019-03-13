@@ -6,7 +6,7 @@
  */
 
 
-private _points = _this getVariable["DCW_SCORE",0];
+private _points = GROUP_PLAYERS getVariable["DCW_SCORE",0];
 private _colorChaser = "";
 private _labelChaser = "";
 private _statusUnd = "";

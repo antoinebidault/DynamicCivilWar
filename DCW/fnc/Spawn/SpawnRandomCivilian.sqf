@@ -6,6 +6,7 @@
  */
 
 
+if (!isServer) exitWith{false};
 private _numberOfmen = 1;
 private _minRange = 300;
 private _unitPool = [];
@@ -15,7 +16,7 @@ while{true}do {
 
 		//Get random pos
 		if (_firstTrigger) then {_minRange = 1; _firstTrigger = false;}else{_minRange = 500;};
-		_pos = [position player, _minRange, 550, 4, 0, 20, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+		_pos = [position (allPlayers call BIS_fnc_selectRandom), _minRange, 550, 4, 0, 20, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 		_numberOfmen =  1;
 		_group = createGroup CIV_SIDE;
 
@@ -28,18 +29,18 @@ while{true}do {
 		[leader _group] spawn fnc_civilianPatrol;
 	};	
 
+	// Garbage collector
 	{
-		/*if (!alive _x)then{
-			_unitPool = _unitPool - [_x];
-		};*/
-		
-		if(_x distance player > 600)then{
-			UNITS_SPAWNED - [_x];
-			_unitPool = _unitPool - [_x];
-			_x call fnc_deleteMarker;
-			deleteVehicle _x;
-		}
-	}foreach _unitPool;
+		_player = _x;
+		{
+			if(_x distance _player > 600)then{
+				UNITS_SPAWNED - [_x];
+				_unitPool = _unitPool - [_x];
+				_x call fnc_deleteMarker;
+				deleteVehicle _x;
+			}
+		}foreach _unitPool;
+	} foreach allPlayers;
 
 	sleep 12;
 };

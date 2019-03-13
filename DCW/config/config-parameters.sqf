@@ -19,3 +19,5 @@ if (count paramsArray > 0) then
 	// Not shared => each client has his own value
 	NUMBER_RESPAWN = paramsArray select 4;
 };
+
+REMAINING_RESPAWN = NUMBER_RESPAWN;

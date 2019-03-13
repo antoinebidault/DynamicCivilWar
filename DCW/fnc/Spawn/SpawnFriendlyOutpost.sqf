@@ -4,6 +4,8 @@
  * Author: BIDASS
  * License : GNU (GPL)
  */
+ 
+if (!isServer) exitWith{false};
 
 private ["_unitName","_civ"];
 private _pos = _this select 0;

@@ -23,10 +23,17 @@ fnc_ActionRest =  {
         sleep 2;
         _unit action ["sitdown",_unit];
         sleep 3;
-        setAccTime 120;
+        
+        if (!isMultiplayer) then {
+            setAccTime 120;
+        };
+
         sleep 25;
-        setAccTime 1;
-        skipTime 3;
+        
+        if (!isMultiplayer) then {
+            setAccTime 1;
+            skipTime 3;
+        };
         sleep 3;
         [_unit,"Ok, let's go back to work !",false] call fnc_Talk;
         _unit action ["sitdown",_unit];

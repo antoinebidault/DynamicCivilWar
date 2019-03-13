@@ -9,6 +9,7 @@ params["_initialPos","_player"];
 
 if (!RESPAWN_ENABLED)then {
 	NUMBER_RESPAWN = 0;
+	REMAINING_RESPAWN = 0;
 };
 
 REMAINING_RESPAWN = NUMBER_RESPAWN;
@@ -119,7 +120,10 @@ fnc_HandleRespawn =
 	BIS_DeathBlur ppEffectAdjust [0.0];
 	BIS_DeathBlur ppEffectCommit 0;
 	cutText ["You are severly injured","BLACK FADED", 999];
-	skipTime 6 + random 12;
+	
+    if (!isMultiplayer) then {
+		skipTime 6 + random 12;
+	};
 	sleep 5;
 	[worldName, "Back to camp",format["%1 hours later...",_timeSkipped], format ["%1 live%2 left",REMAINING_RESPAWN,if (REMAINING_RESPAWN <= 1) then {""}else{"s"}]] call BIS_fnc_infoText;
 	cutText ["","BLACK IN", 4];

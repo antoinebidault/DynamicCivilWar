@@ -16,7 +16,7 @@ HASLANDED = false;
 MEDEVAC_ISABORTED = false;
 
 private _startPos = position TRANSPORTHELO;
-HQ sideChat format["Be advised: medevac chopper in bound ! ETA : %1min",ceil((_landPos distance _startPos)/1000)*.333] ;
+[HQ,format["Be advised: medevac chopper in bound ! ETA : %1min",ceil((_landPos distance _startPos)/1000)*.333] ,true] remoteExec ["fnc_talk"];
 
  private _wp0 = _grp addwaypoint [_landPos, 10];
  _wp0 setwaypointtype "MOVE";
@@ -40,7 +40,7 @@ TRANSPORTHELO addEventHandler ["handleDamage", {
 
 waitUntil {TRANSPORTHELO distance2D _landPos < 200};
 
-HQ sideChat "Throw a green smoke !"  ;
+[HQ,"Throw a green smoke to mark the LZ !" ,true] remoteExec ["fnc_talk"];
 
 SmokeShell = objNull;
 _unit addEventHandler ["Fired", {
@@ -67,7 +67,7 @@ sleep 5;
 	TRANSPORTHELO action ["useWeapon",TRANSPORTHELO,driver TRANSPORTHELO,1];
 };
 
-HQ sideChat "Roger !"  ;
+[HQ,"Landing procedure started !" ,true] remoteExec ["fnc_talk"];
 
 _unit removeEventHandler ["Fired", 0];
 
@@ -95,22 +95,22 @@ interventionGroup leavevehicle TRANSPORTHELO;
 
 waitUntil{{_x in TRANSPORTHELO} count units  replacementGroup == 0 && {_x in TRANSPORTHELO} count units  interventionGroup == 0  };
 
-replacementGroup move position player;
+replacementGroup move position _unit;
 {_x setUnitPos "MIDDLE"; _x setBehaviour "MIDDLE"; } foreach (units replacementGroup);
 
 //Make replacementGroup join player
 {unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);
 (units replacementGroup) join group _unit;
-HQ sideChat "Reinforcments arriving.";
+[HQ,"Reinforcments arriving.",true] remoteExec ["fnc_talk"];
 
 // Save units
-HQ sideChat format["We're starting the %1 injured's evacuations.",count _soldiersDead];
+[HQ,format["We're starting the %1 injured's evacuations.",count _soldiersDead],true] remoteExec ["fnc_talk"];
 [interventionGroup,_soldiersDead,TRANSPORTHELO] spawn fnc_save;
 
 waitUntil{ MEDEVAC_ISABORTED || ({_x in TRANSPORTHELO} count (units  interventionGroup) == count (units  interventionGroup)) };
  
 if (MEDEVAC_ISABORTED) then {
-	HQ sideChat "Mission aborted, it's too dangerous here ! out.";
+	[HQ,"Medevec aborted, it's too dangerous here, we're RTB! out.",true] remoteExec ["fnc_talk"];
 	_allUnits =  units replacementGroup + units interventionGroup + _soldiersDead;
 	{
 		if (vehicle _x == _x)then{

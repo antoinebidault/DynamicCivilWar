@@ -57,7 +57,7 @@ addActionGiveUsAHand =  {
         _talker  = (_this select 1);
         _action  = (_this select 2);
 
-         if (!([GROUP_PLAYER,20] call fnc_afford)) exitWith {[_man,"You need more money !",false] call fnc_talk;false;};
+         if (!([GROUP_PLAYERS,20] call fnc_afford)) exitWith {[_man,"You need more money !",false] call fnc_talk;false;};
          [_man,"Ok, we're taking your flank",false] spawn fnc_talk;
 
         {
@@ -121,7 +121,7 @@ addActionLookInventory = {
             for "_i" from 1 to 3 do {_unit addItemToUniform "1Rnd_HE_Grenade_shell";};
             [_human,"Holy shit ! This man is carrying material for IED purposes !",true] remoteExec ["fnc_talk"];
             [_unit,1] call fnc_updateRep;   
-            [_unit,30] call fnc_updateScore;   
+            [GROUP_PLAYERS,30,false,_human] call fnc_updateScore;   
             RemoveAllActions _unit;
         }else{
             [_unit,-1] call fnc_updateRep;   
@@ -315,9 +315,9 @@ addActionGetIntel = {
         titleCut ["15 minutes later...", "BLACK OUT", 1];
 
         sleep 1;
-
-        skipTime .25;
-
+        if (!isMultiplayer) then {
+            skipTime .25;
+        };
         if (_isSuspect)then{
             [_unit,"Sorry, I have plenty work to do !",false] call fnc_Talk;
         }else{
@@ -350,7 +350,7 @@ addActionRally = {
    _this addAction["Try to rally (30 minutes/5 points)",{
        params["_unit","_talker","_action"];
        
-        if (!([GROUP_PLAYER,5] call fnc_afford)) exitWith {[_unit,"You need more money !",false] call fnc_talk;false;};
+        if (!([GROUP_PLAYERS,5] call fnc_afford)) exitWith {[_unit,"You need more money !",false] call fnc_talk;false;};
 
         _unit removeAction _action;
         showCinemaBorder true;
