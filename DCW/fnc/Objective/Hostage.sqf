@@ -81,7 +81,7 @@ for "_j" from 1 to _nb do {
         //Task success
         _hostage call fnc_success;
         
-    },{},[],4,nil,true,false] call BIS_fnc_holdActionAdd;
+    },{},[],4,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
     _hostage setVariable["DCW_Act",_actionId];
 
     _units pushBack _hostage;

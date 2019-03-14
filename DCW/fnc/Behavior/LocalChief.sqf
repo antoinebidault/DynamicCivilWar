@@ -17,7 +17,7 @@ _this addHeadgear "H_Beret_blk";
 [_this,["Interrogate",{
     (_this select 0) RemoveAction (_this select 2);
     (_this select 0) call fnc_MainObjectiveIntel;
-}]] remoteExec ["addAction"];
+},nil,2.5,true,true,"","true",20,false,""]] remoteExec ["addAction"];
 
 [_this,["Set up camp here (200 points, 6 hours)",{
     params["_unit","_asker","_action"];
@@ -144,4 +144,4 @@ _this addHeadgear "H_Beret_blk";
     
     hint "Next time, you'll respawn at this position.";
 
-}]] remoteExec["addAction", LEADER_PLAYERS];
+},nil,2.5,true,true,"","true",20,false,""]] remoteExec["addAction", LEADER_PLAYERS];

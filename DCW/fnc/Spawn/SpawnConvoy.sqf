@@ -41,7 +41,7 @@ if (isOnRoad(_roadPos) && _roadPos distance LEADER_PLAYERS > 300 )then{
     CONVOY pushback _car;
     CONVOY = CONVOY + (crew _car);
    
-    _nbUnit = (count (fullCrew [_car,"cargo",true]));
+    _nbUnit = (count (fullCrew [_car,"cargo",true])) max 10;
     
     //Civilian team spawn.
     //If we killed them, it's over.

@@ -56,7 +56,7 @@ _radius = ((getMarkerSize _marker) select 0);
     }foreach _newObjs;
     
     _objBase call fnc_success;
-    },{},[_newObjs],3,nil,true,false] call BIS_fnc_holdActionAdd;
+    },{},[_newObjs],3,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
     _units = _units + _newObjs;
  };

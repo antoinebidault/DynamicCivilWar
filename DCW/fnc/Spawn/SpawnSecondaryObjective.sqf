@@ -31,7 +31,7 @@ private _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
 private _truck = [_roadPos, _roadDirection, ENEMY_LEUTNANT_LIST_CARS call bis_fnc_selectrandom, createGroup ENEMY_SIDE] call BIS_fnc_spawnVehicle select 0;
 _leutnant moveInAny _truck;
 
-private _nbUnit = (count (fullCrew [_truck,"cargo",true]))-1;
+private _nbUnit = (count (fullCrew [_truck,"cargo",true]))-1 max 10;
 private _unit = objNull;
 for "_yc" from 1 to _nbUnit  do {
     _unit = [_grp, _initPos, true] call fnc_spawnEnemy;
@@ -101,7 +101,7 @@ _leutnant addEventHandler ["HandleDamage",{
             _unit call fnc_MainObjectiveIntel;
 		},{
 		  (_this select 1) playActionNow "medicStop";
-		},[],3,nil,true,false] spawn BIS_fnc_holdActionAdd;
+		},[],3,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
 	}else{
         if (!(_unit getVariable["DCW_interrogated",false]) && _unit getVariable["DCW_isUnconscious",false]) then {

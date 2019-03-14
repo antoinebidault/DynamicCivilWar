@@ -20,7 +20,7 @@ private _pos = [_unit, 3000, (floor (random 360))] call BIS_fnc_relPos;
 SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",_pos, [], 0, "FORM"]; 
 
 {
-	[SUPPORT_REQUESTER, _x, 0] remoteExec ["BIS_fnc_limitSupport", 0, true];
+	[SUPPORT_REQUESTER, _x, 0] call BIS_fnc_limitSupport;
 } forEach [
 	"Artillery",
 	"CAS_Heli",
@@ -55,10 +55,8 @@ private _logicGroupSupportProvider = createGroup _center;
 	//ENABLE ACTIVATION
 	_supportProvider setVariable["BIS_fnc_initModules_disableAutoActivation", false];
 
-	[SUPPORT_REQUESTER, _x select 0, 0] remoteExec ["BIS_fnc_limitSupport", 0, true];
-	{
-		[_x, SUPPORT_REQUESTER, _supportProvider] remoteExec ["BIS_fnc_addSupportLink", 0, true];
-	} forEach (units (grpNetId call BIS_fnc_groupFromNetId));
+	[SUPPORT_REQUESTER, _x select 0, 0] call BIS_fnc_limitSupport;
+	[player, SUPPORT_REQUESTER, _supportProvider] call BIS_fnc_addSupportLink;
 
 }forEach [
 	["Artillery",[SUPPORT_ARTILLERY_CLASS]],

@@ -95,7 +95,7 @@ fnc_HandleRespawn =
 
 	// Move the alive AI unit back to position
 	{ 
-		if(alive _x && !isPlayer _x && LEADER_PLAYERS == _player) then{
+		if(alive _x && !isPlayer _x && LEADER_PLAYERS == _unit) then{
 			_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)
 		}; 
 	}foreach  units (group _unit);

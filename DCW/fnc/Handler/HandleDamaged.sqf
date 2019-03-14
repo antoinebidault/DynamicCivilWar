@@ -41,7 +41,7 @@ _this addEventHandler["HandleDamage",{
 		};
 
 
-		  [ _unit,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","true","true",{
+		  [ _unit,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
 			  (_this select 1) playActionNow "medicStart";
 		  },{
 			   (_this select 1) playActionNow "medicStart";
@@ -56,7 +56,7 @@ _this addEventHandler["HandleDamage",{
 
 		},{
 			   (_this select 1) playActionNow "medicStop";
-		},[],10,nil,true,false] spawn BIS_fnc_holdActionAdd;
+		},[],10,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
 	}else{
 		if (_unit getVariable["unit_injured",false])then{_damage = .9;};

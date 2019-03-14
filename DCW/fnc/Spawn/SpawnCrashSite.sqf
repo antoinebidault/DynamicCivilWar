@@ -25,10 +25,15 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _tempMarkers = _tempMarkers + [_tmpmarker];
     
     _className = (FRIENDLY_CHOPPER_CLASS call bis_fnc_selectrandom);
+    _crater = createVehicle ["Crater", _spawnPos, [], round random 360, "NONE"];
     _chopper = createVehicle [_className, _spawnPos, [], round random 360, "NONE"];
+    [_chopper, _crater] remoteExecCall ["disableCollisionWith", 0, _chopper];
+    _crater setPos (getPos _chopper);
+
     _elementToDestroy = "IEDLandBig_F" createVehicle _spawnPos;
     _elementToDestroy setPos (getPos _chopper);
-    _crater = createVehicle ["Crater", _spawnPos, [], round random 360, "NONE"];
+    _elementToDestroy allowDamage true;
+
     _chopper setDamage 1;
     _chopper setVehicleLock "LOCKED";
 
@@ -36,28 +41,52 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _marker setMarkerShape "ICON";
     _marker setMarkerColor "ColorRed";
     _marker setMarkerType "b_air";
-    _elementToDestroy setVariable["marker",_marker];
+    _chopper setVariable["marker",_marker];
 
-    _elementToDestroy setVariable ["DCW_Type","wreck"];
-    _elementToDestroy setVariable ["DCW_IsIntel",true];
+    _chopper setVariable ["DCW_Type","wreck"];
+    _chopper setVariable ["DCW_IsIntel",true];
     
-    _taskData = [_elementToDestroy, LEADER_PLAYERS,true] call fnc_createtask;
-    _elementToDestroy setVariable["DCW_Task",_taskData select 0];
+    _taskData = [_chopper, LEADER_PLAYERS,true] call fnc_createtask;
+    _chopper setVariable["DCW_Task",_taskData select 0];
 
-    _elementToDestroy addMPEventHandler ["MPKilled",{
-         params["_unit","_killer"];
-         if (isPlayer _killer || _killer in units GROUP_PLAYERS) then {
-            //Task success
-            _elementToDestroy call fnc_success;
-         };
-    }];
+
+     //Search intel;
+     [_chopper,"Secure and put the charge on...","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","_this distance _target < 12","true",
+     {(_this select 1) playActionNow "medic";},
+     {},
+     {
+          _chopper = (_this select 0);
+          [_this select 0, _this select 1] spawn {
+               params["_chopper","_player"];
+
+               [_player,"30 seconds before detonation", false] remoteExec ["fnc_talk"];
+               sleep 24;
+               [_player,"5", false] remoteExec ["fnc_talk"];
+               sleep 1;
+               [_player,"4", false] remoteExec ["fnc_talk"];
+               sleep 1;
+               [_player,"3", false] remoteExec ["fnc_talk"];
+               sleep 1;
+               [_player,"2", false] remoteExec ["fnc_talk"];
+               sleep 1;
+               [_player,"1", false] remoteExec ["fnc_talk"];
+
+               _bomb = "HelicopterExploBig";
+               _boom = _bomb createVehicle getPos _chopper;
+               _chopper call fnc_success;
+          };
+     },{},[],8,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
+
     // Add to markers
 
     _enemyArea = createMarker [format["ch-bl-%1",random 10000], getPos _chopper];
     _enemyArea setMarkerSize [144,144];
     _enemyArea setMarkerShape "ELLIPSE";
     _enemyArea setMarkerAlpha 0;
-    MARKERS pushback [_enemyArea,getPos _elementToDestroy,false,false,40,[],[0,0,4,0,0,0,0,0,0,0],[], 0,true,false,[]];
+    _civ = 0;
+    _en = 0;
+    if (random 100 > 50) then { _civ = 4;} else { _en  = 4; };
+    MARKERS pushback [_enemyArea,getPos _elementToDestroy,false,false,40,[],[_civ,0,_en,0,0,0,0,0,0,0],[], 0,true,false,[]];
     CRASHSITES pushback _elementToDestroy;
 };
 

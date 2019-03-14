@@ -32,7 +32,7 @@
                     
                     _resIntel = [_unit, _this select 1,25] call fnc_GetIntel;
                     if(_resIntel select 0) then {[_this select 0, "HQ, I found some informations !",true] spawn fnc_talk;};
-                },{},[],1,nil,true,false] call BIS_fnc_holdActionAdd;
+                },{},[],1,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
                 [_unit,_killer] call ENEMY_KILLED;
             };

@@ -1,10 +1,12 @@
-respawn = 3;
+respawn = 0;
 respawndelay = 10;
-disabledAI=0;
+disabledAI= 0;
 joinUnassigned = 0;
 enableDebugConsole = 1;
 allowFunctionsLog = 1;
 author = "Bidass";
+briefingName = "[COOP 1-6/SP] Dynamic Civil War";
+onLoadMission = "Dynamic Civil War";
 loadScreen = "images\loadScreen.paa"; 
 overviewPicture = "images\loadScreen.paa"; 
 overviewText = "You lead the FOXHOUND team, a 6 men british army team. ";

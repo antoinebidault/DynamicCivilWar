@@ -116,7 +116,7 @@ for "_xc" from 1 to _population do {
       _unitName = CIV_LIST_UNITS call BIS_fnc_selectRandom;
       _grp = createGroup CIV_SIDE;
     
-      if (_xc == 1 && _population >= 1) then {
+      if (_xc == 1 && _population >= 1 && count _buildings > 0) then {
         _civ = [_grp,_posSelected,_chief,false] call fnc_SpawnCivil;
         _civ call fnc_localChief;
         _units pushBack _civ;
