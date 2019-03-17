@@ -35,9 +35,8 @@ private _timer = 0;
 
 _unit setBehaviour "SAFE";
 
-
+scopeName "main";
 while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariable ["civ_insurgent",false]) }do{
-
 
     _bPoss = [];
 	_i = 0;
@@ -56,7 +55,7 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
         /**********GO IN*************/
         if (_rd == 0) then {
             
-            if (_unit getVariable ["civ_insurgent",false])exitWith{false};
+            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
 
             _newPos = (floor(random(count _bPoss)));
             _newPos = _bPoss select _newPos;
@@ -64,20 +63,10 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
             _unit doMove _newPos;
             _timer = time;
             waitUntil {sleep 4;unitReady _unit || _unit distance _newPos < 2 || !isNull(_unit findNearestEnemy _unit) || time > _timer + 150};
-            if (_unit getVariable ["civ_insurgent",false])exitWith{false};
+            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+            if (!isNull(_unit findNearestEnemy _unit))then{breakTo "main";};
 
-            /*if (side _unit != CIV_SIDE) then{
-                    _unit stop true;
-                sleep 2;cv 
-                [_unit,_anims call BIS_fnc_selectRandom,"FULL"] call BIS_fnc_ambientAnimCombat;
-            };*/
-            sleep (20 + random 5);
-            /*if (side _unit!= CIV_SIDE) then{
-                    if (alive _unit)then{
-                        _unit stop false;
-                    _unit call BIS_fnc_ambientAnim__terminate;
-                    };
-            };*/
+            sleep (13 + random 5);
             _i2 = _i2 + 1;
         }else{
             /**********GO OUT*************/
@@ -89,6 +78,9 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
                 _timer = time;
 
                 waitUntil {sleep 4; unitReady _unit || _unit distance _newPos < 2 || !isNull(_unit findNearestEnemy _unit) || time > _timer + 150};
+
+                if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+                if (!isNull(_unit findNearestEnemy _unit))then{breakTo "main";};
 
                 //Sit or not
                 if (round(random 1)==1)then{
@@ -111,8 +103,12 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
 
             }else{
                 [_unit,_meetPoint] call fnc_gotomeeting;
+                if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+                if (!isNull(_unit findNearestEnemy _unit))then{breakTo "main";};
                 sleep 20;
             };
+
+            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
         };
     };
 };

@@ -18,7 +18,7 @@ private _enterable = [];
 		if (typeof _x == "Land_HouseV2_03" || typeof _x == "Land_Nasypka") exitWith {};
 	
 		_enterable  pushback _x;
-
+		
 	};
 } foreach _buildings;
 _enterable;

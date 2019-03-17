@@ -3,13 +3,17 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License : GNU (GPL)
+ * Main components preloading and initialization
  */
 
 
-//CONFIG
+// CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 
-//SYSTEM
+// INTRO
+fnc_intro = compileFinal preprocessFileLineNumbers "DCW\intro.sqf";
+
+// SYSTEM
 fnc_GetClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClusters.sqf";
 fnc_isInMarker= compileFinal preprocessFileLineNumbers  "DCW\fnc\System\isinMarker.sqf";
 fnc_findBuildings= compileFinal preprocessFileLineNumbers  "DCW\fnc\System\findBuildings.sqf";
@@ -48,7 +52,7 @@ fnc_SimplePatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\Simple
 fnc_LargePatrol = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\LargePatrol.sqf";
 fnc_chase = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\chase.sqf";
 fnc_carPatrol = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\carPatrol.sqf";
-fnc_leutnantPatrol = compile preprocessFileLineNumbers  "DCW\fnc\Patrol\leutnantPatrol.sqf";
+fnc_officerPatrol = compile preprocessFileLineNumbers  "DCW\fnc\Patrol\officerPatrol.sqf";
 fnc_civilianPatrol = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\civilianPatrol.sqf";
 fnc_gotomeeting =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\gotomeeting.sqf";
 fnc_chopperpatrol = compile preprocessFileLineNumbers  "DCW\fnc\Patrol\ChopperPatrol.sqf";
@@ -100,19 +104,11 @@ compo_commander2 =  call (compileFinal preprocessFileLineNumbers "DCW\compositio
 compos = [compo_camp1,compo_camp2,compo_camp3,compo_camp4,compo_camp5];
 compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest.sqf");
 
-
-
 //Switch here the config you need.
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-kunduz.sqf"); 
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
 //[] execVM "DCW\config\config-dialog.sqf";
 
-// global scope variables
-GROUP_PLAYERS = group (allPlayers select 0); 
-publicVariable "GROUP_PLAYERS";
-
-LEADER_PLAYERS = leader GROUP_PLAYERS; 
-publicVariable "LEADER_PLAYERS";
 
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";

@@ -69,8 +69,8 @@ while{ true }do {
 			if(_veh distance _x > 1500)then{
 				_carPool = _carPool - [_veh];
 				{
-					_veh call fnc_deleteMarker;
-					deleteVehicle _veh;
+					_x call fnc_deleteMarker;
+					deleteVehicle _x;
 				} foreach (crew _veh);
 				_veh call fnc_deleteMarker;
 				deleteVehicle _veh;

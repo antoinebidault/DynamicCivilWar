@@ -59,4 +59,4 @@ ENEMY_LIST_TANKS = ["rhsgref_ins_g_t72ba","rhsgref_ins_g_bmp2e","rhsgref_ins_g_c
 ENEMY_COMMANDER_CLASS = "rhsgref_nat_warlord"; //commander
 ENEMY_CONVOY_CAR_CLASS = "rhsgref_nat_uaz_dshkm"; //commander
 ENEMY_CONVOY_TRUCK_CLASS = "rhsgref_nat_ural"; //commander
-ENEMY_LEUTNANT_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_BRDM2"];  //car list used by leutnant
+ENEMY_OFFICER_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_BRDM2"];  //car list used by officer

@@ -7,12 +7,14 @@
 
 
 if (!isServer) exitWith{false};
+
 private _numberOfmen = 1;
 private _minRange = 300;
 private _unitPool = [];
 private _side = ENEMY_SIDE;
 private _unit = objNull;
 private _firstTrigger = true;
+
 while{true}do {
 	if (count _unitPool < MAX_RANDOM_PATROL)then{
 		//Get random pos

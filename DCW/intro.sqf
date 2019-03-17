@@ -1,15 +1,66 @@
+if (didJIP) exitWith{ false };
 
+playMusic "ASOTheme";
+
+sleep 3;
+titleCut ["", "BLACK IN", 7];
+_cam = "camera" camcreate [4599.38,2317.12,10.9028];
+_cam cameraeffect ["internal", "back"];
+_cam camSetPos [4599.38,2317.12,10.3];
+_cam camSetTarget [4612,2288.64,1];
+_cam camCommit 0;
+
+_cam camSetPos [4599.38,2317.12,1.3];
+_cam camSetFov .9;
+
+_cam camCommit 20;
+
+sleep 24;
+
+[] spawn {
+	nul = ["Bidass presents",.3,.7,7] spawn BIS_fnc_dynamicText;
+	sleep 12;
+	nul = ["An arma III scenario",.3,.2,7] spawn BIS_fnc_dynamicText;
+	sleep 12;
+	nul = ["Dynamic Civil War",-1,-1,4,1,0] spawn BIS_fnc_dynamicText;
+};
+
+
+_cam camSetPos [4757.76,2270.84,3.5422];
+_cam camSetTarget [4649.6,2231.56,0];
+_cam camCommit 0;
+
+_cam camSetPos [4757.76,2270.84,1.5422];
+_cam camSetFov .9;
+_cam camCommit 5;
+
+sleep 5;
+
+_cam camSetPos [4692.01,2238.88,1.7];
+_cam camSetTarget [4744.7,2264.79,1];
+_cam camCommit 0;
+
+_cam camSetFov .8;
+_cam camCommit 6;
+
+sleep 16;
+
+camDestroy _cam;
+showCinemaBorder false;
+_cam cameraeffect ["terminate", "back"];
+
+/*
 private _chopper = vehicle player;
 private _sniper = missionNamespace getVariable ["cut_sniper",objNull];
 private _target = missionNamespace getVariable ["cut_target",objNull];
 _cam = "camera" camcreate (_sniper modelToWorld[.5,4,.3]);
 _cam cameraeffect ["internal", "back"];
-/*titleCut ["", "BLACK FADED", 999];
-titleCut ["", "BLACK IN", 7];*/
+/*
 sleep 3;
 _sniper setAmmo [currentWeapon _sniper, 0];
 
 ["RealIsBrown",3,true] call bis_fnc_setppeffecttemplate;
+
 
 _cam camSetPos (_sniper modelToWorld[.5,4,.3]);
 _cam camSetTarget (_sniper modelToWorld[-100,500,-20]);
@@ -74,12 +125,6 @@ _null=[_cam,_chopper] spawn{
 	sleep 15;
 };
 
-
-nul = ["Bidass presents",.3,.7,7] spawn BIS_fnc_dynamicText;
-sleep 12;
-nul = ["An arma III scenario",.3,.2,7] spawn BIS_fnc_dynamicText;
-sleep 12;
-nul = ["Addons by Red Hammer Studio",-.4,.7,7] spawn BIS_fnc_dynamicText;
 sleep 3;
 _chopper action ["useWeapon",_chopper,driver _chopper,1];
 sleep 5;
@@ -87,8 +132,6 @@ _chopper action ["useWeapon",_chopper,driver _chopper,1];
 sleep 3;
 _chopper action ["useWeapon",_chopper,driver _chopper,1];
 sleep 1;
-sleep 12;
-nul = ["Dynamic Civil War",-1,-1,4,1,0] spawn BIS_fnc_dynamicText;
 sleep 8;
 camDestroy _cam;
 showCinemaBorder false;
@@ -110,3 +153,4 @@ titleCut ["Prepare for landing...", "BLACK FADED", 999];
 	"dynamicBlur" ppEffectCommit 5;  
 	titleCut ["", "BLACK IN", 5];
 };
+*/

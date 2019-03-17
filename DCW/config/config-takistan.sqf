@@ -59,5 +59,5 @@ ENEMY_LIST_TANKS = ["LOP_TKA_T55","LOP_TKA_T72BA"]; //Tanks
 ENEMY_COMMANDER_CLASS = "LOP_TKA_Infantry_Officer"; //commander
 ENEMY_CONVOY_CAR_CLASS = "LOP_AM_OPF_Nissan_PKM"; //commander
 ENEMY_CONVOY_TRUCK_CLASS = "LOP_TKA_Ural"; //commander
-ENEMY_LEUTNANT_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_BRDM2"];  //car list used by leutnant
+ENEMY_OFFICER_LIST_CARS = ["rhsgref_nat_btr70","rhsgref_BRDM2"];  //car list used by officer
 

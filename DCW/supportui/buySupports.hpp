@@ -73,12 +73,12 @@ class ICE_DIALOG
          class ICE_BUTTONUAV: RscButton
          {
           idc = -1;
-          text = "UAV (-100 points)";
+          text = "UAV MQ-9 (-1000 points)";
           x = 0.4 * safezoneW + safezoneX;
           y = 0.55 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""UAV"",100]ExecVM ""DCW\supportui\choose.sqf""";
+          action = "_nil=[""UAV"",1000]ExecVM ""DCW\supportui\choose.sqf""";
         };
 
         class ICE_BUTTONNO: RscButton

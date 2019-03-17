@@ -11,8 +11,6 @@
 
 
 
-//nul= [] execVM "intro.sqf";
-
 
 //A little animation for the player
 //player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 

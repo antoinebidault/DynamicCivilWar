@@ -80,13 +80,13 @@ switch (_type) do {
         _title = "Destroy the mortar";
         _message = "There is a mortar position over here !";
         _messageSuccess = "This mortar won't cause any trouble.";
-        _bonus = 50;
+        _bonus = 100;
      };
     default { };
 };
 
 //Unique ID added to the task id;
 _taskId = format["%1_%2",_taskId,random 20];
-[GROUP_PLAYERS,  _taskId, [_desc,_title,_title],(getPos _intel),_withNotif] call BIS_fnc_taskCreate;
+[GROUP_PLAYERS,  _taskId, [_desc,_title,_title],(getPos _intel),"CREATED",1,_withNotif,""] remoteExec ["BIS_fnc_taskCreate"];
 _intel setVariable["DCW_Bonus",_bonus];
 [_taskId,_message,_messageSuccess,_bonus];

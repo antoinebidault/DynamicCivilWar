@@ -40,7 +40,8 @@ TRANSPORTHELO addEventHandler ["handleDamage", {
 
 waitUntil {TRANSPORTHELO distance2D _landPos < 200};
 
-[HQ,"Throw a green smoke to mark the LZ !" ,true] remoteExec ["fnc_talk"];
+[HQ,"Squad leader, throw a green smoke to mark the LZ !" ,true] remoteExec ["fnc_talk"];
+
 
 SmokeShell = objNull;
 _unit addEventHandler ["Fired", {
@@ -81,10 +82,6 @@ deleteWaypoint [_grp, 0];
 
 _timer = time;
 waitUntil {sleep 2; HASLANDED || time == _timer + 300};
-private _soldiersDead = units (group _unit) select {_x getVariable["unit_injured",false] };
-{ [_x] joinSilent grpNull; } foreach _soldiersDead;
-replacementGroup = [TRANSPORTHELO,side _unit,_soldiersDead] call fnc_SpawnHeloReplacement;
-
 
 if (!HASLANDED) exitWith {[TRANSPORTHELO] call fnc_AbortMedevac;};
 
@@ -97,6 +94,11 @@ waitUntil{{_x in TRANSPORTHELO} count units  replacementGroup == 0 && {_x in TRA
 
 replacementGroup move position _unit;
 {_x setUnitPos "MIDDLE"; _x setBehaviour "MIDDLE"; } foreach (units replacementGroup);
+
+// Remove deads soldiers
+private _soldiersDead = units (group _unit) select {_x getVariable["unit_injured",false] };
+{ [_x] joinSilent grpNull; } foreach _soldiersDead;
+replacementGroup = [TRANSPORTHELO,side _unit,_soldiersDead] call fnc_SpawnHeloReplacement;
 
 //Make replacementGroup join player
 {unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);

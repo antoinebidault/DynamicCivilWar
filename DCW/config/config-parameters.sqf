@@ -7,6 +7,8 @@ REVIVE_ENABLED = true; //Reviving
 RESPAWN_ENABLED =  true; //Respawn when hit
 SHOW_SECTOR = true;
 NUMBER_RESPAWN = 3;
+NUMBER_RESPAWN = 3;
+ENABLE_FILTER = true;
 
 if (count paramsArray > 0) then 
 {

@@ -39,8 +39,8 @@ fnc_getRadiusLocation = {
 	for "_radius" from 50 to MAX_CLUSTER_SIZE step 50 do
 	{
 		_houses = []; 
-		_houses = nearestObjects [_locPos, ["house"], _radius];
-		//_houses = [_locPos,_radius] call fnc_findBuildings;
+		//_houses = nearestObjects [_locPos, ["house"], _radius];
+		_houses = [_locPos,_radius] call fnc_findBuildings;
 		_count = (count _houses);
 		_totalHouses = _totalHouses + _houses;
 		if (_count == _prevHouseCount) exitWith { _rad = _radius-50; };
@@ -48,7 +48,6 @@ fnc_getRadiusLocation = {
 		_rad = _radius;
 	};
 	_isMilitary = [_totalHouses] call fnc_isMilitary;
-
 
 	[_rad, _count,_isMilitary,_totalHouses];
 };
@@ -68,15 +67,14 @@ for "_xc" from 0 to _worldNbBlocks do {
 	for "_yc" from 0 to _worldNbBlocks do {
 		_markerPos = [(_xc*SIZE_BLOCK),(_yc*SIZE_BLOCK),0];
 		if (_markerPos inArea _markerWhiteList) then {
-
 			_buildings = [_markerPos, (SIZE_BLOCK/2)] call fnc_findBuildings;
 			_nbBuildings = count _buildings;
 
 			if (_nbBuildings > 0)then{
 				private _posCenteredOnBuilding = position (_buildings select 0);
-				private _res  =[_posCenteredOnBuilding] call fnc_getRadiusLocation;
+				private _res  = [_posCenteredOnBuilding] call fnc_getRadiusLocation;
 				private _radius = _res select 0;
-				
+
 				_return = false;
 				{ 
 					private _dist = _posCenteredOnBuilding distance (_x select 0);
@@ -85,8 +83,7 @@ for "_xc" from 0 to _worldNbBlocks do {
 
 				if (isNil '_return')then{_return = false;};
 				if (!_return)then {
-					_isMilitary = _res select 2;
-					_clusters pushback [_posCenteredOnBuilding,_radius,_res select 1,false,"",_isMilitary,_buildings];
+					_clusters pushback [_posCenteredOnBuilding,_radius,_res select 1,false,"",_res select 2,_res select 3];
 				};
 
 			};

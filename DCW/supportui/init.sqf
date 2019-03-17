@@ -7,8 +7,6 @@
  
 params ["_unit"];
 waitUntil { time > 0 };
-grpNetID = group _unit call BIS_fnc_netId;
-CRATE_ITEMS = _unit call fnc_getCrateItems;
 
  //Create a side logic 
 private _center = createCenter sideLogic; 

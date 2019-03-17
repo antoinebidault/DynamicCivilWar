@@ -8,6 +8,17 @@
 // This portion of code is only executed by the server
 if (!isServer) exitWith{false;};
 
+// global scope variables
+GROUP_PLAYERS = group (allPlayers select 0); 
+publicVariable "GROUP_PLAYERS";
+
+LEADER_PLAYERS = leader GROUP_PLAYERS; 
+publicVariable "LEADER_PLAYERS";
+
+CRATE_ITEMS = LEADER_PLAYERS call fnc_getCrateItems;
+publicVariable "CRATE_ITEMS";
+
+
 // Create a fake HQ unit
 "B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
@@ -159,7 +170,7 @@ private _typeObj = "";
 	private _radius = _x select 1;
 	private _nbBuildings = _x select 2;
 	private _isLocation = _x select 3;
-	private _nameLocation = _x select 3;
+	private _nameLocation = _x select 4;
 	private _isMilitary = _x select 5;
 	private _buildings = _x select 6;
 
@@ -232,7 +243,7 @@ private _typeObj = "";
 			_marker setMarkerType "mil_dot";
 			_marker setMarkerAlpha 0.3;
 			_marker setMarkerColor "ColorRed";
-			_marker setMarkerText  format["bld:%1/pop:%2/Car:%3",_nbCivilian,_nbEnemies,_nbCars];
+			_marker setMarkerText  format["civ:%1/en:%2/Car:%3/bld:%4",_nbCivilian,_nbEnemies,_nbCars,_nbBuildings];
 		};
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
@@ -252,7 +263,7 @@ private _typeObj = "";
 [] spawn fnc_SpawnCrashSite; //Chopper spawn
 [] spawn fnc_SpawnSecondaryObjective;
 [] spawn fnc_SpawnMainObjective;
-[30] spawn fnc_SpawnConvoy;
+[90] spawn fnc_SpawnConvoy;
 
 private ["_mkr","_cacheResult","_ieds"];
 

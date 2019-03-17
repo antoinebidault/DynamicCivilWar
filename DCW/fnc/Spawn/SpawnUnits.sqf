@@ -80,7 +80,7 @@ if (_nbSnipers > 0)then{
 for "_xc" from 1 to _nbenemies  do {
 
     private _posSelected = [];
-    private _nbUnit = 1;
+    private _nbUnit = 1 ;
     
     if (count _posSelects > 0)then{
         _posSelected = _posSelects call BIS_fnc_selectRandom;

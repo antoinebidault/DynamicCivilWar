@@ -13,6 +13,7 @@ _groupReplacement = createGroup _side;
 
 {
 	_soldier = _groupReplacement createUnit [typeOf(_x), position _transportHelo, [], 0, "NONE"];
+	addSwitchableUnit _soldier;
 	_soldier moveInCargo _transportHelo; 
 } foreach _units ;
 
