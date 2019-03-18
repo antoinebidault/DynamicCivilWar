@@ -10,7 +10,7 @@ private["_type","_price","_unit","_pos"];
 _type  = _this select 0;
 _price = _this select 1;
 
-if( ((GROUP_PLAYERS getVariable["DCW_SCORE",0]) - _price) >= 0)then {
+if((DCW_SCORE - _price) >= 0)then {
 	
 	//Fermeture plus MAJ score 
 	closeDialog 0;

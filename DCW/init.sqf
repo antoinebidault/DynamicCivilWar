@@ -6,6 +6,10 @@
  * Main components preloading and initialization
  */
 
+ 
+//Default white list marker;
+titleCut ["", "BLACK FADED", 999];
+
 
 // CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";

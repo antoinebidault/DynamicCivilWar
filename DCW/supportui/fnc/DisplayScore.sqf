@@ -5,8 +5,10 @@
  * License : GNU (GPL)
  */
 
+if (isNull player) exitWith{false;};
 
-private _points = GROUP_PLAYERS getVariable["DCW_SCORE",0];
+
+private _points = DCW_SCORE;
 private _colorChaser = "";
 private _labelChaser = "";
 private _statusUnd = "";
@@ -22,10 +24,10 @@ if (CHASER_TRIGGERED) then{
 };
 
 // Undercover status
-if (_this getVariable["DCW_undercover",false]) then{
+if (player getVariable["DCW_undercover",false]) then{
 	_statusUnd = "hidden";
 	_colorUnd = "#2f9581";
-	if (_this getVariable["DCW_watched",false]) then{
+	if (player getVariable["DCW_watched",false]) then{
 		_statusUnd = "watched";
 		_colorUnd = "#e0923a";
 	};

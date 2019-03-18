@@ -7,8 +7,9 @@
 
 if (isNull player) exitWith{false;};
 
-//Default white list marker;
-titleCut ["Mission loading...", "BLACK FADED", 999];
+if (!didJIP) then {
+	setDate [2018, 6, 25, 18, 0]; 
+};
 
 //Briefing
 player createDiaryRecord ["Diary",["Keep a good reputation",
@@ -25,12 +26,12 @@ player createDiaryRecord ["Diary",["Main objective : kill the commander",
 "Dynamic Civil War<br/><br/>
 In this singleplayer scenario, you have one major objective : assassinate the enemy general. We kow that it would considerably change the situation in this region which is ravaged by war. At this point, we have no intel on his exact location. He is probably hidden in mountains or forests, wandering from place to place very often far from the conflicts areas. Firstly, you must get intel about his approximate position.<br/><img image='images\target.jpg' width='302' height='190'/><br/><br/>"]];
 
+
  _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 
+//[] call fnc_intro;
 
-[] call fnc_intro;
-
-
+sleep 3;
 titleCut ["Mission loading...", "BLACK FADED", 9999];
 // Info text
 [worldName, format["%1km from %2", round(((getPos _loc) distance2D player)/10)/100,text _loc], str(date select 1) + "." + str(date select 2) + "." + str(date select 0)] spawn BIS_fnc_infoText;
@@ -40,8 +41,13 @@ sleep 5;
 "dynamicBlur" ppEffectCommit 0;     
 "dynamicBlur" ppEffectAdjust [0.0];  
 "dynamicBlur" ppEffectCommit 5;  
-titleCut ["Mission loading...", "BLACK IN", 5];
+titleCut ["", "BLACK FADED", 1];
+sleep 1;
+titleCut ["", "BLACK IN", 5];
 
 // init user respawn loop
 [getMarkerPos "marker_base", player] spawn fnc_respawn; //Respawn loop
+
+sleep 3;
+"Welcome to dynamic civil war" hintC "Your main objective is to seek & neutralize an enemy commander hidden on the map. He will be always moving on the map, hiding in forestry area or compounds. You have two way to get info about his location : interrogating civil chief in neutralizated compound or interrogating one of his officer wandering on the map in trucks...";
 

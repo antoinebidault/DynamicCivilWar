@@ -74,7 +74,6 @@ _healer stop false;
 _healer setBehaviour "CARELESS";
 
 if (alive _injured) then {
-	hint "unit revived";
 	_injured setBehaviour "CARELESS";
 	{_injured disableAI _x; true} count ["TARGET","FSM","AUTOTARGET","AUTOCOMBAT"];
 	_injured setUnconscious false;

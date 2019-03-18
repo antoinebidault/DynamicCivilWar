@@ -34,5 +34,4 @@ _marker setMarkerShape "ICON";
 _marker setMarkerColor "ColorBlack";
 _marker setMarkerType "hd_objective";
 _intel setVariable["DCW_MarkerIntel",_marker];
-_intel setVariable["DCW_Task",_taskId];
 [true,_message];

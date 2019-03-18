@@ -6,6 +6,7 @@
  * License : GNU (GPL)
  * Undercover loop triggered on disguise action on enemy dead bodies
  */
+if (isNull player) exitWith{false};
 
 private["_unit","_enemy"];
 params["_unit","_enemy"];

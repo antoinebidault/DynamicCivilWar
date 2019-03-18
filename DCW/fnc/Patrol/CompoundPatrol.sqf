@@ -33,7 +33,16 @@ private _bPoss = [];
 private _rd = 0;
 private _timer = 0;
 
-_unit setBehaviour "SAFE";
+_unit setBehaviour "SAFE"; 
+
+if(isNull(_unit findNearestEnemy _unit))then{
+    //_unit forceWalk  true;
+    (group _unit) setSpeedMode "LIMITED";
+    (group _unit) setBehaviour "SAFE";
+}else{
+    //_unit forceWalk  false;
+    (group _unit) setBehaviour "AWARE";
+};
 
 scopeName "main";
 while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariable ["civ_insurgent",false]) }do{

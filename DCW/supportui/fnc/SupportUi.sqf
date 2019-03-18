@@ -6,7 +6,7 @@
  */
 
 private _unit = _this;
-private _points = GROUP_PLAYERS getVariable["DCW_SCORE",0];
+private _points = DCW_SCORE;
 
 private["_ok","_ctrlList"];
 _ok = createDialog "ICE_DIALOG";

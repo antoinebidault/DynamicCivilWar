@@ -10,7 +10,7 @@ private _asker = _this select 1;
 private _withNotif = if (count _this >2)then{_this select 2}else{true};
 
  _type = _intel getVariable["DCW_Type",""];
- _taskId = "";
+ _taskId = "default";
  _title = "";
  _desc = "";
  _message = "";
@@ -89,4 +89,5 @@ switch (_type) do {
 _taskId = format["%1_%2",_taskId,random 20];
 [GROUP_PLAYERS,  _taskId, [_desc,_title,_title],(getPos _intel),"CREATED",1,_withNotif,""] remoteExec ["BIS_fnc_taskCreate"];
 _intel setVariable["DCW_Bonus",_bonus];
+_intel setVariable["DCW_Task",_taskId];
 [_taskId,_message,_messageSuccess,_bonus];

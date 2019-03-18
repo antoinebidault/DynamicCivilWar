@@ -45,13 +45,14 @@ for "_j" from 1 to _nb do {
 //Unique ID added to the task id;
 _taskId = "maintask";
 
-{
-  [_unit,"I marked you on the map where I think he is.",true] call fnc_Talk;
-  [_taskId, LEADER_PLAYERS,[ "Investigate the sector where the commander is possibly located","Investigate the sector","Investigate the sector"], _pos, "ASSIGNED", 1, true, true,""] call BIS_fnc_setTask;
+[[_unit,_taskid,_pos],{
+  params ["_unit","_taskid","_pos"];
+  [_unit,"I marked you on the map where I think he is.",true] remoteExecCall ["fnc_Talk"];
+  [_taskId, LEADER_PLAYERS,[ "Investigate the sector where the enemy\n commander is possibly located","Investigate the sector","Investigate the sector"], _pos, "ASSIGNED", 1, true, true,""] call BIS_fnc_setTask;
   [LEADER_PLAYERS,"Thank you, we'll investigate this place.",true] call fnc_Talk;
   [LEADER_PLAYERS,"HQ, we've caught informations about the possible enemy commander last position.",false] call fnc_Talk;
   [HQ,"Copy ! We'll send you extra credits in order to accomplish your task. Good luck ! Out.",false] call fnc_Talk;
-  [GROUP_PLAYERS,250,false,LEADER_PLAYERS] call fnc_updatescore;
-} remoteExec["spawn"];
+  [GROUP_PLAYERS,250,false,LEADER_PLAYERS] remoteExec ["fnc_updatescore", LEADER_PLAYERS];
+}] remoteExec["spawn"];
 
 true;

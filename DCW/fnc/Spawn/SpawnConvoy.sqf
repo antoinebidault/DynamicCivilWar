@@ -54,7 +54,7 @@ if (isOnRoad(_roadPos) && _roadPos distance LEADER_PLAYERS > 300 )then{
     //Trucks
     for "_xc" from 1 to _nbTrucks  do {
         _grpTruck = createGroup ENEMY_SIDE;
-        _truck = [_car modelToWorld [0,-(_xc*15),0], _roadDirection, ENEMY_CONVOY_TRUCK_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
+        _truck = [_car modelToWorld [0,-(_xc*15),0], _roadDirection, ENEMY_CONVOY_TRUCK_CLASS call BIS_fnc_selectRandom, _grp] call BIS_fnc_spawnVehicle select 0;
         _nbUnit = (count (fullCrew [_truck,"cargo",true]));
         for "_yc" from 1 to _nbUnit  do {
             _unit =[_grpTruck,_initPos,true] call fnc_spawnEnemy;
@@ -115,7 +115,7 @@ waitUntil {sleep 5; CAR_DESTROYED == _nbVeh || (leader _grp)  distance _nextPos 
 
 if (CAR_DESTROYED == _nbVeh) exitWith {
     [HQ,"You successfully ambushed the convoy ! Well done !",true] remoteExec ["fnc_talk"];
-    [100] spawn fnc_spawnConvoy;
+    [300] spawn fnc_spawnConvoy;
 };
 
 sleep 100;
@@ -125,5 +125,5 @@ waitUntil {sleep 12;CAR_DESTROYED == _nbVeh || {_x distance (leader _grp) > 700}
 {CONVOY = CONVOY - [_x]; _x call fnc_deleteMarker; deleteVehicle _x; } forEach CONVOY;
 
 [HQ,"You missed the convoy ! Out !",true] remoteExec ["fnc_talk"];
-[100] spawn fnc_spawnConvoy;
+[300] spawn fnc_spawnConvoy;
 false;

@@ -73,4 +73,4 @@ if (isPlayer _unit)then{
 	},nil,1.5,false,true,"","true",15,false,""];
 };
 
-_unit call fnc_displayscore;
+[] call fnc_displayscore;

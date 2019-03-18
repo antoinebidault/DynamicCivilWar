@@ -13,7 +13,7 @@
 
 
 //A little animation for the player
-//player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 
+
 
 //Mission loading
 //nul = [] execVM "functions\playlist.sqf"; //Init the music playlist

@@ -1,9 +1,11 @@
 if (didJIP) exitWith{ false };
 
-playMusic "ASOTheme";
+playMusic "seal";
+
+["Mediterranean",3,true] call bis_fnc_setppeffecttemplate;
 
 sleep 3;
-titleCut ["", "BLACK IN", 7];
+titleCut ["", "BLACK IN",14];
 _cam = "camera" camcreate [4599.38,2317.12,10.9028];
 _cam cameraeffect ["internal", "back"];
 _cam camSetPos [4599.38,2317.12,10.3];
@@ -15,43 +17,71 @@ _cam camSetFov .9;
 
 _cam camCommit 20;
 
-sleep 24;
+
 
 [] spawn {
+	sleep 3;
 	nul = ["Bidass presents",.3,.7,7] spawn BIS_fnc_dynamicText;
-	sleep 12;
+	sleep 13;
 	nul = ["An arma III scenario",.3,.2,7] spawn BIS_fnc_dynamicText;
-	sleep 12;
+	sleep 16;
 	nul = ["Dynamic Civil War",-1,-1,4,1,0] spawn BIS_fnc_dynamicText;
 };
 
+sleep 24;
 
-_cam camSetPos [4757.76,2270.84,3.5422];
-_cam camSetTarget [4649.6,2231.56,0];
+
+private _sl = missionNamespace getVariable ["cut_sl",objNull];
+private _pos = _sl modelToWorld [0,-2,16];
+private _target =  _sl modelToWorld [0,1,2];
+
+_cam camSetPos _pos;
+_cam camSetTarget  _target;
 _cam camCommit 0;
 
-_cam camSetPos [4757.76,2270.84,1.5422];
+_cam camSetPos [_pos select 0, _pos select 1, 2.4];
 _cam camSetFov .9;
 _cam camCommit 5;
 
-sleep 5;
+sleep 4;
 
-_cam camSetPos [4692.01,2238.88,1.7];
-_cam camSetTarget [4744.7,2264.79,1];
+
+_pos = _sl modelToWorld [3,0,1.6];
+_target = _sl modelToWorld [0,0,1.5];
+_cam camSetPos _pos;
+_cam camSetTarget _target;
 _cam camCommit 0;
 
-_cam camSetFov .8;
-_cam camCommit 6;
+sleep 8;
 
+_pos = _sl modelToWorld [6,3,2.6];
+_target = _sl modelToWorld [0,0,2];
+
+_cam camSetPos _pos;
+_cam camSetTarget _target;
+_cam camCommit 0;
+
+
+_pos = _sl modelToWorld [6,3,5.6];
+_cam camSetPos _pos;
+_cam camCommit 16;
 sleep 16;
+
+
+titleCut ["", "BLACK OUT", 3];
+sleep 3;
+titleCut ["", "BLACK FADED", 9999];
 
 camDestroy _cam;
 showCinemaBorder false;
+
 _cam cameraeffect ["terminate", "back"];
+
+player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 
 
 /*
 private _chopper = vehicle player;
-private _sniper = missionNamespace getVariable ["cut_sniper",objNull];
+
 private _target = missionNamespace getVariable ["cut_target",objNull];
 _cam = "camera" camcreate (_sniper modelToWorld[.5,4,.3]);
 _cam cameraeffect ["internal", "back"];

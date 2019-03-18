@@ -103,8 +103,10 @@ fnc_HandleRespawn =
 	sleep 1;
 	_unit switchMove "Acts_UnconsciousStandUp_part1";
 
-	//Disable chasing
-	CHASER_TRIGGERED = false; 
+	//Disable chasing if not in multiplayer
+	if (!isMultiplayer) then{
+		CHASER_TRIGGERED = false;
+	}; 
 	PLAYER_ALIVE = true;
     resetCamShake;
 

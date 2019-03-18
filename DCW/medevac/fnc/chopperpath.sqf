@@ -85,6 +85,11 @@ waitUntil {sleep 2; HASLANDED || time == _timer + 300};
 
 if (!HASLANDED) exitWith {[TRANSPORTHELO] call fnc_AbortMedevac;};
 
+// Remove deads soldiers
+private _soldiersDead = units (group _unit) select {_x getVariable["unit_injured",false] };
+replacementGroup = [TRANSPORTHELO,side _unit,_soldiersDead] call fnc_SpawnHeloReplacement;
+sleep 1;
+
 TRANSPORTHELO land "GET IN";
 replacementGroup leavevehicle TRANSPORTHELO;
 interventionGroup leavevehicle TRANSPORTHELO; 
@@ -95,10 +100,7 @@ waitUntil{{_x in TRANSPORTHELO} count units  replacementGroup == 0 && {_x in TRA
 replacementGroup move position _unit;
 {_x setUnitPos "MIDDLE"; _x setBehaviour "MIDDLE"; } foreach (units replacementGroup);
 
-// Remove deads soldiers
-private _soldiersDead = units (group _unit) select {_x getVariable["unit_injured",false] };
 { [_x] joinSilent grpNull; } foreach _soldiersDead;
-replacementGroup = [TRANSPORTHELO,side _unit,_soldiersDead] call fnc_SpawnHeloReplacement;
 
 //Make replacementGroup join player
 {unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);

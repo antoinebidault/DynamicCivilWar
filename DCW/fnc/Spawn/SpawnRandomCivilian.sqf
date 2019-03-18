@@ -9,10 +9,9 @@
 if (!isServer) exitWith{false};
 private _numberOfmen = 1;
 private _minRange = 300;
-private _unitPool = [];
 private _firstTrigger = true;
 while{true}do {
-	if (count _unitPool < MAX_RANDOM_CIVILIAN)then{
+	if ({ _x getVariable["DCW_type",""] == "civpatrol" } count UNITS_SPAWNED  < MAX_RANDOM_CIVILIAN)then{
 
 		//Get random pos
 		if (_firstTrigger) then {_minRange = 1; _firstTrigger = false;}else{_minRange = 500;};
@@ -23,7 +22,6 @@ while{true}do {
 		for "_j" from 1 to _numberOfmen do {
 			_unit = [_group,_pos] call fnc_SpawnCivil;
 			_unit setVariable["DCW_type","civpatrol"]; // overload
-			_unitPool pushBack _unit;
 			_unit setBehaviour "SAFE";
 			sleep .4;
 		};

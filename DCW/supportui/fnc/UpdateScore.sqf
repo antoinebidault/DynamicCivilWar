@@ -4,21 +4,15 @@
  * Author: BIDASS
  * License : GNU (GPL)
  */
+if (isnull player) exitWith{ hint "executed on server..." };
 
 params ["_group","_bonus","_silent", "_unit"];
-_silent = if (isNil '_silent' ) then{false}else{true};
+private _silent = if (isNil "_silent") then{ false } else { _silent };
 
-_score = _group getVariable ["DCW_SCORE",0];
-_score = (_score + _bonus);
-
-_group setVariable ["DCW_SCORE",_score, true];
+DCW_SCORE = (DCW_SCORE + _bonus);
 private _scoreType = if (_bonus > 0) then {"+"}else{""};
 
 if (!_silent)then{
-	["ScoreAdded",[format["Total points = %1",_score],_bonus,_scoreType]] remoteExec ["BIS_fnc_showNotification"];
+	["ScoreAdded",[format["Total points = %1",str DCW_SCORE],_bonus,_scoreType]] remoteExec ["BIS_fnc_showNotification", _group, false];
 };
-
-{
-  _x remoteExec ["fnc_displayscore",_x, false];
-} foreach allPlayers;
-	
+[] remoteExec ["fnc_displayscore",_group, false];

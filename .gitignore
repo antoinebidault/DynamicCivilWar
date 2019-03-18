@@ -1,2 +1,3 @@
 ﻿*.ogg
 node_modules/
+.vscode/

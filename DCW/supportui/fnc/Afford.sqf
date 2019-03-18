@@ -7,7 +7,7 @@
 
 	params ["_group","_price"];
 
-	_score = _group getVariable ["DCW_SCORE",0];
+	_score = DCW_SCORE;
 	_score = (_score - _price);
 	if (_score < 0) then{
 		hint "Can't afford this";

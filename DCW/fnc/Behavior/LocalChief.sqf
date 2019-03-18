@@ -107,7 +107,7 @@ _this addHeadgear "H_Beret_blk";
     _curr  set [6,_peopleToSpawn];
 
     _units = _curr select 5;
-	_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition] call fnc_SpawnFriendlyOutpost);
+	_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition, _curr select 11] call fnc_SpawnFriendlyOutpost);
 
     _marker = createMarker ["marker",_pos];
     _marker setMarkerShape "ICON";
@@ -142,6 +142,6 @@ _this addHeadgear "H_Beret_blk";
 
     _unit enableAI "MOVE";
     
-    hint "Next time, you'll respawn at this position.";
+    hint "If you're KIA, you'll respawn at this position.";
 
 },nil,2.5,true,true,"","true",20,false,""]] remoteExec["addAction", LEADER_PLAYERS];

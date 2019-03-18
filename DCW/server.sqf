@@ -8,6 +8,7 @@
 // This portion of code is only executed by the server
 if (!isServer) exitWith{false;};
 
+ 
 // global scope variables
 GROUP_PLAYERS = group (allPlayers select 0); 
 publicVariable "GROUP_PLAYERS";
@@ -18,6 +19,15 @@ publicVariable "LEADER_PLAYERS";
 CRATE_ITEMS = LEADER_PLAYERS call fnc_getCrateItems;
 publicVariable "CRATE_ITEMS";
 
+CHASER_TRIGGERED = false;
+publicVariable "CHASER_TRIGGERED";
+
+CHASER_VIEWED = false;
+publicVariable "CHASER_VIEWED";
+
+DCW_SCORE = 150;
+publicVariable "DCW_SCORE";
+
 
 // Create a fake HQ unit
 "B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
@@ -25,7 +35,6 @@ publicVariable "CRATE_ITEMS";
 	sleep 1;
 	HQ setName "HQ";
 };
-
 
 // Variable in Global scope
 GAME_ZONE_SIZE=5000;
@@ -36,17 +45,12 @@ UNITS_CACHED = [];
 MARKERS = [];
 SHEEP_POOL = [];
 UNITS_CHASERS = [];
-CHASER_TRIGGERED = false;
-publicVariable "CHASER_TRIGGERED";
-CHASER_VIEWED = false;
-publicVariable "CHASER_VIEWED";
 MESS_SHOWN = false;
 LAST_FLARE_TIME = time;
 REFRESH_TIME = 10; // Refresh time
 WEATHER = .5;
 CONVOY = []; // Current convoy
 ESCORT = []; // List of escorts guys with the commandant
-START_SCORE = 150;
 
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 
@@ -151,7 +155,7 @@ CIVIL_DISRESPECT = {
 //On enemy search.
 ENEMY_SEARCHED = {
 	params["_unit","_player"];
-	[GROUP_PLAYERS,ceil (random 10),false,_player] call fnc_updateScore;
+	[GROUP_PLAYERS, 2 + ceil (random 10),false,_player] call fnc_updateScore;
 };
 
 private _popbase = 0;
@@ -206,7 +210,7 @@ private _typeObj = "";
 		};
 
 		//Nb units to spawn per block
-		_popbase = 1 MAX (30 MIN (ceil((_nbBuildings)*(RATIO_POPULATION)  + (round random 1))));
+		_popbase = 1 MAX (MAX_POPULATION MIN (ceil((_nbBuildings)*(RATIO_POPULATION)  + (round random 1))));
 		_nbEnemies = 0;
 		_nbCivilian = 0;
 		for "_x" from 1 to _popbase  do
@@ -263,7 +267,7 @@ private _typeObj = "";
 [] spawn fnc_SpawnCrashSite; //Chopper spawn
 [] spawn fnc_SpawnSecondaryObjective;
 [] spawn fnc_SpawnMainObjective;
-[90] spawn fnc_SpawnConvoy;
+[390] spawn fnc_SpawnConvoy;
 
 private ["_mkr","_cacheResult","_ieds"];
 
@@ -288,8 +292,7 @@ private ["_mkr","_cacheResult","_ieds"];
 // Wait until this var is on
 waitUntil {count allPlayers > 0};
 
-// Initial score
-GROUP_PLAYERS setVariable ["DCW_SCORE",GROUP_PLAYERS getVariable ["DCW_SCORE",START_SCORE], true];
+// Initial score display
 LEADER_PLAYERS remoteExec ["fnc_displayscore"];
 
 // Initial timer for the hunters
@@ -414,6 +417,7 @@ while { true } do {
 
 			//Empty the killed units
 			if (!alive _unit)then{
+				_unit call fnc_deletemarker;
 				UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
 			};
 			
@@ -431,7 +435,7 @@ while { true } do {
 						CHASER_VIEWED = true;
 						sleep (15 + random 5);
 						CHASER_VIEWED = false;
-						_player remoteExec ["fnc_DisplayScore",_player, false];
+						[] remoteExec ["fnc_DisplayScore",_player, false];
 						// || _unit knowsAbout player > 2
 						if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,_player] call fnc_GetVisibility > 20))then{
 							if (DEBUG) then  {
@@ -445,7 +449,7 @@ while { true } do {
 								UNITS_SPAWNED = UNITS_SPAWNED + ([_player] call fnc_SpawnChaser);
 							};
 							
-							_player remoteExec ["fnc_DisplayScore",_player, false];
+							[] remoteExec ["fnc_DisplayScore",_player, false];
 							[_player] spawn {
 								params["_player"];
 								sleep 250;
@@ -454,7 +458,7 @@ while { true } do {
 								};
 								sleep 200;
 								CHASER_TRIGGERED = false;
-								_player remoteExec ["fnc_DisplayScore",_player, false];
+								[] remoteExec ["fnc_DisplayScore",_player, false];
 							};
 						};
 					};
