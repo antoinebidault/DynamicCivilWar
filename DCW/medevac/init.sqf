@@ -30,7 +30,7 @@ fnc_deleteMedevac = compile preprocessFileLineNumbers "DCW\medevac\fnc\deleteMed
 
 transportHelo = objNull;
 handle = objNull;
-IsInBound = false; 
+MEDEVAC_IsInBound = false; 
 MEDEVAC_showMenu = false;
 MEDEVAC_FirstTrigger = false;
 MEDEVAC_marker = "";
@@ -88,8 +88,8 @@ while {true} do {
 			sleep 1;
 			openMap false;
 
-			if ((count _soldiersDead > 0) && !IsInBound)then {
-				IsInBound = true;
+			if ((count _soldiersDead > 0) && !MEDEVAC_IsInBound)then {
+				MEDEVAC_IsInBound = true;
 
 				// Chopper spawning
 				transportHelo = [] call fnc_spawnHelo;
@@ -107,7 +107,7 @@ while {true} do {
 
 	//StandBy
 	if(isNull transportHelo)then{ 
-		IsInBound = false;
+		MEDEVAC_IsInBound = false;
 		MEDEVAC_FirstTrigger = false;
 		if (count _soldiersDead > 0 && !MEDEVAC_showMenu)then{
 			MEDEVAC_showMenu = true;
@@ -118,19 +118,17 @@ while {true} do {
 			transportHelo move _posChopper;
 			sleep 150;
 			[transportHelo] call fnc_deleteMedevac;
-			IsInBound = false;
+			MEDEVAC_IsInBound = false;
 		}else{
 			if (!alive transportHelo || damage transportHelo > .6)then{
 				hint "The chopper is destroyed ! MEDEVAC helicopter available in 5 minutes";
 				sleep 5*60;
 				[transportHelo] call fnc_deleteMedevac;
-				IsInBound = false;
+				MEDEVAC_IsInBound = false;
 			};
 		}
 
 	};
-
-
 	sleep 3;
 };
 

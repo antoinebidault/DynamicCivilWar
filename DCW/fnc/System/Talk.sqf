@@ -63,7 +63,7 @@ _ctrl ctrlSetFade 0;
 _talker setRandomLip true;
 _ctrl ctrlCommit .2;
 
-sleep (count(_say)/10) min 1.5;
+sleep (count(_say)/10) max 1.4;
 _talker setRandomLip false;
 
 // Hide subtitle

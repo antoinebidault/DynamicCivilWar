@@ -224,7 +224,7 @@ private _typeObj = "";
 		};
 		_nbFriendlies =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
 		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
-		_nbIeds = (1 + floor(random 4));
+		_nbIeds = (floor(_popbase * .5) + floor(random 4));
 
 		_typeObj = ["hostage","sniper","cache","mortar","","",""] call BIS_fnc_selectRandom;
 		_nbHostages = if (_typeObj == "hostage" || _popbase > 20) then{ 1 }else {0};
@@ -234,7 +234,7 @@ private _typeObj = "";
 
 		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
 		_nbFriendlies = 0;
-		_points = _nbEnemies * 10;
+		_points = 1 + _nbEnemies * 10;
 		_meetingPointPosition =  [_pos, 0, .5*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
 		while {isOnRoad _meetingPointPosition} do{
 			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
@@ -292,9 +292,6 @@ private ["_mkr","_cacheResult","_ieds"];
 // Wait until this var is on
 waitUntil {count allPlayers > 0};
 
-// Initial score display
-LEADER_PLAYERS remoteExec ["fnc_displayscore"];
-
 // Initial timer for the hunters
 _timerChaser = time - 360;
 				   
@@ -312,7 +309,7 @@ while { true } do {
 
 			//Catch flying player
 			_isInFlyingVehicle = false;
-			if( (vehicle _player) != _player && ((vehicle player) isKindOf "Air" && (_playerPos select 2) > 4))then{
+			if( (vehicle _player) != _player && ((vehicle _player) isKindOf "Air" && (_playerPos select 2) > 4))then{
 				_isInFlyingVehicle = true;
 			};
 
@@ -415,6 +412,7 @@ while { true } do {
 		{
 			_unit = _x;
 
+
 			//Empty the killed units
 			if (!alive _unit)then{
 				_unit call fnc_deletemarker;
@@ -465,49 +463,26 @@ while { true } do {
 				};
 
 
-				// Garbage collection
-				if (_unit getVariable["DCW_Type",""] == "patrol")then{
-					if (_unit distance _x > SPAWN_DISTANCE + 300)then {
-						UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
-						_unit call fnc_deleteMarker;
-						deleteVehicle _unit;
-					};
-				} else {
-					if (_unit getVariable["DCW_Type",""] == "chaser")then{
-						if (_unit distance _x > SPAWN_DISTANCE + 300)then {
-							UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
-							_unit call fnc_deleteMarker;
-							deleteVehicle _unit;
-						};
-					} else {
-						if (_unit getVariable["DCW_Type",""] == "carpatrol")then{
-							if (_unit distance _x > 1500)then {
-								UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
-								_unit call fnc_deleteMarker;
-								deleteVehicle _unit;
-							};
-						} else {
-							if (_unit getVariable["DCW_Type",""] == "civpatrol")then{
-								if (_unit distance _x > 1500)then {
-									UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
-									_unit call fnc_deleteMarker;
-									deleteVehicle _unit;
-								};
-							};
-						};
-					};
-				};
-
+				
 				
 
 			} foreach allPlayers;
+
+			// Garbage collection
+			if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{
+				if ({_unit distance _x > SPAWN_DISTANCE + 300} count allPlayers == count allPlayers)then {
+					UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
+					_unit call fnc_deleteMarker;
+					deleteVehicle _unit;
+				};
+			};
+
 
 			//Calcul du score
 			if (_unit getVariable["DCW_Friendliness",-1] != -1) then{
 				_civilReputationSum = _civilReputationSum + (_unit getVariable["DCW_Friendliness",-1]);
 				_civilReputationNb = _civilReputationNb + 1;
 			};
-
 
 		} foreach UNITS_SPAWNED;
 		

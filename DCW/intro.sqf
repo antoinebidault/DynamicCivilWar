@@ -2,7 +2,9 @@ if (didJIP) exitWith{ false };
 
 playMusic "seal";
 
-["Mediterranean",3,true] call bis_fnc_setppeffecttemplate;
+if (daytime > 8 && daytime < 20) then {
+	["Mediterranean",3,true] call bis_fnc_setppeffecttemplate;
+};
 
 sleep 3;
 titleCut ["", "BLACK IN",14];
@@ -17,8 +19,6 @@ _cam camSetFov .9;
 
 _cam camCommit 20;
 
-
-
 [] spawn {
 	sleep 3;
 	nul = ["Bidass presents",.3,.7,7] spawn BIS_fnc_dynamicText;
@@ -32,7 +32,7 @@ sleep 24;
 
 
 private _sl = missionNamespace getVariable ["cut_sl",objNull];
-private _pos = _sl modelToWorld [0,-2,16];
+private _pos = _sl modelToWorld [0,-15,6];
 private _target =  _sl modelToWorld [0,1,2];
 
 _cam camSetPos _pos;

@@ -19,10 +19,10 @@ params [
 if !(local _unit) exitWith {false};
 if (_damage == 0) exitWith {false};
 
-if ( _damage > .9 && !(_unit getVariable["unit_injured",false])) then {
+if ( _damage > .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",false])) then {
 
 	_unconscious = true;
-	_unit setUnconscious true;
+	_unit setUnconscious _unconscious;
 	_unit setVariable ["unit_injured", _unconscious];
 	_unit setDamage .9;
 	_damage = .9;

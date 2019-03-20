@@ -21,7 +21,7 @@ iedJunk=["Land_Garbage_square3_F","Land_Garbage_square5_F","Land_Garbage_line_F"
 
 private _localIeds = [];
 private _ieds = [];
-private _roads = _pos nearRoads (_radius + 200);
+private _roads = _pos nearRoads (_radius + 300);
 private _roadSelects = [];
 private _i = _nb;
 if (count _roads == 0) exitWith {_ieds};
@@ -64,11 +64,11 @@ while {_i > 0} do {
 
 } forEach _roadSelects;
 
-{CIV_SIDE revealMine _x;ENEMY_SIDE revealMine _x;}forEach allMines;
+{CIV_SIDE revealMine (_x select 0);ENEMY_SIDE revealMine (_x select 0);}forEach _localIeds;
 
 
 //Loop to check status
-[_localIeds] spawn{
+[[_localIeds],{
 	params["_localIeds"];
 
 	iedAct={
@@ -109,8 +109,7 @@ while {_i > 0} do {
 		}
 		foreach _localIeds;
 		sleep .2;
-		LOCALIED = _localIeds;
 	}
-};
+}] remoteExec ["spawn", GROUP_PLAYERS, true];
 
 _ieds;

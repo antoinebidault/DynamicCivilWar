@@ -156,7 +156,7 @@ addActionHalt = {
         [_unit,format["Hi ! My name is %1.", name _unit],false] call fnc_Talk;
         sleep 1.5;
         _unit disableAI "MOVE";
-        sleep 30;
+        waitUntil { _asker distance _unit > 10; sleep 4; };
         _unit stop false;
         _unit enableAI "MOVE";
         _unit call addActionHalt;

@@ -36,15 +36,16 @@ while{true}do {
 			for "_j" from 1 to _numberOfmen do {
 
 				if (_side == SIDE_CURRENT_PLAYER) then{
-				_unit = [_grp,_pos,false] call fnc_spawnFriendly;
-				if (_j == 1) then {
-					_grpMarker = createMarker["mkr-"+str(floor random 10000), _pos];
-					_grpMarker setMarkerShape "ICON";
-					_grpMarker setMarkerColor "ColorGreen";
-					_grpMarker setMarkerType "o_motor_inf";
-					_unit call fnc_deleteMarker;
-					_unit setVariable["marker", _grpMarker];
-				};
+					_unit = [_grp,_pos,false] call fnc_spawnFriendly;
+					/*
+					if (_j == 1) then {
+						_grpMarker = createMarker["mkr-"+str(floor random 10000), _pos];
+						_grpMarker setMarkerShape "ICON";
+						_grpMarker setMarkerColor "ColorGreen";
+						_grpMarker setMarkerType "o_motor_inf";
+						_unit call fnc_deleteMarker;
+						_unit setVariable["marker", _grpMarker];
+					};*/
 				} else {
 				_unit = [_grp,_pos,false] call fnc_spawnEnemy;
 				};

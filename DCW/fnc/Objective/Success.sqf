@@ -16,34 +16,35 @@ if (_objWithTask getVariable["DCW_Type",""] == "") exitWith { false };
 if (!(_objWithTask setVariable["DCW_IsIntel",false])) exitWith {false};
 
 _task = _objWithTask getVariable["DCW_Task",""];
-if (_task != "") then{
-    [_task, "SUCCEEDED",true] remoteExecCall ["BIS_fnc_taskSetState"];
-    _taskName = ((_task call BIS_fnc_taskDescription) select 0) select 0;
-    [LEADER_PLAYERS, format["Task done : %1",_taskName],true] remoteExec ["fnc_Talk"];
-    _objWithTask setVariable["DCW_Task",""];
-    _objWithTask getVariable["DCW_MarkerIntel",""] setMarkerColor "ColorGreen";
-}else{
-    [_objWithTask,LEADER_PLAYERS,false] remoteExecCall ["fnc_CreateTask"];
+
+// Silently create a task if not exists
+if (_task == "") then {
+    [_objWithTask,LEADER_PLAYERS,false] call fnc_CreateTask;
     _task = _objWithTask getVariable["DCW_Task",""];
-    [_task, "SUCCEEDED",true] remoteExecCall ["BIS_fnc_taskSetState"];
-    _taskName = ((_task call BIS_fnc_taskDescription) select 0) select 0;
-    [LEADER_PLAYERS,format["Task done : %1",_taskName],true] remoteExec ["fnc_Talk"];
 };
 
+// Spawn task successful on each client
+[[_task,_objWIthTask],{
+    params["_task","_objWithTask"];
+
+    _taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
+    [_task, "SUCCEEDED",true] call BIS_fnc_taskSetState;
+    [LEADER_PLAYERS, format["Task done : %1",_taskName],true] call fnc_Talk;
+    _objWithTask setVariable["DCW_Task","", true];
+    _objWithTask getVariable["DCW_MarkerIntel",""] setMarkerColor "ColorGreen";
+
+     sleep 20;
+     
+    [_task,true] call BIS_fnc_deleteTask;
+
+}] remoteExec ["spawn", GROUP_PLAYERS,false];
+
 //Custom callback
-[_task,_objWithTask,_objWithTask getVariable["DCW_Bonus",0]] remoteExec ["OBJECTIVE_ACCOMPLISHED"];
+[_task,_objWithTask,_objWithTask getVariable["DCW_Bonus",0]] call OBJECTIVE_ACCOMPLISHED;
 
 //Delete the task after success.
-
 _objWithTask setVariable["DCW_Type",""];
 _objWithTask setVariable["DCW_IsIntel",false];
 _objWithTask setVariable["DCW_IsIntelRevealed",false];
-
-//Remote suppresion of the task
-[_task] spawn {
-    sleep 20;
-    [_this select 0,true] remoteExec ["BIS_fnc_deleteTask"];
-};
-
 
 true;

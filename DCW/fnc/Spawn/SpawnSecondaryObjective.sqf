@@ -92,7 +92,10 @@ _officer addEventHandler ["HandleDamage",{
 		  },{
             params["_unit","_player"];
 			_player playActionNow "medicStop";
-            ["DCW_secondary","SUCCEEDED",true] spawn BIS_fnc_taskSetState;
+            {
+                
+                ["DCW_secondary","SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,true];
+             } foreach units GROUP_PLAYERS;
             _unit setVariable["DCW_interrogated",true];
             _unit removeAllMPEventHandlers "MPKilled";
             
@@ -127,14 +130,17 @@ OFFICER = _officer;
 private _firstSpawn = true;
 
 while {sleep 20; alive _officer && !(_officer getVariable["DCW_interrogated",false]) } do {
-    [ "DCW_secondary",LEADER_PLAYERS, [format["Our drones give us some informations about an insurgent's officer location. Move to his location and try to gather infomration. His name is %1",name _officer],"Interrogate the officer","Interrogate the officer"],getPos _officer,"CREATED",1,if (_firstSpawn) then {true}else{false}] call BIS_fnc_setTask;
+
+    {
+        ["DCW_secondary",_x, [format["Our drones give us some informations about an insurgent's officer location. Move to his location and try to gather infomration. His name is %1",name _officer],"Interrogate the officer","Interrogate the officer"],getPos _officer,"CREATED",1,if (_firstSpawn) then {true}else{false}] remoteExec ["BIS_fnc_setTask",_x, true];
+    } foreach units GROUP_PLAYERS;
     private _loc =  nearestLocations [getPosWorld _officer, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	// Info text
     
     [HQ,format["We have some new intels on the enemy officer : %1, he is located %2km from %3",name _officer,round(((getPos _loc) distance2D LEADER_PLAYERS)/10)/100,text _loc], true] remoteExec ["fnc_talk"];
     _marker setMarkerPos (getPos _officer);
     _firstSpawn = false;
-    sleep 300 + random 240;
+    sleep 500 + random 240;
 };
 
 deleteMarker _marker;

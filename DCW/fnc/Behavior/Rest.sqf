@@ -54,10 +54,10 @@ fnc_ActionRest =  {
 
         [_unit,_action]spawn{
             params["_unit","_action"];
-            sleep 60;
+            sleep 30;
             _unit enableStamina true;
             _unit enableFatigue true;
-            sleep 500;
+            sleep 300;
             _unit call fnc_ActionRest;
         };
     },nil,1.5,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];

@@ -1,78 +1,31 @@
-respawn = 0;
-respawndelay = 10;
 disabledAI= 0;
-joinUnassigned = 0;
 enableDebugConsole = 1;
 allowFunctionsLog = 1;
 author = "Bidass";
-briefingName = "[COOP 1-6/SP] Dynamic Civil War";
-onLoadMission = "Dynamic Civil War";
-loadScreen = "images\loadScreen.paa"; 
-overviewPicture = "images\loadScreen.paa"; 
-overviewText = "You lead the FOXHOUND team, a 6 men british army team. ";
-overviewTextLocked = "You lead the FOXHOUND team, a 5 men US SOCOM team. Your mission is to bring back the Apaches crew. You must investigate the crash site. The whole region is controlled by insurgents. You can find intel when interrogating the civilian. Be careful, because sometimes they become hostiles... This scenario consists in one primary objective with side objectives consisting in weapon cache and patrol elimination. The purpose is to get something a bit dynamic with a linear scenario.  Hope you enjoy it... I put a lot of effort in this mission. I hope you would understand the english scenario I wrote with my  bad english. ";
+briefingName = "Dynamic Civil War";
+onLoadMission = "A group of Royal Marines is holding the east side of the airport road.";
+loadScreen = "images\loadScreen.jpg"; 
+overviewPicture = "images\loadScreen.jpg"; 
+overviewText = "A group of Royal Marines is holding the east side of the airport road. Your mission is to locate and kill the enemy commander. The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
+overviewTextLocked = "A group of Royal Marines is holding the east side of the airport road. Your mission is to locate and kill the enemy commander. The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
 
 
 //--------------------------------------------------------------
-//------------------------MUSICS----------------------------
+//---------------------    MUSICS    ---------------------------
 //--------------------------------------------------------------
 
 class CfgMusic
 {
   	tracks[]=
   	{
-      		beast,
-          mhDown,
-          axe,
-          seal,
-          summit,
-          bhdown,
-          bhdown2
+      		seal
 
   	};
- 
-  	class beast
-  	{
-      		name = "beast";
-      		sound[] = {"\music\thebeast.ogg", 1, 1.0};
-  	};
-
-      class mhDown
-    {
-          name = "mhDown";
-          sound[] = {"\music\mhDown.ogg", 1, 1.0};
-    };
-
-      class axe
-    {
-          name = "axe";
-          sound[] = {"\music\axe.ogg", 1, 1.0};
-    };
-
-      class seal
+    class seal
     {
           name = "seal";
           sound[] = {"\music\seal.ogg", 1, 1.0};
     };
-
-      class summit
-    {
-          name = "summit";
-          sound[] = {"\music\summit.ogg", 1, 1.0};
-    };
-
-      class bhdown
-    {
-          name = "bhdown";
-          sound[] = {"\music\bhdown.ogg", 1, 1.0};
-    };
-
-      class bhdown2
-    {
-          name = "bhdown2";
-          sound[] = {"\music\bhdown2.ogg", 1, 1.0};
-    };
-  	
 };
 
 

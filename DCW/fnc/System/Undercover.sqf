@@ -14,7 +14,6 @@ params["_unit","_enemy"];
 private _inventory = getUnitLoadout _enemy;
 private _inventoryBackUp = getUnitLoadout _unit;
 
-
 if (CHASER_TRIGGERED || CHASER_VIEWED || _unit getVariable["DCW_undercover",false]) exitWith{[_unit,"I can't do this...", false] spawn fnc_talk;false;};
 
 private _grpUnit = group _unit;
@@ -23,6 +22,7 @@ _unit playActionNow "medic";
 _unit setCaptive true;
 _unit setVariable["DCW_undercover",true];
 _unit call fnc_displayscore;
+
 sleep 2;
 
 _unit setUnitLoadout _inventory;

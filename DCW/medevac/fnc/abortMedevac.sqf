@@ -7,4 +7,4 @@
 
 params["_helo"];
 MEDEVAC_ISABORTED = true;
-hint "The medevac is aborted, one guy of the rescue team is down";
+hint "The medevac is aborted";

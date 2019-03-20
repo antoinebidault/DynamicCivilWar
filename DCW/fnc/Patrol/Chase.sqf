@@ -21,7 +21,7 @@ while { alive _leader && alive _unitChased }do{
     if (_leader knowsAbout _unitChased >= .5) then {
         if (time > LAST_FLARE_TIME + 120)then{
             _flrObj = "F_40mm_white" createvehicle ((_unitChased) modelToWorld [50-round(random 25),50-round(random 25),200]); 
-            _flrObj setVelocity [0,0,-10];
+            _flrObj setVelocity [0,0,-.1];
             LAST_FLARE_TIME = time;
         };
         _lastKnownPosition = _leader getHideFrom _unitChased;

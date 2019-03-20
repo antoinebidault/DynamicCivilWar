@@ -84,7 +84,7 @@ fnc_HandleRespawn =
 	//count the remaining lives after death
 	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
 
-	if (REMAINING_RESPAWN == -1)exitWith{endMission "KILLED";};
+	if (REMAINING_RESPAWN == -1)exitWith{ endMission "KILLED"; };
 	
 	cutText ["You are severly injured","BLACK OUT", 7];
 	sleep 7;
