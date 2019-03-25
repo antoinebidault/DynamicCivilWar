@@ -8,7 +8,7 @@ One objective : find & kill the enemy commander who is hidden somewhere in a ran
 Mission location
 ---
 
-https://steamcommunity.com/linkfilter/?url=https://github.com/antoinebidault/DynamicCivilWar
+https://steamcommunity.com/sharedfiles/filedetails/?id=1687129563
 
 Base features
 ---
