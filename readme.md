@@ -4,6 +4,12 @@ A cooperative(1-6)/singleplayer scenario for arma III
 
 One objective : find & kill the enemy commander who is hidden somewhere in a random sector... You would have several additional tasks to complete. You must be careful to every civil. They can become very dangerous insurgents, if you are not threating them with respects (Lowering your gun when you talk to them...). You must be patient and clear every compound and talk to every civilian.
 
+
+Mission location
+---
+
+https://steamcommunity.com/sharedfiles/filedetails/?id=1687129563
+
 Base features
 ---
 * Random enemy patrol
