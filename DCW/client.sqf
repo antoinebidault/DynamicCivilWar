@@ -6,10 +6,10 @@
  */
 
 if (isNull player) exitWith{false;};
-
+/*
 if (!didJIP) then {
 	setDate [2018, 6, 25, 18, 0]; 
-};
+};*/
 
 //Briefing
 player createDiaryRecord ["Diary",["Keep a good reputation",
@@ -26,9 +26,19 @@ player createDiaryRecord ["Diary",["Main objective : kill the commander",
 "Dynamic Civil War<br/><br/>
 In this singleplayer scenario, you have one major objective : assassinate the enemy general. We kow that it would considerably change the situation in this region which is ravaged by war. At this point, we have no intel on his exact location. He is probably hidden in mountains or forests, wandering from place to place very often far from the conflicts areas. Firstly, you must get intel about his approximate position.<br/><img image='images\target.jpg' width='302' height='190'/><br/><br/>"]];
 
-
  _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 
+// If is admin
+if (ENABLE_DIALOG) then {
+	if (leader GROUP_PLAYERS == player || !isMultiplayer) then{
+		[] call fnc_dialog;
+	} else{
+		hint "wait until the leader finishes to configure the mission";
+	};
+	waitUntil {DCW_STARTED};
+} else {
+	DCW_STARTED = true;
+};
 [] call fnc_intro;
 
 sleep 3;

@@ -23,18 +23,13 @@ fnc_spawnHealEquipement = compile preprocessFileLineNumbers "DCW\medevac\fnc\spa
 fnc_spawnObject = compile preprocessFileLineNumbers "DCW\medevac\fnc\spawnObject.sqf";
 fnc_dropInHelo = compile preprocessFileLineNumbers "DCW\medevac\fnc\dropInHelo.sqf";
 fnc_help = compile preprocessFileLineNumbers "DCW\medevac\fnc\help.sqf";
-fnc_abortMedevac = compile preprocessFileLineNumbers "DCW\medevac\fnc\abortMedevac.sqf";
 fnc_removeFAKS = compile preprocessFileLineNumbers "DCW\medevac\fnc\removeFAKS.sqf";
 fnc_deleteMedevac = compile preprocessFileLineNumbers "DCW\medevac\fnc\deleteMedevac.sqf";
 
-
 transportHelo = objNull;
 handle = objNull;
-MEDEVAC_IsInBound = false; 
-MEDEVAC_showMenu = false;
-MEDEVAC_FirstTrigger = false;
+MEDEVAC_State = "standby"; // standby/menu/map/inbound/aborted
 MEDEVAC_marker = "";
-MEDEVAC_ISABORTED = false;
 SmokeShell = objNull;
 unit addItem  "SmokeShellGreen";
 unit addItem  "SmokeShellGreen";
@@ -50,18 +45,16 @@ private _soldiersDead = [];
 }foreach (units (group unit));
 
 _posChopper = objNull;
-
-
+MEDEVAC_action = "";
 while {true} do {
 
 	//Push dead soldiers
 	_soldiersDead = units (group unit) select { _x getVariable["unit_injured",false] };
 
 	//Launch chopper
-	if (MEDEVAC_FirstTrigger)then{
+	if (MEDEVAC_State == "map")then{
 
-		MEDEVAC_showMenu = false;
-		MEDEVAC_FirstTrigger = false;
+		MEDEVAC_State = "menu";
 		MEDEVAC_marker = "";
 		deleteMarker "medevac_marker";
 
@@ -84,12 +77,18 @@ while {true} do {
 			//clear the click handle
 			waitUntil {MEDEVAC_marker != ""};
 			unit onMapSingleClick "";
-			HQ sideChat "I copy !";
+			[HQ,"I copy!",true] remoteExec ["fnc_talk"];
 			sleep 1;
 			openMap false;
 
-			if ((count _soldiersDead > 0) && !MEDEVAC_IsInBound)then {
-				MEDEVAC_IsInBound = true;
+		 	MEDEVAC_action = unit addAction ["Abort medevac", { 
+				params["_unit","_actionId"];
+				_unit removeAction MEDEVAC_action;
+				MEDEVAC_State = "aborted";
+			 }];
+
+			if ((count _soldiersDead > 0) && MEDEVAC_State != "inbound")then {
+				MEDEVAC_State = "inbound";
 
 				// Chopper spawning
 				transportHelo = [] call fnc_spawnHelo;
@@ -99,34 +98,38 @@ while {true} do {
 				[group transportHelo,getMarkerPos "medevac_marker",transportHelo,unit] spawn fnc_ChopperPath;
 			}else{
 				hint "Impossible to request";
-				MEDEVAC_showMenu = true;
+				MEDEVAC_State = "menu";
 				[unit, "Medevac"] call BIS_fnc_addCommMenuItem;
 			};
 		};
 	};
 
 	//StandBy
-	if(isNull transportHelo)then{ 
-		MEDEVAC_IsInBound = false;
-		MEDEVAC_FirstTrigger = false;
-		if (count _soldiersDead > 0 && !MEDEVAC_showMenu)then{
-			MEDEVAC_showMenu = true;
-			[unit, "Medevac"] call BIS_fnc_addCommMenuItem;
-		};
+	if (isNull transportHelo && count _soldiersDead > 0 && MEDEVAC_State == "standby")then{
+		MEDEVAC_State = "menu";
+		[unit, "Medevac"] call BIS_fnc_addCommMenuItem;
 	}else{
-		if (MEDEVAC_ISABORTED)then{
-			transportHelo move _posChopper;
-			sleep 150;
+		if (MEDEVAC_State == "succeeded")then{
+			[HQ,"Medevac mission succeeded",true] remoteExec ["fnc_talk"];
 			[transportHelo] call fnc_deleteMedevac;
-			MEDEVAC_IsInBound = false;
-		}else{
-			if (!alive transportHelo || damage transportHelo > .6)then{
-				hint "The chopper is destroyed ! MEDEVAC helicopter available in 5 minutes";
-				sleep 5*60;
+			MEDEVAC_State = "standby";
+			sleep 120;
+		} else {
+			if (MEDEVAC_State == "aborted")then{
+				[HQ,"Medevac mission aborted",true] remoteExec ["fnc_talk"];
+				transportHelo move _posChopper;
+				sleep 120;
 				[transportHelo] call fnc_deleteMedevac;
-				MEDEVAC_IsInBound = false;
+				MEDEVAC_State = "standby";
+			} else {
+				if (MEDEVAC_State == "inbound" && (!alive transportHelo || damage transportHelo > .6))then{
+					[HQ,"The chopper is destroyed ! MEDEVAC helicopter available in 2 minutes",true] remoteExec ["fnc_talk"];
+					sleep 120;	
+					[transportHelo] call fnc_deleteMedevac;
+					MEDEVAC_State = "standby";
+				};
 			};
-		}
+		};
 
 	};
 	sleep 3;

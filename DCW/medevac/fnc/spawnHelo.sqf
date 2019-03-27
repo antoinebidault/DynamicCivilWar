@@ -21,7 +21,7 @@ _transporthelo setCaptive true;
 
 //If the chopper is destroyed => Abort medevac
 _transporthelo addMPEventHandler ["MPKilled",{
-    [transportHelo] call fnc_abortMedevac;
+     MEDEVAC_State = "aborted"; 
 }];
 
 _transporthelo; 

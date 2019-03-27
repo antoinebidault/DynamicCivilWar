@@ -28,10 +28,11 @@
                  {},
                  {
                     _unit = (_this select 0);
-                    [_unit,(_this select 1)] call ENEMY_SEARCHED;
+                    _player = (_this select 1);
+                    [_unit,_player] call ENEMY_SEARCHED;
                     
-                    _resIntel = [_unit, _this select 1,25] call fnc_GetIntel;
-                    if(_resIntel select 0) then {[_this select 0, "HQ, I found some informations !",true] spawn fnc_talk;};
+                    _resIntel = [_unit, _player,25] call fnc_GetIntel;
+                    if(_resIntel select 0) then {[_player, "HQ, I found some informations !",true] spawn fnc_talk;};
                 },{},[],1,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
                 [_unit,_killer] call ENEMY_KILLED;

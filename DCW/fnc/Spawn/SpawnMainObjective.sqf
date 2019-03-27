@@ -6,6 +6,7 @@
  */
 
 if (!isServer) exitWith{false};
+
 _nbTrucks = 2;
 _roadRadius = 40;
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
@@ -114,9 +115,11 @@ while {leader _grp == ENEMY_COMMANDER}do{
 	_trig setTriggerTimeout[1,1,1,true];
     _trig setTriggerStatements[
         "this",
-        "playMUsic ""BackgroundTrack02_F"";[LEADER_PLAYERS,""HQ, this is bravo team, we've found the presumed camp where the commander went. We are at the last known position. We'll investigate the compound around"", true] spawn fnc_talk;",
-        "deleteVehicle thisTrigger"
+        " [] call fnc_foundCommander;",
+        "deleteVehicle thisTrigger;"
     ];
+
+ 
 
     //Push to the global variable
     COMMANDER_LAST_POS pushback _commanderPos;  

@@ -137,14 +137,14 @@ while {sleep 20; alive _officer && !(_officer getVariable["DCW_interrogated",fal
     private _loc =  nearestLocations [getPosWorld _officer, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	// Info text
     
-    [HQ,format["We have some new intels on the enemy officer : %1, he is located %2km from %3",name _officer,round(((getPos _loc) distance2D LEADER_PLAYERS)/10)/100,text _loc], true] remoteExec ["fnc_talk"];
+    [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",name _officer,round(((getPos _loc) distance2D LEADER_PLAYERS)/10)/100,text _loc], true] remoteExec ["fnc_talk"];
     _marker setMarkerPos (getPos _officer);
     _firstSpawn = false;
     sleep 500 + random 240;
 };
 
 deleteMarker _marker;
-sleep 100 + random 400;
+sleep 500 + random 400;
 
 [] spawn fnc_SpawnSecondaryObjective;
 false;

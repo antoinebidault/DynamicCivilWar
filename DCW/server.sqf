@@ -9,6 +9,9 @@
 if (!isServer) exitWith{false;};
 
  
+DCW_STARTED = false;
+publicVariable "DCW_STARTED";
+
 // global scope variables
 GROUP_PLAYERS = group (allPlayers select 0); 
 publicVariable "GROUP_PLAYERS";
@@ -61,43 +64,36 @@ _mp setMarkerAlpha 0;
 _mp setMarkerSize [400,400];
 MARKER_WHITE_LIST pushBack _mp;
 
+
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 _worldCenter = [_worldSize/2,_worldSize/2,0];
+_gameZoneSize = [_worldSize/2,_worldSize/2];
+
+
+GAME_ZONE = createMarker ["gamezone", _worldCenter];
+GAME_ZONE setMarkerShape "RECTANGLE";
+GAME_ZONE setMarkerAlpha 0.2;
+GAME_ZONE setMarkerColor "ColorGreen";
+GAME_ZONE setMarkerSize [_worldSize/2,_worldSize/2];
+
+{  if (_x find "game_zone" == 0  ) then { GAME_ZONE = _x; _gameZoneSize = getMarkerSize _x; }; }foreach allMapMarkers; 
+
 
 // Create a marker all around the terrain if it's a ground
 {
 	_i = _x select 0;
 	_j = _x select 1;
 
-	private _mp = createMarker [format["edge-map-%1-%2",str _i, str _j],[_i  * _worldSize/2  ,_j * _worldSize/2 ,0] ];
+	private _mp = createMarker [format["edge-map-%1-%2",str _i, str _j],[ (_i  * (_gameZoneSize select 0))   ,(_j * (_gameZoneSize select 1)) ,0] ];
 	_mp setMarkerShape "RECTANGLE";
 	_mp setMarkerAlpha 0.1;
 	_mp setMarkerColor "ColorRed";
-	_mp setMarkerSize [_worldSize/2,_worldSize/2];
+	_mp setMarkerSize _gameZoneSize;
 	MARKER_WHITE_LIST pushBack _mp;
 } forEach [[-1,-1],[-1,1],[-1,3],[3,-1],[3,1],[3,3],[1,3],[1,-1]];
 
-private _gameZone = createMarker ["gameZone", _worldCenter ];
-_gameZone setMarkerShape "ELLIPSE";
-_gameZone setMarkerAlpha 0;
-_gameZone setMarkerSize [_worldSize/2,_worldSize/2];
-
 //Consuming work => getAllClusters
-private _clusters = [_gameZone] call fnc_GetClusters;
-
-/*
-//TIME
-setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
-
-//OVERCAST
-0 setOvercast WEATHER;
-0 setRain (if (WEATHER > .7) then {random 1}else{0});
-setWind [10*WEATHER, 10*WEATHER, true];
-0 setFog [if (WEATHER > .8) then {.15}else{0},if (WEATHER > .8) then {.04}else{0}, 60];
-0 setGusts (WEATHER - .3);
-0 setWaves WEATHER;
-forceWeatherChange;
-*/
+private _clusters = [GAME_ZONE] call fnc_GetClusters;
 
 //On civilian killed
 CIVILIAN_KILLED = { 
@@ -158,6 +154,23 @@ ENEMY_SEARCHED = {
 	[GROUP_PLAYERS, 2 + ceil (random 10),false,_player] call fnc_updateScore;
 };
 
+
+WAITUNTIL {DCW_STARTED;};
+
+//TIME
+setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
+
+//OVERCAST
+0 setOvercast WEATHER;
+0 setRain (if (WEATHER > .7) then {random 1}else{0});
+setWind [10*WEATHER, 10*WEATHER, true];
+0 setFog [if (WEATHER > .8) then {.15}else{0},if (WEATHER > .8) then {.04}else{0}, 60];
+0 setGusts (WEATHER - .3);
+0 setWaves WEATHER;
+forceWeatherChange;
+
+
+
 private _popbase = 0;
 private _nbFriendlies = 0;
 private _nbCars = 0;
@@ -182,10 +195,6 @@ private _typeObj = "";
 	{ 
 		if(_pos inArea _x)exitWith{_return = true;};
 	} foreach MARKER_WHITE_LIST;
-
-	// If not in game zone => exit loop
-	//if(!(_pos inArea _gameZone))exitWith{_return = true;};
-
 	if (isNil{_return})then{_return = false;};
 	if (!_return)then
 	{

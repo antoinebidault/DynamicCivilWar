@@ -26,8 +26,8 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     
     _className = (FRIENDLY_CHOPPER_CLASS call bis_fnc_selectrandom);
     _crater = createVehicle ["Crater", _spawnPos, [], round random 360, "NONE"];
-    _chopper = createVehicle [_className, _spawnPos, [], round random 360, "NONE"];
-    [_chopper, _crater] remoteExecCall ["disableCollisionWith", 0, _chopper];
+    _chopper = createVehicle [_className, _spawnPos, [], round random 360, "CAN_COLLIDE"];
+    _chopper enableSimulationGlobal false;
     _crater setPos (getPos _chopper);
 
     _elementToDestroy = "IEDLandBig_F" createVehicle _spawnPos;

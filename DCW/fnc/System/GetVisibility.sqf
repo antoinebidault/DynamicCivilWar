@@ -3,7 +3,7 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License : GNU (GPL)
- * Get visibility
+ * Get the current visibility of an item
  */
 
 params["_unit","_en"];

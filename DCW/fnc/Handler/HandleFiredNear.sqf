@@ -18,12 +18,12 @@ _this select 0 addEventHandler["FiredNear",
 		
 		//Remove the eventHandler to prevent spamming
 		_civ removeAllEventHandlers "FiredNear";
-
 		[_civ,_gunner] spawn fnc_SpawnAsEnemy;
 	}else{
 		group _civ setspeedmode "FULL";
 		_civ forceWalk false;
 		removeAllActions _civ;
+		
 		switch(round(random 2))do{
 			case 0:{_civ switchMove "ApanPercMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
 			case 1:{_civ playMoveNow "ApanPknlMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};

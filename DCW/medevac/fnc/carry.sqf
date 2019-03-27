@@ -6,6 +6,7 @@
  */
 
 //Carry script
+// Not used
 //Credits to Psycho
 
 params["_unit","_target"];

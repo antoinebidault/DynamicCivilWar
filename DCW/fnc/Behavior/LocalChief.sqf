@@ -15,19 +15,28 @@ _this addGoggles (["G_Spectacles_Tinted","G_Aviator"] call BIS_fnc_selectRandom)
 _this addHeadgear "H_Beret_blk";
 
 [_this,["Interrogate",{
-    (_this select 0) RemoveAction (_this select 2);
-    (_this select 0) call fnc_MainObjectiveIntel;
+    params["_unit","_asker","_action"];
+     //Populate with friendlies
+    _curr = ([position _unit,false] call fnc_findNearestMarker);
+   
+    private _success =_curr select 3;
+    
+    [_asker,"Tell us all you know about the commander !", false] call fnc_talk;
+
+     if(!_success) exitWith{[_unit,"Secure our position first", false] spawn fnc_talk;false;};
+
+    _unit RemoveAction (_this select 2);
+    _unit call fnc_MainObjectiveIntel;
 },nil,2.5,true,true,"","true",20,false,""]] remoteExec ["addAction"];
 
 [_this,["Set up camp here (200 points, 6 hours)",{
     params["_unit","_asker","_action"];
     
     //Talk
-    [_asker,"Is it possible to set up our camp here ?", false] spawn fnc_talk;
+    [_asker,"Is it possible to set up our camp here ?", false] call fnc_talk;
 
     //Populate with friendlies
     _curr = ([position _unit,false] call fnc_findNearestMarker);
-    MARKERS = MARKERS - [_curr];
    
     private _marker =_curr select 0;
     private _pos =_curr select 1;
@@ -39,13 +48,15 @@ _this addHeadgear "H_Beret_blk";
     private _meetingPointPosition =_curr select 7;
     private _points =_curr select 8;
     private _isLocation =_curr select 9;
+    
+    if(!_success) exitWith{[_unit,"Secure our position first", false] spawn fnc_talk;false;};
+   
+    if (!([GROUP_PLAYERS,200] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
+
+    MARKERS = MARKERS - [_curr];
     private _randomnumber = floor random 100000;
     private _mkrToAvoid = createMarker ["friendly-outpost-" + (str _randomnumber), getPos player];
     
-    if(!_success) exitWith{[_unit,"Secure our position first", false] spawn fnc_talk;false;};
-
-    if (!([GROUP_PLAYERS,200] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
-
     _unit RemoveAction _action;
     _buildings = nearestObjects [_pos, ["house"], 300];
     {
@@ -58,8 +69,8 @@ _this addHeadgear "H_Beret_blk";
 
      // Put in whitelisty
     _mkrToAvoid setMarkerAlpha 0;
-    _mkrToAvoid setMarkerShape "RECTANGLE";
-    _mkrToAvoid setMarkerSize [500,500];
+    _mkrToAvoid setMarkerShape "ELLIPSE";
+    _mkrToAvoid setMarkerSize [400,400];
     MARKER_WHITE_LIST pushback _mkrToAvoid;
 
     //disableAi

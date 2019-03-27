@@ -52,7 +52,7 @@ fnc_getRadiusLocation = {
 	[_rad, _count,_isMilitary,_totalHouses];
 };
 
-
+/*
 {
 	_pos = getPos _x;
     _res = [getPos _x,true] call fnc_getRadiusLocation;
@@ -60,8 +60,7 @@ fnc_getRadiusLocation = {
 		_clusters pushback [_pos,_res select 0,_res select 1,true,name _x,_res select 2, _res select 3];
 	};
 } forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Strategic","CityCenter"], 25000]; 
-
-
+*/
 
 for "_xc" from 0 to _worldNbBlocks do {
 	for "_yc" from 0 to _worldNbBlocks do {

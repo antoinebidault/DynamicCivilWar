@@ -23,9 +23,8 @@ _assistant doMove [((position _target) select 0) + (1 + random 3) ,((position _t
 
 [_leader,_target] spawn fnc_Heal;
 
-waitUntil { !alive _assistant || !alive _target || _target getVariable["unit_stabilized",false] };
-if (!alive _assistant || !alive _target) exitWith{[_helo] call fnc_abortMedevac;};
-
+waitUntil { sleep 3; isNull _assistant || !alive _assistant || !alive _target || _target getVariable["unit_stabilized",false] };
+if (isNull _assistant || !alive _assistant || !alive _target) exitWith { MEDEVAC_State = "aborted"; };
 
 _assistant setUnitPos "AUTO";
 [_assistant] joinSilent group _leader;

@@ -25,18 +25,17 @@ private _posSelects = _posResult select 0;
 private _enterable = _posResult select 1;
 private _cancel = true;
 
-
 if (_nbSnipers > 0)then{
-  
-  {
-    _objs = nearestTerrainObjects [_x select 0, ["Tree","Bush"], 20];
-    if (count _objs > 0) then{
+  private _sniperPos = [_pos,_radius, 1.4*_radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+  //{
+   // _objs = nearestTerrainObjects [_x select 0, ["Tree","Bush"], 20];
+  //  if (count _objs > 0) then{
       private _obj  =_objs select 0;
       private  _grp = createGroup ENEMY_SIDE;
       for "_xc" from 1 to _nbSnipers do {
         
         _unitName = ENEMY_SNIPER_UNITS call BIS_fnc_selectRandom;
-        _unit = _grp createUnit [_unitName, _pos,[],ENEMY_SKILLS,"NONE"];
+        _unit = _grp createUnit [_unitName, _sniperPos,[],ENEMY_SKILLS,"NONE"];
 
         [_unit,"ColorRed"] call fnc_addmarker;
         [_unit] call fnc_AddTorch;
@@ -70,9 +69,9 @@ if (_nbSnipers > 0)then{
 
         _units pushBack _unit;
       };
-    };
-  }
-  foreach selectBestPlaces [_pos, 500, "trees + 3*hills - houses - forest", 5, 1];
+   // };
+ // }
+  //foreach selectBestPlaces [_sniperPos, 100, "trees + 3*hills - houses - forest", 5, 1];
 };
 
 

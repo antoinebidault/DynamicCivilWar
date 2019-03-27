@@ -17,7 +17,7 @@ private _roadRadius = 40;
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
 
-private _initPos = [_worldCenter,0,_worldSize/2, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+private _initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 private _road = [_initPos,500,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 private _roadPos = getPos _road;
 

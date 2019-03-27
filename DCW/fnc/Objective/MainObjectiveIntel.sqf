@@ -13,7 +13,6 @@ if(count COMMANDER_LAST_POS == 0) exitWith {[_unit,"I don't know where he is.",f
 private _initPos = COMMANDER_LAST_POS call BIS_fnc_selectRandom;
 COMMANDER_LAST_POS = COMMANDER_LAST_POS - [_initPos];
 
-
 private _ratio = 0.8;
 private _offset = 40;
 private _distance = 350 + random 250;
@@ -47,14 +46,16 @@ _taskId = "maintask";
 
 [[_unit,_taskid,_pos],{
   params ["_unit","_taskid","_pos"];
-  [_unit,"I marked you on the map where I think he is.",true] remoteExecCall ["fnc_Talk"];
+  [_unit,"I marked you on the map where I think he is.",true] call fnc_Talk;
   {
     [_taskId, _x, [ "Investigate the sector where the enemy\n commander is possibly located","Investigate the sector","Investigate the sector"], _pos, "ASSIGNED", 1, true, true,""] remoteExec ["BIS_fnc_setTask" ,_x , true];
   } foreach units GROUP_PLAYERS;
   [LEADER_PLAYERS,"Thank you, we'll investigate this place.",true] call fnc_Talk;
   [LEADER_PLAYERS,"HQ, we've caught informations about the possible enemy commander last position.",false] call fnc_Talk;
   [HQ,"Copy ! We'll send you extra credits in order to accomplish your task. Good luck ! Out.",false] call fnc_Talk;
-  [GROUP_PLAYERS,250,false,LEADER_PLAYERS] remoteExec ["fnc_updatescore", LEADER_PLAYERS];
-}] remoteExec["spawn"];
+ 
+}] remoteExec["spawn", GROUP_PLAYERS, false];
+
+ [GROUP_PLAYERS,250,false,LEADER_PLAYERS] call fnc_updatescore;
 
 true;

@@ -17,7 +17,6 @@ fnc_getValueChkBx = {
 //Saving and close method;
 fnc_SaveAndCloseConfigDialog = {
 
-
 	//Time of the day;
 	TIME_OF_DAYS = 2100 call fnc_getValue;
 
@@ -33,58 +32,88 @@ fnc_SaveAndCloseConfigDialog = {
 	//Respawn
 	RESPAWN_ENABLED =  2105 call fnc_getValueChkBx;
 
-	
-	//hint str [TIME_OF_DAYS, WEATHER, POPULATION_INTENSITY,RESPAWN_ENABLED,REVIVE_ENABLED];
-
-
 	//kill camera
 	closeDialog 0;
 
 	[] spawn {
 		titleCut ["", "BLACK OUT", 2];
 		sleep 2;
+		{
+			_x enableAI "MOVE";
+			_x enableAI "FSM";
+			_x call BIS_fnc_ambientAnim__terminate;
+		}
+		foreach units group player;
 		UNIT_SHOWCASE_CAMERA cameraeffect ["terminate", "back"];
 		camDestroy UNIT_SHOWCASE_CAMERA;
-		deleteVehicle UNIT_SHOWCASE;
-		DCW_START = true;
+		//deleteVehicle UNIT_SHOWCASE;
+		DCW_STARTED = true;
+		publicVariable "DCW_STARTED";
 		titleCut ["", "BLACK FADED", 999];
 		sleep 2;
 		titleCut ["", "BLACK IN", 7];
+		setAccTime 1;
 
 	};
 };
 
 //Saving and close method;
 fnc_SwitchUnit = {
+	params["_ctrl","_val"];
+	_factionName =  lbData [_ctrl,_val];
+	titleCut ["", "BLACK OUT", 1];
+	sleep 1;
+
 	//Weather
-	UNIT_SHOWCASE execVM format["DCW\loadout\loadout-%1.sqf",_this];
-	player execVM format["DCW\loadout\loadout-%1.sqf",_this];
+	unitClasses = [_factionName] call fnc_FactionGetUnits;
+	if (count unitClasses > 0) then {
+		_grp = createGroup east;
+		{
+			_rndClass = unitClasses call BIS_fnc_selectRandom;
+			_phantomUnit = _grp createUnit [_rndClass, [0,0,0], [], 0, "FORM"];
+			_x setUnitLoadout(getUnitLoadout(_phantomUnit));
+			deleteVehicle _phantomUnit;
+		} foreach units (group player);
+		deleteGroup _grp;
+	};
+	titleCut ["", "BLACK FADED", 1];
+	sleep 1;
+
+	titleCut ["", "BLACK IN", 3];
+
+	//UNIT_SHOWCASE execVM format["DCW\loadout\loadout-%1.sqf",_this];
+	//player execVM format["DCW\loadout\loadout-%1.sqf",_this];
 
 	sleep .3;
 
 	disableSerialization;
 	private _display = findDisplay 5001;
 
+	/*
 	private _ctrl =  _display displayCtrl 2200;
 	private _image = getText (configfile >> "CfgWeapons" >> primaryWeapon player >> "picture");
 	_ctrl ctrlSetText _image;
 
-		
 	private _ctrl =  _display displayCtrl 2201;
 	private _image = getText (configfile >> "CfgWeapons" >> secondaryWeapon player >> "picture");
 	_ctrl ctrlSetText _image;
 		
 	private _ctrl =  _display displayCtrl 2202;
 	private _image = getText (configfile >> "CfgWeapons" >> handgunWeapon player >> "picture");
-	_ctrl ctrlSetText _image;
+	_ctrl ctrlSetText _image;*/
 
 };
 
 titleCut ["", "BLACK FADED", 999];
 
-UNIT_SHOWCASE =  (createGroup EAST) createUnit ["O_Soldier_AAT_F",[7896.11,11684.8,0.0523224], [], 0, "NONE"]; 
-UNIT_SHOWCASE disableAI "MOVE";
-UNIT_SHOWCASE disableAI "FSM";
+_anims = ["STAND","STAND1","STAND2"];
+UNIT_SHOWCASE = player; 
+{
+	_x disableAI "MOVE";
+	_x disableAI "FSM";
+	[_x,_anims call BIS_fnc_selectRandom,"FULL"] call BIS_fnc_ambientAnim;
+}
+foreach units group player;
 
 UNIT_SHOWCASE_CAMERA = "camera" camcreate (getPos UNIT_SHOWCASE);
 UNIT_SHOWCASE_CAMERA cameraeffect ["internal", "back"];
@@ -99,12 +128,11 @@ showCinemaBorder false;
 private _ok = createDialog "PARAMETERS_DIALOG"; 
 private _display = findDisplay 5001;
 
-1 call fnc_SwitchUnit; 
-
 
 noesckey = _display displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
 //Time
+
 private _ctrlListTime = _display displayCtrl 2100;
 _ctrlListTime lbAdd "Night";
 _ctrlListTime lbSetValue  [0,23];
@@ -142,8 +170,23 @@ _ctrlListPopulation lbSetValue  [2,35];
 _ctrlListPopulation lbSetCurSel  1;
 
 //Population
+_factions = [] call fnc_factionlist;
 private _ctrlLoadout = _display displayCtrl 2103;
-_ctrlLoadout lbAdd "Grigor";
+{
+	_ctrlLoadout lbAdd (_x select 0);
+	_ctrlLoadout lbSetValue [_forEachIndex ,_forEachIndex];
+	_ctrlLoadout lbSetData [_forEachIndex, _x select 1];
+	_ctrlLoadout lbSetPicture [_forEachIndex,_x select 2];
+}foreach _factions;
+_ctrlLoadout lbSetCurSel 0;
+
+_ctrlLoadout ctrlAddEventHandler ["LBSelChanged","[ctrlIDC(_this select 0),_this select 1] spawn fnc_SwitchUnit"];
+
+
+// Default faction
+[2103, 1] call fnc_SwitchUnit; 
+
+/*_ctrlLoadout lbAdd "Grigor";
 _ctrlLoadout lbSetValue  [0,1];
 _ctrlLoadout lbAdd "Vladimir";
 _ctrlLoadout lbSetValue  [1,2];
@@ -153,8 +196,7 @@ _ctrlLoadout lbAdd "Ivanov";
 _ctrlLoadout lbSetValue  [3,4];
 _ctrlLoadout lbAdd "Aleksei";
 _ctrlLoadout lbSetValue  [4,5];
-_ctrlLoadout lbSetCurSel  0;
-_ctrlLoadout ctrlAddEventHandler ["LBSelChanged","((_this select 1) + 1) spawn fnc_SwitchUnit"];
+_ctrlLoadout lbSetCurSel  0;*/
 
 
 //Data

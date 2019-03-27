@@ -110,7 +110,7 @@ class PARAMETERS_DIALOG
         class RscText_1005: RscText
         {
             idc = 1005;
-            text = "Character";
+            text = "Faction";
             x = -10 * GUI_GRID_W + GUI_GRID_X;
             y = 13 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -119,12 +119,12 @@ class PARAMETERS_DIALOG
        class RscCombo_2103: RscCombo
         {
           idc = 2103;
-          text = "Character";
+          text = "Faction";
           x = -10 * GUI_GRID_W + GUI_GRID_X;
           y = 14 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Character";
+          tooltip = "Faction";
         };
         class RscText_1006: RscText
         {
@@ -164,7 +164,7 @@ class PARAMETERS_DIALOG
         };
 
         
-        class RscPicture_2200: RscPicture
+      /*  class RscPicture_2200: RscPicture
         {
           idc = 2200;
           text = "#(argb,8,8,3)color(0,0,0,0.2)";
@@ -192,7 +192,7 @@ class PARAMETERS_DIALOG
           y = 7 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 5 * GUI_GRID_H;
-        };
+        }; */
 
         class ICE_BUTTON_1000: RscButton
         {

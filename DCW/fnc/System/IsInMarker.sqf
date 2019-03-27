@@ -3,6 +3,7 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License : GNU (GPL)
+ * Detect if an element is in a rounded or rectangular marker
  */
 
  private ["_p","_m", "_px", "_py", "_mpx", "_mpy", "_msx", "_msy", "_rpx", "_rpy", "_xmin", "_xmax", "_ymin", "_ymax", "_ma", "_res", "_ret"];

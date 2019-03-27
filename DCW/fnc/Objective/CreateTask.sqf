@@ -28,8 +28,8 @@ switch (_type) do {
      };
      case "wreck": { 
         _taskId = "WreckInvestigation";
-        _desc = "Investigate the crashsite and neutralize the wreck with an explosive charge .";
-        _title = "Chopper crash site";
+        _desc = "Investigate the crashsite and neutralize the wreck with an explosive charge. This will give you extra credits";
+        _title = "Chopper crash site (optional)";
         _message = "There is a chopper crash site in this sector.";
         _messageSuccess = "HQ, we cleaned up the crash site.";
         _bonus = 400;

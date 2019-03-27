@@ -10,12 +10,16 @@
 //Default white list marker;
 titleCut ["", "BLACK FADED", 999];
 
-
 // CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
+fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
+fnc_FactionList = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionList.sqf";
+fnc_dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
 
-// INTRO
-fnc_intro = compileFinal preprocessFileLineNumbers "DCW\intro.sqf";
+// INTRO 
+fnc_CamFollow = compileFinal preprocessFileLineNumbers  "DCW\intro\CamFollow.sqf";
+
+
 
 // SYSTEM
 fnc_GetClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClusters.sqf";
@@ -68,6 +72,7 @@ fnc_Hostage = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\hostage
 fnc_Success = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Success.sqf";
 fnc_failed = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Failed.sqf";
 fnc_createtask =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\createtask.sqf";
+fnc_foundCommander =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\foundCommander.sqf";
 fnc_MainObjectiveIntel =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\MainObjectiveIntel.sqf";
 
 //CUSTOM BEHAVIOR
@@ -109,9 +114,13 @@ compos = [compo_camp1,compo_camp2,compo_camp3,compo_camp4,compo_camp5];
 compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest.sqf");
 
 //Switch here the config you need.
-[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-rhs-kunduz.sqf"); 
+[] call (compileFinal preprocessFileLineNumbers format["DCW\config\config-%1.sqf",_this select 0]); 
+
+// INTRO
+fnc_intro = compileFinal preprocessFileLineNumbers format["DCW\intro\intro-%1.sqf",_this select 0];
+
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
-//[] execVM "DCW\config\config-dialog.sqf";
+
 
 
 [] execVM "DCW\server.sqf";
