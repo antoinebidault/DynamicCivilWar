@@ -24,7 +24,7 @@ fnc_SaveAndCloseConfigDialog = {
 	WEATHER = (2101 call fnc_getValue) / 100;
 
 	//Time_selected;
-	POPULATION_INTENSITY = (2102 call fnc_getValue) / 100;
+	POPULATION_INTENSITY = (2102 call fnc_getValue);
 
 	//Revive
 	REVIVE_ENABLED =  2104 call fnc_getValueChkBx;
@@ -50,9 +50,6 @@ fnc_SaveAndCloseConfigDialog = {
 		DCW_STARTED = true;
 		publicVariable "DCW_STARTED";
 		titleCut ["", "BLACK FADED", 999];
-		sleep 2;
-		titleCut ["", "BLACK IN", 7];
-		setAccTime 1;
 
 	};
 };
@@ -162,11 +159,11 @@ _ctrlListWeather lbSetCurSel  1;
 //Population
 private _ctrlListPopulation = _display displayCtrl 2102;
 _ctrlListPopulation lbAdd "High";
-_ctrlListPopulation lbSetValue  [0,75];
-_ctrlListPopulation lbAdd  "Middle";
-_ctrlListPopulation lbSetValue  [1,50];
+_ctrlListPopulation lbSetValue  [0,1.25];
+_ctrlListPopulation lbAdd  "Standard";
+_ctrlListPopulation lbSetValue  [1,1];
 _ctrlListPopulation lbAdd "Low";
-_ctrlListPopulation lbSetValue  [2,35];
+_ctrlListPopulation lbSetValue  [2,.7];
 _ctrlListPopulation lbSetCurSel  1;
 
 //Population
@@ -181,23 +178,7 @@ private _ctrlLoadout = _display displayCtrl 2103;
 _ctrlLoadout lbSetCurSel 0;
 
 _ctrlLoadout ctrlAddEventHandler ["LBSelChanged","[ctrlIDC(_this select 0),_this select 1] spawn fnc_SwitchUnit"];
-
-
-// Default faction
-[2103, 1] call fnc_SwitchUnit; 
-
-/*_ctrlLoadout lbAdd "Grigor";
-_ctrlLoadout lbSetValue  [0,1];
-_ctrlLoadout lbAdd "Vladimir";
-_ctrlLoadout lbSetValue  [1,2];
-_ctrlLoadout lbAdd "Serguei";
-_ctrlLoadout lbSetValue  [2,3];
-_ctrlLoadout lbAdd "Ivanov";
-_ctrlLoadout lbSetValue  [3,4];
-_ctrlLoadout lbAdd "Aleksei";
-_ctrlLoadout lbSetValue  [4,5];
-_ctrlLoadout lbSetCurSel  0;*/
-
+_ctrlLoadout ctrlEnable false;
 
 //Data
 private _ctrlReviveOn = _display displayCtrl 2104;

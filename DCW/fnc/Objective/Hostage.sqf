@@ -10,14 +10,12 @@ private ["_pos","_radius","_nb","_unit","_building","_buildings","_unitName","_p
 _pos = _this select 0;
 _radius = _this select 1;
 _nb = _this select 2;
+_buildings =_this select 3;
 
 private _units = [];
 private _boxeClasses = ["Box_Syndicate_Wps_F","Box_Syndicate_Ammo_F","Box_Syndicate_WpsLaunch_F"];
 
 if (_nb == 0)exitWith{_units;};
-
-
-private	_buildings = [_pos, _radius] call fnc_findBuildings;
 
 
 for "_j" from 1 to _nb do {

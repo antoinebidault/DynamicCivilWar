@@ -12,7 +12,7 @@ class Params
 		title = "Debug";
 		texts[] = {"Yes","No"};
 		values[] = {1,0};
-		default = 1;
+		default = 0;
 		isGlobal = 1; 
 	};
 	class Respawn

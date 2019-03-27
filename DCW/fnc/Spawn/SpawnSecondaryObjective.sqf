@@ -9,7 +9,7 @@
 
 if (!isServer) exitWith{false};
 
-sleep 40;
+sleep 80;
 
 private _compos = [compo_commander1,compo_commander2];
 private _newPos = [];

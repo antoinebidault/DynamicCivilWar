@@ -39,7 +39,9 @@ if (ENABLE_DIALOG) then {
 } else {
 	DCW_STARTED = true;
 };
-[] call fnc_intro;
+if (!DEBUG) then {
+	[] call fnc_intro;
+};
 
 sleep 3;
 titleCut ["", "BLACK FADED", 9999];
@@ -58,10 +60,13 @@ titleCut ["", "BLACK IN", 5];
 // init user respawn loop
 [getMarkerPos "marker_base", player] spawn fnc_respawn; //Respawn loop
 
-sleep 7;
+sleep 30;
 
 // Hint
 "Welcome to dynamic civil war" hintC "Your main objective is to seek & neutralize an enemy commander hidden on the map. He will be always moving on the map, hiding in forestry area or compounds. You have two way to get info about his location : interrogating civil chief in neutralizated compound or interrogating one of his officer wandering on the map in trucks...";
 
+sleep 1;
+
+if (!isMultiplayer) then{saveGame;};
 // Initial score display
 [] call fnc_displayscore;

@@ -2,9 +2,7 @@ if (didJIP) exitWith{ false };
 
 playMusic "seal";
 
-if (daytime > 8 && daytime < 20) then {
-	["Mediterranean",3,true] call bis_fnc_setppeffecttemplate;
-};
+["Mediterranean",3,true] call bis_fnc_setppeffecttemplate;
 
 sleep 3;
 titleCut ["", "BLACK IN",14];
@@ -17,19 +15,18 @@ _cam camCommit 0;
 _cam camSetPos [4599.38,2317.12,1.3];
 _cam camSetFov .9;
 
-_cam camCommit 20;
+_cam camCommit 21;
 
 [] spawn {
 	sleep 3;
-	nul = ["Bidass presents",.3,.7,7] spawn BIS_fnc_dynamicText;
-	sleep 13;
-	nul = ["An arma III scenario",.3,.2,7] spawn BIS_fnc_dynamicText;
-	sleep 16;
-	nul = ["Dynamic Civil War",-1,-1,4,1,0] spawn BIS_fnc_dynamicText;
+	nul = ["Bidass presents",.3,.7,6] spawn BIS_fnc_dynamicText;
+	sleep 11;
+	nul = ["An arma III scenario",.3,.2,6] spawn BIS_fnc_dynamicText;
+	sleep 14;
+	nul = ["Dynamic Civil War",-1,-1,5,1,0] spawn BIS_fnc_dynamicText;
 };
 
-sleep 24;
-
+sleep 21;
 
 private _sl = missionNamespace getVariable ["cut_sl",objNull];
 private _pos = _sl modelToWorld [0,-15,6];
@@ -54,7 +51,7 @@ _cam camCommit 0;
 
 sleep 8;
 
-_pos = _sl modelToWorld [6,3,2.6];
+_pos = _sl modelToWorld [-6,-5,2.6];
 _target = _sl modelToWorld [0,0,2];
 
 _cam camSetPos _pos;
@@ -62,10 +59,10 @@ _cam camSetTarget _target;
 _cam camCommit 0;
 
 
-_pos = _sl modelToWorld [6,3,5.6];
+_pos = _sl modelToWorld [-6,-5,5.6];
 _cam camSetPos _pos;
 _cam camCommit 16;
-sleep 16;
+sleep 13;
 
 
 titleCut ["", "BLACK OUT", 3];
@@ -76,9 +73,8 @@ camDestroy _cam;
 showCinemaBorder false;
 
 _cam cameraeffect ["terminate", "back"];
-
+["default",5,true] call bis_fnc_setppeffecttemplate;
 player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 
-
 /*
 private _chopper = vehicle player;
 

@@ -163,7 +163,7 @@ setDate [2018, 6, 25, TIME_OF_DAYS, 0];
 //OVERCAST
 0 setOvercast WEATHER;
 0 setRain (if (WEATHER > .7) then {random 1}else{0});
-setWind [10*WEATHER, 10*WEATHER, true];
+//setWind [10*WEATHER, 10*WEATHER, true];
 0 setFog [if (WEATHER > .8) then {.15}else{0},if (WEATHER > .8) then {.04}else{0}, 60];
 0 setGusts (WEATHER - .3);
 0 setWaves WEATHER;
@@ -219,7 +219,7 @@ private _typeObj = "";
 		};
 
 		//Nb units to spawn per block
-		_popbase = 1 MAX (MAX_POPULATION MIN (ceil((_nbBuildings)*(RATIO_POPULATION)  + (round random 1))));
+		_popbase = 1 MAX (MAX_POPULATION MIN (ceil( (POPULATION_INTENSITY * _nbBuildings* RATIO_POPULATION)  + (round random 1))));
 		_nbEnemies = 0;
 		_nbCivilian = 0;
 		for "_x" from 1 to _popbase  do
@@ -256,7 +256,7 @@ private _typeObj = "";
 			_marker setMarkerType "mil_dot";
 			_marker setMarkerAlpha 0.3;
 			_marker setMarkerColor "ColorRed";
-			_marker setMarkerText  format["civ:%1/en:%2/Car:%3/bld:%4",_nbCivilian,_nbEnemies,_nbCars,_nbBuildings];
+			_marker setMarkerText  format["civ:%1/en:%2/Car:%3/bld:%4/ca:%5",_nbCivilian,_nbEnemies,_nbCars,_nbBuildings,_nbCaches];
 		};
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
@@ -358,9 +358,9 @@ while { true } do {
 						//Outposts
 						_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
 						//Cache
-						_units = _units + ([_pos,_radius,(_peopleToSpawn select 5)] call fnc_cache);
+						_units = _units + ([_pos,_radius,(_peopleToSpawn select 5),_buildings] call fnc_cache);
 						//Hostages
-						_units = _units + ([_pos,_radius,(_peopleToSpawn select 6)] call fnc_hostage);
+						_units = _units + ([_pos,_radius,(_peopleToSpawn select 6),_buildings] call fnc_hostage);
 						//Meeting points
 						_units = _units + ([_meetingPointPosition] call fnc_SpawnMeetingPoint);
 						//Mortars

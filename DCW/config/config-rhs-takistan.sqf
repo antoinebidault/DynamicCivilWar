@@ -5,7 +5,6 @@ SHOW_SECTOR = true; //Make every sector colored on the map
 SIDE_CURRENT_PLAYER = side(allPlayers select 0); //Side player
 RESPAWN_ENABLED =  true; 
 CIVIL_REPUTATION = 50;
-ENABLE_DIALOG = true;
 
 //SPAWNING CONFIG
 SIZE_BLOCK = 500; // Size of blocks

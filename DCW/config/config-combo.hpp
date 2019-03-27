@@ -110,7 +110,7 @@ class PARAMETERS_DIALOG
         class RscText_1005: RscText
         {
             idc = 1005;
-            text = "Faction";
+            text = "Faction (WIP)";
             x = -10 * GUI_GRID_W + GUI_GRID_X;
             y = 13 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -119,7 +119,7 @@ class PARAMETERS_DIALOG
        class RscCombo_2103: RscCombo
         {
           idc = 2103;
-          text = "Faction";
+          text = "Faction (WIP)";
           x = -10 * GUI_GRID_W + GUI_GRID_X;
           y = 14 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;

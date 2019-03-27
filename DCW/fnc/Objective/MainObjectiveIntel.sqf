@@ -56,6 +56,13 @@ _taskId = "maintask";
  
 }] remoteExec["spawn", GROUP_PLAYERS, false];
 
+
  [GROUP_PLAYERS,250,false,LEADER_PLAYERS] call fnc_updatescore;
+
+if (!isMultiplayer) then{
+	saveGame;
+};
+
+playMusic "LeadTrack04a_F";
 
 true;
