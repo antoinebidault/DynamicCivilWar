@@ -41,7 +41,7 @@ fnc_SaveAndCloseConfigDialog = {
 		{
 			_x enableAI "MOVE";
 			_x enableAI "FSM";
-			_x call BIS_fnc_ambientAnim__terminate;
+			_x switchMove "";
 		}
 		foreach units group player;
 		UNIT_SHOWCASE_CAMERA cameraeffect ["terminate", "back"];
@@ -103,12 +103,14 @@ fnc_SwitchUnit = {
 
 titleCut ["", "BLACK FADED", 999];
 
-_anims = ["STAND","STAND1","STAND2"];
+_anims = ["Acts_listeningToRadio_Loop","Acts_millerCamp_A","Acts_millerCamp_B","Acts_SupportTeam_Front_KneelLoop","Acts_millerCamp_C","Acts_ShieldFromSun_loop","Acts_SupportTeam_Back_KneelLoop"];
 UNIT_SHOWCASE = player; 
 {
 	_x disableAI "MOVE";
 	_x disableAI "FSM";
-	[_x,_anims call BIS_fnc_selectRandom,"FULL"] call BIS_fnc_ambientAnim;
+	_anim = _anims call BIS_fnc_selectRandom;
+	_anims = _anims - [_anim];
+	_x switchMove _anim;
 }
 foreach units group player;
 

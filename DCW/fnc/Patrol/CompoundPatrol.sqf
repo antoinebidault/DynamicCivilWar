@@ -93,11 +93,10 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
 
                 //Sit or not
                 if (round(random 1)==1)then{
-                    _unit stop true;
                     _unit action ["sitdown",_unit];
                     sleep 40 + random 25;
                     _unit action ["sitdown",_unit];
-                    _unit stop false;
+                    
                 }else{
                     sleep 20 + random 25;
                 };
@@ -107,7 +106,6 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
                     _unit stop true;
                     _unit playActionNow "medic";
                     sleep 4;
-                    _unit stop false;
                 };
 
             }else{
@@ -120,6 +118,12 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
             if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
         };
     };
+};
+
+// Go out if you detected enemy;
+if (random 100 > 50) then {
+     _newPos = [getPos _unit ,0, 40, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+    _unit move  _newPos;
 };
 
 _unit forceWalk false;

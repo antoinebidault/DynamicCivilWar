@@ -9,8 +9,8 @@ CIVIL_REPUTATION = 50;
 //SPAWNING CONFIG
 SIZE_BLOCK = 500; // Size of blocks
 MAX_CLUSTER_SIZE = 200;
-SPAWN_DISTANCE = 650; //Distance uniuts are spawned
-MIN_SPAWN_DISTANCE =  350; //Units can't spawn before this distance
+SPAWN_DISTANCE = 550; //Distance uniuts are spawned
+MIN_SPAWN_DISTANCE =  250; //Units can't spawn before this distance
 RADIO_CHAT_LIST=["rhs_usa_land_rc_1","rhs_usa_land_rc_2","rhs_usa_land_rc_3","rhs_usa_land_rc_4","rhs_usa_land_rc_5","rhs_usa_land_rc_6","rhs_usa_land_rc_7","rhs_usa_land_rc_7"];
 
 // SUPPORT CLASSES
@@ -45,11 +45,11 @@ HUMANITAR_LIST_UNITS = ["C_IDAP_Man_AidWorker_06_F","C_IDAP_Man_AidWorker_05_F",
 MAX_RANDOM_CIVILIAN = 5;
 MAX_SHEEP_HERD = 2; //Number of sheep herd
 RATIO_POPULATION =  1; //Number of unit per building. 0.4 default
-MAX_POPULATION = 14;
+MAX_POPULATION = 30;
 RATIO_CARS =  .1; //Number of empty cars spawned in a city by buidling
 PERCENTAGE_FRIENDLIES = 25; //Percentage friendly spawn in patrol
-PERCENTAGE_CIVILIAN = 50; //Percentage civilian in a block
-PERCENTAGE_ENEMIES = 50; //Percentage enemies
+PERCENTAGE_CIVILIAN = 40; //Percentage civilian in a block
+PERCENTAGE_ENEMIES = 60; //Percentage enemies
 PERCENTAGE_INSURGENTS = 50; //Percentage of potential insurgents in the civilians. If the civilian are attacked they might join the east or west wether the shot are coming from (And with probabilities rules...)
 PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joining the west.
 PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/100);

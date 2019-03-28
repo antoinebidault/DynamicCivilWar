@@ -20,13 +20,11 @@ if !(local _unit) exitWith {false};
 if (_damage == 0) exitWith {false};
 
 if ( _damage > .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",false])) then {
-
-	_unconscious = true;
-	_unit setUnconscious _unconscious;
-	_unit setVariable ["unit_injured", _unconscious];
+	_unit setUnconscious true;
+	_unit setCaptive true;
+	_unit setVariable ["unit_injured", true];
 	_unit setDamage .9;
 	_damage = .9;
-	
 
 	_deathsound = format ["A3\sounds_f\characters\human-sfx\P0%1\Hit_Max_%2.wss", selectRandom [4,5,6,7,8,9], selectRandom [1,2,3,4,5]];
 	playSound3D [_deathsound, _unit, false, getPosASL _unit, 1.5, 1, 150];	
