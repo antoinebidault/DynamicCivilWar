@@ -32,6 +32,9 @@ fnc_SaveAndCloseConfigDialog = {
 	//Respawn
 	RESPAWN_ENABLED =  2105 call fnc_getValueChkBx;
 
+	// Ammobox restricted
+	RESTRICTED_AMMOBOX =  2106 call fnc_getValueChkBx;
+
 	//kill camera
 	closeDialog 0;
 
@@ -48,7 +51,6 @@ fnc_SaveAndCloseConfigDialog = {
 		camDestroy UNIT_SHOWCASE_CAMERA;
 		//deleteVehicle UNIT_SHOWCASE;
 		DCW_STARTED = true;
-		publicVariable "DCW_STARTED";
 		titleCut ["", "BLACK FADED", 999];
 
 	};
@@ -103,7 +105,7 @@ fnc_SwitchUnit = {
 
 titleCut ["", "BLACK FADED", 999];
 
-_anims = ["Acts_listeningToRadio_Loop","Acts_millerCamp_A","Acts_millerCamp_B","Acts_SupportTeam_Front_KneelLoop","Acts_millerCamp_C","Acts_ShieldFromSun_loop","Acts_SupportTeam_Back_KneelLoop"];
+_anims = ["Acts_listeningToRadio_Loop","Acts_millerCamp_A","Acts_millerCamp_C","Acts_SupportTeam_Front_KneelLoop","Acts_ShieldFromSun_loop","Acts_SupportTeam_Back_KneelLoop"];
 UNIT_SHOWCASE = player; 
 {
 	_x disableAI "MOVE";
@@ -122,11 +124,9 @@ UNIT_SHOWCASE_CAMERA camSetTarget (UNIT_SHOWCASE modelToWorld[.3,0,1.3]);
 UNIT_SHOWCASE_CAMERA camCommit 0;
 sleep 2;
 titleCut ["", "BLACK IN", 7];
-showCinemaBorder false;
  
 private _ok = createDialog "PARAMETERS_DIALOG"; 
 private _display = findDisplay 5001;
-
 
 noesckey = _display displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
@@ -189,4 +189,8 @@ _ctrlReviveOn cbSetChecked true;
 //Respawn
 private _ctrlRespawnOn = _display displayCtrl 2105;
 _ctrlRespawnOn cbSetChecked true;
+
+//Respawn
+private _ctrlAmmoOn = _display displayCtrl 2106;
+_ctrlAmmoOn cbSetChecked true;
 

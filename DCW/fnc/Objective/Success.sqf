@@ -19,7 +19,7 @@ _task = _objWithTask getVariable["DCW_Task",""];
 
 // Silently create a task if not exists
 if (_task == "") then {
-    [_objWithTask,LEADER_PLAYERS,false] call fnc_CreateTask;
+    [_objWithTask,(leader GROUP_PLAYERS),false] call fnc_CreateTask;
     _task = _objWithTask getVariable["DCW_Task",""];
 };
 
@@ -29,7 +29,7 @@ if (_task == "") then {
 
     _taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
     [_task, "SUCCEEDED",true] call BIS_fnc_taskSetState;
-    [LEADER_PLAYERS, format["Task done : %1",_taskName],true] call fnc_Talk;
+    [(leader GROUP_PLAYERS), format["Task done : %1",_taskName],true] call fnc_Talk;
     _objWithTask setVariable["DCW_Task","", true];
     _objWithTask getVariable["DCW_MarkerIntel",""] setMarkerColor "ColorGreen";
 

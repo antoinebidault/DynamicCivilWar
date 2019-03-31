@@ -115,7 +115,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 	_trig setTriggerTimeout[1,1,1,true];
     _trig setTriggerStatements[
         "this",
-        " [] call fnc_foundCommander;",
+        " [this] call fnc_foundCommander;",
         "deleteVehicle thisTrigger;"
     ];
 
@@ -126,7 +126,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 
     //Blacklist du joueur
     deleteMarker "mkr-cmdr-remove";
-    _mkrToAvoid = createMarker ["mkr-cmdr-remove", position LEADER_PLAYERS];
+    _mkrToAvoid = createMarker ["mkr-cmdr-remove", position (leader GROUP_PLAYERS)];
     _mkrToAvoid setMarkerAlpha 0;
     _mkrToAvoid setMarkerSize [500,500];
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];

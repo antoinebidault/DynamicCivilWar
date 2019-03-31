@@ -7,9 +7,6 @@
  */
 
  
-//Default white list marker;
-titleCut ["", "BLACK FADED", 999];
-
 // CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
@@ -18,8 +15,6 @@ fnc_dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.s
 
 // INTRO 
 fnc_CamFollow = compileFinal preprocessFileLineNumbers  "DCW\intro\CamFollow.sqf";
-
-
 
 // SYSTEM
 fnc_GetClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClusters.sqf";
@@ -36,6 +31,7 @@ fnc_Undercover = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Underco
 
 //SPAWN
 fnc_Respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
+fnc_respawndialog= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\RespawnDialog.sqf";
 fnc_SpawnUnits= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnUnits.sqf";
 fnc_SpawnAsEnemy = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnAsEnemy.sqf";
 fnc_SpawnFriendly = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnFriendly.sqf";
@@ -53,6 +49,7 @@ fnc_SpawnConvoy = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnCo
 fnc_SpawnPosition = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnPosition.sqf";
 fnc_SpawnCrashSite = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnCrashSite.sqf";
 fnc_SpawnIED = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnIED.sqf";
+fnc_spawncrate = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnCrate.sqf";
 
 //PATROL
 fnc_Patrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\CompoundPatrol.sqf";
@@ -86,6 +83,10 @@ fnc_PrepareAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Pr
 fnc_AddCivilianAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\addCivilianAction.sqf";
 fnc_shout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Shout.sqf";
 fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\BadBuyLoadout.sqf";
+fnc_Rest =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\Rest.sqf";
+fnc_Camp =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\Camp.sqf";
+
+
 
 //HANDLERS
 fnc_HandleFiredNear = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleFiredNear.sqf";
@@ -99,7 +100,6 @@ fnc_updatescore = compile preprocessFileLineNumbers  "DCW\supportui\fnc\UpdateSc
 fnc_afford = compile preprocessFileLineNumbers  "DCW\supportui\fnc\Afford.sqf";
 fnc_supportui = compile preprocessFileLineNumbers  "DCW\supportui\fnc\SupportUI.sqf";
 fnc_displayscore = compile preprocessFileLineNumbers  "DCW\supportui\fnc\DisplayScore.sqf";
-fnc_fillcrate = compile preprocessFileLineNumbers  "DCW\supportui\fnc\FillCrate.sqf";
 fnc_getCrateItems = compile preprocessFileLineNumbers  "DCW\supportui\fnc\GetCrateItems.sqf";
 
 //composition
@@ -112,6 +112,7 @@ compo_commander1 =  call (compileFinal preprocessFileLineNumbers "DCW\compositio
 compo_commander2 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\commander2.sqf");
 compos = [compo_camp1,compo_camp2,compo_camp3,compo_camp4,compo_camp5];
 compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest.sqf");
+compo_camp =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp.sqf");
 
 //Switch here the config you need.
 [] call (compileFinal preprocessFileLineNumbers format["DCW\config\config-%1.sqf",_this select 0]); 
@@ -120,8 +121,6 @@ compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest
 fnc_intro = compileFinal preprocessFileLineNumbers format["DCW\intro\intro-%1.sqf",_this select 0];
 
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
-
-
 
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";

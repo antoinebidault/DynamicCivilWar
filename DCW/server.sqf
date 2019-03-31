@@ -6,9 +6,6 @@
  */
 
 // This portion of code is only executed by the server
-if (!isServer) exitWith{false;};
-
- 
 DCW_STARTED = false;
 publicVariable "DCW_STARTED";
 
@@ -16,11 +13,7 @@ publicVariable "DCW_STARTED";
 GROUP_PLAYERS = group (allPlayers select 0); 
 publicVariable "GROUP_PLAYERS";
 
-LEADER_PLAYERS = leader GROUP_PLAYERS; 
-publicVariable "LEADER_PLAYERS";
-
-CRATE_ITEMS = LEADER_PLAYERS call fnc_getCrateItems;
-publicVariable "CRATE_ITEMS";
+if (!isServer) exitWith{};
 
 CHASER_TRIGGERED = false;
 publicVariable "CHASER_TRIGGERED";
@@ -31,6 +24,11 @@ publicVariable "CHASER_VIEWED";
 DCW_SCORE = 150;
 publicVariable "DCW_SCORE";
 
+CAMP_RESPAWN_POSITION = [];
+publicVariable "CAMP_RESPAWN_POSITION";
+
+INITIAL_RESPAWN_POSITION = getPos (leader GROUP_PLAYERS);
+publicVariable "CAMP_RESPAWN_POSITION";
 
 // Create a fake HQ unit
 "B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
@@ -58,7 +56,7 @@ ESCORT = []; // List of escorts guys with the commandant
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 
 // exclude the player marker
-private _mp = createMarker ["playerMarker", getPos LEADER_PLAYERS];
+private _mp = createMarker ["playerMarker", getPos (leader GROUP_PLAYERS)];
 _mp setMarkerShape "ELLIPSE";
 _mp setMarkerAlpha 0;
 _mp setMarkerSize [400,400];
@@ -116,7 +114,7 @@ COMPOUND_SECURED = {
 
 	//Misa à jour de l'amitié
 	{  if (side _x == CIV_SIDE && _x getVariable["DCW_Friendliness",-1] != -1) then { [_x,6] call fnc_UpdateRep;}; }foreach _units;
-	[GROUP_PLAYERS,_points,false,LEADER_PLAYERS] call fnc_updateScore;
+	[GROUP_PLAYERS,_points,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
 };
 
 //On success
@@ -129,7 +127,7 @@ OBJECTIVE_ACCOMPLISHED = {
 
 //If civilian is healed by player
 CIVIL_HEALED = { 
-	[GROUP_PLAYERS,30,false,LEADER_PLAYERS] call fnc_updateScore;
+	[GROUP_PLAYERS,30,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
  };
 
 //If civil is captured
@@ -139,7 +137,7 @@ CIVIL_HEALED = {
 
 // If player is killed
  PLAYER_KIA = { 
-	[GROUP_PLAYERS,-20,false,LEADER_PLAYERS] call fnc_updateScore;
+	[GROUP_PLAYERS,-20,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
  };
 
 //If player did not respect a civilian
@@ -156,6 +154,11 @@ ENEMY_SEARCHED = {
 
 
 WAITUNTIL {DCW_STARTED;};
+
+_ammobox = missionNamespace getVariable ["ammoBox",objNull];
+if (!isNull _ammobox) then {
+	_ammobox call fnc_spawncrate;
+};
 
 //TIME
 setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
@@ -448,8 +451,10 @@ while { true } do {
 							if (DEBUG) then  {
 								hint "Alarm !";
 							};
+							
 							playMusic (["LeadTrack04a_F","LeadTrack04_F"] call BIS_fnc_selectRandom);
 							CHASER_TRIGGERED = true;
+							publicVariable "CHASER_TRIGGERED";
 							//Chasers
 							if (CHASER_TRIGGERED && time > (_timerChaser + 20))then{
 								_timerChaser = time - 1;
@@ -465,6 +470,7 @@ while { true } do {
 								};
 								sleep 200;
 								CHASER_TRIGGERED = false;
+								publicVariable "CHASER_TRIGGERED";
 								[] remoteExec ["fnc_DisplayScore",_player, false];
 							};
 						};

@@ -28,6 +28,7 @@ if (_side == CIVILIAN) then {
 	};
 };
 
+
 if (_sound) then {
 	[] spawn { playSound (RADIO_CHAT_LIST call BIS_fnc_selectRandom); };
 };

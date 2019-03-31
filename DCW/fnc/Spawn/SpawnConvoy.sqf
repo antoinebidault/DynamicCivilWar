@@ -26,7 +26,7 @@ private _car = objNull;
 CONVOY = [];
 CAR_DESTROYED = 0;
 
-if (isOnRoad(_roadPos) && _roadPos distance LEADER_PLAYERS > 300 )then{
+if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
     [HQ,"There is an enemy convoy moving not far from your position. You can destroy them to earn some points.",true] call fnc_talk;
     private _roadConnectedTo = roadsConnectedTo _road;
     private _connectedRoad = _roadConnectedTo select 0;
@@ -99,7 +99,7 @@ _wpt setMarkerType "hd_ambush";
 _wpt setMarkerText "Convoy destination";
 
 //FIRST STEP => Moving to a random compound
-private _nextPos = getMarkerPos (([getPos LEADER_PLAYERS] call fnc_findNearestMarker) select 0);
+private _nextPos = getMarkerPos (([getPos (leader GROUP_PLAYERS)] call fnc_findNearestMarker) select 0);
 _nextPos = getPosASL([_nextPos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
 (leader _grp) move _nextPos;
 _wpt setMarkerPos _nextPos;

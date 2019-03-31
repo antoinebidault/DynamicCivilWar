@@ -1,5 +1,5 @@
 disabledAI= 0;
-enableDebugConsole = 1;
+enableDebugConsole[] = {"76561197974435552"};
 allowFunctionsLog = 1;
 author = "Bidass";
 briefingName = "Dynamic Civil War";
@@ -19,7 +19,6 @@ class CfgMusic
   	tracks[]=
   	{
       		seal
-
   	};
     class seal
     {
@@ -67,6 +66,7 @@ class CfgNotifications
 #include "DCW\config\mission-parameters.hpp"
 #include "DCW\supportui\Defines.hpp"
 #include "DCW\supportui\buySupports.hpp"
+#include "DCW\config\respawn.hpp"
 #include "DCW\config\config-combo.hpp"
 #include "DCW\medevac\support.hpp"
 

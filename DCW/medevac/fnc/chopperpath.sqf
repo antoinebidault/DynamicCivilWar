@@ -15,7 +15,7 @@ interventionGroup = [TRANSPORTHELO,side _unit] call fnc_SpawnHeloCrew;
 HASLANDED = false;
 
 private _startPos = position TRANSPORTHELO;
-[HQ,format["Be advised: medevac chopper in bound ! ETA : %1min",ceil((_landPos distance _startPos)/1000)*.333] ,true] remoteExec ["fnc_talk"];
+[HQ,format["Be advised: medevac chopper in bound ! ETA : %1min",ceil((_landPos distance _startPos)/1000)*.333] ,true] remoteExec ["fnc_talk", GROUP_PLAYERS, false];
 
  private _wp0 = _grp addwaypoint [_landPos, 10];
  _wp0 setwaypointtype "MOVE";
@@ -73,7 +73,7 @@ _unit removeEventHandler ["Fired", 0];
 
 deleteWaypoint [_grp, 0];
  private _pos = [getposatl SmokeShell, 2, 50, 7, 0, 20, 0] call BIS_fnc_FindSafePos;
- private _landpad = createVehicle ["Land_HelipadEmpty_F", _pos, [], 0, "NONE"];
+ private _landpad = createVehicle ["Land_HelipadEmpty_F", _pos, [], 0, "CAN_COLLIDE"];
  private _wp01 = _grp addwaypoint [_pos, 0];
 
  _wp01 setwaypointtype "UNLOAD";

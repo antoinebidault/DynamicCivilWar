@@ -13,7 +13,7 @@ CHOPPERS  = [];
 if (NUMBER_CHOPPERS == 0)exitWith{CHOPPERS};
 
 for "_xc" from 1 to NUMBER_CHOPPERS do {
-    _spawnPos = [(allPlayers call BIS_fnc_selectRandom) , 4000, 4500, 3, 0, 20, 0] call BIS_fnc_FindSafePos;
+    _spawnPos = [(allPlayers call BIS_fnc_selectRandom) , 4000, 4500, 3, 0, 20, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
     _className = (ENEMY_CHOPPERS call bis_fnc_selectrandom);
     _chopper = [[_spawnPos select 0, _spawnPos select 1, 50], 180, _className, ENEMY_SIDE] call BIS_fnc_spawnVehicle select 0;
      _chopper setPilotLight true;

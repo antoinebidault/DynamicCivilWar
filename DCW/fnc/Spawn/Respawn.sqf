@@ -5,32 +5,35 @@
  * License : GNU (GPL)
  */
 
-params["_initialPos","_player"];
+params ["_player"];
 
 if (!RESPAWN_ENABLED)then {
 	NUMBER_RESPAWN = 0;
 	REMAINING_RESPAWN = 0;
 };
-
+RESPAWN_CHOICE = "";
 REMAINING_RESPAWN = NUMBER_RESPAWN;
-RESPAWN_POSITION = _initialPos;
+
+publicVariable "INITIAL_RESPAWN_POSITION";
+
 PLAYER_ALIVE = true;
 
 //Default trait
 _player setUnitTrait ["explosiveSpecialist",true];
 
-//Support UI
-if (LEADER_PLAYERS == _player) then {
+//Rest animations
+[_player] call fnc_rest;
 
-	//Rest animations
-	[_player] execVM "DCW\fnc\Behavior\Rest.sqf";
+//Squad leader specific
+if ((leader GROUP_PLAYERS) == _player) then {
 
 	// Revive friendlies with chopper pick up
 	if (REVIVE_ENABLED) then{
 		[_player] execVM "DCW\medevac\init.sqf";
 	};
 
-	nul = [LEADER_PLAYERS] call fnc_supportuiInit;
+	[_player] call fnc_camp;
+	[_player] call fnc_supportuiInit;
 };
 
 //Damage handler
@@ -78,8 +81,14 @@ fnc_HandleRespawn =
 {
 	params["_unit"];
 	_loadout = getUnitLoadout _unit;
+	
 
 	waitUntil{!PLAYER_ALIVE};
+	 
+	 // Corrected player rating
+	 if (rating _unit < 0) then {
+		_unit addRating ((-(rating _unit)) + 1000);
+	};
 
 	//count the remaining lives after death
 	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
@@ -92,11 +101,20 @@ fnc_HandleRespawn =
 
 	_timeSkipped = round(6 + random 12);
 	cutText ["You are severly injured","BLACK FADED", 999];
-
+	sleep 2;
+	cutText ["","BLACK FADED",  999];
+	[] call fnc_respawndialog;
+	waitUntil{RESPAWN_CHOICE != ""};
+	cutText [format["Back to %1...",RESPAWN_CHOICE],"BLACK FADED", 999];
+	sleep 1;
+	
 	// Move the alive AI unit back to position
+	private _respawnPos = if (RESPAWN_CHOICE == "base") then {INITIAL_RESPAWN_POSITION} else {CAMP_RESPAWN_POSITION};
+	RESPAWN_CHOICE = ""; // Reset
+
 	{ 
-		if(!isPlayer _x && LEADER_PLAYERS == _unit) then{
-			_x setPos ([RESPAWN_POSITION, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)
+		if(!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
+			_x setPos ([_respawnPos, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)
 		}; 
 	}foreach  units (group _unit);
 
@@ -106,22 +124,23 @@ fnc_HandleRespawn =
 	//Disable chasing if not in multiplayer
 	if (!isMultiplayer) then{
 		CHASER_TRIGGERED = false;
+		publicVariable "CHASER_TRIGGERED";
 	}; 
 	PLAYER_ALIVE = true;
     resetCamShake;
 
 	//Set new pos and loadout
 	_unit setDamage 0;
-	_unit setPos RESPAWN_POSITION;
+	_unit setPos _respawnPos;
 	_unit setUnitLoadout _loadout;
 
 	//Black screen with timer...
 	sleep 2;
-	cutText ["You are severly injured","BLACK FADED", 999];
+	cutText ["","BLACK FADED", 999];
 	
 	BIS_DeathBlur ppEffectAdjust [0.0];
 	BIS_DeathBlur ppEffectCommit 0;
-	cutText ["You are severly injured","BLACK FADED", 999];
+	cutText ["","BLACK FADED", 999];
 	
     if (!isMultiplayer) then {
 		skipTime 6 + random 12;

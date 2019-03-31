@@ -163,6 +163,25 @@ class PARAMETERS_DIALOG
           tooltip = "Enable respawn";
         };
 
+        class RscText_1008: RscText
+        {
+            idc = 1008;
+            text = "Restricted arsenal";
+            x = -8 * GUI_GRID_W + GUI_GRID_X;
+            y = 18 * GUI_GRID_H + GUI_GRID_Y;
+            w = 12 * GUI_GRID_W;
+            h = 1 * GUI_GRID_H;
+        };
+       class RscCombo_2106: RscCheckbox
+        {
+          idc = 2106;
+          x = -10 * GUI_GRID_W + GUI_GRID_X;
+          y = 18 * GUI_GRID_H + GUI_GRID_Y;
+          w = 1 * GUI_GRID_W;
+          h = 1 * GUI_GRID_H;
+          tooltip = "Enable restricted arsenal";
+        };
+
         
       /*  class RscPicture_2200: RscPicture
         {

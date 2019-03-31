@@ -4,7 +4,6 @@ ENEMY_SKILLS = 1;
 DEBUG = true;
 RESPAWN_ENABLED = true;
 REVIVE_ENABLED = true; //Reviving
-RESPAWN_ENABLED =  true; //Respawn when hit
 SHOW_SECTOR = true;
 NUMBER_RESPAWN = 3;
 ENABLE_FILTER = true;
@@ -12,6 +11,7 @@ TIME_OF_DAYS = 12;
 WEATHER = .2;
 ENABLE_DIALOG = true;
 POPULATION_INTENSITY = 1;
+RESTRICTED_AMMOBOX = true;
 
 if (count paramsArray > 0 && isMultiplayer) then 
 {

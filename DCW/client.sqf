@@ -6,6 +6,9 @@
  */
 
 if (isNull player) exitWith{false;};
+
+titleCut ["", "BLACK FADED", 9999];
+
 /*
 if (!didJIP) then {
 	setDate [2018, 6, 25, 18, 0]; 
@@ -29,16 +32,39 @@ In this singleplayer scenario, you have one major objective : assassinate the en
  _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 
 // If is admin
-if (ENABLE_DIALOG) then {
-	if (leader GROUP_PLAYERS == player || !isMultiplayer) then{
+if (ENABLE_DIALOG && !didJIP) then {
+	
+	_timer = time;
+	_maxTime = 60;
+	// Show a timer for all the players
+	[_maxTime] spawn {
+		params["_time"];
+		while {_time > 0 && !DCW_STARTED} do {
+			_time = _time - 1;  
+			hintSilent format["%1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];	
+			sleep 1;
+		};
+	};
+
+	if ((leader GROUP_PLAYERS) == leader group (allPlayers select 0)) then{
 		[] call fnc_dialog;
 	} else{
-		hint "wait until the leader finishes to configure the mission";
+		if (isPlayer (leader GROUP_PLAYERS)) then {
+			hint "wait until the leader finishes to configure the mission";
+		} else{
+			DCW_STARTED = true;
+		};
 	};
-	waitUntil {DCW_STARTED};
+
+	waitUntil {DCW_STARTED || time > _timer + _maxTime};
+	DCW_STARTED = true;
+	publicVariableServer "DCW_STARTED";
+	hintSilent "";
 } else {
 	DCW_STARTED = true;
+	publicVariableServer "DCW_STARTED";
 };
+
 if (!DEBUG) then {
 	[] call fnc_intro;
 };
@@ -58,7 +84,7 @@ sleep 1;
 titleCut ["", "BLACK IN", 5];
 
 // init user respawn loop
-[getMarkerPos "marker_base", player] spawn fnc_respawn; //Respawn loop
+[player] spawn fnc_respawn; //Respawn loop
 
 sleep 30;
 

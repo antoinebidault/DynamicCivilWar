@@ -25,7 +25,7 @@ for "_j" from 1 to _nb do {
     _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
     _posBuildings = _posBuildings -[_posToSpawn];
     _unitName = _boxeClasses call BIS_fnc_selectRandom;
-    _unit = createVehicle [_unitName,_posToSpawn,[],0,"NONE"]; 
+    _unit = createVehicle [_unitName,_posToSpawn,[],0,"CAN_COLLIDE"]; 
     _unit setDir (random 359);
     [_unit,"ColorBrown"] call fnc_addMarker;
     _unit setVariable["DCW_Type","cache"];

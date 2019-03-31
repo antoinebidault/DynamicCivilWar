@@ -1,33 +1,35 @@
+params["_unit"];
+
 playMusic "BackgroundTrack02_F";
 
 if (getMarkerColor "DCW_commander_dir" != "") then {
 	deleteMarker "DCW_commander_dir";
 };
 
-_distance = LEADER_PLAYERS distance ENEMY_COMMANDER;
+_distance = _unit distance ENEMY_COMMANDER;
 _distance = (round ((_distance + (( [-1,1] call BIS_fnc_selectRandom ) * random (50))) / 100)) * 100;
-_dir = round([LEADER_PLAYERS,ENEMY_COMMANDER] call BIS_fnc_dirTo);
-_marker = createMarker ["DCW_commander_dir",getPos LEADER_PLAYERS];
+_dir = round([_unit,ENEMY_COMMANDER] call BIS_fnc_dirTo);
+_marker = createMarker ["DCW_commander_dir",getPos _unit];
 _marker setMarkerShape "ICON";
 _marker setMarkerColor "ColorRed";
 _marker setMarkerText "Last direction of the Commander !";
 _marker setMarkerType "hd_arrow";
 _marker setMarkerDir _dir;
 
-[LEADER_PLAYERS,"HQ, this is bravo team, we've found the presumed camp where the commander rested at night. We'll keep you in touch", true] remoteExec ["fnc_talk",GROUP_PLAYERS];
+[_unit,"HQ, this is bravo team, we've found the presumed camp where the commander rested at night. We'll keep you in touch", true] remoteExec ["fnc_talk",GROUP_PLAYERS];
 sleep 10;
 [HQ,"Copy", true] remoteExec ["fnc_talk"];
 sleep 10;
-[LEADER_PLAYERS,format["There is some step foots over here ! I think he moved to this direction : %1deg",str (_dir)], true] remoteExec ["fnc_talk",GROUP_PLAYERS];
+[_unit,format["There is some step foots over here ! I think he moved to this direction : %1deg",str (_dir)], true] remoteExec ["fnc_talk",GROUP_PLAYERS];
 sleep 10;
-[LEADER_PLAYERS,format["When I see the state of the fireplace, I think he is approximately at %1 meters from our position... I marked it on the map.",str _distance], true] remoteExec ["fnc_talk",GROUP_PLAYERS];
+[_unit,format["When I see the state of the fireplace, I think he is approximately at %1 meters from our position... I marked it on the map.",str _distance], true] remoteExec ["fnc_talk",GROUP_PLAYERS];
 sleep 10;
 [HQ,"Good job soldiers ! Go as fast as possible to this position. ", true] remoteExec ["fnc_talk",GROUP_PLAYERS];
 
 if (getMarkerColor "DCW_commander_pos" != "") then {
 	deleteMarker "DCW_commander_pos";
 };
-_pos = LEADER_PLAYERS getRelPos [_distance, 180 - _dir];
+_pos = _unit getRelPos [_distance, 180 - _dir];
 _marker = createMarker ["DCW_commander_pos", _pos]; 
 _marker setMarkerShape "ELLIPSE";
 _marker setMarkerSize [200,200];

@@ -12,7 +12,7 @@ if ( {_x getVariable["DCW_Type",""] == "chaser"} count UNITS_SPAWNED >= MAX_CHAS
 
 private _nbUnit = (PATROL_SIZE select 0) + round(random(PATROL_SIZE SELECT 1));;
 private _grp = createGroup ENEMY_SIDE;
-private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100, 2, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 
  for "_xc" from 1 to _nbUnit do {
     _enemy = [_grp,_posSelected, false] call fnc_spawnEnemy;
@@ -20,6 +20,8 @@ private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100,
     _enemy setDir random 360;
     _units pushback _enemy;
  };
+
+[HQ, format["Be careful, our drone has watched %1 of them moving straight to your position, and there are other reinforcements incoming !",_nbUnit], true] remoteExec["fnc_talk", GROUP_PLAYERS, false];
 
  //Trigger chase
  [leader _grp, _unitChased] spawn fnc_chase;

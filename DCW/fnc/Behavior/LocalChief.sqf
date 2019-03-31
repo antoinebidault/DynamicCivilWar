@@ -29,7 +29,7 @@ _this addHeadgear "H_Beret_blk";
     _unit call fnc_MainObjectiveIntel;
 },nil,2.5,true,true,"","true",20,false,""]] remoteExec ["addAction"];
 
-[_this,["Set up camp here (200 points, 6 hours)",{
+[_this,["Set up a base here (200 points, 6 hours)",{
     params["_unit","_asker","_action"];
     
     //Talk
@@ -58,14 +58,15 @@ _this addHeadgear "H_Beret_blk";
     private _mkrToAvoid = createMarker ["friendly-outpost-" + (str _randomnumber), getPos player];
     
     _unit RemoveAction _action;
-    _buildings = nearestObjects [_pos, ["house"], 300];
+   /* _buildings = nearestObjects [_pos, ["house"], 300];
     {
         if ([_x, 3] call BIS_fnc_isBuildingEnterable) then {
             _posBuilding = [_x] call BIS_fnc_buildingPositions;
             RESPAWN_POSITION = ([_posBuilding] call BIS_fnc_selectRandom) select 0;
+            publicVariable "RESPAWN_POSITION";
             if (true) exitWith{true};
         };
-    } foreach _buildings;
+    } foreach _buildings;*/
 
      // Put in whitelisty
     _mkrToAvoid setMarkerAlpha 0;
@@ -98,7 +99,7 @@ _this addHeadgear "H_Beret_blk";
     _cam camSetPos (_unit modelToWorld [-1,-0.2,1.9]);
     _cam camSetTarget _asker;
 
-    [_unit,"Okay, I'll send you some reinforcements", false] call fnc_talk;
+    [HQ,"Okay, we're sending you some reinforcements", false] call fnc_talk;
     
     titleCut ["6 hours later...", "BLACK OUT", 3];
     sleep 3;
@@ -153,6 +154,4 @@ _this addHeadgear "H_Beret_blk";
 
     _unit enableAI "MOVE";
     
-    hint "If you're KIA, you'll respawn at this position.";
-
-},nil,2.5,true,true,"","true",20,false,""]] remoteExec["addAction", LEADER_PLAYERS];
+},nil,2.5,true,true,"","true",20,false,""]] remoteExec["addAction", GROUP_PLAYERS, true];

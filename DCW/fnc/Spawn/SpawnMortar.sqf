@@ -54,7 +54,7 @@ for "_j" from 1 to _nb do {
     [_pos,_radius,_mortar] spawn {
         params["_pos","_radius","_mortar"];
         waitUntil{sleep 15; { getPosATL _x distance _pos < _radius } count allPlayers > 0 };
-        [_mortar,LEADER_PLAYERS,_pos,_radius] call fnc_mortarbombing;
+        [_mortar,(leader GROUP_PLAYERS),_pos,_radius] call fnc_mortarbombing;
     };
                     
     for "_i" from 1 to _nbGuards do {

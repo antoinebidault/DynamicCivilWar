@@ -44,7 +44,7 @@ private _logicGroupSupportProvider = createGroup _center;
 	}forEach [
 		["BIS_SUPP_crateInit",
 		'
-			_this call fnc_fillCrate;
+			_this call fnc_spawncrate;
 		'],
 		["BIS_SUPP_vehicles",_x select 1],		//types of vehicles to use
 		["BIS_SUPP_vehicleinit",""],	//init code for vehicle

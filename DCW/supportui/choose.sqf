@@ -24,16 +24,16 @@ if((DCW_SCORE - _price) >= 0)then {
 		publicVariable "BIS_supp_refresh";
 	}else{
 		[HQ,"An UAV is moving toward your position",true] remoteExec ["fnc_talk"];
-	    _pos = [LEADER_PLAYERS, 2500, 3000, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+	    _pos = [(leader GROUP_PLAYERS), 2500, 3000, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
 		_unit = createVehicle [SUPPORT_DRONE_CLASS, [_pos select 0, _pos select 1, 300], [], 0,"FLY"];  
 		createVehicleCrew _unit;  
 		_unit setCaptive true;
-		_unit move (LEADER_PLAYERS modelToWorld[0,0,300]);
-		LEADER_PLAYERS connectTerminalToUAV _unit;
+		_unit move ((leader GROUP_PLAYERS) modelToWorld[0,0,300]);
+		(leader GROUP_PLAYERS) connectTerminalToUAV _unit;
 	};
 
 }else{
-	LEADER_PLAYERS sideChat "You can't afford it, not enough points... Try it later.";
+	(leader GROUP_PLAYERS) sideChat "You can't afford it, not enough points... Try it later.";
 };
 
 
