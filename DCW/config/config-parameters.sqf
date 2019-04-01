@@ -1,7 +1,7 @@
 
 
 ENEMY_SKILLS = 1;
-DEBUG = true;
+DEBUG = false;
 RESPAWN_ENABLED = true;
 REVIVE_ENABLED = true; //Reviving
 SHOW_SECTOR = true;
@@ -12,6 +12,7 @@ WEATHER = .2;
 ENABLE_DIALOG = true;
 POPULATION_INTENSITY = 1;
 RESTRICTED_AMMOBOX = true;
+publicVariable "RESTRICTED_AMMOBOX";
 
 if (count paramsArray > 0 && isMultiplayer) then 
 {

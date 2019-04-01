@@ -18,7 +18,7 @@ class ICE_DIALOG
           x = 0.390476 * safezoneW + safezoneX;
           y = 0.290476 * safezoneH + safezoneY;
           w = 0.236905 * safezoneW;
-          h = 0.385238 * safezoneH;
+          h = 0.5 * safezoneH;
          };
          class ICE_FRAME: RscFrame
          {
@@ -27,7 +27,7 @@ class ICE_DIALOG
           x = 0.390476 * safezoneW + safezoneX;
           y = 0.290476 * safezoneH + safezoneY;
           w = 0.236905 * safezoneW;
-          h = 0.385238 * safezoneH;
+          h = 0.5 * safezoneH;
          };
          class ICE_BUTTONARTILLERY: RscButton
          {
@@ -70,6 +70,7 @@ class ICE_DIALOG
           h = 0.0404761 * safezoneH;
           action = "_nil=[""Transport"",150]ExecVM ""DCW\supportui\choose.sqf""";
         };
+       
          class ICE_BUTTONUAV: RscButton
          {
           idc = -1;
@@ -81,12 +82,24 @@ class ICE_DIALOG
           action = "_nil=[""UAV"",1000]ExecVM ""DCW\supportui\choose.sqf""";
         };
 
+
+           class ICE_BUTTONVEHICLE: RscButton
+         {
+          idc = -1;
+          text = "vehicle paradrop (-150 points)";
+          x = 0.4 * safezoneW + safezoneX;
+          y = 0.6 * safezoneH + safezoneY;
+          w = 0.22 * safezoneW;
+          h = 0.0404761 * safezoneH;
+          action = "_nil=[""vehicle"",150] ExecVM ""DCW\supportui\choose.sqf""";
+        };
+
         class ICE_BUTTONNO: RscButton
         {
           idc = -1;
           text = "Back";
           x = 0.4 * safezoneW + safezoneX;
-          y = 0.625715 * safezoneH + safezoneY;
+          y = 0.7 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
           action = "closeDialog 0;";

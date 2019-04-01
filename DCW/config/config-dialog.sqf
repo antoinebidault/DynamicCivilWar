@@ -19,21 +19,27 @@ fnc_SaveAndCloseConfigDialog = {
 
 	//Time of the day;
 	TIME_OF_DAYS = 2100 call fnc_getValue;
+	publicVariable "TIME_OF_DAYS";
 
 	//Weather
 	WEATHER = (2101 call fnc_getValue) / 100;
+	publicVariable "WEATHER";
 
 	//Time_selected;
 	POPULATION_INTENSITY = (2102 call fnc_getValue);
+	publicVariable "POPULATION_INTENSITY";
 
 	//Revive
 	REVIVE_ENABLED =  2104 call fnc_getValueChkBx;
+	publicVariable "REVIVE_ENABLED";
 
 	//Respawn
 	RESPAWN_ENABLED =  2105 call fnc_getValueChkBx;
+	publicVariable "RESPAWN_ENABLED";
 
 	// Ammobox restricted
 	RESTRICTED_AMMOBOX =  2106 call fnc_getValueChkBx;
+	publicVariable "RESTRICTED_AMMOBOX";
 
 	//kill camera
 	closeDialog 0;
@@ -51,6 +57,7 @@ fnc_SaveAndCloseConfigDialog = {
 		camDestroy UNIT_SHOWCASE_CAMERA;
 		//deleteVehicle UNIT_SHOWCASE;
 		DCW_STARTED = true;
+		publicVariable "DCW_STARTED";
 		titleCut ["", "BLACK FADED", 999];
 
 	};
