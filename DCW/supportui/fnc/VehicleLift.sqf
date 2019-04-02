@@ -1,7 +1,6 @@
 
 params["_unit","_dist"];
 
-
 // Spawn CH47
 _pos = [_unit, _dist, _dist+1, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
 _spawnpos = [_pos select 0, _pos select 1, 200];

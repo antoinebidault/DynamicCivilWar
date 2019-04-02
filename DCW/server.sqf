@@ -5,15 +5,8 @@
  * License : GNU (GPL)
  */
 
-// This portion of code is only executed by the server
-DCW_STARTED = false;
-publicVariable "DCW_STARTED";
-
-// global scope variables
-GROUP_PLAYERS = group (allPlayers select 0); 
-publicVariable "GROUP_PLAYERS";
-
 if (!isServer) exitWith{};
+
 
 CHASER_TRIGGERED = false;
 publicVariable "CHASER_TRIGGERED";
@@ -30,6 +23,9 @@ publicVariable "CAMP_RESPAWN_POSITION";
 INITIAL_RESPAWN_POSITION = getPos (leader GROUP_PLAYERS);
 publicVariable "CAMP_RESPAWN_POSITION";
 
+CIVIL_REPUTATION = 50;
+publicVariable "CIVIL_REPUTATION";
+
 // Create a fake HQ unit
 "B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
@@ -40,6 +36,8 @@ publicVariable "CAMP_RESPAWN_POSITION";
 // Variable in Global scope
 GAME_ZONE_SIZE=5000;
 MARKER_WHITE_LIST = []; //Pass list of marker white list name
+publicVariable "MARKER_WHITE_LIST";
+
 UNITS_SPAWNED = [];
 INTELS = [];
 UNITS_CACHED = [];
@@ -56,11 +54,12 @@ ESCORT = []; // List of escorts guys with the commandant
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 
 // exclude the player marker
-private _mp = createMarker ["playerMarker", getPos (leader GROUP_PLAYERS)];
+private _mp = createMarker ["player-marker", getPos (leader GROUP_PLAYERS)];
 _mp setMarkerShape "ELLIPSE";
 _mp setMarkerAlpha 0;
 _mp setMarkerSize [400,400];
 MARKER_WHITE_LIST pushBack _mp;
+publicVariable "MARKER_WHITE_LIST";
 
 
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
@@ -89,6 +88,7 @@ GAME_ZONE setMarkerSize [_worldSize/2,_worldSize/2];
 	_mp setMarkerSize _gameZoneSize;
 	MARKER_WHITE_LIST pushBack _mp;
 } forEach [[-1,-1],[-1,1],[-1,3],[3,-1],[3,1],[3,3],[1,3],[1,-1]];
+publicVariable "MARKER_WHITE_LIST";
 
 //Consuming work => getAllClusters
 private _clusters = [GAME_ZONE] call fnc_GetClusters;
@@ -139,12 +139,6 @@ CIVIL_HEALED = {
  PLAYER_KIA = { 
 	[GROUP_PLAYERS,-20,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
  };
-
-//If player did not respect a civilian
-CIVIL_DISRESPECT = { 
-	params["_unit"];
-	[GROUP_PLAYERS,-5,false,_unit] call fnc_updateScore;
-};
 
 //On enemy search.
 ENEMY_SEARCHED = {
@@ -206,6 +200,14 @@ private _typeObj = "";
 		_m = createMarker [format ["mrk%1",random 100000],_pos];
 		_m setMarkerShape "ELLIPSE";
 		_m setMarkerSize [_radius,_radius];
+		_m setMarkerColor "ColorRed";
+		
+		_secured = false;
+
+		if (_isMilitary) then{
+			_secured = true;
+			_m setMarkerColor "ColorGreen";
+		};
 
 		if (!_isMilitary) then{
 			_m setMarkerBrush "FDiagonal";
@@ -214,7 +216,6 @@ private _typeObj = "";
 			_m setMarkerBrush "BDiagonal";
 		};
 
-		_m setMarkerColor "ColorRed";
 		if (SHOW_SECTOR || DEBUG) then{
 			_m setMarkerAlpha .5;
 		}else{
@@ -263,7 +264,7 @@ private _typeObj = "";
 		};
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
-		MARKERS pushBack  [_m,_pos,false,false,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings];
+		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings];
 	};
 	
 } foreach _clusters;
@@ -505,7 +506,8 @@ while { true } do {
 			_tmp = round(_civilReputationSum/_civilReputationNb);
 			if (_tmp != CIVIL_REPUTATION) then{
 				_diff = (_tmp-CIVIL_REPUTATION);
-				[format["REPUTATION %1% <t color='%2'>%3%4pt</t>",_tmp,if(_diff > 0) then {"#29c46c"} else{"#ea4f4f"},if(_diff > 0) then{"+"}else{""},_diff]] remoteExec ["fnc_ShowIndicator"];
+				publicVariable "CIVIL_REPUTATION";
+				[format["REPUTATION %1% <t color='%2'>%3%4pt</t>",_tmp,if(_diff > 0) then {"#29c46c"} else{"#ea4f4f"},if(_diff > 0) then{"+"}else{""},_diff]] remoteExec ["fnc_ShowIndicator",0,false];
 			};
 			CIVIL_REPUTATION = _tmp;
 		};

@@ -1,7 +1,7 @@
 
 
 ENEMY_SKILLS = 1;
-DEBUG = false;
+DEBUG = true;
 RESPAWN_ENABLED = true;
 REVIVE_ENABLED = true; //Reviving
 SHOW_SECTOR = true;

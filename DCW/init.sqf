@@ -6,7 +6,10 @@
  * Main components preloading and initialization
  */
 
- 
+if (!isNull player) then {
+	titleCut ["", "BLACK FADED",9999];
+};
+
 // CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
@@ -71,6 +74,7 @@ fnc_failed = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Failed.s
 fnc_createtask =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\createtask.sqf";
 fnc_foundCommander =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\foundCommander.sqf";
 fnc_MainObjectiveIntel =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\MainObjectiveIntel.sqf";
+fnc_CompoundSecured =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\CompoundSecured.sqf";
 
 //CUSTOM BEHAVIOR
 fnc_MortarBombing = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\MortarBombing.sqf";
@@ -121,6 +125,21 @@ compo_camp =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp
 fnc_intro = compileFinal preprocessFileLineNumbers format["DCW\intro\intro-%1.sqf",_this select 0];
 
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
+
+
+DCW_STARTED = false;
+publicVariable "DCW_STARTED";
+
+// Wait until everything is ready
+waitUntil {count allPlayers > 0};
+
+GROUP_PLAYERS = group (allPlayers select 0); 
+publicVariable "GROUP_PLAYERS";
+
+SIDE_CURRENT_PLAYER = side(allPlayers select 0); //Side player
+publicVariable "SIDE_CURRENT_PLAYER";
+
+TALK_QUEUE = [];
 
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";

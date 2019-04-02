@@ -6,7 +6,7 @@
  */
 
 
-RemoveAllActions _this;
+_this remoteExec ["RemoveAllActions",0];
 
 _this setVariable["DCW_Medic",true];
 removeGoggles _this;

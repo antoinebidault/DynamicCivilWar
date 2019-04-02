@@ -95,7 +95,7 @@ while {_i > 0} do {
 				//It's in cache, that's okay !
 				if (player distance _junk < 250) then{
 					//The mine is defused by the player
-					_junk call fnc_success;
+					_junk remoteExec ["fnc_success",2,false];
 				};
 				
 				//Anyway;

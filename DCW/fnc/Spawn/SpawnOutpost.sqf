@@ -47,7 +47,7 @@ _radius = ((getMarkerSize _marker) select 0);
     },{},{
     _objBase = (_this select 0);
     _newObjs = (_this  select 3) select 0;
-    [_objBase, _this select 1] call fnc_GetIntel;
+    [_objBase, _this select 1]  remoteExec ["fnc_GetIntel",2];
 
     {
         if (alive _x )then{
@@ -55,7 +55,7 @@ _radius = ((getMarkerSize _marker) select 0);
         };
     }foreach _newObjs;
     
-    _objBase call fnc_success;
+    _objBase remoteExec ["fnc_success",2,false];
     },{},[_newObjs],3,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
     _units = _units + _newObjs;

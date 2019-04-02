@@ -10,6 +10,10 @@ private _talker = _this select 0;
 private _say = _this select 1;
 private _sound = _this select 2;
 
+// Queuing conversation
+TALK_QUEUE pushback _this;
+waitUntil { sleep .2;TALK_QUEUE select 0 isEqualTo _this};
+
 private _side = side _talker;
 private _color = "#E0E0E0";
 if (_side == CIVILIAN) then {
@@ -74,3 +78,6 @@ ctrlDelete _ctrl;
 MESS_SHOWN = false;
 
 _talker setVariable["DCW_speak",false];
+
+// remove talk queue
+ TALK_QUEUE = TALK_QUEUE - [_this];

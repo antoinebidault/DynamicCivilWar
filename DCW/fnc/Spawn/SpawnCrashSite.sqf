@@ -49,32 +49,32 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _taskData = [_chopper, (leader GROUP_PLAYERS),false] call fnc_createtask;
     _chopper setVariable["DCW_Task",_taskData select 0];
 
-
      //Search intel;
      [_chopper,"Secure and put the charge on...","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","_this distance _target < 12","true",
      {(_this select 1) playActionNow "medic";},
      {},
      {
           _chopper = (_this select 0);
-          [_this select 0, _this select 1] spawn {
+          [[_this select 0, _this select 1], {
                params["_chopper","_player"];
 
                [_player,"30 seconds before detonation", false] remoteExec ["fnc_talk"];
                sleep 24;
-               [_player,"5", false] remoteExec ["fnc_talk"];
+               [_player,"5...", false] remoteExec ["fnc_talk"];
                sleep 1;
-               [_player,"4", false] remoteExec ["fnc_talk"];
+               [_player,"...4...", false] remoteExec ["fnc_talk"];
                sleep 1;
-               [_player,"3", false] remoteExec ["fnc_talk"];
+               [_player,"...3...", false] remoteExec ["fnc_talk"];
                sleep 1;
-               [_player,"2", false] remoteExec ["fnc_talk"];
+               [_player,"...2...", false] remoteExec ["fnc_talk"];
                sleep 1;
-               [_player,"1", false] remoteExec ["fnc_talk"];
+               [_player,"...1", false] remoteExec ["fnc_talk"];
+               sleep 1;
 
                _bomb = "HelicopterExploBig";
                _boom = _bomb createVehicle getPos _chopper;
-               _chopper call fnc_success;
-          };
+               _chopper remoteExec ["fnc_success",2, false];
+          }] remoteExec ["spawn"];
      },{},[],8,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
     // Add to markers

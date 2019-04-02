@@ -14,7 +14,7 @@ if((DCW_SCORE - _price) >= 0)then {
 	
 	//Fermeture plus MAJ score 
 	closeDialog 0;
-	[GROUP_PLAYERS,-_price] call fnc_updatescore;
+	[GROUP_PLAYERS,-_price] remoteExec ["fnc_updateScore",2];   
 	
 	if (_type=="UAV")then{
 		[HQ,"An UAV is moving toward your position",true] remoteExec ["fnc_talk"];

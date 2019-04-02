@@ -22,7 +22,7 @@ if (_damage == 0) exitWith {false};
 if ( _damage > .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",false])) then {
 	_unit setUnconscious true;
 	_unit setCaptive true;
-	_unit setVariable ["unit_injured", true];
+	_unit setVariable ["unit_injured", true, true];
 	_unit setDamage .9;
 	_damage = .9;
 

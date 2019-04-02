@@ -22,7 +22,8 @@ _this select 0 addEventHandler["FiredNear",
 	}else{
 		group _civ setspeedmode "FULL";
 		_civ forceWalk false;
-		removeAllActions _civ;
+		
+        _civ remoteExec ["removeAllActions",0];
 		
 		switch(round(random 2))do{
 			case 0:{_civ switchMove "ApanPercMstpSnonWnonDnon_G01";_civ setSpeedMode "FULL";};
@@ -66,18 +67,19 @@ _this select 0 addEventHandler["FiredNear",
 			_unit stop true;
 			_unit  setVariable["civ_affraid",false];
 			sleep .3;
-			_unit switchMove "";
+			[_unit,""] remoteExec ["switchMove",0];
 			sleep .3;
-			[_unit] call fnc_addCivilianAction;
-			[_unit,2] call fnc_UpdateRep;
+			[_unit] remoteExec ["fnc_addCivilianAction",0];
+			[_unit,2] remoteExec ["fnc_UpdateRep",2];
 			sleep 15;
 			_unit stop false;
-			[_unit] call fnc_handleFiredNear;
+			[_unit]  remoteExec ["fnc_handleFiredNear",0];
 		},nil,1.5,true,true,"","true",2,false,""]] remoteExec ["addAction"];
+
 		if (isPlayer _gunner )then {
-			[_unit,-5] call fnc_UpdateRep;
+			[_unit,-5] remoteExec ["fnc_UpdateRep",2];
 		}else{
-			[_unit,1] call fnc_UpdateRep;
+			[_unit,1] remoteExec ["fnc_UpdateRep",2];
 		};
 	};
 

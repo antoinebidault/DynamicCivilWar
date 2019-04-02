@@ -26,7 +26,7 @@ _this addEventHandler["HandleDamage",{
 		[_unit] spawn fnc_shout;	
 		removeAllActions _unit;
 		_unit setUnconscious true;
-		_unit setVariable ["unit_injured", true];
+		_unit setVariable ["unit_injured", true, true];
 		_unit setDamage .9;
 		_damage = .9;
 		_unit setHit ["legs", 1];
@@ -51,8 +51,8 @@ _this addEventHandler["HandleDamage",{
 			_unit setUnconscious false;
 			_unit setDamage .3;
 			_unit setUnitPos "UP";
-			_unit setVariable ["unit_injured", false];
-			[_unit,(_this select 1)] spawn CIVIL_HEALED;
+			_unit setVariable ["unit_injured", false, true];
+			[_unit,(_this select 1)] remoteExec ["CIVIL_HEALED",2];
 
 		},{
 			   (_this select 1) playActionNow "medicStop";

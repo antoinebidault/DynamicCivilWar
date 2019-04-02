@@ -9,6 +9,9 @@ private _objWithTask = _this;
 private _task = "";
 private _taskName = "";
 
+// Success
+if (!isServer) exitWith{hint format["fnc_success executed on the client %1 ;/", _objWithTask getVariable["DCW_Task",""]]; };
+
 //Task type unknown
 if (_objWithTask getVariable["DCW_Type",""] == "") exitWith { false };
 

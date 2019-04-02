@@ -15,48 +15,52 @@ while{ true }do {
 	if (count _carPool < MAX_RANDOM_CAR)then{
 		//Get random pos
 		// get the next connected roadsegements to determine the direction of the road
-		_pos = [position (allPlayers call BIS_fnc_selectRandom), 500, 700, 0, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
-		_road = [_pos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
-		if (isOnRoad(getPos _road) && (getPos _road) distance (allPlayers call BIS_fnc_selectRandom) > 400 )then{
-			_roadConnectedTo = roadsConnectedTo _road;
-			_connectedRoad = _roadConnectedTo select 0;
-			_roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
+		_pos = [position (allPlayers call BIS_fnc_selectRandom), 500, 700, 0, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_FindSafePos;
+		if (_pos isEqualTo []) then {
+			sleep 2;
+		} else {
+			_road = [_pos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
+			if (isOnRoad(getPos _road) && (getPos _road) distance (allPlayers call BIS_fnc_selectRandom) > 400 )then{
+				_roadConnectedTo = roadsConnectedTo _road;
+				_connectedRoad = _roadConnectedTo select 0;
+				_roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
 
-			if(random 100 > PERCENTAGE_CIVILIAN )then{
-				_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
-				_car = ([getPos _road, _roadDirection,_unitName, ENEMY_SIDE] call bis_fnc_spawnvehicle)  select 0;
-				_nbUnit = (count (fullCrew [_car,"cargo",true]));
-    
-				//Civilian team spawn.
-				//If we killed them, it's over.
-				_grp = group _car;
-				for "_xc" from 1 to _nbUnit  do {
-					_unit =[_grp,_pos,true] call fnc_spawnEnemy;
-					_unit moveInCargo _car;
+				if(random 100 > PERCENTAGE_CIVILIAN )then{
+					_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
+					_car = ([getPos _road, _roadDirection,_unitName, ENEMY_SIDE] call bis_fnc_spawnvehicle)  select 0;
+					_nbUnit = (count (fullCrew [_car,"cargo",true]));
+		
+					//Civilian team spawn.
+					//If we killed them, it's over.
+					_grp = group _car;
+					for "_xc" from 1 to _nbUnit  do {
+						_unit =[_grp,_pos,true] call fnc_spawnEnemy;
+						_unit moveInCargo _car;
+					};
+					
+				}else{
+					_unitName = CIV_LIST_CARS call BIS_fnc_selectRandom;
+					_car = ([getPos _road, _roadDirection,_unitName, CIV_SIDE] call bis_fnc_spawnvehicle)  select 0;
+
 				};
+
+				_carPool pushBack _car ;
+				CAR = _car;
+
+				{
+					_unit = _x;
+					[_unit] call fnc_handlekill;
+					[_unit] call fnc_addTorch;
+					[_unit, if(side _unit == CIV_SIDE) then { "ColorBlue" } else { "ColorRed" } ] call fnc_addMarker;
+					_unit setVariable["DCW_type","carpatrol"];
+					UNITS_SPAWNED pushBack _unit;
+				} foreach (crew _car);
+
+				[driver _car, 1500] spawn fnc_carPatrol;
 				
-			}else{
-				_unitName = CIV_LIST_CARS call BIS_fnc_selectRandom;
-				_car = ([getPos _road, _roadDirection,_unitName, CIV_SIDE] call bis_fnc_spawnvehicle)  select 0;
-
 			};
-
-			_carPool pushBack _car ;
-			CAR = _car;
-
-			{
-				_unit = _x;
-				[_unit] call fnc_handlekill;
-				[_unit] call fnc_addTorch;
-				[_unit, if(side _unit == CIV_SIDE) then { "ColorBlue" } else { "ColorRed" } ] call fnc_addMarker;
-				_unit setVariable["DCW_type","carpatrol"];
-				UNITS_SPAWNED pushBack _unit;
-			} foreach (crew _car);
-
-			[driver _car, 1500] spawn fnc_carPatrol;
-			
-		};
-	};	
+		};	
+	};
 
 	// Garbage collector
 	{

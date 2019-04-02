@@ -20,8 +20,8 @@ private _distance = 350 + random 250;
 //Get the marker random position
 private _pos = [_initPos, _offset, (_distance - _offset) , 0, 0, 20, 0] call BIS_fnc_FindSafePos;
 
-deleteMarker "DCW_intel_c";
-_marker = createMarker ["DCW_intel_c",_pos];
+deleteMarker "dcw_intel_c";
+_marker = createMarker ["dcw_intel_c",_pos];
 _marker setMarkerShape "ELLIPSE";
 _marker setMarkerColor "ColorRed";
 _marker setMarkerBrush "Border";
@@ -31,10 +31,10 @@ _marker setMarkerPos _pos;
 private _nb = (2+round(random 2));
 for "_j" from 1 to _nb do {
     if (_j > 1) then{
-      _initPos = [["DCW_intel_c"],["water"]] call BIS_fnc_randomPos;
+      _initPos = [["dcw_intel_c"],["water"]] call BIS_fnc_randomPos;
     };
-    deleteMarker format["DCW_intel_q_%1",_j];
-    _marker = createMarker [format["DCW_intel_q_%1",_j],_initPos];
+    deleteMarker format["dcw_intel_q_%1",_j];
+    _marker = createMarker [format["dcw_intel_q_%1",_j],_initPos];
     _marker setMarkerShape "ICON";
     _marker setMarkerColor "ColorRed";
     _marker setMarkerType "hd_unknown";

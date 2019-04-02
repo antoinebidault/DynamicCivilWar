@@ -19,7 +19,7 @@ addActionHandcuff =  {
         (_this select 1) playActionNow "PutDown";
         _man SetBehaviour "CARELESS";
         _man setCaptive true;
-        [_man,-4] call fnc_updateRep;
+        [_man,-4] remoteExec ["fnc_updateRep",2];
 
         //Handle weapon states
         _rifle = primaryWeapon _man; 
@@ -40,19 +40,19 @@ addActionHandcuff =  {
         _man disableai "ANIM"; 
         _man disableAI "MOVE"; 
 
-        removeAllActions _man;
+        _man remoteExec ["RemoveAllActions",0];
 
         _man call addActionLiberate;
         _man call addActionLookInventory;
         hint "Civilian captured";	   
-        [_man] call CIVIL_CAPTURED;
+        [_man] remoteExec ["CIVIL_CAPTURED",2];
 
     },nil,1.5,true,true,"","true",3,false,""];
 };
 
 
 addActionGiveUsAHand =  {
-    _this addAction["Give us a hand (20 points/10 minutes)",{
+    _this addAction ["Give us a hand (20 points/10 minutes)",{
         _man  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
@@ -61,19 +61,19 @@ addActionGiveUsAHand =  {
          [_man,"Ok, we're taking your flank",false] spawn fnc_talk;
 
         {
-            _x removeAction _action;
-            _x addAction["Stop following us",{
+            [_x,_action] remoteExec ["removeAction",2];
+            [_x,["Stop following us",{
                 _man  = (_this select 0);
                 _talker  = (_this select 1);
                 _action  = (_this select 2);
                 [_man,"Understood sir !",false] spawn fnc_talk;
 
                  {
-                    _x removeAction _action;
+                    [_x,_action] remoteExec ["removeAction",2];
                     _x setVariable ["follow_player",false];
                     _x remoteExec ["addActionGiveUsAHand"];
                 } foreach units group _man;
-            }];
+            }]] remoteExec ["addAction",2];
         } foreach units group _man;
 
         _talker playActionNow "PutDown";
@@ -95,12 +95,12 @@ addActionGiveUsAHand =  {
 };
 
 addActionLiberate =  {
-    _this addAction["Liberate him",{
+    _this addAction ["Liberate him",{
         _man  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
-        removeAllActions _man;
-        _talker playActionNow "PutDown";
+        _man remoteExec ["removeAllActions",0];
+        [_talker,"PutDown"] remoteExec ["playActionNow"];
         [_man] call fnc_handlefiredNear;
         [_man] call fnc_addCivilianAction;
         _man SetBehaviour "AWARE";
@@ -108,23 +108,23 @@ addActionLiberate =  {
         _man switchMove ""; 
         _man enableai "ANIM"; 
         _man enableai "MOVE"; 
-        [_man,2] call fnc_updateRep;
+        [_man,2] remoteExec ["fnc_updateRep",2];
     },nil,1.5,true,true,"","true",3,false,""];
 };
 
 
 addActionLookInventory = {
-    _this addAction["Search in gear",{
+     _this addAction ["Search in gear",{
         params["_unit","_human","_action"];
         _unit removeAction _action;
         if (_unit getVariable["DCW_Suspect",false])then{
             for "_i" from 1 to 3 do {_unit addItemToUniform "1Rnd_HE_Grenade_shell";};
             [_human,"Holy shit ! This man is carrying material for IED purposes !",true] remoteExec ["fnc_talk"];
-            [_unit,1] call fnc_updateRep;   
-            [GROUP_PLAYERS,30,false,_human] call fnc_updateScore;   
-            RemoveAllActions _unit;
+            [_unit,1] remoteExec ["fnc_updateRep",2];   
+            [GROUP_PLAYERS,30,false,_human] remoteExec ["fnc_updateScore",2];   
+            _unit remoteExec ["RemoveAllActions",0];
         }else{
-            [_unit,-1] call fnc_updateRep;   
+            [_unit,-1] remoteExec ["fnc_updateRep",2];   
         };
         sleep .4;
         if (alive _unit) then {
@@ -135,7 +135,7 @@ addActionLookInventory = {
 };
 
 addActionHalt = {
-    _this addAction["Say hello",{
+     _this addAction ["Say hello",{
         params["_unit","_asker","_action"];
         _asker playActionNow "GestureFreeze";
         _unit stop true;
@@ -144,7 +144,7 @@ addActionHalt = {
             [_unit,"I don't talk to somebody pointing his gun on me ! Go away !",false] call fnc_Talk;
             _unit playActionNow "gestureNo";
             [_asker,"I'm sorry, sir !",false] call fnc_Talk;
-            [_unit,-2] call fnc_updateRep;
+            [_unit,-2] remoteExec ["fnc_updateRep",2];
             _unit stop false;
             false; 
         };
@@ -165,12 +165,12 @@ addActionHalt = {
 
 addActionDidYouSee = {
     //Try to gather intel
-    _this addAction["Did you see anything recently ?",{
+    _this addAction ["Did you see anything recently ?",{
     params["_unit","_talker","_action"];
         _unit removeAction _action;
 
         if (_unit getVariable["DCW_Friendliness",50] < 40) exitWith {
-            [_unit,-2] call fnc_updateRep;
+            [_unit,-2] remoteExec ["fnc_updateRep",2];
             [_unit,"Don't talk to me !",false] call fnc_Talk;
             false;
         };
@@ -208,26 +208,23 @@ addActionDidYouSee = {
         } forEach _data;
 
         [_unit,"I marked their positions on your map. Help us please !",false] call fnc_Talk;
-        [_unit,1] call fnc_updateRep;
+        [_unit,1] remoteExec ["fnc_updateRep",2];
         [_talker,"Thanks a lot !",false] call fnc_Talk;
         [_unit,"You're welcome !",false] call fnc_Talk;
         sleep 240;
         { deleteMarker _x; }foreach _markers;
         if (alive _unit) then {
-            _unit call addActionDidYouSee;
+            _unit remoteExec ["addActionDidYouSee"];
         };
     },nil,1.5,true,true,"","true",3,false,""];
 };
 
-
-    
-
 AddActionFeeling = {
     //Try to gather intel
-    _this addAction[format["What's your feeling about the %1's presence in %2",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (allPlayers select 0)] >> "displayName"),worldName] ,{
+    _this addAction [format["What's your feeling about the %1's presence in %2",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (allPlayers select 0)] >> "displayName"),worldName] ,{
         params["_unit","_talker","_action"];
-            [_unit,1] call fnc_updateRep;
-            _unit removeAction _action;
+            [_unit,1] remoteExec ["fnc_updateRep",2];
+            [_unit, _action] remoteExec["removeAction"];
             _message = "No problem, if you stay calm";
             if (CIVIL_REPUTATION  < 10) then {
                 _message = "Go away, before I call all my friends to kick your ass!";
@@ -267,7 +264,7 @@ AddActionFeeling = {
 
             [_unit,_message,false] call fnc_Talk;
             sleep 120;
-            _unit call AddActionFeeling;
+            _unit remoteExec["AddActionFeeling"];
 
         },nil,1.5,true,true,"","true",3,false,""];
 };
@@ -276,21 +273,21 @@ AddActionFeeling = {
 
 addActionGetIntel = {
     //Try to gather intel
-   _this addAction["Gather intel (15 minutes)",{
+   _this addAction ["Gather intel (15 minutes)",{
        params["_unit","_talker","_action"];
 
         //Suspect
         _isSuspect=_unit getVariable ["DCW_Suspect",false];
 
          if (_unit getVariable["DCW_Friendliness",50] < 35 ) exitWith {
-            [_unit,-3] call fnc_updateRep;
+            [_unit,-3] remoteExec ["fnc_updateRep",2];
            [_unit,"Don't talk to me !",false] call fnc_Talk;
            false;
         };
 
         _unit removeAction _action;
         if (!weaponLowered _talker)then{
-            _talker  action ["WeaponOnBack", _talker];
+            _talker action ["WeaponOnBack", _talker];
         };
         showCinemaBorder true;
         _camPos = _talker modelToWorld [-1,-0.2,1.9];
@@ -321,9 +318,9 @@ addActionGetIntel = {
         if (_isSuspect)then{
             [_unit,"Sorry, I have plenty work to do !",false] call fnc_Talk;
         }else{
-            _res = [_unit,_talker] call fnc_GetIntel;
-            [_unit,(_res select 1),false] call fnc_Talk;
-            [_unit,3] call fnc_updateRep;
+            _res = [_unit,_talker] remoteExec ["fnc_GetIntel",2];
+            [_unit,(_res select 1),false] remoteExec ["fnc_Talk",0];
+            [_unit,3] remoteExec ["fnc_updateRep",2];
         };
 
         sleep 1;
@@ -385,7 +382,7 @@ addActionRally = {
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !",false] call fnc_Talk;
             [_unit,SIDE_CURRENT_PLAYER] call fnc_BadBuyLoadout;
-            [_unit,3] call fnc_updateRep;
+            [_unit,3] remoteExec ["fnc_updateRep",2];
             sleep 5;
             [_unit] joinSilent grpNull;
             [_unit] joinSilent (group _talker);
@@ -396,7 +393,7 @@ addActionRally = {
                 [_unit,"Sorry, but I have a family ! No way I get back to war...", false] call fnc_Talk;
             };
 
-            [_unit,-1 ] call fnc_updateRep;
+            [_unit,-1 ] remoteExec ["fnc_updateRep",2];
         };
     },nil,1.5,true,true,"","true",3,false,""];
 };
@@ -424,12 +421,12 @@ addActionFindChief = {
 
 
 addActionLeave = {
-    _this addAction["Go away !",{
+    _this addAction ["Go away !",{
         params["_unit","_asker"];
-        [_unit,-3] call fnc_updateRep;
-        RemoveAllActions _unit;
+        [_unit,-3] remoteExec ["fnc_updateRep",2];
+        _unit remoteExec ["removeAllActions",0];
         _asker playActionNow "gestureGo";
-        [_asker,"Sorry sir, you must leave now, go away !",false] call fnc_Talk;
+        [_asker,"Sorry sir, you must leave now, go away !",false] remoteExec ["fnc_Talk",0];
         _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
         _unit stop false;
         _unit forceWalk false;

@@ -2,14 +2,14 @@ params["_unit"];
 
 playMusic "BackgroundTrack02_F";
 
-if (getMarkerColor "DCW_commander_dir" != "") then {
-	deleteMarker "DCW_commander_dir";
+if (getMarkerColor "dcw_commander_dir" != "") then {
+	deleteMarker "dcw_commander_dir";
 };
 
 _distance = _unit distance ENEMY_COMMANDER;
 _distance = (round ((_distance + (( [-1,1] call BIS_fnc_selectRandom ) * random (50))) / 100)) * 100;
 _dir = round([_unit,ENEMY_COMMANDER] call BIS_fnc_dirTo);
-_marker = createMarker ["DCW_commander_dir",getPos _unit];
+_marker = createMarker ["dcw_commander_dir",getPos _unit];
 _marker setMarkerShape "ICON";
 _marker setMarkerColor "ColorRed";
 _marker setMarkerText "Last direction of the Commander !";
@@ -26,11 +26,11 @@ sleep 10;
 sleep 10;
 [HQ,"Good job soldiers ! Go as fast as possible to this position. ", true] remoteExec ["fnc_talk",GROUP_PLAYERS];
 
-if (getMarkerColor "DCW_commander_pos" != "") then {
-	deleteMarker "DCW_commander_pos";
+if (getMarkerColor "dcw_commander_pos" != "") then {
+	deleteMarker "dcw_commander_pos";
 };
 _pos = _unit getRelPos [_distance, 180 - _dir];
-_marker = createMarker ["DCW_commander_pos", _pos]; 
+_marker = createMarker ["dcw_commander_pos", _pos]; 
 _marker setMarkerShape "ELLIPSE";
 _marker setMarkerSize [200,200];
 _marker setMarkerAlpha 1;

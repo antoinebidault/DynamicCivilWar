@@ -20,7 +20,8 @@ ENEMY_COMMANDER = objNull;
 _grp = createGroup ENEMY_SIDE;
 ESCORT = [];
 
-private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_FindSafePos;
+if (_initPos isEqualTo []) exitWith{hint "unable to spawn the commander"};
 _initPos = ((selectBestPlaces[_initPos, 100, _situation, 5, 1]) select 0 )select 0;
 
 //Spawn the commander
@@ -31,7 +32,7 @@ COMMANDER_LAST_POS = [];
 
 //Custom variable
 if (DEBUG) then {
-    _marker = createMarker ["commanderMarker",position ENEMY_COMMANDER];
+    _marker = createMarker ["commander-marker",position ENEMY_COMMANDER];
     _marker setMarkerShape "ICON";
     _marker setMarkerColor "ColorRed";
     _marker setMarkerType "o_motor_inf";

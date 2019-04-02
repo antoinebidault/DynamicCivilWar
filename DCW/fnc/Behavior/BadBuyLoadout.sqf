@@ -29,7 +29,7 @@ if (_side == ENEMY_SIDE)then{
 
 _unit stop true;
 _unit playActionNow  "TakeFlag";
-removeAllActions _unit;
+_unit remoteExec ["RemoveAllActions",0];
 sleep 2;
 
 // Random weapon loadout

@@ -17,7 +17,8 @@ private _roadRadius = 40;
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
 
-private _initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+private _initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_FindSafePos;
+if (_initPos isEqualTo []) exitWith{ hint "unable to spawn the convoy"; };
 private _road = [_initPos,500,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 private _roadPos = getPos _road;
 
@@ -34,7 +35,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
     _car = [_roadPos, _roadDirection, ENEMY_CONVOY_CAR_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
 
     _car addMPEventHandler ["MPKilled",{
-        [GROUP_PLAYERS,100] spawn fnc_updatescore;
+        [GROUP_PLAYERS,100] remoteExec ["fnc_updateScore",2];   
         CAR_DESTROYED = CAR_DESTROYED + 1;
     }];
 
@@ -69,7 +70,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
          };
 
          _truck addMPEventHandler ["MPKilled",{
-             [GROUP_PLAYERS,100] spawn fnc_updatescore;
+            [GROUP_PLAYERS,100] remoteExec ["fnc_updateScore",2];   
             CAR_DESTROYED = CAR_DESTROYED + 1;
          }];
     };
@@ -84,15 +85,15 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
  [30] call fnc_SpawnConvoy;
 };
 
-deleteMarker "convoyStartMarker";
-private _wpt = createMarker ["convoyStartMarker",_roadPos];
+deleteMarker "convoy-start-marker";
+private _wpt = createMarker ["convoy-start-marker",_roadPos];
 _wpt setMarkerShape "ICON";
 _wpt setMarkerColor "ColorRed";
 _wpt setMarkerType "mil_start";
 _wpt setMarkerText "Convoy start";
 
-deleteMarker "convoyEndMarker";
-_wpt = createMarker ["convoyEndMarker",[0,0,0]];
+deleteMarker "convoy-end-marker";
+_wpt = createMarker ["convoy-end-marker",[0,0,0]];
 _wpt setMarkerShape "ICON";
 _wpt setMarkerColor "ColorRed";
 _wpt setMarkerType "hd_ambush";

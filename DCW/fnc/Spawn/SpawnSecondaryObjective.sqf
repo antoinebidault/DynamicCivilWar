@@ -65,8 +65,8 @@ _officer addEventHandler ["HandleDamage",{
 	
 	if (_damage > .9 && !(_unit getVariable["DCW_isUnconscious",false])) then {
         _unit setVariable["DCW_isUnconscious",true];
-		[_unit] spawn fnc_shout;	
-		removeAllActions _unit;
+		[_unit] remoteExec ["fnc_shout", 0];	
+        _unit remoteExec ["removeAllActions",0];
 		_unit setDamage .9;
 		_unit setHit ["legs", 1];
 
@@ -121,7 +121,7 @@ _officer addEventHandler ["HandleDamage",{
 
 
 //Custom variable
-private _marker = createMarker ["officerLMarker",getPos _officer];
+private _marker = createMarker ["officerlmarker",getPos _officer];
 _marker setMarkerShape "ICON";
 _marker setMarkerColor "ColorRed";
 _marker setMarkerType "mil_warning";
@@ -137,7 +137,7 @@ while {sleep 20; alive _officer && !(_officer getVariable["DCW_interrogated",fal
     private _loc =  nearestLocations [getPosWorld _officer, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	// Info text
     
-    [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",name _officer,round(((getPos _loc) distance2D (leader GROUP_PLAYERS))/10)/100,text _loc], true] remoteExec ["fnc_talk"];
+    [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",name _officer,round(((getPos _loc) distance2D (leader GROUP_PLAYERS))/100)/10,text _loc], true] remoteExec ["fnc_talk"];
     _marker setMarkerPos (getPos _officer);
     _firstSpawn = false;
     sleep 500 + random 240;

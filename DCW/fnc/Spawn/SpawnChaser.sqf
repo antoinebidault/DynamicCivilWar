@@ -10,7 +10,7 @@ private _units = [];
 
 if ( {_x getVariable["DCW_Type",""] == "chaser"} count UNITS_SPAWNED >= MAX_CHASERS) exitWith {_units;};
 
-private _nbUnit = (PATROL_SIZE select 0) + round(random(PATROL_SIZE SELECT 1));;
+private _nbUnit = MAX_CHASERS - round(random 3);
 private _grp = createGroup ENEMY_SIDE;
 private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100, 2, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 

@@ -56,12 +56,12 @@ for "_j" from 1 to _nb do {
         (_this select 0) spawn fnc_failed;
     }];
 
-    _actionId = [ _hostage,"Secure Prisoner","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","_this distance _target < 2","true",{
+    [ _hostage,"Secure Prisoner","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","_this distance _target < 2","true",{
         (_this select 1) playActionNow "medic";
     },{},{
         _hostage = _this select 0;
         if (!alive(_hostage)) exitWith{hint "He is dead";};
-        removeallactions _hostage;
+        _hostage remoteExec ["removeAllActions",0];
         _hostage stop false;
         _hostage playMove "Acts_ExecutionVictim_Unbow";
         _hostage setUnitPos "UP";	
@@ -74,13 +74,12 @@ for "_j" from 1 to _nb do {
         _hostage move _pos;
         
         [_hostage,"Thank you !", false] call fnc_talk;
-        [(_this select 1),"HQ, this is bravo team, we've liberated a hostage held down in a compound.", true] call fnc_talk;
+        [(_this select 1),"HQ, this is bravo team, we've liberated a hostage held down in a compound.", true] remoteExec ["fnc_talk",0,false];
 
         //Task success
-        _hostage call fnc_success;
+        _hostage remoteExec ["fnc_success",2, false];
         
-    },{},[],4,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
-    _hostage setVariable["DCW_Act",_actionId];
+    },{},[],4,nil,true,false] remoteExecCall ["BIS_fnc_holdActionAdd",0];
 
     _units pushBack _hostage;
 

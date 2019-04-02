@@ -7,10 +7,12 @@
 
 params ["_player"];
 
+
 if (!RESPAWN_ENABLED)then {
 	NUMBER_RESPAWN = 0;
 	REMAINING_RESPAWN = 0;
 };
+
 RESPAWN_CHOICE = "";
 REMAINING_RESPAWN = NUMBER_RESPAWN;
 
@@ -92,7 +94,6 @@ fnc_HandleRespawn =
 
 	//count the remaining lives after death
 	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
-
 	if (REMAINING_RESPAWN == -1)exitWith{ endMission "KILLED"; };
 	
 	cutText ["You are severly injured","BLACK OUT", 7];

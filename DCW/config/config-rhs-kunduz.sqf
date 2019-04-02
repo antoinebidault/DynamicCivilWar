@@ -1,10 +1,4 @@
 
-//Global configuration
-//GLOBAL
-SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_CURRENT_PLAYER = side(allPlayers select 0); //Side player
-RESPAWN_ENABLED =  true; 
-CIVIL_REPUTATION = 50;
 
 //SPAWNING CONFIG
 SIZE_BLOCK = 500; // Size of blocks
@@ -46,8 +40,8 @@ HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
 HUMANITAR_LIST_UNITS = ["C_IDAP_Man_AidWorker_06_F","C_IDAP_Man_AidWorker_05_F","C_IDAP_Man_AidWorker_01_F","C_IDAP_Man_AidWorker_08_F","C_IDAP_Man_UAV_06_medical_F","C_IDAP_Man_EOD_01_F","C_IDAP_Man_AidWorker_03_F"];
 MAX_RANDOM_CIVILIAN = 5;
 MAX_SHEEP_HERD = 2; //Number of sheep herd
-RATIO_POPULATION =  1; //Number of unit per building. 0.4 default
-MAX_POPULATION = 14;
+RATIO_POPULATION =  1.5; //Number of unit per building. 0.4 default
+MAX_POPULATION = 18;
 RATIO_CARS =  .1; //Number of empty cars spawned in a city by buidling
 PERCENTAGE_FRIENDLIES = 25; //Percentage friendly spawn in patrol
 PERCENTAGE_CIVILIAN = 50; //Percentage civilian in a block
@@ -59,7 +53,7 @@ PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/1
 //ENEMIES
 ENEMY_SIDE = EAST; //Enemy side 
 PATROL_SIZE = [1,3]; //Size of patrol => [minimum,random additionnals units]
-MAX_SPAWNED_UNITS = 40; //Max units to spawn
+MAX_SPAWNED_UNITS = 50; //Max units to spawn
 MAX_CHASERS = 10; //Max hunters who are looking for you !
 MAX_RANDOM_PATROL = 8; //Number of units patroling around the player at the same time
 MAX_RANDOM_CAR = 2; //Max car spawned.

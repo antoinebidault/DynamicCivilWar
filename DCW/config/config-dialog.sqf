@@ -48,16 +48,19 @@ fnc_SaveAndCloseConfigDialog = {
 		titleCut ["", "BLACK OUT", 2];
 		sleep 2;
 		{
-			_x enableAI "MOVE";
-			_x enableAI "FSM";
-			_x switchMove "";
+			if (!isPlayer _x) then {
+				[_x,"MOVE"] remoteExec ["enableAI", 2] ;
+				[_x,"FSM"] remoteExec ["enableAI", 2] ;
+			};
+    		[_x,""] remoteExec ["switchMove", 0];
 		}
 		foreach units group player;
 		UNIT_SHOWCASE_CAMERA cameraeffect ["terminate", "back"];
 		camDestroy UNIT_SHOWCASE_CAMERA;
 		//deleteVehicle UNIT_SHOWCASE;
 		DCW_STARTED = true;
-		publicVariable "DCW_STARTED";
+		publicVariableServer "DCW_STARTED";
+
 		titleCut ["", "BLACK FADED", 999];
 
 	};
@@ -115,11 +118,13 @@ titleCut ["", "BLACK FADED", 999];
 _anims = ["Acts_listeningToRadio_Loop","Acts_millerCamp_A","Acts_millerCamp_C","Acts_SupportTeam_Front_KneelLoop","Acts_ShieldFromSun_loop","Acts_SupportTeam_Back_KneelLoop"];
 UNIT_SHOWCASE = player; 
 {
-	_x disableAI "MOVE";
-	_x disableAI "FSM";
+	if (!isPlayer _x) then {
+		[_x,"MOVE"] remoteExec ["disableAI", 2] ;
+		[_x,"FSM"] remoteExec ["disableAI", 2] ;
+	};
 	_anim = _anims call BIS_fnc_selectRandom;
 	_anims = _anims - [_anim];
-	_x switchMove _anim;
+    [_x,_anim] remoteExec ["switchMove", 0];
 }
 foreach units group player;
 
