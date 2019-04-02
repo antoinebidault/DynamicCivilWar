@@ -52,7 +52,7 @@ addActionHandcuff =  {
 
 
 addActionGiveUsAHand =  {
-    _this addAction ["Give us a hand (20 points/10 minutes)",{
+    _this addAction ["<t color='#FF0000'>Give us a hand (20 points/10 minutes)</t>",{
         _man  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
@@ -95,7 +95,7 @@ addActionGiveUsAHand =  {
 };
 
 addActionLiberate =  {
-    _this addAction ["Liberate him",{
+    _this addAction ["<t color='#FF0000'>Liberate him</t>",{
         _man  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
@@ -114,7 +114,7 @@ addActionLiberate =  {
 
 
 addActionLookInventory = {
-     _this addAction ["Search in gear",{
+     _this addAction ["<t color='#FF0000'>Search in gear</t>",{
         params["_unit","_human","_action"];
         _unit removeAction _action;
         if (_unit getVariable["DCW_Suspect",false])then{
@@ -135,7 +135,7 @@ addActionLookInventory = {
 };
 
 addActionHalt = {
-     _this addAction ["Say hello",{
+     _this addAction ["<t color='#FF0000'>Say hello</t>",{
         params["_unit","_asker","_action"];
         _asker playActionNow "GestureFreeze";
         _unit stop true;
@@ -165,7 +165,7 @@ addActionHalt = {
 
 addActionDidYouSee = {
     //Try to gather intel
-    _this addAction ["Did you see anything recently ?",{
+    _this addAction ["<t color='#FF0000'>Did you see anything recently ?</t>",{
     params["_unit","_talker","_action"];
         _unit removeAction _action;
 
@@ -221,7 +221,7 @@ addActionDidYouSee = {
 
 AddActionFeeling = {
     //Try to gather intel
-    _this addAction [format["What's your feeling about the %1's presence in %2",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (allPlayers select 0)] >> "displayName"),worldName] ,{
+    _this addAction [format["<t color='#FF0000'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (allPlayers select 0)] >> "displayName"),worldName] ,{
         params["_unit","_talker","_action"];
             [_unit,1] remoteExec ["fnc_updateRep",2];
             [_unit, _action] remoteExec["removeAction"];
@@ -273,7 +273,7 @@ AddActionFeeling = {
 
 addActionGetIntel = {
     //Try to gather intel
-   _this addAction ["Gather intel (15 minutes)",{
+   _this addAction ["<t color='#FF0000'>Gather intel (15 minutes)</t>",{
        params["_unit","_talker","_action"];
 
         //Suspect
@@ -344,7 +344,7 @@ addActionGetIntel = {
 
 addActionRally = {
     //Try to make him a friendly
-   _this addAction["Try to rally (30 minutes/5 points)",{
+   _this addAction["<t color='#FF0000'>Try to rally (30 minutes/5 points)</t>",{
        params["_unit","_talker","_action"];
        
         if (!([GROUP_PLAYERS,5] call fnc_afford)) exitWith {[_unit,"You need more money !",false] call fnc_talk;false;};
@@ -403,7 +403,7 @@ addActionRally = {
 addActionFindChief = {
     params["_unit","_chief"];
     //Try to gather intel
-   _unit addAction["Where is your chief ?",{
+   _unit addAction["<t color='#FF0000'>Where is your chief ?</t>",{
         params["_unit","_talker","_action"];
         _chief = (_this select 3) select 0;
         if(alive _chief)then{

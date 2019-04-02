@@ -18,7 +18,7 @@ MARKER_WHITE_LIST pushback CAMP_MARKER;
 publicVariable "MARKER_WHITE_LIST";
 
 fnc_ActionCamp =  {
-    _this addAction ["Set up camp (1 hour)", {
+    _this addAction ["<t color='#00FF00'>Set up camp (1 hour)</t>", {
         params["_unit","_asker","_action"];
         if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around (100m radius)",false] call fnc_talk;};
         if(([getPos _unit, 1, getDir _unit ] call BIS_fnc_relPos) isFlatEmpty  [2, -1, 0.3, 2, 0, false, _unit]  isEqualTo [] )exitWith {[_unit,"Impossible to build the camp here. Check there is not any object in front of you.",false] call fnc_talk;};
@@ -51,7 +51,7 @@ fnc_ActionCamp =  {
         disableUserInput false;
 
         // Pack up camp
-        (CAMP_OBJS select 0) addAction ["Pack up camp", {
+        (CAMP_OBJS select 0) addAction ["<t color='#00FF00'>Pack up camp</t>", {
            CAMP_RESPAWN_POSITION = [];
            publicVariable "CAMP_RESPAWN_POSITION";
            

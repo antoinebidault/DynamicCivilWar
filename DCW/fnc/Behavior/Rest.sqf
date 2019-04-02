@@ -7,7 +7,7 @@
 
 params["_unit"];
 fnc_ActionRest =  {
-    _this addAction ["Rest (3 hours)", {
+    _this addAction ["<t color='#00FF00'>Rest (3 hours)</t>", {
         params["_unit","_asker","_action"];
         if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around",false] call fnc_talk;};
         _unit removeAction _action;

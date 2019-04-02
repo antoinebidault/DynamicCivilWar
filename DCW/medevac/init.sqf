@@ -81,7 +81,7 @@ while {true} do {
 			sleep 1;
 			openMap false;
 
-		 	MEDEVAC_action = unit addAction ["Abort medevac", { 
+		 	MEDEVAC_action = unit addAction ["<t color='#000'>Abort medevac</t>", { 
 				params["_unit","_actionId"];
 				_unit removeAction MEDEVAC_action;
 				MEDEVAC_State = "aborted";

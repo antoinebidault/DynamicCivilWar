@@ -84,7 +84,6 @@ fnc_HandleRespawn =
 	params["_unit"];
 	_loadout = getUnitLoadout _unit;
 	
-
 	waitUntil{!PLAYER_ALIVE};
 	 
 	 // Corrected player rating
@@ -113,14 +112,17 @@ fnc_HandleRespawn =
 	private _respawnPos = if (RESPAWN_CHOICE == "base") then {INITIAL_RESPAWN_POSITION} else {CAMP_RESPAWN_POSITION};
 	RESPAWN_CHOICE = ""; // Reset
 
-	{ 
-		if(!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
-			_x setPos ([_respawnPos, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)
-		}; 
-	}foreach  units (group _unit);
+	if (!isMultiplayer) then {
+		{ 
+			if(!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
+				_x setPos ([_respawnPos, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)
+			}; 
+		}foreach  units (group _unit);
+	};
 
 	sleep 1;
-	_unit switchMove "Acts_UnconsciousStandUp_part1";
+
+	[_unit,"Acts_UnconsciousStandUp_part1"] remoteExec ["switchMove",0];
 
 	//Disable chasing if not in multiplayer
 	if (!isMultiplayer) then{

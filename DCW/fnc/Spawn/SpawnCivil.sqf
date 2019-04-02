@@ -23,7 +23,7 @@ _unit call fnc_handleDamaged;
 
 //By default, it takes the average civil reputation;
 _unit setVariable["DCW_Suspect", if(random 100 > PERCENTAGE_SUSPECT) then {false}else{true} ];
-_unit setVariable["DCW_Friendliness",CIVIL_REPUTATION];
+_unit setVariable["DCW_Friendliness",CIVIL_REPUTATION, true];
 
 if (DEBUG)then{
     [_unit, if (_unit getVariable["DCW_Suspect", false])then{"ColorOrange"}else{"ColorBlue"}] call fnc_addmarker;
