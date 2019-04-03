@@ -237,7 +237,7 @@ private _typeObj = "";
 		};
 		_nbFriendlies =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
 		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
-		_nbIeds = (floor(_popbase * .5) + floor(random 4));
+		_nbIeds = (floor(_popbase * .25) + floor(random 2));
 
 		_typeObj = ["hostage","sniper","cache","mortar","","",""] call BIS_fnc_selectRandom;
 		_nbHostages = if (_typeObj == "hostage" || _popbase > 20) then{ 1 }else {0};
@@ -260,7 +260,7 @@ private _typeObj = "";
 			_marker setMarkerType "mil_dot";
 			_marker setMarkerAlpha 0.3;
 			_marker setMarkerColor "ColorRed";
-			_marker setMarkerText  format["civ:%1/en:%2/Car:%3/bld:%4/ca:%5",_nbCivilian,_nbEnemies,_nbCars,_nbBuildings,_nbCaches];
+			_marker setMarkerText  format["civ:%1/en:%2/Car:%3/bld:%4/ca:%5/mr:%6",_nbCivilian,_nbEnemies,_nbCars,_nbBuildings,_nbCaches,_nbMortars];
 		};
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];

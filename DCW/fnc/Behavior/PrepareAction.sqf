@@ -318,9 +318,8 @@ addActionGetIntel = {
         if (_isSuspect)then{
             [_unit,"Sorry, I have plenty work to do !",false] call fnc_Talk;
         }else{
-            _res = [_unit,_talker] remoteExec ["fnc_GetIntel",2];
-            [_unit,(_res select 1),false] remoteExec ["fnc_Talk",0];
-            [_unit,3] remoteExec ["fnc_updateRep",2];
+           [_unit,_talker] remoteExec ["fnc_GetIntel",2];
+           [_unit,3] remoteExec ["fnc_updateRep",2];
         };
 
         sleep 1;

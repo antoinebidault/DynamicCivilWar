@@ -77,22 +77,21 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
     params["_unit","_killer"];
 
     if (group _killer == GROUP_PLAYERS)then{
-        []spawn{
-            [_killer,format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _killer],true] remoteExec ["fnc_talk"];
+        [_killer,{
+            [_this,format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _this],true] call fnc_talk;
             sleep 60;
-            ["END1" ,true ,2 ] remoteExec ["BIS_fnc_endMission"];
-        };
+            ["END1" ,true ,2 ] call BIS_fnc_endMission;
+        }] remoteExec["spawn",0];
     }else{
         //Start over
         hint "restart...";
         { ESCORT = ESCORT - [_x]; _x call fnc_deleteMarker;deleteVehicle _x;} forEach ESCORT;
-        [] spawn fnc_SpawnMainObjective; 
+        [] spawn fnc_SpawnMainObjective;
     };
 }];
 
 //Civilian team spawn.
 //If we killed them, it's over.
-
 
 for "_yc" from 1 to 4  do {
     _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
@@ -119,8 +118,6 @@ while {leader _grp == ENEMY_COMMANDER}do{
         " [this] call fnc_foundCommander;",
         "deleteVehicle thisTrigger;"
     ];
-
- 
 
     //Push to the global variable
     COMMANDER_LAST_POS pushback _commanderPos;  

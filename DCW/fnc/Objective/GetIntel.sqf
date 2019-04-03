@@ -33,4 +33,6 @@ _marker setMarkerShape "ICON";
 _marker setMarkerColor "ColorBlack";
 _marker setMarkerType "hd_objective";
 _intel setVariable["DCW_MarkerIntel",_marker];
+[_asker, "HQ, I found some informations !",true] remoteExec ["fnc_talk"];
+[HQ, "Good job, keep up the good work !",true] remoteExec ["fnc_talk"];
 [true,_message];

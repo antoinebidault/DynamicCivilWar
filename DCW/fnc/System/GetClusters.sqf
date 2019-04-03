@@ -20,9 +20,9 @@ fnc_isMilitary = {
 	//Check military houses
 	_nbMilitaryBuilding = {
 		_class = (getText (configfile >> "CfgVehicles" >>  (typeOf _x) >> "vehicleClass")) ;
-		_class == "Structures_Military" || _class == "Structures_Airport" || _class == "Fortifications"
+		_class == "Structures_Military" || _class == "Structures_Airport" || _class == "Fortifications" 
 	} count _buildings;
-	if(_nbMilitaryBuilding > (count _buildings)/3) exitWith {true};
+	if(_nbMilitaryBuilding > (count _buildings)/6) exitWith {true};
 	false;
 };
 
@@ -47,20 +47,25 @@ fnc_getRadiusLocation = {
 		_prevHouseCount = _count;
 		_rad = _radius;
 	};
+
 	_isMilitary = [_totalHouses] call fnc_isMilitary;
 
 	[_rad, _count,_isMilitary,_totalHouses];
 };
 
-/*
+// Friendly markers
+_markerFriendly = [];
+{  if (_x find "marker_friendly" == 0 ) then { _markerFriendly pushback _x }; }foreach allMapMarkers; 
 {
-	_pos = getPos _x;
-    _res = [getPos _x,true] call fnc_getRadiusLocation;
-	if( _res select 1 > 0)then{
-		_clusters pushback [_pos,_res select 0,_res select 1,true,name _x,_res select 2, _res select 3];
-	};
-} forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Strategic","CityCenter"], 25000]; 
-*/
+	_locPos = getMarkerPos _x;
+	_radius = getMarkerSize _x select 0;
+	_result = [_locPos] call fnc_getRadiusLocation;
+	_clusters pushback [_locPos,_radius,_result select 1,true,_x,true, _result select 3];
+} foreach _markerFriendly;
+
+
+// forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Strategic","CityCenter"], 25000]; 
+
 
 for "_xc" from 0 to _worldNbBlocks do {
 	for "_yc" from 0 to _worldNbBlocks do {

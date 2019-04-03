@@ -5,23 +5,6 @@
  * License : GNU (GPL)
  */
 
-/*
-Grab data:
-Mission: insurgent-s%20hunt%20tanoa
-World: Tanoa
-Anchor position: [2068.89, 3509.93]
-Area size: 10
-Using orientation of objects: no
-*/
-/*
-Grab data:
-Mission: DCW
-World: Kunduz
-Anchor position: [3932.41, 2503.47]
-Area size: 7
-Using orientation of objects: yes
-*/
-
 [
 	["Land_Map_Tanoa_F",[-0.408447,0.912354,2.14577e-005],359.984,1,0,[2.29079,-2.51699],"","",true,false], 
 	["Land_GasCooker_F",[0.181885,1.00195,0.00036478],0.00471401,1,0,[2.30759,-2.75472],"","",true,false], 

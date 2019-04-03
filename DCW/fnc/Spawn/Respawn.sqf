@@ -52,18 +52,18 @@ if (RESPAWN_ENABLED) then{
 			"_hitPoint"			// hit point Cfg name (String)
 		];
 
-		if (_damage > .95 && NUMBER_RESPAWN >= 1 && PLAYER_ALIVE)then{
+		if (_damage > .96 && NUMBER_RESPAWN >= 1 && PLAYER_ALIVE)then{
 			PLAYER_ALIVE = false;
 			_unit setUnconscious true;
 			addCamShake [15, 5, 0.7];
 			[_unit] spawn fnc_HandleRespawn;
-			_damage = .95;
-			_unit setDamage .95;
+			_damage = .96;
+			_unit setDamage .96;
 		}else{
 			if (!PLAYER_ALIVE)then{
-				_damage = .95;
+				_damage = .96;
 				_unit playActionNow "agonyStart";
-				_unit setDamage .95;
+				_unit setDamage .96;
 			}
 		};
 		
