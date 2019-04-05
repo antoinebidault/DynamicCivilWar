@@ -16,7 +16,7 @@ _unit = _group createUnit [_unitName, _pos,[],ENEMY_SKILLS,"NONE"];
 
 
 //Si c'est un mauvais
-_unit setVariable["DCW_Chief",_chief];
+_unit setVariable["DCW_Chief",_chief, true];
 
 [_unit] call fnc_handlekill;
 _unit call fnc_handleDamaged;
@@ -35,7 +35,7 @@ removeAllWeapons _unit;
 
 if (_handleFireEvent)then{
     [_unit] spawn fnc_HandleFiredNear;
-    [_unit] spawn fnc_AddCivilianAction;
+    [_unit] remoteEXec ["fnc_AddCivilianAction",0];
 };
 
 UNITS_SPAWNED pushBack _unit;

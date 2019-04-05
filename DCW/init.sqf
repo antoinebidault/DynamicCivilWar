@@ -87,7 +87,6 @@ fnc_PrepareAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Pr
 fnc_AddCivilianAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\addCivilianAction.sqf";
 fnc_shout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Shout.sqf";
 fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\BadBuyLoadout.sqf";
-fnc_Rest =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\Rest.sqf";
 fnc_Camp =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\Camp.sqf";
 
 
@@ -126,7 +125,7 @@ fnc_intro = compileFinal preprocessFileLineNumbers format["DCW\intro\intro-%1.sq
 
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
 
-
+// Global scope variable
 DCW_STARTED = false;
 publicVariable "DCW_STARTED";
 
@@ -138,6 +137,27 @@ publicVariable "GROUP_PLAYERS";
 
 SIDE_CURRENT_PLAYER = side(allPlayers select 0); //Side player
 publicVariable "SIDE_CURRENT_PLAYER";
+
+CHASER_TRIGGERED = false;
+publicVariable "CHASER_TRIGGERED";
+
+CHASER_VIEWED = false;
+publicVariable "CHASER_VIEWED";
+
+DCW_SCORE = 150;
+publicVariable "DCW_SCORE";
+
+CAMP_RESPAWN_POSITION = [];
+publicVariable "CAMP_RESPAWN_POSITION";
+
+CIVIL_REPUTATION = 50;
+publicVariable "CIVIL_REPUTATION";
+
+CAMP_RESPAWN_POSITION_ID = [];
+publicVariable "CAMP_RESPAWN_POSITION_ID";
+
+PLAYER_MARKER_LIST = []; //Pass list of marker white list name
+publicVariable "PLAYER_MARKER_LIST";
 
 TALK_QUEUE = [];
 

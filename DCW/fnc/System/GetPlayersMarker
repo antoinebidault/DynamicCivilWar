@@ -1,0 +1,16 @@
+
+// Create a basic hidden marker on player's position (Used for blacklisting purposes)
+
+_markersPlayer = []
+{
+    _mkr = createMarker [format["player-marker-%1",random 1000], getPos player];
+    _mkr setMarkerShape "ELLIPSE";
+    _mkr setMarkerColor "ColorGreen";
+    _mkr setMarkerAlpha 0;
+    _mkr setMarkerSize [260,260];
+    if (DEBUG) then {
+        _mkr setMArkerAlpha .3;
+    };
+} allPlayers;
+
+_markersPlayer

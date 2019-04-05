@@ -5,26 +5,9 @@
  * License : GNU (GPL)
  */
 
+
 if (!isServer) exitWith{};
 
-
-CHASER_TRIGGERED = false;
-publicVariable "CHASER_TRIGGERED";
-
-CHASER_VIEWED = false;
-publicVariable "CHASER_VIEWED";
-
-DCW_SCORE = 150;
-publicVariable "DCW_SCORE";
-
-CAMP_RESPAWN_POSITION = [];
-publicVariable "CAMP_RESPAWN_POSITION";
-
-INITIAL_RESPAWN_POSITION = getPos (leader GROUP_PLAYERS);
-publicVariable "CAMP_RESPAWN_POSITION";
-
-CIVIL_REPUTATION = 50;
-publicVariable "CIVIL_REPUTATION";
 
 // Create a fake HQ unit
 "B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
@@ -38,6 +21,7 @@ GAME_ZONE_SIZE=5000;
 MARKER_WHITE_LIST = []; //Pass list of marker white list name
 publicVariable "MARKER_WHITE_LIST";
 
+PLAYER_MARKER_LIST = []; //Pass list of marker white list name
 UNITS_SPAWNED = [];
 INTELS = [];
 UNITS_CACHED = [];
@@ -52,13 +36,6 @@ CONVOY = []; // Current convoy
 ESCORT = []; // List of escorts guys with the commandant
 
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
-
-// exclude the player marker
-private _mp = createMarker ["player-marker", getPos (leader GROUP_PLAYERS)];
-_mp setMarkerShape "ELLIPSE";
-_mp setMarkerAlpha 0;
-_mp setMarkerSize [400,400];
-MARKER_WHITE_LIST pushBack _mp;
 publicVariable "MARKER_WHITE_LIST";
 
 
@@ -270,6 +247,7 @@ private _typeObj = "";
 } foreach _clusters;
 
 [] call fnc_PrepareAction;
+[] call fnc_camp;
 
 [] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
 [] execVM "DCW\fnc\spawn\SpawnRandomEnemies.sqf"; //Enemy patrols
@@ -285,20 +263,34 @@ private _typeObj = "";
 private ["_mkr","_cacheResult","_ieds"];
 
 [] spawn {
-	if (DEBUG)then{
-		while {true} do{
+	while {true} do {
+		if (DEBUG) then {
 			{
 				//Update marker position
 				_mkr = _x getVariable["marker",""];
 				if (_mkr!="")then{
 					_mkr setMarkerPos (getPos _x);
 					if (!alive _x) then{
-            		 	_x call fnc_deleteMarker;
+						_x call fnc_deleteMarker;
 					}
 				};
 			} foreach UNITS_SPAWNED + ESCORT + CONVOY;
-			sleep 1;
+
 		};
+
+
+		_tmp = [];
+		{
+			//Update marker position
+			_mkr = _x getVariable["marker",""];
+			if (_mkr != "" && getMarkerColor _mkr  != "") then {
+				_tmp pushBackUnique _mkr;
+				_mkr setMarkerPos (getPos _x);
+			};
+			sleep .2;
+		} foreach allPlayers;
+		PLAYER_MARKER_LIST = _tmp;
+		sleep 1;
 	};
 };
 
@@ -416,11 +408,6 @@ while { true } do {
 		_civilReputationSum = 0;
 		_civilReputationNb = 0;
 
-		//If all players are killed => Finish the mission
-		if ({ alive _x } count allPlayers == 0) then {
-			["End1", true, true] remoteExecCall ["BIS_FNC_EndMission"];
-		};
-
 		// foreach UNITS_SPAWNED
 		{
 			_unit = _x;
@@ -453,9 +440,11 @@ while { true } do {
 								hint "Alarm !";
 							};
 							
-							playMusic (["LeadTrack04a_F","LeadTrack04_F"] call BIS_fnc_selectRandom);
+							// playMusic (["LeadTrack04a_F","LeadTrack04_F"] call BIS_fnc_selectRandom);
+							
 							CHASER_TRIGGERED = true;
 							publicVariable "CHASER_TRIGGERED";
+							
 							//Chasers
 							if (CHASER_TRIGGERED && time > (_timerChaser + 20))then{
 								_timerChaser = time - 1;
@@ -506,8 +495,10 @@ while { true } do {
 			_tmp = round(_civilReputationSum/_civilReputationNb);
 			if (_tmp != CIVIL_REPUTATION) then{
 				_diff = (_tmp-CIVIL_REPUTATION);
-				publicVariable "CIVIL_REPUTATION";
 				[format["REPUTATION %1% <t color='%2'>%3%4pt</t>",_tmp,if(_diff > 0) then {"#29c46c"} else{"#ea4f4f"},if(_diff > 0) then{"+"}else{""},_diff]] remoteExec ["fnc_ShowIndicator",0,false];
+
+				CIVIL_REPUTATION = _tmp;
+				publicVariable "CIVIL_REPUTATION";
 			};
 			CIVIL_REPUTATION = _tmp;
 		};

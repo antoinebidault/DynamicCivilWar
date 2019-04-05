@@ -14,7 +14,8 @@ _this select 0 addEventHandler["FiredNear",
 	_distance = _this select 2;	
 	_gunner = _this select 7;	
 	
-	if (_civ distance _gunner > 30 && (random 100) < PERCENTAGE_INSURGENTS)then{
+	// Check the civ is not too far
+	if ( { _civ distance _x > 30 } count allPlayers == count allPlayers && (random 100) < PERCENTAGE_INSURGENTS)then{
 		
 		//Remove the eventHandler to prevent spamming
 		_civ removeAllEventHandlers "FiredNear";
@@ -74,7 +75,7 @@ _this select 0 addEventHandler["FiredNear",
 			sleep 15;
 			_unit stop false;
 			[_unit]  remoteExec ["fnc_handleFiredNear",0];
-		},nil,1.5,true,true,"","true",2,false,""]] remoteExec ["addAction"];
+		},nil,1.5,false,true,"","true",2,false,""]] remoteExec ["addAction"];
 
 		if (isPlayer _gunner )then {
 			[_unit,-5] call fnc_UpdateRep;

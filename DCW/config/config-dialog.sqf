@@ -30,8 +30,8 @@ fnc_SaveAndCloseConfigDialog = {
 	publicVariable "POPULATION_INTENSITY";
 
 	//Revive
-	REVIVE_ENABLED =  2104 call fnc_getValueChkBx;
-	publicVariable "REVIVE_ENABLED";
+	MEDEVAC_ENABLED =  2104 call fnc_getValueChkBx;
+	publicVariable "MEDEVAC_ENABLED";
 
 	//Respawn
 	RESPAWN_ENABLED =  2105 call fnc_getValueChkBx;
@@ -115,14 +115,14 @@ fnc_SwitchUnit = {
 
 titleCut ["", "BLACK FADED", 999];
 
-_anims = ["Acts_listeningToRadio_Loop","Acts_millerCamp_A","Acts_millerCamp_C","Acts_SupportTeam_Front_KneelLoop","Acts_ShieldFromSun_loop","Acts_SupportTeam_Back_KneelLoop"];
+_anims = ["Acts_millerCamp_A","Acts_millerCamp_C","acts_millerIdle","Acts_Ending_Lacey2","Acts_starterPistol_loop","Acts_listeningToRadio_Loop","Acts_ComingInSpeakingWalkingOut_10","Acts_ComingInSpeakingWalkingOut_4","Acts_ShieldFromSun_loop","Acts_ComingInSpeakingWalkingOut_4"];
 UNIT_SHOWCASE = player; 
 {
 	if (!isPlayer _x) then {
 		[_x,"MOVE"] remoteExec ["disableAI", 2] ;
 		[_x,"FSM"] remoteExec ["disableAI", 2] ;
 	};
-	_anim = _anims call BIS_fnc_selectRandom;
+	_anim = _anims select 0;
 	_anims = _anims - [_anim];
     [_x,_anim] remoteExec ["switchMove", 0];
 }

@@ -15,7 +15,7 @@ private _compos = [compo_commander1,compo_commander2];
 private _newPos = [];
 private _radiusSpawnRange = [1000,5400];
 private _playerPos = getPos (leader GROUP_PLAYERS);
-private _initPos = [_playerPos,_radiusSpawnRange select 0, _radiusSpawnRange select 1, 4, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+private _initPos = [_playerPos,_radiusSpawnRange select 0, _radiusSpawnRange select 1, 4, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_FindSafePos;
 private _grp = createGroup ENEMY_SIDE;
 private _officer = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],ENEMY_SKILLS,"NONE"];
 
@@ -137,7 +137,7 @@ while {sleep 20; alive _officer && !(_officer getVariable["DCW_interrogated",fal
     private _loc =  nearestLocations [getPosWorld _officer, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	// Info text
     
-    [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",name _officer,round(((getPos _loc) distance2D (leader GROUP_PLAYERS))/100)/10,text _loc], true] remoteExec ["fnc_talk"];
+    [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",name _officer,round(((getPos _loc) distance2D (leader GROUP_PLAYERS))/100)/100,text _loc], true] remoteExec ["fnc_talk"];
     _marker setMarkerPos (getPos _officer);
     _firstSpawn = false;
     sleep 500 + random 240;

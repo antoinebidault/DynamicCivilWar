@@ -48,4 +48,5 @@ class Params
 		function = "BIS_fnc_paramDaytime"; // (Optional) [[Functions_Library_(Arma_3)|Function]] [[call]]ed when player joins, selected value is passed as an argument
 		isGlobal = 1; // (Optional) 1 to execute script / function locally for every player who joins, 0 to do it only on server
 	};
+	#include "\a3\Functions_F\Params\paramRevive.hpp"
 };

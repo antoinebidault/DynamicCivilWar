@@ -34,7 +34,9 @@ while {sleep 5;  alive _unit}do{
 
     _curPos =  getPos _driver;
     _newPos = getMarkerPos(([_curPos] call fnc_findNearestMarker) select 0);
-    _newPos = getPos([_newPos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
+    _road = ([_newPos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
+    if (isNull _road) exitWith {[_truck,_unit,_radius] spawn fnc_officerpatrol; };
+    _newPos = getPos _road; 
 
     private _marker = createMarker [format["sold%1",random 13100], _newPos];
     _marker setMarkerShape "ELLIPSE";

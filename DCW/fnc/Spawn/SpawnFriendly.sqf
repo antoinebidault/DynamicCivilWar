@@ -16,7 +16,8 @@ if (DEBUG)then{
     [_unit,"ColorGreen"] call fnc_addmarker;
 };
 
-_unit remoteExec ["addActionGiveUsAHand"];
+
+[_unit] remoteExec ["addActionGiveUsAHand"];
 
 if (!_excludedFromSpawnedUnit)then{
     UNITS_SPAWNED pushback _unit;

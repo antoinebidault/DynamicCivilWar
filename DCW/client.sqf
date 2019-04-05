@@ -65,7 +65,7 @@ if (ENABLE_DIALOG && !didJIP) then {
 	publicVariableServer "DCW_STARTED";
 };
 
-if (!DEBUG) then {
+if (!DEBUG ) then {
 	[] call fnc_intro;
 };
 
@@ -89,7 +89,7 @@ titleCut ["", "BLACK IN", 5];
 sleep 30;
 
 // Hint
-"Welcome to dynamic civil war" hintC "Your main objective is to seek & neutralize an enemy commander hidden on the map. He will be always moving on the map, hiding in forestry area or compounds. You have two way to get info about his location : interrogating civil chief in neutralizated compound or interrogating one of his officer wandering on the map in trucks...";
+hint "Your main objective is to seek & neutralize an enemy commander hidden on the map. He will be always moving on the map, hiding in forestry area or compounds. You have two way to get info about his location : interrogating civil chief in neutralizated compound or interrogating one of his officer wandering on the map in trucks...";
 
 sleep 1;
 

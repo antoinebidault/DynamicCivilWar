@@ -20,7 +20,7 @@ ENEMY_COMMANDER = objNull;
 _grp = createGroup ENEMY_SIDE;
 ESCORT = [];
 
-private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_FindSafePos;
+private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_FindSafePos;
 if (_initPos isEqualTo []) exitWith{hint "unable to spawn the commander"};
 _initPos = ((selectBestPlaces[_initPos, 100, _situation, 5, 1]) select 0 )select 0;
 
@@ -130,7 +130,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
     _initPos = _commanderPos;
-    _commanderPos = [_commanderPos, 400, 3000, 1, 0, 5, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+    _commanderPos = [_commanderPos, 400, 3000, 1, 0, 5, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_FindSafePos;
     _commanderPos = ((selectBestPlaces[_commanderPos, 500, _situation, 5, 1]) select 0 )select 0;
 
     _grp setBehaviour "SAFE";

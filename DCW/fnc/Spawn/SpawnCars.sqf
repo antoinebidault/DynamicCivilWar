@@ -33,7 +33,7 @@ private _roadConnectedTo = objNull;
   _x;
   _r = floor random 100;
 
-  if (_r < PERCENTAGE_ENEMIES)then{
+  if (_r < 30)then{
   	_car = createVehicle [ENEMY_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
   }else{
   	_car = createVehicle [CIV_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];

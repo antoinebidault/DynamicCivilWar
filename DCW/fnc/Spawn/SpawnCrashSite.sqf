@@ -30,10 +30,6 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _chopper enableSimulationGlobal false;
     _crater setPos (getPos _chopper);
 
-    _elementToDestroy = "IEDLandBig_F" createVehicle _spawnPos;
-    _elementToDestroy setPos (getPos _chopper);
-    _elementToDestroy allowDamage true;
-
     _chopper setDamage 1;
     _chopper setVehicleLock "LOCKED";
 
@@ -58,23 +54,22 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
           [[_this select 0, _this select 1], {
                params["_chopper","_player"];
 
-               [_player,"30 seconds before detonation", false] remoteExec ["fnc_talk"];
+               [_player,"30 seconds before detonation", false] spawn fnc_talk;
                sleep 24;
-               [_player,"5...", false] remoteExec ["fnc_talk"];
-               sleep 1;
-               [_player,"...4...", false] remoteExec ["fnc_talk"];
-               sleep 1;
-               [_player,"...3...", false] remoteExec ["fnc_talk"];
-               sleep 1;
-               [_player,"...2...", false] remoteExec ["fnc_talk"];
-               sleep 1;
-               [_player,"...1", false] remoteExec ["fnc_talk"];
-               sleep 1;
+               [_player,"5...", false] call fnc_talk;
+               [_player,"...4...", false] call fnc_talk;
+               [_player,"...3...", false] call fnc_talk;
+               [_player,"...2...", false]  call fnc_talk;
+               [_player,"...1", false]  call fnc_talk;
 
                _bomb = "HelicopterExploBig";
                _boom = _bomb createVehicle getPos _chopper;
                _chopper remoteExec ["fnc_success",2, false];
-          }] remoteExec ["spawn"];
+               sleep 1;
+               deleteVehicle _chopper;
+
+          }] remoteExec ["spawn",0];
+
      },{},[],8,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
     // Add to markers
@@ -86,8 +81,8 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _civ = 0;
     _en = 0;
     if (random 100 > 50) then { _civ = 4;} else { _en  = 4; };
-    MARKERS pushback [_enemyArea,getPos _elementToDestroy,false,false,40,[],[_civ,0,_en,0,0,0,0,0,0,0],[], 0,true,false,[]];
-    CRASHSITES pushback _elementToDestroy;
+    MARKERS pushback [_enemyArea,getPos _chopper,false,false,40,[],[_civ,0,_en,0,0,0,0,0,0,0],[], 0,true,false,[]];
+    CRASHSITES pushback _chopper;
 };
 
 CRASHSITES;

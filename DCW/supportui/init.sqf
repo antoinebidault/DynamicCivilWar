@@ -5,7 +5,7 @@
  * License : GNU (GPL)
  */
  
-params ["_unit"];
+_unit = _this;
 waitUntil { time > 0 };
 
  //Create a side logic 

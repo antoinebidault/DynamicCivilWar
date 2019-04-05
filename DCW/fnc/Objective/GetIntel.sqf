@@ -21,7 +21,11 @@ private _potentialIntel = [];
     };
 } forEach MARKERS;
 
-if (count _potentialIntel == 0 || random 100 > _probability) exitWith { [false,"I have nothing to tell you ! Leave me alone !"];};
+if (count _potentialIntel == 0 || random 100 > _probability ) exitWith { 
+    if (alive _unit) then {
+        [_unit, "I have nothing to tell you ! Leave me alone !",true] remoteExec ["fnc_talk",0]; 
+    };
+    };
 
 private _intel = _potentialIntel call BIS_fnc_selectRandom;
 _task = [_intel,_asker,true] call fnc_createTask;

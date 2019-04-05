@@ -129,7 +129,7 @@ class PARAMETERS_DIALOG
         class RscText_1006: RscText
         {
             idc = 1006;
-            text = "Revive system enabled";
+            text = "Medevac AI system enabled";
             x = -8 * GUI_GRID_W + GUI_GRID_X;
             y = 16 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -142,7 +142,7 @@ class PARAMETERS_DIALOG
           y = 16 * GUI_GRID_H + GUI_GRID_Y;
           w = 1 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Enable Revive system";
+          tooltip = "Enable AI medevac system";
         };
         class RscText_1007: RscText
         {

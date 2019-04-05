@@ -4,6 +4,4 @@
  * Author: BIDASS
  * License : GNU (GPL)
  */
-
-skipTime 12;
-//TODO
+ // TODO

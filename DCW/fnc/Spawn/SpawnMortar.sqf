@@ -15,15 +15,7 @@ private _units = [];
 
 if (_nb == 0)exitWith{_units;};
 
-private _tempList = MARKER_WHITE_LIST;
-
-{
-    _mkrToAvoid = createMarker ["mkr-to-avoid-" + str(floor random 100000),getPos _x];
-    _mkrToAvoid setMarkerShape "ELLIPSE";
-    _mkrToAvoid setMarkerAlpha 0;
-    _mkrToAvoid setMarkerSize [150,150];
-    _tempList pushback _mkrToAvoid;
-} foreach allPlayers;
+private _tempList = MARKER_WHITE_LIST + PLAYER_MARKER_LIST;
 
 _posToSpawn = [_pos, 350 min (1.5*_radius) , 500 min (3*_radius), 3, 0, 2, 0, _tempList] call BIS_fnc_FindSafePos;
 

@@ -7,8 +7,8 @@
 
 
 //Menote le mec;
-addActionHandcuff =  {
-    _this addAction["Capture him",{
+addActionHandCuff =  {
+    _this addaction ["Capture him",{
         _man  = (_this select 0);
         _man removeAllEventHandlers "FiredNear";
         _man  setVariable["civ_affraid",false];
@@ -47,12 +47,12 @@ addActionHandcuff =  {
         hint "Civilian captured";	   
         [_man] remoteExec ["CIVIL_CAPTURED",2];
 
-    },nil,1.5,true,true,"","true",3,false,""];
+    },nil,1.5,false,true,"","true",3,false,""];
 };
 
 
 addActionGiveUsAHand =  {
-    _this addAction ["<t color='#FF0000'>Give us a hand (20 points/10 minutes)</t>",{
+    _this select 0 addaction ["<t color='#FF0000'>Give us a hand (20 points/10 minutes)</t>",{
         _man  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
@@ -71,7 +71,7 @@ addActionGiveUsAHand =  {
                  {
                     [_x,_action] remoteExec ["removeAction",2];
                     _x setVariable ["follow_player",false];
-                    _x remoteExec ["addActionGiveUsAHand"];
+                    [_x] remoteExec ["addActionGiveUsAHand"];
                 } foreach units group _man;
             }]] remoteExec ["addAction",2];
         } foreach units group _man;
@@ -91,11 +91,11 @@ addActionGiveUsAHand =  {
             };
         };
 
-    },nil,12,true,true,"","true",3,false,""];
+    },nil,12,false,true,"","true",3,false,""];
 };
 
 addActionLiberate =  {
-    _this addAction ["<t color='#FF0000'>Liberate him</t>",{
+    _this addaction ["<t color='#FF0000'>Liberate him</t>",{
         _man  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
@@ -109,12 +109,12 @@ addActionLiberate =  {
         _man enableai "ANIM"; 
         _man enableai "MOVE"; 
         [_man,2] remoteExec ["fnc_updateRep",2];
-    },nil,1.5,true,true,"","true",3,false,""];
+    },nil,1.5,false,true,"","true",3,false,""];
 };
 
 
 addActionLookInventory = {
-     _this addAction ["<t color='#FF0000'>Search in gear</t>",{
+      _this addaction ["<t color='#FF0000'>Search in gear</t>",{
         params["_unit","_human","_action"];
         _unit removeAction _action;
         if (_unit getVariable["DCW_Suspect",false])then{
@@ -131,11 +131,11 @@ addActionLookInventory = {
             _human action ["Gear", _unit];
         };
 
-    },nil,1.5,true,true,"","true",3,false,""];
+    },nil,1.5,false,true,"","true",3,false,""];
 };
 
 addActionHalt = {
-     _this addAction ["<t color='#FF0000'>Say hello</t>",{
+      _this addaction ["<t color='#FF0000'>Say hello</t>",{
         params["_unit","_asker","_action"];
         _asker playActionNow "GestureFreeze";
         _unit stop true;
@@ -160,12 +160,12 @@ addActionHalt = {
         _unit stop false;
         _unit enableAI "MOVE";
         _unit call addActionHalt;
-    },nil,2.5,true,true,"","true",20,false,""];
+    },nil,2.5,false,true,"","true",20,false,""];
 };
 
 addActionDidYouSee = {
     //Try to gather intel
-    _this addAction ["<t color='#FF0000'>Did you see anything recently ?</t>",{
+     _this addaction ["<t color='#FF0000'>Did you see anything recently ?</t>",{
     params["_unit","_talker","_action"];
         _unit removeAction _action;
 
@@ -216,12 +216,12 @@ addActionDidYouSee = {
         if (alive _unit) then {
             _unit remoteExec ["addActionDidYouSee"];
         };
-    },nil,1.5,true,true,"","true",3,false,""];
+    },nil,1.5,false,true,"","true",3,false,""];
 };
 
 AddActionFeeling = {
     //Try to gather intel
-    _this addAction [format["<t color='#FF0000'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (allPlayers select 0)] >> "displayName"),worldName] ,{
+     _this addaction [format["<t color='#FF0000'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (allPlayers select 0)] >> "displayName"),worldName] ,{
         params["_unit","_talker","_action"];
             [_unit,1] remoteExec ["fnc_updateRep",2];
             [_unit, _action] remoteExec["removeAction"];
@@ -266,14 +266,14 @@ AddActionFeeling = {
             sleep 120;
             _unit remoteExec["AddActionFeeling"];
 
-        },nil,1.5,true,true,"","true",3,false,""];
+        },nil,1.5,false,true,"","true",3,false,""];
 };
 
 
 
 addActionGetIntel = {
     //Try to gather intel
-   _this addAction ["<t color='#FF0000'>Gather intel (15 minutes)</t>",{
+    _this addaction ["<t color='#FF0000'>Gather intel (15 minutes)</t>",{
        params["_unit","_talker","_action"];
 
         //Suspect
@@ -337,13 +337,13 @@ addActionGetIntel = {
         _unit enableAI "MOVE";
         _unit stop false;
 
-    },nil,1.5,true,true,"","true",3,false,""];
+    },nil,1.5,false,true,"","true",3,false,""];
 };
 
 
 addActionRally = {
     //Try to make him a friendly
-   _this addAction["<t color='#FF0000'>Try to rally (30 minutes/5 points)</t>",{
+    _this addaction["<t color='#FF0000'>Try to rally (30 minutes/5 points)</t>",{
        params["_unit","_talker","_action"];
        
         if (!([GROUP_PLAYERS,5] call fnc_afford)) exitWith {[_unit,"You need more money !",false] call fnc_talk;false;};
@@ -394,7 +394,7 @@ addActionRally = {
 
             [_unit,-1 ] remoteExec ["fnc_updateRep",2];
         };
-    },nil,1.5,true,true,"","true",3,false,""];
+    },nil,1.5,false,true,"","true",3,false,""];
 };
 
 
@@ -415,12 +415,12 @@ addActionFindChief = {
         }else{
             [_unit,"Our chief is no more... Fucking war !",false] call fnc_Talk;
         };
-    },[_chief],1.5,true,true,"","true",3,false,""];
+    },[_chief],1.5,false,true,"","true",3,false,""];
 };
 
 
 addActionLeave = {
-    _this addAction ["Go away !",{
+     _this addaction ["Go away !",{
         params["_unit","_asker"];
         [_unit,-3] remoteExec ["fnc_updateRep",2];
         _unit remoteExec ["removeAllActions",0];
@@ -431,6 +431,66 @@ addActionLeave = {
         _unit forceWalk false;
         _unit forceSpeed 10;
         _unit move _pos;
-    },nil,3.5,true,true,"","true",3,false,""];
+    },nil,3.5,false,true,"","true",3,false,""];
 };
 
+
+fnc_ActionRest =  {
+    _this addAction ["<t color='#00FF00'>Rest (3 hours)</t>", {
+        params["_tent","_unit","_action"];
+        if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around",false] call fnc_talk;};
+        _tent removeAction _action;
+        _newObjs = [getPos _unit,getDir _unit, compo_rest ] call BIS_fnc_ObjectsMapper;
+        _camPos = _unit modelToWorld [.3,2.2,2];
+        _cam = "camera" camcreate _camPos;
+        _cam cameraeffect ["internal", "back"];
+        _cam camSetPos _camPos;
+        _cam camSetTarget _unit;
+        _cam camSetFov 1.05;
+        _cam camCommit 30;
+        _unit stop true;
+        sleep 2;
+        _unit action ["sitdown",_unit];
+        sleep 3;
+        
+        if (!isMultiplayer) then {
+            setAccTime 120;
+        };
+
+        sleep 25;
+        
+        if (!isMultiplayer) then {
+            setAccTime 1;
+            skipTime 3;
+        };
+
+        sleep 3;
+        [_unit,"Ok, let's go back to work !",false] call fnc_Talk;
+        _unit action ["sitdown",_unit];
+
+        _cam cameraeffect ["terminate", "back"];
+        camDestroy _cam;
+
+        _unit setFatigue 0;
+        _unit setStamina 1;
+        _unit enableStamina false;
+        _unit enableFatigue false;
+
+        { deleteVehicle _x; }foreach _newObjs;
+
+        sleep 1;
+        disableUserInput false;
+        sleep 3;
+
+        [_tent,_unit,_action]spawn{
+            params["_tent","_unit","_action"];
+            sleep 30;
+            _unit enableStamina true;
+            _unit enableFatigue true;
+            sleep 300;
+            if (isNull _tent) exitWith {};
+            _tent call fnc_ActionRest;
+        };
+        
+    },nil,1.5,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];
+ };
