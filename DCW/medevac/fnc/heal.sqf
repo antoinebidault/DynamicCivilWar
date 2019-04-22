@@ -14,7 +14,7 @@ params [
 HEALER = _healer;
 {_healer disableAI _x; true} count ["TARGET","FSM","AUTOTARGET","AUTOCOMBAT"];
 _healer doMove position _injured;
-waitUntil { _healer distance _injured < 5 || speed _healer == 0 };
+waitUntil { sleep 3; _healer distance _injured < 4 || speed _healer == 0 };
 sleep 5;
 
 if (speed _healer == 0) exitWith{ [_healer,_injured] call fnc_heal;};

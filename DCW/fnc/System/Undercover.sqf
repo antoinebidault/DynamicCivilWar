@@ -38,7 +38,7 @@ _null = [_unit,"Good idea ! I'm gonna infiltrate their line.", false] spawn fnc_
 
 private _idFiredNear = _unit addEventHandler["FiredNear",{
 	params["_unit","_veh","_dist","_weap","_muz","_mode","_am","_gunner"];
-	if (side _gunner == ENEMY_SIDE && alive _unit && alive _gunner && _dist < 20)then{
+	if (side _gunner == SIDE_ENEMY && alive _unit && alive _gunner && _dist < 20)then{
 		_unit setVariable["DCW_undercover" , false];
 	};
 }];
@@ -66,7 +66,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 	};
 
 	{
-		if (side _x == ENEMY_SIDE)then{
+		if (side _x == SIDE_ENEMY)then{
 			
 			if (_x knowsAbout _unit > 2) then{
 				private _know =  [_x,_unit] call fnc_getVisibility; //[ position _x, getDir _x, 45, position _unit] call BIS_fnc_inAngleSector;

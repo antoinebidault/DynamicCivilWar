@@ -3,10 +3,10 @@
 //GLOBAL
 DEBUG = false; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_CURRENT_PLAYER = side player; //Side player
+SIDE_PLAYER = side player; //Side player
 NUMBER_RESPAWN = 3;
 CIVIL_REPUTATION = 50;
-"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
 	sleep 1;
 	HQ setName "HQ";
@@ -35,7 +35,7 @@ FRIENDLY_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"]; //Friendly cars
 FRIENDLY_FLAG = "Flag_AFG_13";//Flag of your side
 
 //CIVILIAN
-CIV_SIDE = CIVILIAN; // Side civilian
+SIDE_CIV = CIVILIAN; // Side civilian
 CIV_LIST_UNITS = ["UK3CB_TKC_C_CIV"];
 CIV_LIST_CARS = ["UK3CB_TKC_C_Ikarus","UK3CB_TKC_C_Datsun_Civ_Closed","UK3CB_TKC_C_Datsun_Civ_Open","UK3CB_TKC_C_Hatchback","UK3CB_TKC_C_Hilux_Civ_Open","UK3CB_TKC_C_Kamaz_Covered","UK3CB_TKC_C_Lada","UK3CB_TKC_C_Lada_Taxi","UK3CB_TKC_C_LR_Closed","UK3CB_TKC_C_LR_Open","UK3CB_TKC_C_V3S_Reammo","UK3CB_TKC_C_V3S_Refuel","UK3CB_TKC_C_V3S_Repair","UK3CB_TKC_C_V3S_Open","UK3CB_TKC_C_Sedan","UK3CB_TKC_C_Skoda","UK3CB_TKC_C_S1203","UK3CB_TKC_C_Tractor_Old","UK3CB_TKC_C_UAZ_Closed","UK3CB_TKC_C_UAZ_Open","UK3CB_TKC_C_Gaz24"];
 HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
@@ -52,7 +52,7 @@ PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joinin
 PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/100);
 
 //ENEMIES
-ENEMY_SIDE = EAST; //Enemy side 
+SIDE_ENEMY = EAST; //Enemy side 
 ENEMY_SKILLS = 1; //Skills units
 PATROL_SIZE = [2,2]; //Size of patrol => [minimum,random additionnals units]
 MAX_SPAWNED_UNITS = 60; //Max units to spawn

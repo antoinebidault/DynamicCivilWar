@@ -7,10 +7,10 @@
 
 params ["_unit"];
 
-if (side _unit == CIV_SIDE)then
+if (side _unit == SIDE_CIV)then
 {
+    _unit call addActionHalt;
     _unit call addActionHandcuff;
-     _unit call addActionHalt;
     if ( _unit getVariable["DCW_Chief",objNull] != objNull && alive (_unit getVariable["DCW_Chief",objNull]))then{
         [_unit,_unit getVariable["DCW_Chief",objNull]]  call addActionFindChief;
     };

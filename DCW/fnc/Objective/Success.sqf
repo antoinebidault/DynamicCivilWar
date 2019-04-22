@@ -24,13 +24,12 @@ _task = _objWithTask getVariable["DCW_Task",""];
 if (_task == "") then {
     [_objWithTask,(leader GROUP_PLAYERS),false] call fnc_CreateTask;
     _task = _objWithTask getVariable["DCW_Task",""];
+    sleep 2;
 };
 
 // Spawn task successful on each client
-[[_task,_objWIthTask],{
-    params["_task","_objWithTask"];
-
-    _taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
+[[_task,((_task call BIS_fnc_taskDescription) select 1) select 0,_objWIthTask],{
+    params["_task","_taskName","_objWithTask"];
     [_task, "SUCCEEDED",true] call BIS_fnc_taskSetState;
     [(leader GROUP_PLAYERS), format["Task done : %1",_taskName],true] call fnc_Talk;
     _objWithTask setVariable["DCW_Task","", true];

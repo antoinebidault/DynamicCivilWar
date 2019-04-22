@@ -3,10 +3,10 @@
 //GLOBAL
 DEBUG = true; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_CURRENT_PLAYER = side player; //Side player
+SIDE_PLAYER = side player; //Side player
 NUMBER_RESPAWN = 3;
 CIVIL_REPUTATION = 50;
-"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this", 0.6, "colonel"];
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_PLAYER, "this allowDamage false; HQ = this", 0.6, "colonel"];
 []spawn{
 	sleep 1;
 	HQ setName "HQ";
@@ -23,7 +23,7 @@ FRIENDLY_FLAG = "Flag_US_F";
 SUPPORT_DRONE_CLASS="rhs_pchela1t_vvsc";
 
 //CIVILIAN
-CIV_SIDE = CIVILIAN; // Side civilian
+SIDE_CIV = CIVILIAN; // Side civilian
 CIV_LIST_UNITS = ["LOP_Tak_Civ_Random","CUP_C_TK_Man_04","CUP_C_TK_Man_04_Jack","CUP_C_TK_Man_04_Waist","CUP_C_TK_Man_07","CUP_C_TK_Man_08_Jack","CUP_C_TK_Man_05_Coat","CUP_C_TK_Man_05_Waist","CUP_C_TK_Man_06_Jack","CUP_C_TK_Man_06_Waist","CUP_C_TK_Man_02","CUP_C_TK_Man_01_Waist","CUP_C_TK_Man_01_Coat","CUP_C_TK_Man_03_Coat","CUP_C_TK_Man_03_Waist"] ;
 CIV_LIST_CARS = ["LOP_TAK_Civ_Landrover","LOP_TAK_Civ_Offroad","LOP_TAK_Civ_UAZ","LOP_TAK_Civ_UAZ_Open","LOP_TAK_Civ_Ural","LOP_TAK_Civ_Ural_open","CUP_C_S1203_CIV","CUP_C_Ikarus_TKC","CUP_C_Lada_TK2_CIV","CUP_C_SUV_TK","CUP_C_Volha_Gray_TKCIV","CUP_C_Volha_Limo_TKCIV","CUP_C_V3S_Open_TKC","CUP_C_Volha_Blue_TKCIV"];
 HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
@@ -40,7 +40,7 @@ PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joinin
 PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/1000);
 
 //ENEMIES
-ENEMY_SIDE = EAST; //Enemy side 
+SIDE_ENEMY = EAST; //Enemy side 
 ENEMY_SKILLS = 1; //Skills units
 PATROL_SIZE = [1,2]; //Size of patrol => [minimum,random additionnals units]
 MAX_SPAWNED_UNITS = 60; //Max units to spawn

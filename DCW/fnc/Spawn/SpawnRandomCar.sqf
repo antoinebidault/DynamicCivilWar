@@ -27,7 +27,7 @@ while{ true }do {
 
 				if(random 100 > PERCENTAGE_CIVILIAN )then{
 					_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
-					_car = ([getPos _road, _roadDirection,_unitName, ENEMY_SIDE] call bis_fnc_spawnvehicle)  select 0;
+					_car = ([getPos _road, _roadDirection,_unitName, SIDE_ENEMY] call bis_fnc_spawnvehicle)  select 0;
 					_nbUnit = (count (fullCrew [_car,"cargo",true]));
 		
 					//Civilian team spawn.
@@ -40,7 +40,7 @@ while{ true }do {
 					
 				}else{
 					_unitName = CIV_LIST_CARS call BIS_fnc_selectRandom;
-					_car = ([getPos _road, _roadDirection,_unitName, CIV_SIDE] call bis_fnc_spawnvehicle)  select 0;
+					_car = ([getPos _road, _roadDirection,_unitName, SIDE_CIV] call bis_fnc_spawnvehicle)  select 0;
 
 				};
 
@@ -51,12 +51,12 @@ while{ true }do {
 					_unit = _x;
 					[_unit] call fnc_handlekill;
 					[_unit] call fnc_addTorch;
-					[_unit, if(side _unit == CIV_SIDE) then { "ColorBlue" } else { "ColorRed" } ] call fnc_addMarker;
+					[_unit, if(side _unit == SIDE_CIV) then { "ColorBlue" } else { "ColorRed" } ] call fnc_addMarker;
 					_unit setVariable["DCW_type","carpatrol"];
 					UNITS_SPAWNED pushBack _unit;
 				} foreach (crew _car);
 
-				[driver _car, 1500] spawn fnc_carPatrol;
+				[driver _car, 1500,true] spawn fnc_carPatrol;
 				
 			};
 		};	
@@ -70,7 +70,7 @@ while{ true }do {
 				_carPool = _carPool - [_veh];
 			};
 
-			if(_veh distance _x > 1500)then{
+			if(_veh distance _x > (SPAWN_DISTANCE max 1300))then{
 				_carPool = _carPool - [_veh];
 				{
 					_x call fnc_deleteMarker;

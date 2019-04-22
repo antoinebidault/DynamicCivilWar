@@ -31,6 +31,7 @@ fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Show
 fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Talk.sqf";
 fnc_GetVisibility = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetVisibility.sqf";
 fnc_Undercover = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Undercover.sqf";
+fnc_surrenderSystem = compile preprocessFileLineNumbers  "DCW\fnc\System\SurrenderSystem.sqf";
 
 //SPAWN
 fnc_Respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
@@ -53,9 +54,11 @@ fnc_SpawnPosition = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Spawn
 fnc_SpawnCrashSite = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnCrashSite.sqf";
 fnc_SpawnIED = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnIED.sqf";
 fnc_spawncrate = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnCrate.sqf";
+fnc_SpawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnObjects.sqf";
 
 //PATROL
-fnc_Patrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\CompoundPatrol.sqf";
+fnc_EnemyCompoundPatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\CompoundPatrol.sqf";
+fnc_CivilianCompoundPatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\CivilianCompoundPatrol.sqf";
 fnc_SimplePatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\SimplePatrol.sqf";
 fnc_LargePatrol = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\LargePatrol.sqf";
 fnc_chase = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\chase.sqf";
@@ -116,6 +119,11 @@ compo_commander2 =  call (compileFinal preprocessFileLineNumbers "DCW\compositio
 compos = [compo_camp1,compo_camp2,compo_camp3,compo_camp4,compo_camp5];
 compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest.sqf");
 compo_camp =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp.sqf");
+compo_captured =  call (compileFinal preprocessFileLineNumbers "DCW\composition\captured.sqf");
+
+
+compos_turrets=  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\turrets.sqf");
+compos_objects =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\objects.sqf");
 
 //Switch here the config you need.
 [] call (compileFinal preprocessFileLineNumbers format["DCW\config\config-%1.sqf",_this select 0]); 
@@ -135,8 +143,8 @@ waitUntil {count allPlayers > 0};
 GROUP_PLAYERS = group (allPlayers select 0); 
 publicVariable "GROUP_PLAYERS";
 
-SIDE_CURRENT_PLAYER = side(allPlayers select 0); //Side player
-publicVariable "SIDE_CURRENT_PLAYER";
+SIDE_PLAYER = side(allPlayers select 0); //Side player
+publicVariable "SIDE_PLAYER";
 
 CHASER_TRIGGERED = false;
 publicVariable "CHASER_TRIGGERED";
@@ -149,6 +157,7 @@ publicVariable "DCW_SCORE";
 
 CAMP_RESPAWN_POSITION = [];
 publicVariable "CAMP_RESPAWN_POSITION";
+
 
 CIVIL_REPUTATION = 50;
 publicVariable "CIVIL_REPUTATION";

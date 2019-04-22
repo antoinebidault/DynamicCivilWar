@@ -27,7 +27,7 @@ for "_j" from 1 to _nb do {
     if (count _posBuildings == 0) exitWith{_units;};
     _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
     _posBuildings = _posBuildings -[_posToSpawn];
-    _grp = createGroup CIV_SIDE;
+    _grp = createGroup SIDE_CIV;
     _unitName = CIV_LIST_UNITS call BIS_fnc_selectRandom;
     _hostage = _grp  createUnit [_unitName, _posToSpawn,[],0,"CAN_COLLIDE"];
     _hostage setCaptive true;
@@ -36,7 +36,9 @@ for "_j" from 1 to _nb do {
 	removeBackpack _hostage;
 	removeVest _hostage;
 
-	_hostage playMove "Acts_ExecutionVictim_Loop";
+	//_hostage playMove "Acts_ExecutionVictim_Loop";
+    _anim = selectRandom ["Acts_AidlPsitMstpSsurWnonDnon01","Acts_AidlPsitMstpSsurWnonDnon02","Acts_AidlPsitMstpSsurWnonDnon03","Acts_AidlPsitMstpSsurWnonDnon04","Acts_AidlPsitMstpSsurWnonDnon05"];
+    _hostage switchMove _anim;
 	_hostage disableAI "autoTarget";
 	_hostage setBehaviour "Careless";
     _hostage setDamage .7;
@@ -45,6 +47,7 @@ for "_j" from 1 to _nb do {
     _largeSplash setDir random 360;
 	_hostage allowFleeing 0;
 	_hostage disableAI "Move";
+
 
     _hostage setDir (random 359);
     [_hostage,"ColorBlue"] call fnc_addMarker;
@@ -63,7 +66,8 @@ for "_j" from 1 to _nb do {
         if (!alive(_hostage)) exitWith{hint "He is dead";};
         _hostage remoteExec ["removeAllActions",0];
         _hostage stop false;
-        _hostage playMove "Acts_ExecutionVictim_Unbow";
+        //_hostage playMove "Acts_ExecutionVictim_Unbow";
+        _hostage switchMove "Acts_AidlPsitMstpSsurWnonDnon_out";
         _hostage setUnitPos "UP";	
         _hostage setBehaviour "CARELESS";
         _hostage enableAI "Move";
@@ -84,7 +88,7 @@ for "_j" from 1 to _nb do {
     _units pushBack _hostage;
 
     _nbGuards = 1 + round(random 2);
-    _grp = createGroup ENEMY_SIDE;
+    _grp = createGroup SIDE_ENEMY;
     for "_i" from 1 to _nbGuards do {
         if (count _posBuildings == 0) exitWith{_units};
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;

@@ -17,7 +17,7 @@ private _commanderPos = [];
 private _tempList = [];
 
 ENEMY_COMMANDER = objNull;
-_grp = createGroup ENEMY_SIDE;
+_grp = createGroup SIDE_ENEMY;
 ESCORT = [];
 
 private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_FindSafePos;
@@ -52,7 +52,7 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
     if (group _gunner == GROUP_PLAYERS && _distance < 50)then{
         [_gunner,"Shit ! this asshole is fleeing.",false]  remoteExec ["fnc_talk"];
         _commander removeAllEventHandlers "FiredNear";
-        [_commander] joinSilent (createGroup ENEMY_SIDE);
+        [_commander] joinSilent (createGroup SIDE_ENEMY);
         _commander setBehaviour "CARELESS";
         _commander forceWalk false;
         _commander forceSpeed 10;
@@ -85,7 +85,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
     }else{
         //Start over
         hint "restart...";
-        { ESCORT = ESCORT - [_x]; _x call fnc_deleteMarker;deleteVehicle _x;} forEach ESCORT;
+        { ESCORT = ESCORT - [_x]; _x call fnc_deleteMarker; deleteVehicle _x;} forEach ESCORT;
         [] spawn fnc_SpawnMainObjective;
     };
 }];
@@ -111,7 +111,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 
     _trig = createTrigger["EmptyDetector",getPosATL _mainObj];
 	_trig setTriggerArea[7,7,0,FALSE,3];
-	_trig setTriggerActivation[str SIDE_CURRENT_PLAYER,"PRESENT",false];
+	_trig setTriggerActivation[str SIDE_PLAYER,"PRESENT",false];
 	_trig setTriggerTimeout[1,1,1,true];
     _trig setTriggerStatements[
         "this",

@@ -16,7 +16,7 @@ private _newPos = [];
 private _radiusSpawnRange = [1000,5400];
 private _playerPos = getPos (leader GROUP_PLAYERS);
 private _initPos = [_playerPos,_radiusSpawnRange select 0, _radiusSpawnRange select 1, 4, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_FindSafePos;
-private _grp = createGroup ENEMY_SIDE;
+private _grp = createGroup SIDE_ENEMY;
 private _officer = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],ENEMY_SKILLS,"NONE"];
 
 removeAllWeapons _officer;
@@ -31,7 +31,7 @@ if (count _roadConnectedTo == 0) exitWith { hint "restart";[] spawn fnc_SpawnSec
 private _connectedRoad = _roadConnectedTo select 0;
 
 private _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
-private _truck = [_roadPos, _roadDirection, ENEMY_OFFICER_LIST_CARS call bis_fnc_selectrandom, createGroup ENEMY_SIDE] call BIS_fnc_spawnVehicle select 0;
+private _truck = [_roadPos, _roadDirection, ENEMY_OFFICER_LIST_CARS call bis_fnc_selectrandom, createGroup SIDE_ENEMY] call BIS_fnc_spawnVehicle select 0;
 _officer moveInAny _truck;
 
 private _nbUnit = (count (fullCrew [_truck,"cargo",true]))-1 max 10;
@@ -95,7 +95,7 @@ _officer addEventHandler ["HandleDamage",{
             {
                 
                 ["DCW_secondary","SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,true];
-             } foreach units GROUP_PLAYERS;
+             } foreach allPlayers;
             _unit setVariable["DCW_interrogated",true];
             _unit removeAllMPEventHandlers "MPKilled";
             
@@ -133,7 +133,7 @@ while {sleep 20; alive _officer && !(_officer getVariable["DCW_interrogated",fal
 
     {
         ["DCW_secondary",_x, [format["Our drones give us some informations about an insurgent's officer location. Move to his location and try to gather infomration. His name is %1",name _officer],"Interrogate the officer","Interrogate the officer"],getPos _officer,"CREATED",1,if (_firstSpawn) then {true}else{false}] remoteExec ["BIS_fnc_setTask",_x, true];
-    } foreach units GROUP_PLAYERS;
+    } foreach allPlayers;
     private _loc =  nearestLocations [getPosWorld _officer, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 	// Info text
     

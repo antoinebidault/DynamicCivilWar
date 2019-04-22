@@ -30,7 +30,7 @@ _radius = ((getMarkerSize _marker) select 0);
     _soldiers = [];
     _nbUnit = ceil (random 3);
     for "_xc" from 1 to _nbUnit do {
-        _grp = createGroup ENEMY_SIDE;
+        _grp = createGroup SIDE_ENEMY;
         _enemy = [_grp,_nicePos,false] call fnc_spawnEnemy;
         _enemy setDir random 360;
 

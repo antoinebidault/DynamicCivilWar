@@ -21,41 +21,34 @@ SUPPORT_CAR_PARADROP_CLASS = "UK3CB_BAF_LandRover_WMIK_HMG_FFR_Sand_A_MTP";
 
 //FRIENDLIES
 FRIENDLY_LIST_UNITS = ["UK3CB_TKA_B_RIF_2","UK3CB_TKA_B_MK","UK3CB_TKA_B_STATIC_GUN_KORD","UK3CB_TKA_B_STATIC_GUN_NSV","UK3CB_TKA_B_GL","UK3CB_TKA_B_DEM","UK3CB_TKA_B_AR","UK3CB_TKA_B_AT","UK3CB_TKA_B_GL","UK3CB_TKA_B_MD","UK3CB_TKA_B_TL"]; //Units of your side
-FRIENDLY_LIST_CARS = ["UK3CB_TKA_B_M113_M2",
-"UK3CB_TKA_B_M113_M240",
-"UK3CB_TKA_B_BTR60",
-"UK3CB_TKA_B_Hilux_Pkm",
-"UK3CB_TKA_B_BMP2",
-"UK3CB_TKA_B_LR_SF_M2",
-"UK3CB_TKA_B_M1025_M2",
-"UK3CB_TKA_B_MaxxPro_M2"]; //Friendly cars
+FRIENDLY_LIST_CARS = ["UK3CB_TKA_B_M113_M2","UK3CB_TKA_B_M113_M240","UK3CB_TKA_B_BTR60","UK3CB_TKA_B_Hilux_Pkm","UK3CB_TKA_B_BMP2","UK3CB_TKA_B_LR_SF_M2","UK3CB_TKA_B_M1025_M2","UK3CB_TKA_B_MaxxPro_M2"]; //Friendly cars
 FRIENDLY_FLAG = "Flag_AFG_13";//Flag of your side
 FRIENDLY_CHOPPER_CLASS = ["UK3CB_BAF_Apache_AH1_CAS_MTP","UK3CB_BAF_Merlin_HC3_18_GPMG_MTP"];
 
 //CIVILIAN
-CIV_SIDE = CIVILIAN; // Side civilian
+SIDE_CIV = CIVILIAN; // Side civilian
 CIV_LIST_UNITS = ["UK3CB_TKC_C_CIV"];
 CIV_LIST_CARS = ["UK3CB_TKC_C_Ikarus","UK3CB_TKC_C_Datsun_Civ_Closed","UK3CB_TKC_C_Datsun_Civ_Open","UK3CB_TKC_C_Hatchback","UK3CB_TKC_C_Hilux_Civ_Open","UK3CB_TKC_C_Kamaz_Covered","UK3CB_TKC_C_Lada","UK3CB_TKC_C_Lada_Taxi","UK3CB_TKC_C_LR_Closed","UK3CB_TKC_C_LR_Open","UK3CB_TKC_C_V3S_Reammo","UK3CB_TKC_C_V3S_Refuel","UK3CB_TKC_C_V3S_Repair","UK3CB_TKC_C_V3S_Open","UK3CB_TKC_C_Sedan","UK3CB_TKC_C_Skoda","UK3CB_TKC_C_S1203","UK3CB_TKC_C_Tractor_Old","UK3CB_TKC_C_UAZ_Closed","UK3CB_TKC_C_UAZ_Open","UK3CB_TKC_C_Gaz24"];
 HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
 HUMANITAR_LIST_UNITS = ["C_IDAP_Man_AidWorker_06_F","C_IDAP_Man_AidWorker_05_F","C_IDAP_Man_AidWorker_01_F","C_IDAP_Man_AidWorker_08_F","C_IDAP_Man_UAV_06_medical_F","C_IDAP_Man_EOD_01_F","C_IDAP_Man_AidWorker_03_F"];
-MAX_RANDOM_CIVILIAN = 5;
+MAX_RANDOM_CIVILIAN = 4;
 MAX_SHEEP_HERD = 2; //Number of sheep herd
-RATIO_POPULATION =  1.5; //Number of unit per building. 0.4 default
+RATIO_POPULATION =  1.3; //Number of unit per building. 0.4 default
 MAX_POPULATION = 18;
 RATIO_CARS =  .1; //Number of empty cars spawned in a city by buidling
 PERCENTAGE_FRIENDLIES = 25; //Percentage friendly spawn in patrol
-PERCENTAGE_CIVILIAN = 50; //Percentage civilian in a block
-PERCENTAGE_ENEMIES = 50; //Percentage enemies
+PERCENTAGE_CIVILIAN = 40; //Percentage civilian in a block
+PERCENTAGE_ENEMIES = 60; //Percentage enemies
 PERCENTAGE_INSURGENTS = 50; //Percentage of potential insurgents in the civilians. If the civilian are attacked they might join the east or west wether the shot are coming from (And with probabilities rules...)
 PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joining the west.
 PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/100);
 
 //ENEMIES
-ENEMY_SIDE = EAST; //Enemy side 
+SIDE_ENEMY = EAST; //Enemy side 
 PATROL_SIZE = [1,3]; //Size of patrol => [minimum,random additionnals units]
-MAX_SPAWNED_UNITS = 50; //Max units to spawn
-MAX_CHASERS = 10; //Max hunters who are looking for you !
-MAX_RANDOM_PATROL = 8; //Number of units patroling around the player at the same time
+MAX_SPAWNED_UNITS = 60; //Max units to spawn
+MAX_CHASERS = 8; //Max hunters who are looking for you !
+MAX_RANDOM_PATROL = 11; //Number of units patroling around the player at the same time
 MAX_RANDOM_CAR = 2; //Max car spawned.
 NUMBER_CHOPPERS = 0; // Number of choppers
 NUMBER_CRASHSITES = 2;

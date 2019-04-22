@@ -13,8 +13,6 @@ _unitName = if (count _this >= 5) then{ _this select 4 }else{CIV_LIST_UNITS call
 
 _unit = _group createUnit [_unitName, _pos,[],ENEMY_SKILLS,"NONE"];
 
-
-
 //Si c'est un mauvais
 _unit setVariable["DCW_Chief",_chief, true];
 
@@ -31,7 +29,6 @@ if (DEBUG)then{
 
 _unit setVariable["DCW_Type","civ"];
 _unit setDir random 360;
-removeAllWeapons _unit;
 
 if (_handleFireEvent)then{
     [_unit] spawn fnc_HandleFiredNear;

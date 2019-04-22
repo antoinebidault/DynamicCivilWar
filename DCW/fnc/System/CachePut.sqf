@@ -43,6 +43,7 @@ _unitsToRemove = [];
         }else{
                 _x call fnc_failed;
                 _unitsToRemove pushBack _x;
+                
                 if (_type == "civ")then{
                     _nbPeople = _nbPeople+1;
                 }else{
@@ -72,7 +73,7 @@ _unitsToRemove = [];
                                                 }else{
                                                     if (_type == "friendly")then{
                                                         _nbFriendlies = _nbFriendlies+1;
-                                                    }
+                                                    };
                                                 };   
                                             };
                                         };
@@ -82,6 +83,11 @@ _unitsToRemove = [];
                         };
                     };
                 };
+
+            // If it's a vehicle
+            if (vehicle _x != _x) then {
+                { _x call fnc_deletemarker; deletevehicle _x; } foreach crew _x;
+            };
              _x call fnc_deleteMarker;
             deleteVehicle _x;
         };

@@ -16,8 +16,8 @@ _pos = position _unit;
 _unit setVariable ["civ_insurgent",true]; 
 
 //Add a bonus wether the shooter is from the enemy side or not
-private _bonus = if (side _gunner == ENEMY_SIDE)then{25}else{-25};
-private _side = if (random 100 > (PERCENTAGE_FRIENDLY_INSURGENTS + _bonus)) then {ENEMY_SIDE}else{SIDE_CURRENT_PLAYER};
+private _bonus = if (side _gunner == SIDE_ENEMY)then{25}else{-25};
+private _side = if (random 100 > (PERCENTAGE_FRIENDLY_INSURGENTS + _bonus)) then {SIDE_ENEMY}else{SIDE_PLAYER};
 
 
 if (DEBUG)then{

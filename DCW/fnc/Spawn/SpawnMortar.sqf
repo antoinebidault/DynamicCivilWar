@@ -17,7 +17,7 @@ if (_nb == 0)exitWith{_units;};
 
 private _tempList = MARKER_WHITE_LIST + PLAYER_MARKER_LIST;
 
-_posToSpawn = [_pos, 350 min (1.5*_radius) , 500 min (3*_radius), 3, 0, 2, 0, _tempList] call BIS_fnc_FindSafePos;
+_posToSpawn = [_pos, 130 min (1.3*_radius) , SPAWN_DISTANCE min (2*_radius), 3, 0, 2, 0, _tempList] call BIS_fnc_FindSafePos;
 
 for "_j" from 1 to _nb do {
     _mortar = ENEMY_MORTAR_CLASS createVehicle _posToSpawn ; 
@@ -40,12 +40,12 @@ for "_j" from 1 to _nb do {
     _units pushback _mortar;
 
     _nbGuards = 2 + round(random 1);
-    _grp = createGroup ENEMY_SIDE;
+    _grp = createGroup SIDE_ENEMY;
 
     //Déclenchement du bombardement
     [_pos,_radius,_mortar] spawn {
         params["_pos","_radius","_mortar"];
-        waitUntil{sleep 15; { getPosATL _x distance _pos < _radius } count allPlayers > 0 };
+        waitUntil{sleep 15; { alive _x && !captive _x && getPosATL _x distance _pos < _radius } count allPlayers > 0 };
         [_mortar,(leader GROUP_PLAYERS),_pos,_radius] call fnc_mortarbombing;
     };
                     

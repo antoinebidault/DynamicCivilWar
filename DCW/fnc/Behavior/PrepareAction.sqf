@@ -57,7 +57,7 @@ addActionGiveUsAHand =  {
         _talker  = (_this select 1);
         _action  = (_this select 2);
 
-         if (!([GROUP_PLAYERS,20] call fnc_afford)) exitWith {[_man,"You need more money !",false] call fnc_talk;false;};
+         if (!([GROUP_PLAYERS,20] call fnc_afford)) exitWith {[_man,"You need more points !",false] call fnc_talk;false;};
          [_man,"Ok, we're taking your flank",false] spawn fnc_talk;
 
         {
@@ -84,6 +84,7 @@ addActionGiveUsAHand =  {
             (leader _group) setVariable["follow_player",true];
             _wp1 = _group addWaypoint [[0,0,0],0];
             _wp1 setWaypointType "MOVE";
+            _wp1 setWaypointBehaviour "AWARE";
             while {alive _talker && leader _group getVariable["follow_player", false]} do {
                 _wp1 setWaypointPosition [(_talker ModelToWorld [random 25,-20,0]), 0];
                 _group setCurrentWaypoint _wp1;
@@ -160,7 +161,7 @@ addActionHalt = {
         _unit stop false;
         _unit enableAI "MOVE";
         _unit call addActionHalt;
-    },nil,2.5,false,true,"","true",20,false,""];
+    },nil,1.5,false,true,"","true",3,false,""];
 };
 
 addActionDidYouSee = {
@@ -176,9 +177,9 @@ addActionDidYouSee = {
         };
         
         [_talker,"Did you see anything recently ?", false] call fnc_Talk;
-        private _data = _unit targetsQuery [objNull,ENEMY_SIDE, "", [], 0];
+        private _data = _unit targetsQuery [objNull,SIDE_ENEMY, "", [], 0];
         sleep 1;
-        _data = _data select {side group (_x select 1) == ENEMY_SIDE};
+        _data = _data select {side group (_x select 1) == SIDE_ENEMY};
         if (count _data == 0) exitWith {
             [_unit, "I saw nothing...",false] call fnc_Talk;
         };
@@ -216,7 +217,7 @@ addActionDidYouSee = {
         if (alive _unit) then {
             _unit remoteExec ["addActionDidYouSee"];
         };
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,1,false,true,"","true",2.5,false,""];
 };
 
 AddActionFeeling = {
@@ -380,7 +381,7 @@ addActionRally = {
        
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !",false] call fnc_Talk;
-            [_unit,SIDE_CURRENT_PLAYER] call fnc_BadBuyLoadout;
+            [_unit,SIDE_PLAYER] call fnc_BadBuyLoadout;
             [_unit,3] remoteExec ["fnc_updateRep",2];
             sleep 5;
             [_unit] joinSilent grpNull;

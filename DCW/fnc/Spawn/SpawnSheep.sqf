@@ -21,7 +21,7 @@ while{true}do {
 		_numberOfmen = round(random 2);
 		_numberOfSheep = 3 + floor(random 4	);
 
-		_goatgroup = createGroup CIV_SIDE; 
+		_goatgroup = createGroup SIDE_CIV; 
 
 		_isSheep = if (random 1 > 0.5)then{true;}else{false;}; 
 		_type = if (_isSheep)then{"Sheep_random_F";}else{"Goat_random_F"};

@@ -57,6 +57,11 @@ if (ENABLE_DIALOG && !didJIP) then {
 	};
 
 	waitUntil {DCW_STARTED || time > _timer + _maxTime};
+	if (time > _timer + _maxTime) then {
+		closeDialog 0;		
+		UNIT_SHOWCASE_CAMERA cameraeffect ["terminate", "back"];
+		camDestroy UNIT_SHOWCASE_CAMERA;
+	};
 	DCW_STARTED = true;
 	publicVariableServer "DCW_STARTED";
 	hintSilent "";

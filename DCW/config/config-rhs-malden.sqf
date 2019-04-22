@@ -3,10 +3,10 @@
 //GLOBAL
 DEBUG = false; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_CURRENT_PLAYER = side player; //Side player
+SIDE_PLAYER = side player; //Side player
 NUMBER_RESPAWN = 3;
 CIVIL_REPUTATION = 50;
-"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
 	sleep 1;
 	HQ setName "HQ";
@@ -23,7 +23,7 @@ FRIENDLY_FLAG = "rhs_Flag_Russia_F";//Flag of your side
 SUPPORT_DRONE_CLASS="rhs_pchela1t_vvsc";
 
 //CIVILIAN
-CIV_SIDE = CIVILIAN; // Side civilian
+SIDE_CIV = CIVILIAN; // Side civilian
 CIV_LIST_UNITS = ["C_man_p_beggar_F_euro","C_Man_casual_1_F_euro","C_man_p_fugitive_F_euro","C_Man_casual_6_F_euro","C_man_polo_5_F_euro","C_man_polo_4_F_euro","C_Story_Mechanic_01_F","C_man_hunter_1_F","C_Man_Messenger_01_F","C_Man_casual_4_F","C_Man_Fisherman_01_F"];
 CIV_LIST_CARS = ["RHS_Ural_Open_Civ_01","C_Truck_02_transport_F","C_Offroad_01_F","C_Offroad_02_unarmed_F","C_SUV_01_F"];
 HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
@@ -40,7 +40,7 @@ PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joinin
 PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/100);
 
 //ENEMIES
-ENEMY_SIDE = RESISTANCE; //Enemy side 
+SIDE_ENEMY = RESISTANCE; //Enemy side 
 ENEMY_SKILLS = 1; //Skills units
 PATROL_SIZE = [2,2]; //Size of patrol => [minimum,random additionnals units]
 MAX_SPAWNED_UNITS = 65; //Max units to spawn

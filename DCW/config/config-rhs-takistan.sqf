@@ -2,7 +2,7 @@
 //Global configuration
 //GLOBAL
 SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_CURRENT_PLAYER = side(allPlayers select 0); //Side player
+SIDE_PLAYER = side(allPlayers select 0); //Side player
 RESPAWN_ENABLED =  true; 
 CIVIL_REPUTATION = 50;
 
@@ -11,7 +11,7 @@ SIZE_BLOCK = 500; // Size of blocks
 MAX_CLUSTER_SIZE = 200;
 SPAWN_DISTANCE = 550; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  250; //Units can't spawn before this distance
-RADIO_CHAT_LIST=["rhs_usa_land_rc_1","rhs_usa_land_rc_2","rhs_usa_land_rc_3","rhs_usa_land_rc_4","rhs_usa_land_rc_5","rhs_usa_land_rc_6","rhs_usa_land_rc_7","rhs_usa_land_rc_7"];
+RADIO_CHAT_LIST=["rhs_usa_land_rc_1","rhs_usa_land_rc_2","rhs_usa_land_rc_3","rhs_usa_land_rc_4","rhs_usa_land_rc_5","rhs_usa_land_rc_6","rhs_usa_land_rc_7","rhs_usa_land_rc_8","rhs_usa_land_rc_9","rhs_usa_land_rc_10","rhs_usa_land_rc_11","rhs_usa_land_rc_12","rhs_usa_land_rc_13"];
 
 // SUPPORT CLASSES
 SUPPORT_ARTILLERY_CLASS = "RHS_M119_D";
@@ -37,7 +37,7 @@ FRIENDLY_FLAG = "Flag_AFG_13";//Flag of your side
 FRIENDLY_CHOPPER_CLASS = ["RHS_CH_47F_10","RHS_UH60M_d"];
 
 //CIVILIAN
-CIV_SIDE = CIVILIAN; // Side civilian
+SIDE_CIV = CIVILIAN; // Side civilian
 CIV_LIST_UNITS = ["UK3CB_TKC_C_CIV"];
 CIV_LIST_CARS = ["UK3CB_TKC_C_Ikarus","UK3CB_TKC_C_Datsun_Civ_Closed","UK3CB_TKC_C_Datsun_Civ_Open","UK3CB_TKC_C_Hatchback","UK3CB_TKC_C_Hilux_Civ_Open","UK3CB_TKC_C_Kamaz_Covered","UK3CB_TKC_C_Lada","UK3CB_TKC_C_Lada_Taxi","UK3CB_TKC_C_LR_Closed","UK3CB_TKC_C_LR_Open","UK3CB_TKC_C_V3S_Reammo","UK3CB_TKC_C_V3S_Refuel","UK3CB_TKC_C_V3S_Repair","UK3CB_TKC_C_V3S_Open","UK3CB_TKC_C_Sedan","UK3CB_TKC_C_Skoda","UK3CB_TKC_C_S1203","UK3CB_TKC_C_Tractor_Old","UK3CB_TKC_C_UAZ_Closed","UK3CB_TKC_C_UAZ_Open","UK3CB_TKC_C_Gaz24"];
 HUMANITAR_LIST_CARS = ["LOP_UN_Ural","LOP_UN_Offroad","LOP_UN_UAZ"];
@@ -55,7 +55,7 @@ PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joinin
 PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/100);
 
 //ENEMIES
-ENEMY_SIDE = EAST; //Enemy side 
+SIDE_ENEMY = EAST; //Enemy side 
 PATROL_SIZE = [1,3]; //Size of patrol => [minimum,random additionnals units]
 MAX_SPAWNED_UNITS = 40; //Max units to spawn
 MAX_CHASERS = 10; //Max hunters who are looking for you !

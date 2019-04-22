@@ -12,12 +12,10 @@ private _pos = _this select 0;
 private _radius = _this select 1;
 private _nb = _this select 2;
 
-//!!DO NOT EDIT BELOW!!
 iedBlast=["Bo_Mk82","Rocket_03_HE_F","M_Mo_82mm_AT_LG","Bo_GBU12_LGB","Bo_GBU12_LGB_MI10","HelicopterExploSmall"];
 iedList=["IEDLandBig_F","IEDLandSmall_F","IEDUrbanBig_F","IEDUrbanSmall_F"];
 iedAmmo=["IEDUrbanSmall_Remote_Ammo","IEDLandSmall_Remote_Ammo","IEDUrbanBig_Remote_Ammo","IEDLandBig_Remote_Ammo"];
 iedJunk=["Land_Garbage_square3_F","Land_Garbage_square5_F","Land_Garbage_line_F"];
-
 
 private _localIeds = [];
 private _ieds = [];
@@ -50,6 +48,7 @@ while {_i > 0} do {
 	_iedJunk enableSimulationGlobal false;
 	_iedJunk setVariable ["DCW_Type","ied"];
 	_iedJunk setVariable ["DCW_IsIntel",true];
+	_iedJunk allowDamage false;
 	[_iedJunk,"ColorBlue"] call fnc_addMarker;
 
 	_ieds pushBack _iedJunk;
@@ -64,7 +63,7 @@ while {_i > 0} do {
 
 } forEach _roadSelects;
 
-{CIV_SIDE revealMine (_x select 0);ENEMY_SIDE revealMine (_x select 0);}forEach _localIeds;
+{SIDE_CIV revealMine (_x select 0);SIDE_ENEMY revealMine (_x select 0);}forEach _localIeds;
 
 
 //Loop to check status
@@ -79,7 +78,7 @@ while {_i > 0} do {
 			createVehicle["Crater",(getPosATL _iedObj),[],0,"NONE"];
 
 			{
-				deleteVehicle _x
+				hideObject _x
 			}forEach nearestObjects[getPosATL _iedObj,iedJunk,4];
 
 			deleteVehicle _iedObj;

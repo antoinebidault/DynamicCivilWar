@@ -14,5 +14,5 @@ if (_unitWithTask getVariable["DCW_IsIntelRevealed",false])then{
     deleteMarker(_unitWithTask getVariable["DCW_MarkerIntel",""]);
     {
         [_x getVariable["DCW_Task",""], "FAILED",true] spawn BIS_fnc_taskSetState;
-    } foreach units GROUP_PLAYERS;
+    } foreach allPlayers;
 };

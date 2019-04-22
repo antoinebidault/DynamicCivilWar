@@ -40,7 +40,7 @@ for "_j" from 1 to _nb do {
     }];
     _units pushBack _unit;
     _nbGuards = 1 + round(random 4);
-    _grp = createGroup ENEMY_SIDE;
+    _grp = createGroup SIDE_ENEMY;
     for "_i" from 1 to _nbGuards do {
         if (count _posBuildings == 0) exitWith{_units};
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;

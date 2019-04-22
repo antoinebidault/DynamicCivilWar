@@ -10,7 +10,7 @@ if (!isServer) exitWith{};
 
 
 // Create a fake HQ unit
-"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_CURRENT_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
 	sleep 1;
 	HQ setName "HQ";
@@ -34,6 +34,7 @@ REFRESH_TIME = 10; // Refresh time
 WEATHER = .5;
 CONVOY = []; // Current convoy
 ESCORT = []; // List of escorts guys with the commandant
+INITIAL_SPAWN_DISTANCE = SPAWN_DISTANCE;
 
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 publicVariable "MARKER_WHITE_LIST";
@@ -75,7 +76,7 @@ CIVILIAN_KILLED = {
 	params["_unit","_killer"]; 
 	hint format ["%1 %2 was killed by %3",name (_unit),side _unit,name (_killer)];
 	_friends = nearestObjects [position _unit,["Man"],50];
-	{  if (side _x == CIV_SIDE) then { [_x,-4] call fnc_UpdateRep}; }foreach _friends;
+	{  if (side _x == SIDE_CIV) then { [_x,-4] call fnc_UpdateRep}; }foreach _friends;
 	[GROUP_PLAYERS,-50,false,_killer] call fnc_updateScore;
 };
 
@@ -90,7 +91,7 @@ COMPOUND_SECURED = {
 	params["_marker","_radius","_units","_points"]; 
 
 	//Misa à jour de l'amitié
-	{  if (side _x == CIV_SIDE && _x getVariable["DCW_Friendliness",-1] != -1) then { [_x,6] call fnc_UpdateRep;}; }foreach _units;
+	{  if (side _x == SIDE_CIV && _x getVariable["DCW_Friendliness",-1] != -1) then { [_x,6] call fnc_UpdateRep;}; }foreach _units;
 	[GROUP_PLAYERS,_points,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
 };
 
@@ -130,6 +131,8 @@ _ammobox = missionNamespace getVariable ["ammoBox",objNull];
 if (!isNull _ammobox) then {
 	_ammobox call fnc_spawncrate;
 };
+
+
 
 //TIME
 setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
@@ -225,7 +228,7 @@ private _typeObj = "";
 		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
 		_nbFriendlies = 0;
 		_points = 1 + _nbEnemies * 10;
-		_meetingPointPosition =  [_pos, 0, .5*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
+		_meetingPointPosition =  [getPos (_buildings call BIS_fnc_selectRandom), 0, 15, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
 		while {isOnRoad _meetingPointPosition} do{
 			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
 		};
@@ -259,6 +262,12 @@ private _typeObj = "";
 [] spawn fnc_SpawnSecondaryObjective;
 [] spawn fnc_SpawnMainObjective;
 [390] spawn fnc_SpawnConvoy;
+
+// Revive friendlies with chopper pick up
+if (MEDEVAC_ENABLED) then{
+	[GROUP_PLAYERS] execVM "DCW\medevac\init.sqf";
+};
+
 
 private ["_mkr","_cacheResult","_ieds"];
 
@@ -362,17 +371,19 @@ while { true } do {
 						//Mortars
 						_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
 
+						_units = _units + ([_pos,_buildings,_success] call fnc_spawnobjects);
+
 						_triggered = true;
 
 						//Add a little breath
-						sleep 2;
+						sleep 1;
 					};
 
 
 				}else{
 
 					//Gestion du cache
-					if(_playerPos distance _pos > (SPAWN_DISTANCE + 100) && _triggered)then {
+					if(_playerPos distance _pos > (SPAWN_DISTANCE + 150) && _triggered)then {
 						_cacheResult = [_units] call fnc_CachePut;
 						_peopleToSpawn = _cacheResult select 0;
 						_units = _units - [_cacheResult select 1];
@@ -382,16 +393,15 @@ while { true } do {
 						// Check if enemies remains in the area;
 						if (_triggered && !_success) then{
 							if ([_playerPos, _marker] call fnc_isInMarker) then{
-								_nben = 0;
 								_enemyInMarker = true;
-								if ({side _x == ENEMY_SIDE && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= round (0.1 * (_peopleToSpawn select 2))) then {
+								if ({side _x == SIDE_ENEMY && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= round (0.1 * (_peopleToSpawn select 2))) then {
 									_enemyInMarker = false;
 								};
 								//Cleared success
 								if (!_enemyInMarker)then {
 									_success = true;
 									[_marker,_radius,_units,_points] remoteExec ["COMPOUND_SECURED"];
-									[_player,"This compound is cleared ! Great job.", true] remoteExec ["fnc_talk"];
+									[_player,format["The compound in %1 is cleared ! Great job team.", getMarkerPos _marker], true] remoteExec ["fnc_talk"];
 									_marker setMarkerColor "ColorGreen";
 								};
 
@@ -425,8 +435,10 @@ while { true } do {
 				   _timerChaser = time;
 				};
 
+				
+
 				//Detection
-				if (!CHASER_TRIGGERED && !CHASER_VIEWED && side _unit == ENEMY_SIDE && _unit knowsAbout _x > 1 && !(_x getVariable["DCW_undercover",false]) ) then 
+				if (!CHASER_TRIGGERED && !CHASER_VIEWED && side _unit == SIDE_ENEMY && _unit knowsAbout _x > 1 && !(_x getVariable["DCW_undercover",false]) ) then 
 				{
 					[_unit,_x,_timerChaser] spawn {
 						params["_unit","_player","_timerChaser"];
@@ -473,10 +485,21 @@ while { true } do {
 
 			} foreach allPlayers;
 
+			// Regulate the spawn distance
+			if (count UNITS_SPAWNED > MAX_SPAWNED_UNITS) then {
+				SPAWN_DISTANCE = 0.75 * INITIAL_SPAWN_DISTANCE max (SPAWN_DISTANCE - 10);
+			} else {
+				SPAWN_DISTANCE = INITIAL_SPAWN_DISTANCE min (SPAWN_DISTANCE + 10);
+			};
+
 			// Garbage collection
 			if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{
-				if ({_unit distance _x > SPAWN_DISTANCE + 300} count allPlayers == count allPlayers)then {
+				if ({_unit distance _x > SPAWN_DISTANCE + 230} count allPlayers == count allPlayers)then {
 					UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
+					 // If it's a vehicle
+					if (vehicle _unit != _unit) then {
+						{ _x call fnc_deletemarker; deletevehicle _x; } foreach crew _unit;
+					};
 					_unit call fnc_deleteMarker;
 					deleteVehicle _unit;
 				};

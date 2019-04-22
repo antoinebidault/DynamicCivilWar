@@ -22,7 +22,7 @@ if (_initPos isEqualTo []) exitWith{ hint "unable to spawn the convoy"; };
 private _road = [_initPos,500,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 private _roadPos = getPos _road;
 
-private _grp = createGroup ENEMY_SIDE;
+private _grp = createGroup SIDE_ENEMY;
 private _car = objNull;
 CONVOY = [];
 CAR_DESTROYED = 0;
@@ -54,7 +54,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
 
     //Trucks
     for "_xc" from 1 to _nbTrucks  do {
-        _grpTruck = createGroup ENEMY_SIDE;
+        _grpTruck = createGroup SIDE_ENEMY;
         _truck = [_car modelToWorld [0,-(_xc*15),0], _roadDirection, ENEMY_CONVOY_TRUCK_CLASS call BIS_fnc_selectRandom, _grp] call BIS_fnc_spawnVehicle select 0;
         _nbUnit = (count (fullCrew [_truck,"cargo",true]));
         for "_yc" from 1 to _nbUnit  do {

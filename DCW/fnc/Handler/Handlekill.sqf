@@ -12,10 +12,10 @@
         params["_unit","_killer"];
         _unit remoteExec ["RemoveAllActions",0];
         private _side = side group _unit;
-        if (_side == CIV_SIDE && isPlayer _killer)then{ 
+        if (_side == SIDE_CIV && isPlayer _killer)then{ 
             [_unit,_killer] call CIVILIAN_KILLED;
         }else{
-            if (_side == ENEMY_SIDE && group _killer == GROUP_PLAYERS)then{
+            if (_side == SIDE_ENEMY && group _killer == GROUP_PLAYERS)then{
 
                 [_unit, ["Disguise",{
                     params ["_enemy","_unit"];

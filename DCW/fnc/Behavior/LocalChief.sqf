@@ -27,7 +27,7 @@ _this addHeadgear "H_Beret_blk";
 
     _unit RemoveAction (_this select 2);
     _unit call fnc_MainObjectiveIntel;
-},nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction"];
+},nil,1.5,false,true,"","true",20,false,""]] remoteExec ["addAction"];
 
 [_this,["Set up a base here (200 points, 6 hours)",{
     params["_unit","_asker","_action"];
@@ -103,4 +103,4 @@ _this addHeadgear "H_Beret_blk";
         _unit enableAI "MOVE";
 
     }] remoteExec["spawn",2];
-},nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", GROUP_PLAYERS, true];
+},nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];

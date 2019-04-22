@@ -24,7 +24,7 @@ while {count TANKS < NUMBER_TANKS} do{
     _tempMarkers = _tempMarkers + [_tmpmarker];
 
     _className = (ENEMY_LIST_TANKS call bis_fnc_selectrandom);
-    _tank = [[_spawnPos select 0, _spawnPos select 1, 0], 180, _className, ENEMY_SIDE] call BIS_fnc_spawnVehicle select 0;
+    _tank = [[_spawnPos select 0, _spawnPos select 1, 0], 180, _className, SIDE_ENEMY] call BIS_fnc_spawnVehicle select 0;
 
     _tank setPilotLight true;
     _tank setCollisionLight true;

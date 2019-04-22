@@ -7,27 +7,29 @@
 
 params ["_player"];
 
-
-
 if (!RESPAWN_ENABLED)then {
 	NUMBER_RESPAWN = 0;
 	REMAINING_RESPAWN = 0;
 };
 
+[] spawn fnc_surrenderSystem;
+
+
 RESPAWN_CHOICE = "";
+INITIAL_RESPAWN_POSITION = getPos _player;
 REMAINING_RESPAWN = NUMBER_RESPAWN;
 
 fnc_HandleRespawnMultiplayer = {
 	params["_unit"];
 
 	PLAYER_ALIVE = true;
-	 
+
 	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
 	_pm = createMarker [format["player-marker-%1",random 1000], getPos _unit];
 	_pm setMarkerShape "ELLIPSE";
 	_pm setMarkerColor "ColorGreen";
 	_pm setMarkerAlpha 0;
-	_pm setMarkerSize [260,260];
+	_pm setMarkerSize [200,200];
 	if (DEBUG) then {
 		_pm setMArkerAlpha .3;
 	};
@@ -38,14 +40,10 @@ fnc_HandleRespawnMultiplayer = {
 	_unit setUnitTrait ["explosiveSpecialist",true];
 
 
+
 	//Squad leader specific
+	sleep 2;
 	if ((leader GROUP_PLAYERS) == _unit) then {
-
-		// Revive friendlies with chopper pick up
-		if (MEDEVAC_ENABLED) then{
-			[_unit] execVM "DCW\medevac\init.sqf";
-		};
-
 		_unit call fnc_ActionCamp;
 		_unit call fnc_supportuiInit;
 	};
@@ -65,16 +63,18 @@ fnc_HandleRespawnSingleplayer =
 	
 	waitUntil{!PLAYER_ALIVE};
 	 
+
 	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
+	/*deletemarker MARKER
 	_pm = createMarker [format["player-marker-%1",random 1000], getPos _unit];
 	_pm setMarkerShape "ELLIPSE";
 	_pm setMarkerColor "ColorGreen";
 	_pm setMarkerAlpha 0;
-	_pm setMarkerSize [260,260];
+	_pm setMarkerSize [200,200];
 	if (DEBUG) then {
 		_pm setMArkerAlpha .3;
-	};
-	_unit setVariable["marker", _pm, true];
+	};*/
+	//_unit setVariable["marker", _pm, true];
 
 	// Initial score display
 	[] call fnc_displayscore;
@@ -135,6 +135,17 @@ fnc_HandleRespawnSingleplayer =
 	sleep 2;
 	cutText ["","BLACK FADED", 999];
 	
+	// Wait a bit that the group are made with surrendersystem
+	//Squad leader specific
+	if ((leader GROUP_PLAYERS) == _unit) then {
+
+		RemoveAllActions _unit;
+
+		_unit call fnc_ActionCamp;
+		_unit call fnc_supportuiInit;
+	};
+
+
 	BIS_DeathBlur ppEffectAdjust [0.0];
 	BIS_DeathBlur ppEffectCommit 0;
 	cutText ["","BLACK FADED", 999];
@@ -164,18 +175,18 @@ if (RESPAWN_ENABLED) then{
 		REMAINING_RESPAWN = NUMBER_RESPAWN;
 		[player] call fnc_HandleRespawnMultiplayer;
 		
-	    player addMPEventHandler ["MPRespawn", {
+	  player addMPEventHandler ["MPRespawn", {
 			params ["_unit", "_corpse"];
 			_unit setVariable["marker", MARKER_PLAYER, true];
 			REMAINING_RESPAWN = [_unit,nil,true] call BIS_fnc_respawnTickets;
 			if (REMAINING_RESPAWN == 0)exitWith{ endMission "KILLED"; };
-			[_unit] call fnc_HandleRespawnMultiplayer;
+			[_unit] spawn fnc_HandleRespawnMultiplayer;
 		}];
 
 		player addMPEventHandler ["MPKilled",{
 			params ["_unit"	];
 			[] remoteExec ["PLAYER_KIA",2];
-
+			PLAYER_ALIVE = false;
 			// Delete the marker with a little delay
 			[_unit] spawn {
 				params["_unit"];

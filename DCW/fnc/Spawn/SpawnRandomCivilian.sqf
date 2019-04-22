@@ -21,7 +21,7 @@ while{true}do {
 			sleep 2;
 		} else {
 			_numberOfmen =  1;
-			_group = createGroup CIV_SIDE;
+			_group = createGroup SIDE_CIV;
 
 			for "_j" from 1 to _numberOfmen do {
 				_unit = [_group,_pos] call fnc_SpawnCivil;
@@ -33,20 +33,6 @@ while{true}do {
 		};
 	};	
 
-	// Garbage collector => moved to main loop
-	/*
-	{
-		_player = _x;
-		{
-			if(_x distance _player > 600)then{
-				UNITS_SPAWNED - [_x];
-				_unitPool = _unitPool - [_x];
-				_x call fnc_deleteMarker;
-				deleteVehicle _x;
-			}
-		}foreach _unitPool;
-	} foreach allPlayers;
-	*/
 
 	sleep 12;
 };

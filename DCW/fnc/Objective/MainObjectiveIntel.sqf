@@ -49,7 +49,7 @@ _taskId = "maintask";
   [_unit,"I marked you on the map where I think he is.",true] call fnc_Talk;
   {
     [_taskId, _x, [ "Investigate the sector where the enemy\n commander is possibly located","Investigate the sector","Investigate the sector"], _pos, "ASSIGNED", 1, true, true,""] remoteExec ["BIS_fnc_setTask" ,_x , true];
-  } foreach units GROUP_PLAYERS;
+  } foreach allPlayers;
   [(leader GROUP_PLAYERS),"Thank you, we'll investigate this place.",true] call fnc_Talk;
   [(leader GROUP_PLAYERS),"HQ, we've caught informations about the possible enemy commander last position.",false] call fnc_Talk;
   [HQ,"Copy ! We'll send you extra credits in order to accomplish your task. Good luck ! Out.",false] call fnc_Talk;

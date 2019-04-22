@@ -22,6 +22,7 @@ _this addGoggles "G_Spectacles";
 
 comment "Add weapons";
 _this addWeapon "rhs_weap_m21s";
+_this addWeapon "rhs_weap_m21s";
 _this addPrimaryWeaponItem "rhs_acc_pkas";
 _this addWeapon "Binocular";
 

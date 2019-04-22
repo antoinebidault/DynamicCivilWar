@@ -18,7 +18,7 @@ if (DEBUG)then{
 
 [_unit] call fnc_AddTorch;
 [_unit] call fnc_handlekill;
-//[_unit] call fnc_handleAttacked;
+[_unit] call fnc_handleAttacked;
 
 if (!_excludedFromSpawnedUnit)then{
     UNITS_SPAWNED pushback _unit;

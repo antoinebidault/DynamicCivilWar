@@ -32,7 +32,7 @@ _unit setPos _newPos;
 
 
 
-if (side _unit == CIV_SIDE)then{
+if (side _unit == SIDE_CIV)then{
 	_animPossible = ["Acts_CivilListening_1","Acts_CivilListening_2","acts_StandingSpeakingUnarmed"];
 	/*if (count _chairFound > 0) then {
 		[_unit, "SIT", "NONE"] call BIS_fnc_ambientAnim;

@@ -27,7 +27,7 @@ if (_nb < 1) exitWith { _units };
 //Spawn an armed vehicke
 private _road = [_pos,4*_radius,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 if (!isNil '_road')then{
-    _car = ([getPos _road, 0,FRIENDLY_LIST_CARS call BIS_fnc_selectRandom, SIDE_CURRENT_PLAYER] call bis_fnc_spawnvehicle)  select 0;
+    _car = ([getPos _road, 0,FRIENDLY_LIST_CARS call BIS_fnc_selectRandom, SIDE_PLAYER] call bis_fnc_spawnvehicle)  select 0;
     _car setVehicleLock "LOCKED";
     _roadConnectedTo = roadsConnectedTo _road;
     if (count _roadConnectedTo == 0) then{
@@ -58,7 +58,7 @@ for "_xc" from 1 to _nb  do {
     };
 
     if (!_cancel) then {
-      _grp = createGroup SIDE_CURRENT_PLAYER;
+      _grp = createGroup SIDE_PLAYER;
       _unitName = FRIENDLY_LIST_UNITS call BIS_fnc_selectRandom;
       _unit = _grp createUnit [_unitName, _posSelected,[],1,"NONE"];
 
@@ -74,7 +74,7 @@ for "_xc" from 1 to _nb  do {
       _units pushBack _unit;
 
       //Si c'est une patrouille
-      [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_patrol;
+      [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_EnemyCompoundPatrol;
       
     };
 };

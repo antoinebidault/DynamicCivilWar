@@ -31,7 +31,7 @@ if (_nbSnipers > 0)then{
    // _objs = nearestTerrainObjects [_x select 0, ["Tree","Bush"], 20];
   //  if (count _objs > 0) then{
       private _obj  =_objs select 0;
-      private  _grp = createGroup ENEMY_SIDE;
+      private  _grp = createGroup SIDE_ENEMY;
       for "_xc" from 1 to _nbSnipers do {
         
         _unitName = ENEMY_SNIPER_UNITS call BIS_fnc_selectRandom;
@@ -88,7 +88,7 @@ for "_xc" from 1 to _nbenemies  do {
         _posSelected = [_pos,1, _radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
     };
 
-    _grp = createGroup ENEMY_SIDE;
+    _grp = createGroup SIDE_ENEMY;
     for "_xc" from 1 to _nbUnit do {
       _enemy = [_grp,_posSelected,false] call fnc_spawnEnemy;
       _enemy setVariable["DCW_Type","enemy"];
@@ -96,7 +96,7 @@ for "_xc" from 1 to _nbenemies  do {
       _units pushBack _enemy;
     };
 
-    [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_patrol;
+    [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_EnemyCompoundPatrol;
 };
 
 
@@ -113,7 +113,7 @@ for "_xc" from 1 to _population do {
 
     if (count _posSelected > 0) then {
       _unitName = CIV_LIST_UNITS call BIS_fnc_selectRandom;
-      _grp = createGroup CIV_SIDE;
+      _grp = createGroup SIDE_CIV;
     
       if (_xc == 1 && _population >= 1 && count _buildings > 0) then {
         _civ = [_grp,_posSelected,_chief,false] call fnc_SpawnCivil;
@@ -127,7 +127,7 @@ for "_xc" from 1 to _population do {
           _units pushBack _civ;
         }else{
           _civ = [_grp,_posSelected,_chief,true] call fnc_SpawnCivil;
-          [_civ,_radius,_meetingPointPosition,_buildings] spawn fnc_patrol;
+          [_civ,_radius,_meetingPointPosition,_buildings] spawn fnc_CivilianCompoundPatrol;
           _units pushBack _civ;
         };
       };
