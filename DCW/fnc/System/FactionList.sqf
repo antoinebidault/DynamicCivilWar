@@ -7,7 +7,7 @@
  */
 
 
-params[];
+params["_side"];
 
 _allowedmenclass = ["Man"]; 
 
@@ -20,7 +20,7 @@ FACTIONS = [];
 for "_i" from 1 to ((count _CfgFactions) - 1) do 
 {
 	_faction = _CfgFactions select _i;
-	if (getNumber(_faction >> "side") < 2 && getNumber(_faction >> "side") > 0) then {
+	if (getNumber(_faction >> "side") == (_side call BIS_fnc_sideID)) then {
 		FACTIONS = FACTIONS + [[getText(_faction >> "displayName"), configName _faction, getText(_faction >> "icon") ]];
 	};
 };

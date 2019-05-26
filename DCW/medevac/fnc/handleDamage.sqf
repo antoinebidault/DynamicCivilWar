@@ -19,7 +19,14 @@ params [
 if !(local _unit) exitWith {false};
 if (_damage == 0) exitWith {false};
 
-if ( _damage > .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",false])) then {
+// Reducing damage with a factor of 3
+_damage = 0.9 min (_damage * 0.33);
+if ( _damage >= .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",false])) then {
+
+	if (vehicle _unit != _unit) then {
+		_unit leaveVehicle (vehicle _unit);
+	};
+	
 	_unit setUnconscious true;
 	_unit setCaptive true;
 	_unit setVariable ["unit_injured", true, true];
@@ -32,7 +39,7 @@ if ( _damage > .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",false
     _unit setHit ["legs", 1]; 
     [_unit] call fnc_removeFAKS;
 
-	[leader (group _unit), "Shit ! We've got a man down ! Requesting immediate air support at our coordinates !",true] spawn fnc_talk;
+	[leader (group _unit), "Shit ! We've got a wounded man here ! We should request a medevac now !",true] spawn fnc_talk;
     _marker = createMarker [format["body-%1", name _unit], position _unit];
     _marker setMarkerShape "ICON";
     _marker setMarkerType "mil_dot";
@@ -41,8 +48,11 @@ if ( _damage > .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",false
 	_unit setVariable ["unit_marker",  _marker];
 
 }else{
-	if (_unit getVariable["unit_injured",false])then{_damage = .9;};
+	if (_unit getVariable["unit_injured",false])then{
+		_damage = .9;
+	};
 };
 
-	
+//_unit setDamage _damage;
+
 _damage;

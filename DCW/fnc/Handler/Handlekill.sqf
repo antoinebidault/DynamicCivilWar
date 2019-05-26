@@ -14,6 +14,7 @@
         private _side = side group _unit;
         if (_side == SIDE_CIV && isPlayer _killer)then{ 
             [_unit,_killer] call CIVILIAN_KILLED;
+            [_unit,-10] remoteExec ["fnc_updaterep",2];
         }else{
             if (_side == SIDE_ENEMY && group _killer == GROUP_PLAYERS)then{
 

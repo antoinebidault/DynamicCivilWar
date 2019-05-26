@@ -17,7 +17,7 @@ if (_nb == 0)exitWith{_units;};
 
 private _tempList = MARKER_WHITE_LIST + PLAYER_MARKER_LIST;
 
-_posToSpawn = [_pos, 130 min (1.3*_radius) , SPAWN_DISTANCE min (2*_radius), 3, 0, 2, 0, _tempList] call BIS_fnc_FindSafePos;
+_posToSpawn = [_pos, 250 min (2*_radius) , (550 min 2.5*_radius), 3, 0, 2, 0, _tempList] call BIS_fnc_FindSafePos;
 
 for "_j" from 1 to _nb do {
     _mortar = ENEMY_MORTAR_CLASS createVehicle _posToSpawn ; 

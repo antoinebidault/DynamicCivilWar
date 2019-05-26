@@ -25,7 +25,9 @@ if (_initPos isEqualTo []) exitWith{hint "unable to spawn the commander"};
 _initPos = ((selectBestPlaces[_initPos, 100, _situation, 5, 1]) select 0 )select 0;
 
 //Spawn the commander
-ENEMY_COMMANDER = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],ENEMY_SKILLS,"NONE"];
+ENEMY_COMMANDER = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],AI_SKILLS,"NONE"];
+[ENEMY_COMMANDER] joinSilent _grp;
+ENEMY_COMMANDER enableDynamicSimulation false;
 ENEMY_COMMANDER execVM "DCW\loadout\loadout-commander.sqf";
 
 COMMANDER_LAST_POS = [];
@@ -80,7 +82,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
         [_killer,{
             [_this,format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _this],true] call fnc_talk;
             sleep 60;
-            ["END1" ,true ,2 ] call BIS_fnc_endMission;
+            "EveryoneWon" call BIS_fnc_endMissionServer;
         }] remoteExec["spawn",0];
     }else{
         //Start over
@@ -95,6 +97,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
 
 for "_yc" from 1 to 4  do {
     _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
+    _unit enableDynamicSimulation false;
     ESCORT pushback _unit;
 };
 
@@ -115,7 +118,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 	_trig setTriggerTimeout[1,1,1,true];
     _trig setTriggerStatements[
         "this",
-        " [this] call fnc_foundCommander;",
+        " [thisList select 0] spawn fnc_foundCommander;",
         "deleteVehicle thisTrigger;"
     ];
 
@@ -147,7 +150,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
     _grp setBehaviour "SAFE";
     _grp setSpeedMode "LIMITED";
 
-    sleep (15*60);
+    sleep (12*60);
     
 };
 

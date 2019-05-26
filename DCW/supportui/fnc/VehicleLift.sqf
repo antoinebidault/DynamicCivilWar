@@ -5,7 +5,7 @@ params["_unit","_dist"];
 _pos = [_unit, _dist, _dist+1, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
 _spawnpos = [_pos select 0, _pos select 1, 200];
 
-_heli_spawn = [_spawnpos, 0, SUPPORT_HEAVY_TRANSPORT_CLASS, West] call BIS_fnc_spawnVehicle;
+_heli_spawn = [_spawnpos, 0, SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom, SIDE_PLAYER] call BIS_fnc_spawnVehicle;
 _chopper = _heli_spawn select 0;
 _spawnpos set [2,400];
 _chopper setposatl _spawnpos;

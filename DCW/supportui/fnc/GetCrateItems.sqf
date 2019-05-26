@@ -1,30 +1,40 @@
 
-_gearAndStuffArray = [];
-{ 
-  _items =  getUnitLoadout _x; 
- if (count _items > 0) then { 
- { 
-   if (typeName _x == "ARRAY" ) then { 
-    if (count _x > 0) then { 
-     if ( count _x == 3) then { 
-      if (_x select 1 != "") then { 
-       _gearAndStuffArray pushBackUnique (_x select 1); 
+if (count GEAR_AND_STUFF == 0) then {
+  GEAR_AND_STUFF = [];
+  _gearAndStuffArray = [];
+  { 
+    _items =  getUnitLoadout _x;
+    if (count _items > 0) then { 
+    { 
+      if (typeName _x == "ARRAY" ) then { 
+        if (count _x > 0) then { 
+          {
+            if (typeName _x == "STRING") then {
+              if (_x != "") then { _gearAndStuffArray pushBackUnique _x;  };
+            } else{
+              if (typeName _x == "ARRAY" ) then { 
+                  if (count _x > 0) then { 
+                    {
+                      if (typeName _x == "STRING" ) then {
+                        if (_x != "") then { _gearAndStuffArray pushBackUnique _x;  };
+                      };
+                    }foreach _x;
+                  }; 
+                };
+            };
+          } foreach _x;
+        }; 
+      } else { 
+        if (typeName _x == "STRING") then {
+          if (_x != "") then { _gearAndStuffArray pushBackUnique _x;  };
+        };
       }; 
-       
-      if (_x select 2 != "") then { 
-       _gearAndStuffArray pushBackUnique (_x select 2); 
-      }; 
-      if (_x select 3 != "") then { 
-      	_gearAndStuffArray pushBackUnique (_x select 3); 
-      }; 
-     };
-     _gearAndStuffArray pushBackUnique (_x select 0); 
+      } foreach _items; 
     }; 
-   } else { 
-    _gearAndStuffArray pushBackUnique _x; 
-   }; 
-  } foreach _items; 
- }; 
-} foreach units (group (leader GROUP_PLAYERS)); 
- 
- _gearAndStuffArray;
+  } foreach FRIENDLY_LIST_UNITS; //units (group (leader GROUP_PLAYERS)); 
+
+
+  GEAR_AND_STUFF = _gearAndStuffArray;
+};
+
+GEAR_AND_STUFF;

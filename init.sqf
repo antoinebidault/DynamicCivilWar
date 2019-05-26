@@ -10,4 +10,4 @@
  */
 //Mission loading
 //nul = [] execVM "functions\playlist.sqf"; //Init the music playlist
-nul = ["rhs-kunduz"] execVM "DCW\init.sqf"; //Init the insurgents
+nul = ["stratis"] execVM "DCW\init.sqf"; //Init the insurgents

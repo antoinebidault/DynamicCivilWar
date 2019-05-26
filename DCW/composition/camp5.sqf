@@ -15,6 +15,7 @@ Using orientation of objects: no
 */
 
 [
+	["Box_Syndicate_Ammo_F",[-1.73438,-1.39478,2.28882e-005],39.7442,1,0,[],"","",true,false], 
 	["Land_WaterBottle_01_full_F",[0.190674,-0.723633,0.024025],0.0186651,1,0,[],"","",true,false], 
 	["Land_WaterBottle_01_full_F",[0.316895,-0.697388,0.0240402],359.992,1,0,[],"","",true,false], 
 	["Land_WaterBottle_01_pack_F",[0.513428,-0.747559,0.0240097],304.097,1,0,[],"","",true,false], 
@@ -29,6 +30,5 @@ Using orientation of objects: no
 	["Box_Syndicate_WpsLaunch_F",[-1.73438,0.598999,2.28882e-005],312.171,1,0,[],"","",true,false], 
 	["Land_FoodSacks_01_cargo_brown_idap_F",[0.36377,-1.87292,0.0240326],124.623,1,0,[],"","",true,false], 
 	["Box_Syndicate_Ammo_F",[-2.11401,-0.507935,2.28882e-005],82.5311,1,0,[],"","",true,false], 
-	["Box_Syndicate_Ammo_F",[-1.73438,-1.39478,2.28882e-005],39.7442,1,0,[],"","",true,false], 
 	["Land_CanisterFuel_F",[-0.480225,-2.37646,-2.28882e-005],225,1,0,[],"","",true,false]
 ]

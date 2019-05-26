@@ -13,6 +13,7 @@ _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize"))
 _worldCenter = [_worldSize/2,_worldSize/2,0];
 private _tempMarkers = MARKER_WHITE_LIST;
 while {count TANKS < NUMBER_TANKS} do{
+    
 
      _spawnPos = [_worldCenter, 0, (_worldSize/2), 5, 0, .3, 0, _tempMarkers] call BIS_fnc_FindSafePos;
     
@@ -25,7 +26,8 @@ while {count TANKS < NUMBER_TANKS} do{
 
     _className = (ENEMY_LIST_TANKS call bis_fnc_selectrandom);
     _tank = [[_spawnPos select 0, _spawnPos select 1, 0], 180, _className, SIDE_ENEMY] call BIS_fnc_spawnVehicle select 0;
-
+    _tank enableDynamicSimulation true;
+    
     _tank setPilotLight true;
     _tank setCollisionLight true;
     group _tank setBehaviour "SAFE";

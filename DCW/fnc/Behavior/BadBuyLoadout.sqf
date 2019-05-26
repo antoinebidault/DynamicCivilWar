@@ -15,8 +15,8 @@ params ["_unit","_side"];
 [_unit] joinSilent grpNull;
 [_unit] joinSilent (createGroup _side);
 
-_unit removeEventHandler ["HandleDamage",0];
-_unit removeEventHandler ["FiredNear",0];
+_unit removeAllEventHandlers "HandleDamage";
+_unit removeAllEventHandlers "FiredNear";
 
 private _marker = _unit getVariable["marker",""];
 if (_side == SIDE_ENEMY)then{

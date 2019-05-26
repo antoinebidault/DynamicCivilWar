@@ -8,30 +8,31 @@
 //Stand by during a long period
 if (!isServer) exitWith{false};
 
-SLEEP (_this select 0);
-
-private _nbVeh = 3;
-private _nbTrucks = _nbVeh - 1;
-private _roadRadius = 40;
-
-private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
-private _worldCenter = [_worldSize/2,_worldSize/2,0];
-
-private _initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_FindSafePos;
-if (_initPos isEqualTo []) exitWith{ hint "unable to spawn the convoy"; };
-private _road = [_initPos,500,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
-private _roadPos = getPos _road;
-
-private _grp = createGroup SIDE_ENEMY;
-private _car = objNull;
 CONVOY = [];
+
+//SLEEP (_this select 0);
+
+_nbVeh = 3;
+_nbTrucks = _nbVeh - 1;
+_roadRadius = 40;
+
+_worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
+_worldCenter = [_worldSize/2,_worldSize/2,0];
+
+_initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_FindSafePos;
+if (_initPos isEqualTo []) exitWith{ hint "unable to spawn the convoy"; };
+_road = [_initPos,500,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
+_roadPos = getPos _road;
+
+_grp = createGroup SIDE_ENEMY;
+_car = objNull;
 CAR_DESTROYED = 0;
 
 if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
     [HQ,"There is an enemy convoy moving not far from your position. You can destroy them to earn some points.",true] call fnc_talk;
-    private _roadConnectedTo = roadsConnectedTo _road;
-    private _connectedRoad = _roadConnectedTo select 0;
-    private _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
+    _roadConnectedTo = roadsConnectedTo _road;
+    _connectedRoad = _roadConnectedTo select 0;
+    _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
     _car = [_roadPos, _roadDirection, ENEMY_CONVOY_CAR_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
 
     _car addMPEventHandler ["MPKilled",{
@@ -42,7 +43,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
     CONVOY pushback _car;
     CONVOY = CONVOY + (crew _car);
    
-    _nbUnit = (count (fullCrew [_car,"cargo",true])) max 10;
+    _nbUnit = (count (fullCrew [_car,"cargo",true])) min 10;
     
     //Civilian team spawn.
     //If we killed them, it's over.
@@ -58,7 +59,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
         _truck = [_car modelToWorld [0,-(_xc*15),0], _roadDirection, ENEMY_CONVOY_TRUCK_CLASS call BIS_fnc_selectRandom, _grp] call BIS_fnc_spawnVehicle select 0;
         _nbUnit = (count (fullCrew [_truck,"cargo",true]));
         for "_yc" from 1 to _nbUnit  do {
-            _unit =[_grpTruck,_initPos,true] call fnc_spawnEnemy;
+            _unit = [_grpTruck,_initPos,true] call fnc_spawnEnemy;
             _unit moveInCargo _truck;
             CONVOY pushback _unit;
         };
@@ -99,13 +100,15 @@ _wpt setMarkerColor "ColorRed";
 _wpt setMarkerType "hd_ambush";
 _wpt setMarkerText "Convoy destination";
 
+
+
 //FIRST STEP => Moving to a random compound
-private _nextPos = getMarkerPos (([getPos (leader GROUP_PLAYERS)] call fnc_findNearestMarker) select 0);
+_nextPos = getMarkerPos (([getPos ((units GROUP_PLAYERS) call BIS_fnc_selectRandom)] call fnc_findNearestMarker) select 0);
 _nextPos = getPosASL([_nextPos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
 (leader _grp) move _nextPos;
 _wpt setMarkerPos _nextPos;
 
-waitUntil {sleep 5; CAR_DESTROYED == _nbVeh || (leader _grp) distance _nextPos < 10 };
+waitUntil {sleep 5;  CAR_DESTROYED == _nbVeh || (leader _grp) distance _nextPos < 10 };
 sleep 100 + random 400;
 
 //SECOND STEP Move back to the position

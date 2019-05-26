@@ -9,6 +9,7 @@ if (isNull player) exitWith{false;};
 
 titleCut ["", "BLACK FADED", 9999];
 
+
 /*
 if (!didJIP) then {
 	setDate [2018, 6, 25, 18, 0]; 
@@ -31,50 +32,85 @@ In this singleplayer scenario, you have one major objective : assassinate the en
 
  _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 
+
+
 // If is admin
 if (ENABLE_DIALOG && !didJIP) then {
 	
-	_timer = time;
-	_maxTime = 60;
-	// Show a timer for all the players
-	[_maxTime] spawn {
-		params["_time"];
-		while {_time > 0 && !DCW_STARTED} do {
-			_time = _time - 1;  
-			hintSilent format["%1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];	
-			sleep 1;
-		};
-	};
+	playMusic "AmbientTrack04_F";
 
-	if ((leader GROUP_PLAYERS) == leader group (allPlayers select 0)) then{
+	if ((leader GROUP_PLAYERS) != player) then{
+		titleCut ["", "BLACK IN", 4];
+
+		[] spawn {
+			sleep 4;
+			[parseText "<t font='PuristaBold' size='1.6'>Dynamic Civil War</t><br />by Bidass", true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
+			sleep 14;
+			[
+				[
+					[format["Welcome on %1, ",worldName], "align = 'left' shadow = '1' size = '1.0'"],
+					["","<br/>"], // line break
+					["Stand by, the administrator is currently configuring", "align = 'left' shadow = '1' size = '1'"],
+					["","<br/>"], // line break
+					["the scenario's parameters...","align = 'left' shadow = '1' size = '1.0'"]
+				]
+			] spawn BIS_fnc_typeText2;
+		};
+
+		_randomPos = [getPos player, 200, 10000, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+		_randomPos set [2, 140];
+		_targetPos = [_randomPos, 1000, 1100, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+		CONFIG_CAMERA = "camera" camcreate _randomPos;
+		CONFIG_CAMERA cameraeffect ["internal", "back"];
+		showCinemaBorder false;
+		CONFIG_CAMERA camSetPos _randomPos;
+		CONFIG_CAMERA camCommit 0;
+		CONFIG_CAMERA camSetTarget _targetPos; 
+		CONFIG_CAMERA camSetPos _targetPos;
+		CONFIG_CAMERA camCommit 500;
+	} else { // He is the team leader => he administrates the mission
 		[] call fnc_dialog;
-	} else{
-		if (isPlayer (leader GROUP_PLAYERS)) then {
-			hint "wait until the leader finishes to configure the mission";
-		} else{
-			DCW_STARTED = true;
-		};
 	};
 
-	waitUntil {DCW_STARTED || time > _timer + _maxTime};
-	if (time > _timer + _maxTime) then {
-		closeDialog 0;		
-		UNIT_SHOWCASE_CAMERA cameraeffect ["terminate", "back"];
-		camDestroy UNIT_SHOWCASE_CAMERA;
+	// Just in case there is no config at all
+	if (!isPlayer (leader GROUP_PLAYERS)) then {
+		DCW_STARTED = true;
 	};
+
+	waitUntil {DCW_STARTED};
+	
+	player switchMove "";
+
+	{
+		if (!isPlayer _x) then {
+			[_x,"MOVE"] remoteExec ["enableAI", 2] ;
+			[_x,"FSM"] remoteExec ["enableAI", 2] ;
+			[_x,""] remoteExec ["switchMove", 0];
+		};
+	}
+	foreach units group player;
+
+	// Close the dialog 
+	if ((leader GROUP_PLAYERS) != player) then{
+		CONFIG_CAMERA cameraeffect ["terminate", "back"];
+		camDestroy CONFIG_CAMERA;
+	};
+
 	DCW_STARTED = true;
 	publicVariableServer "DCW_STARTED";
+
 	hintSilent "";
 } else {
 	DCW_STARTED = true;
 	publicVariableServer "DCW_STARTED";
 };
 
+
 if (!DEBUG ) then {
 	[] call fnc_intro;
 };
 
-sleep 3;
+sleep .3;
 titleCut ["", "BLACK FADED", 9999];
 // Info text
 [worldName, format["%1km from %2", round(((getPos _loc) distance2D player)/10)/100,text _loc], str(date select 1) + "." + str(date select 2) + "." + str(date select 0)] spawn BIS_fnc_infoText;
@@ -91,6 +127,98 @@ titleCut ["", "BLACK IN", 5];
 // init user respawn loop
 [player] spawn fnc_respawn; //Respawn loop
 
+
+//Loop to check mines
+iedBlasts=["Bo_Mk82","Rocket_03_HE_F","M_Mo_82mm_AT_LG","Bo_GBU12_LGB","Bo_GBU12_LGB_MI10","HelicopterExploSmall"];
+iedJunks=["Land_Garbage_square3_F","Land_Garbage_square5_F","Land_Garbage_line_F"];
+
+iedAct={	
+	_iedObj=_this;
+	if(mineActive _iedObj)then{
+
+		_iedBlast = selectRandom iedBlasts;
+		createVehicle[_iedBlast,(getPosATL _iedObj),[],0,"NONE"];
+		createVehicle["Crater",(getPosATL _iedObj),[],0,"NONE"];
+
+		{
+			hideObject _x
+		}forEach nearestObjects[getPosATL _iedObj,iedJunks,4];
+		
+		deleteVehicle _iedObj;
+	};
+};
+
+[] spawn {
+	while {true} do {
+		{
+			_mine = _x select 0;
+			if (!(mineActive _mine) || !(alive _mine)) then {
+				_junk = _x select 1;
+				// It's in cache, that's okay !
+				if (player distance _junk < 250) then{
+
+					// The mine is defused by the player
+					_junk remoteExec ["fnc_success", 2, false];
+
+					// Delete the mine
+					IEDS = IEDS - [_x];
+					publicVariable "IEDS";
+				};
+				
+			} else {
+				if (_mine distance player < 3  && (speed player > 4 || (stance player) != "PRONE")) then{
+					_mine call iedAct;
+				};
+			};
+			sleep .2;
+		} foreach IEDS;
+		sleep .4;
+	};
+};
+
+// Hover effect on map;
+addMissionEventHandler
+[	"Map",
+	{	
+		params ["_isOpened","_isForced"];
+		if (_isOpened) then {
+			[] spawn {
+				["DCW-markerhover", "onEachFrame", {
+					_map = findDisplay 12 displayCtrl 51; 
+					_mapMarker = (ctrlMapMouseOver _map);
+					hintsilent "";
+					_map ctrlMapCursor ["Track","Track"];
+					if (_mapMarker select 0 == "marker"  ) then {
+						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString ) then {
+							_map ctrlMapCursor ["Track","HC_overFriendly"];
+							_marker = [_mapMarker select 1] call fnc_getMarkerById;
+							_people = ((_marker select 0) select 6);
+							_population = (_people select 0) + (_people select 1) + (_people select 2) + (_people select 5) + (_people select 8); 
+							_dbg =  "";
+							if (DEBUG) then {
+								_labels = ["Civilians","Snipers","Enemies","Cars","Ieds","Caches","Hostages","Mortars","Outposts","Friendlies"];
+								{
+									_dbg =  _dbg + format["<br/><t>%1:%2</t>",_labels select _foreachIndex,_x];
+								}foreach _people;
+							};
+							
+							hintsilent parseText format["<t >%1</t><br/><t size='1.3'>Reputation : %2/100</t><br/><t size='1.3'>Population : %3</t>%4",(_marker select 0) select 14,(_marker select 0) select 13,_population,_dbg];
+						};
+					};
+
+					if (!visibleMap) then {
+						["DCW-markerhover", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
+					};
+				}] call BIS_fnc_addStackedEventHandler;
+			};
+		};
+	
+	}
+];
+
+
+
+
 sleep 30;
 
 // Hint
@@ -101,3 +229,4 @@ sleep 1;
 if (!isMultiplayer) then{saveGame;};
 // Initial score display
 [] call fnc_displayscore;
+

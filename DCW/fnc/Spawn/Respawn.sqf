@@ -14,9 +14,8 @@ if (!RESPAWN_ENABLED)then {
 
 [] spawn fnc_surrenderSystem;
 
-
 RESPAWN_CHOICE = "";
-INITIAL_RESPAWN_POSITION = getPos _player;
+INITIAL_RESPAWN_POSITION = getMArkerPos "marker_base"; // getPos _player;
 REMAINING_RESPAWN = NUMBER_RESPAWN;
 
 fnc_HandleRespawnMultiplayer = {
@@ -35,14 +34,12 @@ fnc_HandleRespawnMultiplayer = {
 	};
 	_unit setVariable["marker", _pm, true];
 
-
 	//Default trait
 	_unit setUnitTrait ["explosiveSpecialist",true];
 
-
-
 	//Squad leader specific
 	sleep 2;
+
 	if ((leader GROUP_PLAYERS) == _unit) then {
 		_unit call fnc_ActionCamp;
 		_unit call fnc_supportuiInit;
@@ -87,7 +84,7 @@ fnc_HandleRespawnSingleplayer =
 
 	//count the remaining lives after death
 	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
-	if (REMAINING_RESPAWN == -1)exitWith{ endMission "KILLED"; };
+	if (REMAINING_RESPAWN == -1) exitWith{ endMission "LOSER"; };
 	
 	cutText ["You are severly injured","BLACK OUT", 7];
 	sleep 7;
@@ -109,14 +106,17 @@ fnc_HandleRespawnSingleplayer =
 	if (!isMultiplayer) then {
 		{ 
 			if(!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
-				_x setPos ([_respawnPos, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos)
+				_x setPos ([_respawnPos, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos);
+				if (ACE_ENABLED) then {
+					[objNull, _x] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
+				};
 			}; 
 		}foreach  units (group _unit);
 	};
 
 	sleep 1;
 
-	[_unit,"Acts_UnconsciousStandUp_part1"] remoteExec ["switchMove",0];
+	[_unit,"Acts_welcomeOnHUB01_PlayerWalk_6"] remoteExec ["switchMove",0];
 
 	//Disable chasing if not in multiplayer
 	if (!isMultiplayer) then{
@@ -128,9 +128,14 @@ fnc_HandleRespawnSingleplayer =
 
 	//Set new pos and loadout
 	_unit setDamage 0;
+	if (ACE_ENABLED) then {
+		[objNull, player] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
+	};
+	_unit setCaptive true;
 	_unit setPos _respawnPos;
 	_unit setUnitLoadout _loadout;
 
+	[_unit,"Acts_welcomeOnHUB01_PlayerWalk_6"] remoteExec ["switchMove",0];
 	//Black screen with timer...
 	sleep 2;
 	cutText ["","BLACK FADED", 999];
@@ -138,9 +143,7 @@ fnc_HandleRespawnSingleplayer =
 	// Wait a bit that the group are made with surrendersystem
 	//Squad leader specific
 	if ((leader GROUP_PLAYERS) == _unit) then {
-
 		RemoveAllActions _unit;
-
 		_unit call fnc_ActionCamp;
 		_unit call fnc_supportuiInit;
 	};
@@ -162,28 +165,33 @@ fnc_HandleRespawnSingleplayer =
 	"dynamicBlur" ppEffectAdjust [0.0];  
 	"dynamicBlur" ppEffectCommit 5;  
 	[] remoteExec ["PLAYER_KIA",2];
-
+	
+	_unit setCaptive false;
 };
 
 
 
 //Damage handler
 if (RESPAWN_ENABLED) then{
+
 	if (isMultiplayer) then {
 		// Add tickets to the player
-		[player, NUMBER_RESPAWN, false] call BIS_fnc_respawnTickets;
+		[_player, NUMBER_RESPAWN, false] call BIS_fnc_respawnTickets;
 		REMAINING_RESPAWN = NUMBER_RESPAWN;
-		[player] call fnc_HandleRespawnMultiplayer;
+
+		[SIDE_PLAYER, getMarkerPos "marker_base","Base"] call BIS_fnc_addRespawnPosition;
 		
-	  player addMPEventHandler ["MPRespawn", {
+		[_player] call fnc_HandleRespawnMultiplayer;
+		
+	  _player addMPEventHandler ["MPRespawn", {
 			params ["_unit", "_corpse"];
 			_unit setVariable["marker", MARKER_PLAYER, true];
 			REMAINING_RESPAWN = [_unit,nil,true] call BIS_fnc_respawnTickets;
-			if (REMAINING_RESPAWN == 0)exitWith{ endMission "KILLED"; };
+			if (REMAINING_RESPAWN == -1)exitWith{  endMission "LOSER";  };
 			[_unit] spawn fnc_HandleRespawnMultiplayer;
 		}];
 
-		player addMPEventHandler ["MPKilled",{
+		_player addMPEventHandler ["MPKilled",{
 			params ["_unit"	];
 			[] remoteExec ["PLAYER_KIA",2];
 			PLAYER_ALIVE = false;
@@ -196,9 +204,15 @@ if (RESPAWN_ENABLED) then{
 		}];
 
 	} else {
+		
+		// Disable team switching
+		enableTeamSwitch false;
+
 		// In Singleplayer
 		[_player] call fnc_HandleRespawnMultiplayer;
 
+		// Prevent ACE to do bullshit
+		_player removeAllEventHandlers "HandleDamage";
 		_player addEventHandler["HandleDamage",{
 			params [
 				"_unit",			// Object the event handler is assigned to.
@@ -211,22 +225,23 @@ if (RESPAWN_ENABLED) then{
 				"_hitPoint"			// hit point Cfg name (String)
 			];
 
-			if (_damage > .96 && NUMBER_RESPAWN >= 1 && PLAYER_ALIVE)then{
+			_damage = .9 min _damage;
+			if (_damage >= .9 && PLAYER_ALIVE)then{
 				PLAYER_ALIVE = false;
 				_unit setUnconscious true;
-				addCamShake [15, 5, 0.7];
+				addCamShake [15, 6, 0.7];
 				[_unit] spawn fnc_HandleRespawnSinglePlayer;
-				_damage = .96;
-				_unit setDamage .96;
-			}else{
+				_damage = .9;
+				_unit setDamage .9;
+				_unit playActionNow "agonyStart";
+			} else {
 				if (!PLAYER_ALIVE)then{
-					_damage = .96;
-					_unit playActionNow "agonyStart";
-					_unit setDamage .96;
-				}
+					_damage = .9;
+					_unit setDamage .9;
+				};
 			};
 			
-			_damage;
+				_unit setDamage _damage;
 		}];
 	};
 }else{

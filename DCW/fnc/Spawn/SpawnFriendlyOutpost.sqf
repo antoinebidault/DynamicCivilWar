@@ -24,25 +24,38 @@ private _cancel = true;
 
 if (_nb < 1) exitWith { _units };
 
-//Spawn an armed vehicke
-private _road = [_pos,4*_radius,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
-if (!isNil '_road')then{
-    _car = ([getPos _road, 0,FRIENDLY_LIST_CARS call BIS_fnc_selectRandom, SIDE_PLAYER] call bis_fnc_spawnvehicle)  select 0;
-    _car setVehicleLock "LOCKED";
-    _roadConnectedTo = roadsConnectedTo _road;
-    if (count _roadConnectedTo == 0) then{
-      _car setDir floor(random 360);
-    }else{
-      _connectedRoad = _roadConnectedTo select 0;
-      _car setDir ([_road, _connectedRoad] call BIS_fnc_DirTo);
+_nbVehicles = if (_nb > 7) then {2} else {if (_nb <= 3) then {0} else {1};};
+
+_roads = _pos nearRoads _radius; 
+
+if (count _roads > 0) then {
+  for "_xc" from 1 to _nbVehicles  do  {
+    _road = _roads call BIS_fnc_selectRandom;
+    if (!isNil '_road')then{
+        _roads = _roads - [_road];
+        _car = ([getPos _road, 0,FRIENDLY_LIST_CARS call BIS_fnc_selectRandom, SIDE_PLAYER] call bis_fnc_spawnvehicle)  select 0;
+        _car setVehicleLock "LOCKED";
+        _roadConnectedTo = roadsConnectedTo _road;
+        if (count _roadConnectedTo == 0) then{
+          _car setDir floor(random 360);
+        }else{
+          _connectedRoad = _roadConnectedTo select 0;
+          _car setDir ([_road, _connectedRoad] call BIS_fnc_DirTo);
+        };
+        _car setPos [getPos _car select 0, getPos _car select 1, getPos _car select 2];
+        _units pushBack _car;
     };
-    _car setPos [getPos _car select 0, getPos _car select 1, getPos _car select 2];
-    _units pushBack _car;
+  };
 };
 
 private _flagPos = [_pos,0, 20, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
 _unit = FRIENDLY_FLAG createVehicle _flagPos;
 _units pushBack _unit;
+
+_ammoBox = "Box_Syndicate_Ammo_F" createVehicle (_unit modelToWorld [1,1,0]);
+_ammoBox call fnc_spawncrate;
+_units pushBack _ammoBox;
+
 
 //Ajout des enemis 
 for "_xc" from 1 to _nb  do {
@@ -58,19 +71,12 @@ for "_xc" from 1 to _nb  do {
     };
 
     if (!_cancel) then {
+      
+   //   _unitName = FRIENDLY_LIST_UNITS call BIS_fnc_selectRandom;
+    //  _unit = _grp createUnit [_unitName, _posSelected,[],1,"NONE"];
       _grp = createGroup SIDE_PLAYER;
-      _unitName = FRIENDLY_LIST_UNITS call BIS_fnc_selectRandom;
-      _unit = _grp createUnit [_unitName, _posSelected,[],1,"NONE"];
-
-
-      if (DEBUG)then{
-          [_unit,"ColorGreen"] call fnc_addmarker;
-      };
-
-      [_unit] call fnc_AddTorch;
-
+      _unit = [_grp,_posSelected,false] call fnc_spawnfriendly;
       _unit setVariable["DCW_Type","friendly"];
-      _unit setDir random 360;
       _units pushBack _unit;
 
       //Si c'est une patrouille
@@ -78,8 +84,5 @@ for "_xc" from 1 to _nb  do {
       
     };
 };
-
-
-
 
 _units;

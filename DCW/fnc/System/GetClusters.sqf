@@ -9,7 +9,7 @@
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
 private _worldNbBlocks = floor(_worldSize/SIZE_BLOCK);
-private _return = false;
+private _isCloseToAnotherCompound = false;
 private _isMilitary = false;
 private _clusters = [];
 private _markerWhiteList = _this select 0;
@@ -39,7 +39,6 @@ fnc_getRadiusLocation = {
 	for "_radius" from 50 to MAX_CLUSTER_SIZE step 50 do
 	{
 		_houses = []; 
-		//_houses = nearestObjects [_locPos, ["house"], _radius];
 		_houses = [_locPos,_radius] call fnc_findBuildings;
 		_count = (count _houses);
 		_totalHouses = _totalHouses + _houses;
@@ -60,18 +59,28 @@ _markerFriendly = [];
 	_locPos = getMarkerPos _x;
 	_radius = getMarkerSize _x select 0;
 	_result = [_locPos] call fnc_getRadiusLocation;
-	_clusters pushback [_locPos,_radius,_result select 1,true,_x,true, _result select 3];
+	if (_radius > 0)then {
+		_clusters pushback [_locPos,_radius,_result select 1,true,_x,true, _result select 3,str random 10000];
+	};
 } foreach _markerFriendly;
 
 
-// forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Strategic","CityCenter"], 25000]; 
+{
+	_pos = getPos _x;
+    _res = [_pos,true] call fnc_getRadiusLocation;
+    _radius = _res select 0;
+	
+	if (_radius > 0)then {
+		_clusters pushback [_pos,_radius,_res select 1,true,if (text _x == "") then {"Unknown location"} else {text _x},_res select 2, _res select 3,str random 10000];
+	};
+} forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Airport","CityCenter"], 25000]; 
 
 
 for "_xc" from 0 to _worldNbBlocks do {
 	for "_yc" from 0 to _worldNbBlocks do {
 		_markerPos = [(_xc*SIZE_BLOCK),(_yc*SIZE_BLOCK),0];
 		if (_markerPos inArea _markerWhiteList) then {
-			_buildings = [_markerPos, (SIZE_BLOCK/2)] call fnc_findBuildings;
+			_buildings = [_markerPos, (SIZE_BLOCK)] call fnc_findBuildings;
 			_nbBuildings = count _buildings;
 
 			if (_nbBuildings > 0)then{
@@ -79,15 +88,30 @@ for "_xc" from 0 to _worldNbBlocks do {
 				private _res  = [_posCenteredOnBuilding] call fnc_getRadiusLocation;
 				private _radius = _res select 0;
 
-				_return = false;
+				/*_isCloseToAnotherCompound = false;
 				{ 
 					private _dist = _posCenteredOnBuilding distance (_x select 0);
-					if( _dist < (_x select 1)  + _radius )exitWith{_return = true;};
+					if( .7*_dist < ((_x select 1)  + _radius) )exitWith{_isCloseToAnotherCompound = true;};
 				} foreach _clusters;
 
-				if (isNil '_return')then{_return = false;};
-				if (!_return)then {
-					_clusters pushback [_posCenteredOnBuilding,_radius,_res select 1,false,"",_res select 2,_res select 3];
+				if (isNil '_isCloseToAnotherCompound')then{_isCloseToAnotherCompound = false;};
+				if (!_isCloseToAnotherCompound)then {*/
+				if (_radius > 0)then {
+					_name = "Compound";
+					if (_radius < 50) then {
+						_name = "Land house";
+					} else {
+						if (_radius < 150) then {
+							_name = "Small compound";
+						} else{
+							if (_radius < 200) then {
+								_name = "Large compound";
+							} else{
+								_name = "Small town";
+							};
+						};
+					};
+					_clusters pushback [_posCenteredOnBuilding,_radius,_res select 1,false,_name,_res select 2,_res select 3,str random 10000];
 				};
 
 			};
@@ -95,6 +119,28 @@ for "_xc" from 0 to _worldNbBlocks do {
 	};
 };
 
+
+_sortedClusters = [_clusters, [], { if(_x select 3) then { 99999 } else { _x select 1 }; }, "DESCEND"] call BIS_fnc_sortBy;
+_sortedClustersReverse = [_clusters, [], { if(_x select 3) then { 0 } else { _x select 1 }; }, "ASCEND"] call BIS_fnc_sortBy;
+
+{
+	_posCenteredOnBuilding = _x select 0;
+	_radius = _x select 1;
+	_isCloseToAnotherCompound = false;
+	_id = _x select 7;
+	{ 
+	    _dist = _posCenteredOnBuilding distance2D (_x select 0);
+		if( _x select 7 != _id && _dist < ((_x select 1)  + _radius) ) then { 
+			_clusters = _clusters - [_x]; 
+		};
+	} foreach _sortedClustersReverse;
+
+	_sortedClustersReverse = _sortedClustersReverse - [_x];
+		
+} foreach _sortedClusters;
+
+_sortedClusters = [];
+_sortedClustersReverse = [];
+
+
 _clusters;
-
-

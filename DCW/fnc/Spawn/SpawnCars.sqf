@@ -8,13 +8,14 @@
 private _pos = _this select 0;
 private _radius = _this select 1;
 private _nb = _this select 2;
+private _state = _this select 3;
 
 private _cars = [];
 
 private _roads = _pos nearRoads _radius;
 
 _roadSelects = [];
-//_i = floor(_radius/100);
+
 _i = _nb;
 if (count _roads == 0) exitWith {_cars};
 while {_i > 0} do {
@@ -32,11 +33,14 @@ private _roadConnectedTo = objNull;
 {
   _x;
   _r = floor random 100;
-
-  if (_r < 30)then{
-  	_car = createVehicle [ENEMY_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
-  }else{
-  	_car = createVehicle [CIV_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
+  if (_state == "humanitary") then {
+    _car = createVehicle [HUMANITAR_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
+  } else {
+    if (_state == "bastion")then{
+      _car = createVehicle [ENEMY_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
+    } else {
+      _car = createVehicle [CIV_LIST_CARS call BIS_fnc_selectRandom, getPos _x, [], random 5, "NONE"];
+    };
   };
 
   _car setVariable ["DCW_Type","car"];

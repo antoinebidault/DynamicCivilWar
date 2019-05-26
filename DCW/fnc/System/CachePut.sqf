@@ -97,6 +97,16 @@ _unitsToRemove = [];
 }
 foreach _units;
 
+// Clean up objNull ied
+_tmpIEDs = IEDS;
+{
+    if (isNull (_x select 0)) then {
+        _tmpIEDs = _tmpIEDs - [_x]; 
+    };
+} foreach IEDS;
+IEDS = _tmpIEDs;
+publicVariable "IEDS";
+
 [[_nbPeople,_nbSniper,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies],_unitsToRemove];
 
 

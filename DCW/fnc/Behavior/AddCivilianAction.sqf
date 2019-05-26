@@ -7,16 +7,9 @@
 
 params ["_unit"];
 
-if (side _unit == SIDE_CIV)then
+if (side _unit == SIDE_CIV) then
 {
     _unit call addActionHalt;
-    _unit call addActionHandcuff;
-    if ( _unit getVariable["DCW_Chief",objNull] != objNull && alive (_unit getVariable["DCW_Chief",objNull]))then{
-        [_unit,_unit getVariable["DCW_Chief",objNull]]  call addActionFindChief;
-    };
-    _unit call addActionDidYouSee;
-    _unit call addActionFeeling;
-    _unit call addActionGetIntel;
-    _unit call addActionRally;
     _unit call addActionLeave;
+    _unit call addActionHandcuff;
 };

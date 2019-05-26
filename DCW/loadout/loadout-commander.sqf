@@ -1,4 +1,8 @@
+
 comment "Exported from Arsenal by dugland";
+
+comment "[!] UNIT MUST BE LOCAL [!]";
+if (!local _this) exitWith {};
 
 comment "Remove existing items";
 removeAllWeapons _this;
@@ -11,19 +15,18 @@ removeHeadgear _this;
 removeGoggles _this;
 
 comment "Add containers";
-_this forceAddUniform "rhsgref_uniform_altis_lizard_olive";
+_this forceAddUniform "U_I_C_Soldier_Bandit_3_F";
 _this addItemToUniform "FirstAidKit";
-_this addItemToUniform "rhsgref_30rnd_556x45_m21";
-_this addVest "rhs_6b5_officer_ttsko";
-for "_i" from 1 to 8 do {_this addItemToVest "rhsgref_30rnd_556x45_m21";};
-for "_i" from 1 to 2 do {_this addItemToVest "APERSMine_Range_Mag";};
-_this addHeadgear "rhssaf_beret_black";
-_this addGoggles "G_Spectacles";
+_this addItemToUniform "10Rnd_9x21_Mag";
+_this addVest "V_TacChestrig_grn_F";
+for "_i" from 1 to 4 do {_this addItemToVest "10Rnd_9x21_Mag";};
+for "_i" from 1 to 7 do {_this addItemToVest "50Rnd_570x28_SMG_03";};
+_this addHeadgear "H_MilCap_gry";
+_this addGoggles "G_Aviator";
 
 comment "Add weapons";
-_this addWeapon "rhs_weap_m21s";
-_this addWeapon "rhs_weap_m21s";
-_this addPrimaryWeaponItem "rhs_acc_pkas";
+_this addWeapon "SMG_03C_black";
+_this addWeapon "hgun_Pistol_01_F";
 _this addWeapon "Binocular";
 
 comment "Add items";
@@ -31,8 +34,6 @@ _this linkItem "ItemMap";
 _this linkItem "ItemCompass";
 _this linkItem "ItemWatch";
 _this linkItem "ItemRadio";
-_this linkItem "ItemGPS";
 
 comment "Set identity";
-_this setFace "GreekHead_A3_13";
-_this setSpeaker "male03gre";
+[_this,"Ioannou","male06gre"] call BIS_fnc_setIdentity;

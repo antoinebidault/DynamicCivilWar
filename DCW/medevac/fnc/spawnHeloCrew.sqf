@@ -17,8 +17,10 @@ for "_xc" from 0 to 1 do {
 	_unit addMPEventHandler ["MPKilled",{
 		 MEDEVAC_State = "aborted"; 
 	}];
+	[_unit] joinSilent _interventionGroup;
 };
 
 {_x moveInCargo _transportHelo; } foreach units _interventionGroup;
+
 
 _interventionGroup;

@@ -4,11 +4,27 @@
  * Author: BIDASS
  * License : GNU (GPL)
  */
+addActionJoinAsAdvisor = {
+      _this addaction ["<t color='#FF0000'>Recruit him as a military advisor (-20pts)</t>",{
+         params["_unit","_asker","_action"];
+         if (!([GROUP_PLAYERS,20] call fnc_afford)) exitWith {[_man,"You need more points !",false] call fnc_talk;false;};
+        _asker playActionNow "GestureFreeze";
+        _unit playActionNow "GestureHi";
+        _unit doWatch _asker;
+        _unit stop true;
+        [_asker,"Hi buddy, I would need a military advisor, are you in ?!",false] call fnc_Talk;
+        [_unit,"I'm in ! Let's go",false] call fnc_Talk;
+        _unit removeAction _action;
+        sleep .3;
+        _unit setVariable["DCW_advisor", true, true];
+        [_unit] join GROUP_PLAYERS;
 
+    },nil,1.5,false,true,"","true",3,false,""];
+}
 
 //Menote le mec;
 addActionHandCuff =  {
-    _this addaction ["Capture him",{
+    _this addaction ["<t color='#FF0000'>Capture him</t>",{
         _man  = (_this select 0);
         _man removeAllEventHandlers "FiredNear";
         _man  setVariable["civ_affraid",false];
@@ -100,16 +116,29 @@ addActionLiberate =  {
         _man  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
+        [_talker,"Go away now ! asshole !",false] call fnc_Talk;
+        if(side _man != SIDE_CIV) then {
+		    [_man] joinSilent createGroup SIDE_CIV;
+        };
         _man remoteExec ["removeAllActions",0];
         [_talker,"PutDown"] remoteExec ["playActionNow"];
-        [_man] call fnc_handlefiredNear;
-        [_man] call fnc_addCivilianAction;
+        //[_man] call fnc_handlefiredNear;
+        //[_man] call fnc_addCivilianAction;
         _man SetBehaviour "AWARE";
         _man setCaptive false;
         _man switchMove ""; 
         _man enableai "ANIM"; 
         _man enableai "MOVE"; 
-        [_man,2] remoteExec ["fnc_updateRep",2];
+        if (side _man == SIDE_CIV) then {
+            [_man,2] remoteExec ["fnc_updateRep",2];
+        };
+        _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
+        _unit stop false;
+        _unit forceWalk false;
+        _unit forceSpeed 10;
+        _unit move _pos;
+
+            
     },nil,1.5,false,true,"","true",3,false,""];
 };
 
@@ -141,6 +170,7 @@ addActionHalt = {
         _asker playActionNow "GestureFreeze";
         _unit stop true;
         [_asker,"Hello sir !",false] call fnc_Talk;
+
         if (!weaponLowered _asker) exitWith { 
             [_unit,"I don't talk to somebody pointing his gun on me ! Go away !",false] call fnc_Talk;
             _unit playActionNow "gestureNo";
@@ -154,13 +184,23 @@ addActionHalt = {
         _unit doWatch _asker;
         sleep 1;
         _unit playActionNow "GestureHi";
-        [_unit,format["Hi ! My name is %1.", name _unit],false] call fnc_Talk;
-        sleep 1.5;
+        [_unit,format["Hi ! My name is %1.", name _unit],false] spawn fnc_Talk;
+        _unit call addActionDidYouSee;
+        _unit call addActionFeeling;
+        _unit call addActionGetIntel;
+        _unit call addActionRally;
+        _unit call addActionSupportUs;
+        if ( _unit getVariable["DCW_Chief",objNull] != objNull && alive (_unit getVariable["DCW_Chief",objNull])) then {
+            [_unit,_unit getVariable["DCW_Chief",objNull]]  call addActionFindChief;
+        };
+        sleep 0.5;
         _unit disableAI "MOVE";
-        waitUntil { _asker distance _unit > 10; sleep 4; };
+        waitUntil { _asker distance _unit > 13; sleep 4; };
         _unit stop false;
         _unit enableAI "MOVE";
-        _unit call addActionHalt;
+        RemoveAllActions _this;
+        [_man] call fnc_addCivilianAction;
+
     },nil,1.5,false,true,"","true",3,false,""];
 };
 
@@ -170,11 +210,11 @@ addActionDidYouSee = {
     params["_unit","_talker","_action"];
         _unit removeAction _action;
 
-        if (_unit getVariable["DCW_Friendliness",50] < 40) exitWith {
+        /*if (_unit getVariable["DCW_Friendliness",50] < 40) exitWith {
             [_unit,-2] remoteExec ["fnc_updateRep",2];
             [_unit,"Don't talk to me !",false] call fnc_Talk;
             false;
-        };
+        };*/
         
         [_talker,"Did you see anything recently ?", false] call fnc_Talk;
         private _data = _unit targetsQuery [objNull,SIDE_ENEMY, "", [], 0];
@@ -280,11 +320,13 @@ addActionGetIntel = {
         //Suspect
         _isSuspect=_unit getVariable ["DCW_Suspect",false];
 
-         if (_unit getVariable["DCW_Friendliness",50] < 35 ) exitWith {
-            [_unit,-3] remoteExec ["fnc_updateRep",2];
+         /*if (_unit getVariable["DCW_Friendliness",50] < 35 ) exitWith {
+            if (side _unit == SIDE_CIV) then {
+                [_unit,-3] remoteExec ["fnc_updateRep",2];
+            };  
            [_unit,"Don't talk to me !",false] call fnc_Talk;
            false;
-        };
+        };*/
 
         _unit removeAction _action;
         if (!weaponLowered _talker)then{
@@ -398,6 +440,25 @@ addActionRally = {
     },nil,1.5,false,true,"","true",3,false,""];
 };
 
+addActionSupportUs = {
+    //Try to gather intel
+     _this addaction ["<t color='#FF0000'>Give him help (2 hours/20points)</t>",{
+    params["_unit","_talker","_action"];
+        _unit removeAction _action;
+
+        if (!([GROUP_PLAYERS,20] call fnc_afford)) exitWith {[_unit,"You need more money !",false] call fnc_talk;false;};
+        
+        [_talker,"What are looking for ? We can provide you food, medicine, water...", false] call fnc_Talk;
+        [_unit,1] remoteExec ["fnc_updateRep",(2 + floor random 2)];
+        [_unit,"Thanks for your precious help !",false] call fnc_Talk;
+        [_unit,"You're welcome !",false] call fnc_Talk;
+        sleep 240;
+        if (alive _unit) then {
+            _unit remoteExec ["addActionDidYouSee"];
+        };
+    },nil,1,false,true,"","true",2.5,false,""];
+
+};
 
 
 addActionFindChief = {
@@ -407,12 +468,13 @@ addActionFindChief = {
         params["_unit","_talker","_action"];
         _chief = (_this select 3) select 0;
         if(alive _chief)then{
-            [_unit,format["I marked you the exact position where I last saw %1", name _chief],false] call fnc_Talk;
             _marker = createMarkerLocal [format["chief-%1", random 50], getPosWorld _chief];
             _marker setMarkerShapeLocal "ICON";
             _marker setMarkerTypeLocal "mil_dot";
             _marker setMarkerColorLocal "ColorGreen";
             _marker setMarkerTextLocal "LocalChief";
+            [_unit,format["I marked you the exact position where I last saw %1", name _chief],false] call fnc_Talk;
+           
         }else{
             [_unit,"Our chief is no more... Fucking war !",false] call fnc_Talk;
         };
@@ -421,7 +483,7 @@ addActionFindChief = {
 
 
 addActionLeave = {
-     _this addaction ["Go away !",{
+     _this addaction ["<t color='#FF0000'>Go away !</t>",{
         params["_unit","_asker"];
         [_unit,-3] remoteExec ["fnc_updateRep",2];
         _unit remoteExec ["removeAllActions",0];

@@ -1,4 +1,4 @@
-params["_unit"];
+params["_unit","_soldiersDead"];
 
 if (MEDEVAC_State == "menu") then {
 	// Delete all useless commmenu item

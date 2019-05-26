@@ -13,7 +13,7 @@ params ["_center","_radius"];
 private _buildings = nearestObjects [_center, ["house"], _radius];
 private _enterable = [];
 {
-	if ([_x, 3] call BIS_fnc_isBuildingEnterable) then {
+	if ([_x, 1] call BIS_fnc_isBuildingEnterable) then {
 		//this both buildings are not enterable but pickedup by BIS_fnc_isBuildingEnterable
 		if (typeof _x == "Land_HouseV2_03" || typeof _x == "Land_Nasypka") exitWith {};
 	

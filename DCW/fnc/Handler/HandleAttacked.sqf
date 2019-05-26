@@ -11,21 +11,28 @@ _unit addEventHandler["FiredNear",
 		_distance = _this select 2;	
 		_muzzle = _this select 4;	
 		_gunner = _this select 7;	
-		if (!captive _unit  && morale _unit < -0.5 && _unit call BIS_fnc_enemyDetected) then {
+		if (!captive _unit && side _gunner == SIDE_PLAYER  && count (units (group _unit)) == 1 && damage _unit < .6 && morale _unit < -1 && _unit distance _gunner < 50) then {
+			_unit removeAllEventHandlers "FiredNear";
 			_unit setCaptive true;
-			_unit action ["Surrender", _player]; 
-			_unit call addActionLiberate;
+			_unit action ["Surrender", _unit]; 
+			removeHeadgear _unit;
+			_weapon = currentWeapon _unit;       
+			
+			_dude removeWeapon (currentWeapon _unit);
+			sleep .1;
+			_weaponHolder = "WeaponHolderSimulated" createVehicle [0,0,0];
+			_weaponHolder addWeaponCargoGlobal [_weapon,1];
+			_weaponHolder setPos (_unit modelToWorld [0,.2,1.2]);
+			_weaponHolder disableCollisionWith _unit;
+			_dir = random(360);
+			_speed = 1.5;
+			_weaponHolder setVelocity [_speed * sin(_dir), _speed * cos(_dir),4];  
+
 			_unit call addActionLiberate;
 			_unit call addActionLookInventory;
 			_unit call addActionGetIntel;
+			[_unit] call fnc_shout;
+			[_gunner, ["This enemy is surrendering","He gives up !","Hands up !", "Your hands in the hair !"] call BIS_fnc_selectRandom, false] spawn fnc_talk;
 		};
-		/*_silencer = _gunner weaponAccessories currentMuzzle _gunner select 0;
-		_hasSilencer = !isNil "_silencer" && {_silencer != ""};
-		if (_hasSilencer || _distance > 160 || !isPlayer _gunner ) exitWith { true };
-		_unit setBehaviour "AWARE";
-		_unit forceWalk false;
-		_unit forceSpeed (0-1);
-		_unit setSpeedMode "FULL";
-		_unit removeAllEventHandlers "FiredNear";*/
 	}
 ];

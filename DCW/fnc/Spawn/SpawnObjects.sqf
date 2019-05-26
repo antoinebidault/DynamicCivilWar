@@ -26,7 +26,7 @@ for "_xc" from 1 to _nbCompos do {
     if (_nicePos isEqualTo [])exitWith{};
     if (isOnRoad _nicePos)exitWith{};
 
-    if (random 100 > 70) then {
+  /*  if (random 100 > 70) then {
         if (_tmpTurrets isEqualTo [])exitWith{};
         _curr = _tmpTurrets call bis_fnc_selectrandom;
         _tmpTurrets = _tmpTurrets - [_curr];
@@ -44,14 +44,14 @@ for "_xc" from 1 to _nbCompos do {
             _unit moveInGunner _turret;
             _objs = _objs + _newObjs;
         };
-    } else{
+    } else{*/
         if (_tmpObjects isEqualTo [])exitWith{};
          _curr = _tmpObjects call bis_fnc_selectrandom;
         _tmpObjects = _tmpObjects - [_curr];
         _newObjs = [_nicePos,  random 360, _curr] call BIS_fnc_ObjectsMapper;
          [_newObjs select 0, "ColorWhite"] call fnc_addMarker;
         _objs = _objs + _newObjs;
-    };
+   // };
 };
 
 _objs;

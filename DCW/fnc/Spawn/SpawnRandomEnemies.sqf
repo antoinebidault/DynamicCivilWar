@@ -40,16 +40,16 @@ while{true}do {
 
 				if (_side == SIDE_PLAYER) then{
 					_unit = [_grp,_pos,false] call fnc_spawnFriendly;
+					[_unit] remoteExec ["addActionGiveUsAHand"];
 					
-					if (_j == 1) then {
+					/*	if (_j == 1) then {
 						_grpMarker = createMarker["mkr-"+str(floor random 10000), _pos];
 						_grpMarker setMarkerShape "ICON";
 						_grpMarker setMarkerColor "ColorGreen";
 						_grpMarker setMarkerType "o_motor_inf";
 						_unit call fnc_deleteMarker;
 						_unit setVariable["marker", _grpMarker];
-						_isfriendlySpawned = true;
-					};
+					};*/
 				} else {
 					_unit = [_grp,_pos,false] call fnc_spawnEnemy;
 				};

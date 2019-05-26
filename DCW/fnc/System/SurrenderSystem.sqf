@@ -14,10 +14,10 @@ fnc_captured = {
 	sleep 7;
 
 	// Find a random building pos at the first floor preferently.
-	/*[[_player],{
+	[[_player],{
 		params["_player"];
 		_heightRequired = 1.5; //m
-		_numberPositionRequired = 7; 
+		_numberPositionRequired = 2; 
 		_enemyMarkers =  [];
 		{ if (!(_x select 3)) then {_enemyMarkers pushback _x;}; }foreach MARKERS;
 		_enemyMarker = _enemyMarkers call BIS_fnc_selectRandom;
@@ -25,20 +25,25 @@ fnc_captured = {
 		_currentPosition = [];
 		_foundPosition = [0,0,0];
 		_discoveredBuildings = [];
-		while {_foundPosition isEqualTo [0,0,0] || count _discoveredBuildings <  count (_enemyMarker select 11)} do {
-			_currentBuilding = (_enemyMarker select 11) call BIS_fnc_selectRandom;
-			_discoveredBuildings pushback _currentBuilding;
-			_positions = [_currentBuilding] call BIS_fnc_buildingPositions;
-			if (count _positions > _numberPositionRequired) then {
-				while { _foundPosition isEqualTo [0,0,0] || count _positions == 0 || (_foundPosition) select 2 > _heightRequired} do {
-					_foundPosition = (_positions call BIS_fnc_selectRandom);
-					_positions = _positions - [_foundPosition];
+		while {_foundPosition isEqualTo [0,0,0] || count _enemyMarkers > 0} do{
+			_enemyMarker = _enemyMarkers call BIS_fnc_selectRandom;
+			_enemyMarkers = _enemyMarkers - [_enemyMarker];
+			while {_foundPosition isEqualTo [0,0,0] || count _discoveredBuildings <  count (_enemyMarker select 11)} do {
+				_currentBuilding = (_enemyMarker select 11) call BIS_fnc_selectRandom;
+				_discoveredBuildings pushback _currentBuilding;
+				_positions = [_currentBuilding] call BIS_fnc_buildingPositions;
+				if (count _positions > _numberPositionRequired) then {
+					while { _foundPosition isEqualTo [0,0,0] || count _positions == 0 || (_foundPosition) select 2 > _heightRequired} do {
+						_foundPosition = (_positions call BIS_fnc_selectRandom);
+						_positions = _positions - [_foundPosition];
+					};
 				};
 			};
 		};
 		_player setPos _foundPosition;
-	}] remoteExec ["spawn",2, false];*/
+	}] remoteExec ["spawn",2, false];
 
+	/*
 	[[_player],{
 		params["_player"];
 		_heightRequired = 1.5; //m
@@ -56,7 +61,7 @@ fnc_captured = {
 		_player setPos [_foundPos select 0,_foundPos select 1,0];
 
 	}] remoteExec ["spawn",2, false];
-	
+	*/
 	sleep 1;
 	
 	_loadout = getUnitLoadout _player;
@@ -77,18 +82,20 @@ fnc_captured = {
 	[_player] joinSilent (createGroup SIDE_PLAYER);
 
 	_pos = _player  modelToWorld [0,1,0];
-	_general = (createGroup SIDE_ENEMY) createUnit [ENEMY_COMMANDER_CLASS, _pos,[],ENEMY_SKILLS,"CAN_COLLIDE"];
+	_general = (createGroup SIDE_ENEMY) createUnit [ENEMY_COMMANDER_CLASS, _pos,[],AI_SKILLS,"CAN_COLLIDE"];
 	_general attachTo [_player,[-0.9,-0.2,0]]; 
 	_general setDir (_general getRelDir _player); 
 	_general doWatch _player;
-	_general addWeapon "rhsusf_weap_m1911a1";
+	_general execVM "DCW\loadout\loadout-commander.sqf";
+	_general addWeapon "hgun_Pistol_01_F";
 	_general disableAI "ALL";
+	
 
 	// Add a basic pistol
 	_player setDir (_player getRelDir _general);
 	//_general execVM "DCW\loadout\loadout-commander.sqf";
 	
-	_player setDamage .7;
+	_player setDamage .4;
 
 
 	if (!isMultiplayer) then {
@@ -171,7 +178,7 @@ fnc_captured = {
 				_actionId = 0;
 			};
 
-			if (side _x == SIDE_ENEMY && _x knowsAbout _player > 2) then{
+			if (side _x == SIDE_ENEMY && _x knowsAbout _player > 1) then{
 				_know =  [_x,_player] call fnc_getVisibility; 
 				if ([_x,_player] call fnc_getVisibility > 50 && alive _x) then{
 					hint "You've been watched";
@@ -193,7 +200,13 @@ fnc_captured = {
 	waitUntil { sleep .3; !(alive _player)  || { side _x == SIDE_PLAYER && (_player distance _x) < 10} count allUnits > 1 };
 	
 	_player setVariable ["dcw_surrender_action", false];
+
 	_wasKIA = !PLAYER_ALIVE;
+	
+	_player setUnitLoadout _loadout;
+	[_player] joinSilent GROUP_PLAYERS;
+	if (_wasTheLeader) then{group _player selectLeader _player;};
+
 	if (_wasKIA) then {
 		waitUntil {PLAYER_ALIVE};
 		[leader GROUP_PLAYERS,"Good to see you back home !",false] call fnc_talk;
@@ -202,13 +215,7 @@ fnc_captured = {
 		[_player] remoteExec ["fnc_mainobjectiveIntel"];
 	};
 
-		
-
-	_player setUnitLoadout _loadout;
 	{deleteVehicle _x;} foreach COMPO_OBJS;
-
-	[_player] joinSilent GROUP_PLAYERS;
-	if (_wasTheLeader) then{group _player selectLeader _player;};
 
 };
 

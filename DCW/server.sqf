@@ -16,6 +16,9 @@ if (!isServer) exitWith{};
 	HQ setName "HQ";
 };
 
+
+enableDynamicSimulationSystem true;
+
 // Variable in Global scope
 GAME_ZONE_SIZE=5000;
 MARKER_WHITE_LIST = []; //Pass list of marker white list name
@@ -29,12 +32,19 @@ MARKERS = [];
 SHEEP_POOL = [];
 UNITS_CHASERS = [];
 MESS_SHOWN = false;
+INDICATOR_SHOWN = false;
+MESS_HEIGHT = 0;
 LAST_FLARE_TIME = time;
 REFRESH_TIME = 10; // Refresh time
 WEATHER = .5;
 CONVOY = []; // Current convoy
 ESCORT = []; // List of escorts guys with the commandant
 INITIAL_SPAWN_DISTANCE = SPAWN_DISTANCE;
+GEAR_AND_STUFF = [];
+OFFICERS = [];
+ESCORT_UNITS = [];
+IEDS = [];
+publicVariable "IEDS";
 
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 publicVariable "MARKER_WHITE_LIST";
@@ -91,7 +101,6 @@ COMPOUND_SECURED = {
 	params["_marker","_radius","_units","_points"]; 
 
 	//Misa à jour de l'amitié
-	{  if (side _x == SIDE_CIV && _x getVariable["DCW_Friendliness",-1] != -1) then { [_x,6] call fnc_UpdateRep;}; }foreach _units;
 	[GROUP_PLAYERS,_points,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
 };
 
@@ -127,9 +136,16 @@ ENEMY_SEARCHED = {
 
 WAITUNTIL {DCW_STARTED;};
 
+// Fill up all game crate
 _ammobox = missionNamespace getVariable ["ammoBox",objNull];
 if (!isNull _ammobox) then {
 	_ammobox call fnc_spawncrate;
+};
+for "_i" from 1 to 10  do {
+	_ammobox = missionNamespace getVariable [format["ammoBox_%1",str _i],objNull];
+	if (!isNull _ammobox) then {
+		_ammobox call fnc_spawncrate;
+	};
 };
 
 
@@ -148,25 +164,27 @@ forceWeatherChange;
 
 
 
-private _popbase = 0;
-private _nbFriendlies = 0;
-private _nbCars = 0;
-private _nbFriendlies = 0;
-private _nbCivilian = 0;
-private _points = 0;
-private _nbSnipers = 0;
-private _nbMortars = 0;
-private _typeObj = "";
+_popbase = 0;
+_nbFriendlies = 0;
+_nbCars = 0;
+_nbFriendlies = 0;
+_nbCivilian = 0;
+_points = 0;
+_nbSnipers = 0;
+_nbMortars = 0;
+_typeObj = "";
+_compoundState = "default";
+_supportScore = 0;
 
 {
-	private _return = false;
-	private _pos = _x select 0;
-	private _radius = _x select 1;
-	private _nbBuildings = _x select 2;
-	private _isLocation = _x select 3;
-	private _nameLocation = _x select 4;
-	private _isMilitary = _x select 5;
-	private _buildings = _x select 6;
+	_return = false;
+	_pos = _x select 0;
+	_radius = _x select 1;
+	_nbBuildings = _x select 2;
+	_isLocation = _x select 3;
+	_nameLocation = _x select 4;
+	_isMilitary = _x select 5;
+	_buildings = _x select 6;
 
 	// If in white list exit loop
 	{ 
@@ -177,7 +195,7 @@ private _typeObj = "";
 	{
 
 		//Création du marker
-		_m = createMarker [format ["mrk%1",random 100000],_pos];
+		_m = createMarker [format ["dcw-cluster-%1",random 100000],_pos];
 		_m setMarkerShape "ELLIPSE";
 		_m setMarkerSize [_radius,_radius];
 		_m setMarkerColor "ColorRed";
@@ -186,26 +204,71 @@ private _typeObj = "";
 
 		if (_isMilitary) then{
 			_secured = true;
+			MARKER_WHITE_LIST pushback _m;
 			_m setMarkerColor "ColorGreen";
 		};
 
-		if (!_isMilitary) then{
+		/*if (!_isMilitary) then{
 			_m setMarkerBrush "FDiagonal";
 		};
 		if (_isLocation && !_isMilitary) then{
 			_m setMarkerBrush "BDiagonal";
-		};
+		};*/
 
 		if (SHOW_SECTOR || DEBUG) then{
 			_m setMarkerAlpha .5;
 		}else{
 			_m setMarkerAlpha 0;
 		};
+			
+		_icon = createMarker [format["%1-icon", _m], _pos];
+		_icon setMarkerShape "ICON";
+		_icon setMarkerColor "ColorBlack";
+		_icon setMarkerSize [1,1];
+		_icon setMarkerType "loc_Cross";
+
+		// default = startup state / corrupted / secured / succeeded / massacred = destroyed compound / helped = called the humanitary
+		_compoundState = "default";
+		_supportScore = 50;
+		_respawnId = [];
+		if (_secured) then{
+			_supportScore = 100;
+			_compoundState = "secured";
+			_m setMarkerColor "ColorGreen";
+			_icon setMarkerColor "ColorGreen";
+			_icon setMarkerType "loc_Ruin";
+			_respawnId = [SIDE_PLAYER, _pos, _nameLocation] call BIS_fnc_addRespawnPosition
+		}else{
+			if (_forEachIndex >= 10/100*count _clusters) then {
+				_supportScore = 50 + ([1,-1] call BIS_fnc_selectRandom) * (floor (random 25));
+				_compoundState = "default";
+				_m setMarkerColor "ColorWhite";
+				_icon setMarkerColor "ColorBlack";
+				_icon setMarkerType "loc_tourism";
+			}else {
+				if (_forEachIndex > 3/100*count _clusters) then {
+					_supportScore = floor (random 25);
+					_compoundState = "bastion";
+					_m setMarkerColor "ColorRed";
+					_icon setMarkerColor "ColorRed";
+					_icon setMarkerType "loc_Ruin";
+				}else {
+					if (_forEachIndex <= 3/100*count _clusters) then {
+						_supportScore = 50 + ([1,-1] call BIS_fnc_selectRandom) * (floor (random 25));
+						_compoundState = "humanitary";
+						_m setMarkerColor "ColorBlue";
+						_icon setMarkerColor "ColorBlue";
+						_icon setMarkerType "loc_Hospital";
+					};
+				};
+			};
+		};
 
 		//Nb units to spawn per block
 		_popbase = 1 MAX (MAX_POPULATION MIN (ceil( (POPULATION_INTENSITY * _nbBuildings* RATIO_POPULATION)  + (round random 1))));
 		_nbEnemies = 0;
 		_nbCivilian = 0;
+
 		for "_x" from 1 to _popbase  do
 		{
 			_rnd = random 100;
@@ -215,7 +278,9 @@ private _typeObj = "";
 				_nbEnemies = _nbEnemies + 1;
 			}
 		};
-		_nbFriendlies =  ceil (_popbase * (PERCENTAGE_CIVILIAN/100));
+
+		_nbFriendlies = if (_compoundState == "secured") then { ceil (1.3*_popbase) } else { 0 };
+
 		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
 		_nbIeds = (floor(_popbase * .25) + floor(random 2));
 
@@ -226,28 +291,32 @@ private _typeObj = "";
 		_nbMortars = if (_typeObj == "mortar") then{ 1 }else {0};
 
 		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
-		_nbFriendlies = 0;
 		_points = 1 + _nbEnemies * 10;
 		_meetingPointPosition =  [getPos (_buildings call BIS_fnc_selectRandom), 0, 15, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
 		while {isOnRoad _meetingPointPosition} do{
 			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
 		};
 
+	
+
 
 		if (DEBUG) then {
-			_marker = createMarker [format["body-%1", random 10000], _pos];
+			/*_marker = createMarker [format["%1-debug", _m], _pos];
 			_marker setMarkerShape "ICON";
 			_marker setMarkerType "mil_dot";
 			_marker setMarkerAlpha 0.3;
-			_marker setMarkerColor "ColorRed";
-			_marker setMarkerText  format["civ:%1/en:%2/Car:%3/bld:%4/ca:%5/mr:%6",_nbCivilian,_nbEnemies,_nbCars,_nbBuildings,_nbCaches,_nbMortars];
+			_marker setMarkerColor "ColorBlack";
+			_icon setMarkerText  format["support:%1|%2", _supportScore,_nameLocation];*/
+			//_marker setMarkerText  format["civ:%1/en:%2/Car:%3/bld:%4/ca:%5/mr:%6",_nbCivilian,_nbEnemies,_nbCars,_nbBuildings,_nbCaches,_nbMortars];
 		};
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
-		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings];
+
+		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId];
 	};
 	
-} foreach _clusters;
+} foreach (_clusters call BIS_fnc_arrayShuffle);
+
 
 [] call fnc_PrepareAction;
 [] call fnc_camp;
@@ -261,7 +330,7 @@ private _typeObj = "";
 [] spawn fnc_SpawnCrashSite; //Chopper spawn
 [] spawn fnc_SpawnSecondaryObjective;
 [] spawn fnc_SpawnMainObjective;
-[390] spawn fnc_SpawnConvoy;
+// [390] spawn fnc_SpawnConvoy;
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{
@@ -283,11 +352,11 @@ private ["_mkr","_cacheResult","_ieds"];
 						_x call fnc_deleteMarker;
 					}
 				};
-			} foreach UNITS_SPAWNED + ESCORT + CONVOY;
+			} foreach UNITS_SPAWNED + ESCORT + CONVOY + ESCORT_UNITS;
 
 		};
 
-
+		
 		_tmp = [];
 		{
 			//Update marker position
@@ -308,7 +377,9 @@ waitUntil {count allPlayers > 0};
 
 // Initial timer for the hunters
 _timerChaser = time - 360;
-				   
+_tmpRep = 50;
+_currentMarker = [];
+
 while { true } do {
 
 	// foreach players
@@ -333,46 +404,71 @@ while { true } do {
 
 			// foreach markers
 			{
-				private _marker =_x select 0;
-				private _pos =_x select 1;
-				private _triggered =_x select 2;
-				private _success =_x select 3;
-				private _radius =_x select 4;
-				private _units =_x select 5;
-				private _peopleToSpawn =_x select 6;
-				private _meetingPointPosition =_x select 7;
-				private _points =_x select 8;
-				private _isLocation = _x select 9;
-				private _isMilitary = _x select 10;
-				private _buildings = _x select 11;
+				_currentCompound = _x;
+				_marker =_x select 0;
+				_pos =_x select 1;
+				_triggered =_x select 2;
+				_success =_x select 3;
+				_radius =_x select 4;
+				_units =_x select 5;
+				_peopleToSpawn =_x select 6;
+				_meetingPointPosition = _x select 7;
+				_points =_x select 8;
+				_isLocation = _x select 9;
+				_isMilitary = _x select 10;
+				_buildings = _x select 11;
+				_compoundState = _x select 12;
+				_supportScore = _x select 13;
+				_nameLocation = _x select 14;
+				_respawnId = _x select 15;
+
+				if (_triggered && !(_currentCompound isEqualTo _currentMarker) && _playerPos distance _pos < _radius) then {
+					_currentMarker = _x;
+					[format["Inhabitants: %1<br/>State: %2<br/>Population support: <t >%3%/100</t><br/>",(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 24] remoteExec ["fnc_ShowIndicator",_player,false];
+				};
 
 				if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE) then{
-				
+					
 					if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
 
 						//Véhicles spawn
-						_units = _units +  ([_pos,_radius,(_peopleToSpawn select 3)] call fnc_SpawnCars);
+						_units = _units + ([_pos,_radius,(_peopleToSpawn select 3),_compoundState] call fnc_SpawnCars);
 						//Units
-						_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition,_buildings] call fnc_SpawnUnits);
-						//Units
-						_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition,_buildings] call fnc_SpawnFriendlyOutpost);
-						//IEDs
-						if (!_isMilitary)then{
-							_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_spawnIED);
-						};
-						//Outposts
-						_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
-						//Cache
-						_units = _units + ([_pos,_radius,(_peopleToSpawn select 5),_buildings] call fnc_cache);
-						//Hostages
-						_units = _units + ([_pos,_radius,(_peopleToSpawn select 6),_buildings] call fnc_hostage);
+						_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition,_buildings,_compoundState,_supportScore] call fnc_SpawnUnits);
 						//Meeting points
 						_units = _units + ([_meetingPointPosition] call fnc_SpawnMeetingPoint);
-						//Mortars
-						_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
-
+						//Spawn random composition
 						_units = _units + ([_pos,_buildings,_success] call fnc_spawnobjects);
 
+						if (_compoundState == "secured")  then {	
+							//Units
+							_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition,_buildings] call fnc_SpawnFriendlyOutpost);
+						};
+
+						if (_compoundState == "humanitary") then {
+							//Units
+							_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition,_buildings] call fnc_SpawnHumanitaryOutpost);
+						};
+
+						if (_compoundState != "secured" && _compoundState != "humanitary") then {
+							//IEDs
+							_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_spawnIED);
+						};
+
+						
+						if (_compoundState == "bastion" || (_compoundState == "default" && _supportScore < 45)) then {
+							//Cache
+							_units = _units + ([_pos,_radius,(_peopleToSpawn select 5),_buildings] call fnc_cache);
+							//Mortars
+							_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
+							//Hostages
+							_units = _units + ([_pos,_radius,(_peopleToSpawn select 6),_buildings] call fnc_hostage);
+						};
+
+						if (_compoundState == "bastion") then {
+							//Outposts
+							_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
+						};
 						_triggered = true;
 
 						//Add a little breath
@@ -381,25 +477,27 @@ while { true } do {
 
 
 				}else{
-
 					//Gestion du cache
 					if(_playerPos distance _pos > (SPAWN_DISTANCE + 150) && _triggered)then {
 						_cacheResult = [_units] call fnc_CachePut;
 						_peopleToSpawn = _cacheResult select 0;
 						_units = _units - [_cacheResult select 1];
 						_triggered = false;
+
 					} else {
 
 						// Check if enemies remains in the area;
-						if (_triggered && !_success) then{
+						if (_triggered && !_success && _compoundState == "bastion") then{
 							if ([_playerPos, _marker] call fnc_isInMarker) then{
 								_enemyInMarker = true;
-								if ({side _x == SIDE_ENEMY && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= round (0.1 * (_peopleToSpawn select 2))) then {
+								if ({side _x == SIDE_ENEMY && !(captive _x) && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= round (0.1 * (_peopleToSpawn select 2))) then {
 									_enemyInMarker = false;
 								};
 								//Cleared success
 								if (!_enemyInMarker)then {
 									_success = true;
+									[_currentCompound,"default"] call fnc_setCompoundState;
+									_supportScore = _supportScore + 50;
 									[_marker,_radius,_units,_points] remoteExec ["COMPOUND_SECURED"];
 									[_player,format["The compound in %1 is cleared ! Great job team.", getMarkerPos _marker], true] remoteExec ["fnc_talk"];
 									_marker setMarkerColor "ColorGreen";
@@ -409,14 +507,14 @@ while { true } do {
 						};
 					};
 				}; 
-				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings]]; 
+				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId]]; 
 			}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
 		};
 		sleep 1;
 	} foreach allPlayers;
 
-		_civilReputationSum = 0;
-		_civilReputationNb = 0;
+		/*_civilReputationSum = 0;
+		_civilReputationNb = 0;*/
 
 		// foreach UNITS_SPAWNED
 		{
@@ -507,13 +605,15 @@ while { true } do {
 
 
 			//Calcul du score
+			/*
 			if (_unit getVariable["DCW_Friendliness",-1] != -1) then{
 				_civilReputationSum = _civilReputationSum + (_unit getVariable["DCW_Friendliness",-1]);
 				_civilReputationNb = _civilReputationNb + 1;
-			};
+			};*/
 
 		} foreach UNITS_SPAWNED;
 		
+		/*
 		if (_civilReputationNb > 0) then  {
 			_tmp = round(_civilReputationSum/_civilReputationNb);
 			if (_tmp != CIVIL_REPUTATION) then{
@@ -524,7 +624,7 @@ while { true } do {
 				publicVariable "CIVIL_REPUTATION";
 			};
 			CIVIL_REPUTATION = _tmp;
-		};
+		};*/
 
 
 

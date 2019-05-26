@@ -12,11 +12,19 @@ private _isCleared = _this select 2;
 private _people = _this select 3;
 private _meetingPointPosition = _this select 4;
 private _buildings = _this select 5;
+private _compoundState  = _this select 6;
+private _compoundScore  = _this select 7;
+
 private _units = [];
 private _population = _people select 0; 
 private _nbSnipers = _people select 1; 
 private _nbenemies = _people select 2; 
 
+if (_compoundState == "default" || _compoundState == "humanitary" || _compoundState == "secured" || _compoundState == "massacred") then {
+  _population =  _population + _nbenemies + _nbSnipers;
+  _nbenemies = 0;
+  _nbsnipers = 0;
+};
 
 //List positions;
 private _posResult = [];
@@ -25,80 +33,79 @@ private _posSelects = _posResult select 0;
 private _enterable = _posResult select 1;
 private _cancel = true;
 
-if (_nbSnipers > 0)then{
-  private _sniperPos = [_pos,_radius, 1.4*_radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
-  //{
-   // _objs = nearestTerrainObjects [_x select 0, ["Tree","Bush"], 20];
-  //  if (count _objs > 0) then{
-      private _obj  =_objs select 0;
-      private  _grp = createGroup SIDE_ENEMY;
-      for "_xc" from 1 to _nbSnipers do {
-        
-        _unitName = ENEMY_SNIPER_UNITS call BIS_fnc_selectRandom;
-        _unit = _grp createUnit [_unitName, _sniperPos,[],ENEMY_SKILLS,"NONE"];
+if (!_isCleared) then{
+  if (_nbSnipers > 0)then{
+    private _sniperPos = [_pos,_radius, 1.4*_radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+    //{
+    // _objs = nearestTerrainObjects [_x select 0, ["Tree","Bush"], 20];
+    //  if (count _objs > 0) then{
+        private _obj  =_objs select 0;
+        private  _grp = createGroup SIDE_ENEMY;
+        for "_xc" from 1 to _nbSnipers do {
+          
+          _unitName = ENEMY_SNIPER_UNITS call BIS_fnc_selectRandom;
+          _unit = _grp createUnit [_unitName, _sniperPos,[],AI_SKILLS,"NONE"];
+          [_unit] joinSilent _grp;
 
-        [_unit,"ColorRed"] call fnc_addmarker;
-        [_unit] call fnc_AddTorch;
-        [_unit] call fnc_handlekill;
+          [_unit,"ColorRed"] call fnc_addmarker;
+          [_unit] call fnc_handlekill;
 
-        _unit setVariable["DCW_Type","sniper"];
-        UNITS_SPAWNED pushback _unit;
-        
-        _unit doWatch _pos;
-        if (_xc == 1)then{
-          _unit setVariable["DCW_IsIntel",true];
-          _unit setUnitPos "MIDDLE";
-          _unit addWeapon "Binocular";
-          _unit selectWeapon "Binocular";
+          _unit setVariable["DCW_Type","sniper", true];
+          UNITS_SPAWNED pushback _unit;
+          
+          _unit doWatch _pos;
+          if (_xc == 1)then{
+            _unit setVariable["DCW_IsIntel",true, true];
+            _unit setUnitPos "MIDDLE";
+            _unit addWeapon "Binocular";
+            _unit selectWeapon "Binocular";
 
-          //Handle success of the mission
-          _unit addMPEventHandler ["MPKilled",
-            { 
-              params["_unit","_killer"];
-               if (group _killer == GROUP_PLAYERS) then{
-                  _unit call fnc_success;
-                };
-                _unit call fnc_deleteMarker;
-                UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
-            }
-          ];
+            //Handle success of the mission
+            _unit addMPEventHandler ["MPKilled",
+              { 
+                params["_unit","_killer"];
+                if (group _killer == GROUP_PLAYERS) then{
+                    _unit call fnc_success;
+                  };
+              }
+            ];
 
-        }else{
-          _unit setUnitPos "DOWN";
+          }else{
+            _unit setUnitPos "DOWN";
+          };
+
+          _units pushBack _unit;
         };
+    // };
+  // }
+    //foreach selectBestPlaces [_sniperPos, 100, "trees + 3*hills - houses - forest", 5, 1];
+  };
 
-        _units pushBack _unit;
+
+  //Enemies
+  for "_xc" from 1 to _nbenemies  do {
+
+      private _posSelected = [];
+      private _nbUnit = 1 ;
+      
+      if (count _posSelects > 0)then{
+          _posSelected = _posSelects call BIS_fnc_selectRandom;
+          _posSelects = _posSelects - [_posSelected];
+      }else{
+          _posSelected = [_pos,1, _radius, 2, 0, 10, 0] call BIS_fnc_FindSafePos;
       };
-   // };
- // }
-  //foreach selectBestPlaces [_sniperPos, 100, "trees + 3*hills - houses - forest", 5, 1];
+
+      _grp = createGroup SIDE_ENEMY;
+      for "_xc" from 1 to _nbUnit do {
+        _enemy = [_grp,_posSelected,false] call fnc_spawnEnemy;
+        _enemy setVariable["DCW_Type","enemy"];
+        _enemy setDir random 360;
+        _units pushBack _enemy;
+      };
+
+      [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_EnemyCompoundPatrol;
+  };
 };
-
-
-//Enemies
-for "_xc" from 1 to _nbenemies  do {
-
-    private _posSelected = [];
-    private _nbUnit = 1 ;
-    
-    if (count _posSelects > 0)then{
-        _posSelected = _posSelects call BIS_fnc_selectRandom;
-        _posSelects = _posSelects - [_posSelected];
-    }else{
-        _posSelected = [_pos,1, _radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
-    };
-
-    _grp = createGroup SIDE_ENEMY;
-    for "_xc" from 1 to _nbUnit do {
-      _enemy = [_grp,_posSelected,false] call fnc_spawnEnemy;
-      _enemy setVariable["DCW_Type","enemy"];
-      _enemy setDir random 360;
-      _units pushBack _enemy;
-    };
-
-    [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_EnemyCompoundPatrol;
-};
-
 
 //Civilians
 _chief = objNull;
@@ -119,6 +126,9 @@ for "_xc" from 1 to _population do {
         _civ = [_grp,_posSelected,_chief,false] call fnc_SpawnCivil;
         _civ call fnc_localChief;
         _units pushBack _civ;
+        if (_compoundState == "massacred" || _compoundState == "humanitary") then {
+          _civ setDamage (floor(random 1)) min .3;
+        };
         _chief = _civ;
       }else{
         if (_xc == 2 && _population > 10)then{
@@ -126,7 +136,10 @@ for "_xc" from 1 to _population do {
           _civ call fnc_Medic;
           _units pushBack _civ;
         }else{
-          _civ = [_grp,_posSelected,_chief,true] call fnc_SpawnCivil;
+          _civ = [_grp,_posSelected,_chief,true,nil,_compoundScore] call fnc_SpawnCivil;
+          if (_compoundState == "massacred" || _compoundState == "humanitary") then {
+            _civ setDamage ([1,.9,.5,.7] call BIS_fnc_selectRandom);
+          };
           [_civ,_radius,_meetingPointPosition,_buildings] spawn fnc_CivilianCompoundPatrol;
           _units pushBack _civ;
         };

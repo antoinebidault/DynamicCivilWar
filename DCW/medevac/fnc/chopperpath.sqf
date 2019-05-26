@@ -40,7 +40,7 @@ TRANSPORTHELO addEventHandler ["handleDamage", {
 waitUntil {MEDEVAC_State == "aborted" || TRANSPORTHELO distance2D _landPos < 200};
 if (MEDEVAC_State == "aborted") exitWith { false };
 
-[HQ,"Squad leader, throw a green smoke to mark the LZ !" ,true] remoteExec ["fnc_talk"];
+[HQ,"Squad leader, throw a smoke to mark the LZ !" ,true] remoteExec ["fnc_talk"];
 hint "50 seconds before the chopper RTB...";
 
 // Silently add a green smoke to group leader

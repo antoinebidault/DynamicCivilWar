@@ -41,7 +41,7 @@ PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/1
 
 //ENEMIES
 SIDE_ENEMY = RESISTANCE; //Enemy side 
-ENEMY_SKILLS = 1; //Skills units
+AI_SKILLS = 1; //Skills units
 PATROL_SIZE = [2,2]; //Size of patrol => [minimum,random additionnals units]
 MAX_SPAWNED_UNITS = 65; //Max units to spawn
 MAX_CHASERS = POPULATION_INTENSITY*12; //Max hunters who are looking for you !

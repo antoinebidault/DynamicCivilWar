@@ -19,14 +19,13 @@ _this addEventHandler["HandleDamage",{
 	];
 	
 	if !(local _unit) exitWith {false};
-	if (isPlayer _source) exitWith {false};
 	if (_damage == 0) exitWith {false};
 	
 	if ( _damage > .9 && !(_unit getVariable["unit_injured",false])) then {
 		[_unit] spawn fnc_shout;	
-		removeAllActions _unit;
 		_unit setUnconscious true;
 		_unit setVariable ["unit_injured", true, true];
+		
 		_unit setDamage .9;
 		_damage = .9;
 		_unit setHit ["legs", 1];
@@ -39,8 +38,6 @@ _this addEventHandler["HandleDamage",{
 			_marker setMarkerText "Injured civil";
 			_unit setVariable ["marker", _marker];
 		};
-
-
 		  [ _unit,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
 			  (_this select 1) playActionNow "medicStart";
 		  },{
@@ -52,6 +49,7 @@ _this addEventHandler["HandleDamage",{
 			_unit setDamage .3;
 			_unit setUnitPos "UP";
 			_unit setVariable ["unit_injured", false, true];
+			 _unit;
 			[_unit,(_this select 1)] remoteExec ["CIVIL_HEALED",2];
 
 		},{

@@ -6,16 +6,18 @@
  * License : GNU (GPL)
  * Show chat
  */
-private _talker = _this select 0;
-private _say = _this select 1;
-private _sound = _this select 2;
+_talker = _this select 0;
+_say = _this select 1;
+_sound = _this select 2;
+_layer = round (random 99999);
+_this pushBack _layer;
 
 // Queuing conversation
 TALK_QUEUE pushback _this;
-waitUntil { sleep .2;TALK_QUEUE select 0 isEqualTo _this};
+waitUntil { sleep .2; TALK_QUEUE select 0 isEqualTo _this};
 
-private _side = side _talker;
-private _color = "#E0E0E0";
+_side = side _talker;
+_color = "#E0E0E0";
 if (_side == CIVILIAN) then {
 	_color = '#c6b32b';
 }else{
@@ -33,51 +35,70 @@ if (_side == CIVILIAN) then {
 };
 
 
+/*
 if (_sound) then {
 	[] spawn { playSound (RADIO_CHAT_LIST call BIS_fnc_selectRandom); };
-};
+};*/
 
-_talker setVariable["DCW_speak",true];
 
 // Create display and control
 disableSerialization;
-titleRsc ["RscDynamicText", "PLAIN"];
-private _display = displayNull;
+_layer cutrsc ["rscDynamicText","plain"];
+_display = displayNull;
 waitUntil {_display = uiNamespace getVariable "BIS_dynamicText"; !(isNull _display)};
-MESS_SHOWN = true;
-private _ctrl = _display displayCtrl 9999;
+_ctrl = _display displayCtrl 9999;
 uiNamespace setVariable ["BIS_dynamicText", displayNull];
-private _ctrlBackground = _display ctrlCreate ["RscText",99999];
+_ctrlBackground = _display ctrlCreate ["RscText",9999];
 
 // Position control
-private _w = 0.7 * safeZoneW;
-private _x = safeZoneX + (0.15 * safeZoneW );
-private _y = safeZoneY + (0.75 * safeZoneH);
-private _h = safeZoneH;
+ _w = 0.7 * safeZoneW;
+ _x = safeZoneX + (0.15 * safeZoneW );
+ _y = safeZoneY + (0.75 * safeZoneH);
+ _h = safeZoneH;
 
-_ctrl ctrlSetPosition [_x,_y,_w,_h];
-
-// Hide control
-_ctrl ctrlSetFade 1;
-_ctrl ctrlCommit 0;
 
 // Show subtitle
 _text = parseText format ["<t align = 'center' shadow = '2' size = '.8'><t color = '%1'>%2</t></t><br /><t align = 'center' shadow = '1' size = '.63'><t color = '#E0E0E0'>%3</t></t>",_color,name _talker,_say];
 _ctrl ctrlSetStructuredText _text;
-_ctrl ctrlSetFade 0;
-_talker setRandomLip true;
-_ctrl ctrlCommit .2;
+MESS_HEIGHT = ctrlTextHeight _ctrl;
+MESS_SHOWN = true;
 
+_ctrl ctrlSetPosition [_x,.95*_y,_w,_h];
+_ctrl ctrlCommit 0;
+_ctrl ctrlSetPosition [_x,_y,_w,_h];
+
+// Hide control
+_ctrl ctrlSetFade 0;
+_ctrl ctrlCommit .3;
+
+playSound "FD_CP_Clear_F";
+
+_talker setVariable["DCW_speak",true];
+_talker setRandomLip true;
 sleep ((count(_say)/10) max 2);
 _talker setRandomLip false;
-
-// Hide subtitle
-_ctrl ctrlSetFade 1;
-_ctrl ctrlCommit .3;
-ctrlDelete _ctrl;
-MESS_SHOWN = false;
-
 _talker setVariable["DCW_speak",false];
 
-// remove talk queue
- TALK_QUEUE = TALK_QUEUE - [_this];
+
+
+ if (count TALK_QUEUE > 1) then {
+	TALK_QUEUE = TALK_QUEUE - [_this];
+	MESS_SHOWN = false;
+	waituntil {MESS_SHOWN || count TALK_QUEUE == 0};
+	_ctrl ctrlSetPosition [_x,1.1*MESS_HEIGHT + _y,_w,_h];	
+	_ctrl ctrlSetFade .4;
+	_ctrl ctrlCommit .3;
+	sleep ((count((TALK_QUEUE select 0) select 1)/10) max 2);
+	_ctrl ctrlSetFade 1;
+	_ctrl ctrlCommit .3;
+} else {
+	_ctrl ctrlSetFade 1;
+	_ctrl ctrlCommit .3;
+	sleep .3;
+	// remove talk queue
+	TALK_QUEUE = TALK_QUEUE - [_this];
+	MESS_SHOWN = false;
+};
+
+// Hide subtitle
+ctrlDelete _ctrl;

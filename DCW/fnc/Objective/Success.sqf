@@ -24,7 +24,7 @@ _task = _objWithTask getVariable["DCW_Task",""];
 if (_task == "") then {
     [_objWithTask,(leader GROUP_PLAYERS),false] call fnc_CreateTask;
     _task = _objWithTask getVariable["DCW_Task",""];
-    sleep 2;
+     sleep .5;
 };
 
 // Spawn task successful on each client
@@ -36,7 +36,6 @@ if (_task == "") then {
     _objWithTask getVariable["DCW_MarkerIntel",""] setMarkerColor "ColorGreen";
 
      sleep 20;
-     
     [_task,true] call BIS_fnc_deleteTask;
 
 }] remoteExec ["spawn", GROUP_PLAYERS,false];

@@ -57,12 +57,12 @@ private _logicGroupSupportProvider = createGroup _center;
 	[player, SUPPORT_REQUESTER, _supportProvider] call BIS_fnc_addSupportLink;
 
 }forEach [
-	["Artillery",[SUPPORT_ARTILLERY_CLASS]],
-	["CAS_Heli",[SUPPORT_CAS_HELI_CLASS]],
-	["CAS_Bombing",[SUPPORT_BOMBING_AIRCRAFT_CLASS]],
+	["Artillery",SUPPORT_ARTILLERY_CLASS],
+	["CAS_Heli",SUPPORT_CAS_HELI_CLASS],
+	["CAS_Bombing",SUPPORT_BOMBING_AIRCRAFT_CLASS],
 	["UAV",[SUPPORT_DRONE_CLASS]],
-	["Drop",[SUPPORT_DROP_AIRCRAFT_CLASS]],
-	["Transport",[SUPPORT_TRANSPORT_CHOPPER_CLASS]]
+	["Drop",SUPPORT_DROP_AIRCRAFT_CLASS],
+	["Transport",SUPPORT_TRANSPORT_CHOPPER_CLASS]
 ];
 
 

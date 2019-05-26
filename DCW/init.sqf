@@ -10,11 +10,18 @@ if (!isNull player) then {
 	titleCut ["", "BLACK FADED",9999];
 };
 
+enableDynamicSimulationSystem true;
+"Group" setDynamicSimulationDistance 600;
+
+
 // CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
 fnc_FactionList = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionList.sqf";
-fnc_dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
+fnc_FactionGetSupportUnits =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetSupportUnits.sqf";
+fnc_GetConfigVehicles =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\GetConfigVehicles.sqf";
+fnc_Dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
+fnc_MissionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
 
 // INTRO 
 fnc_CamFollow = compileFinal preprocessFileLineNumbers  "DCW\intro\CamFollow.sqf";
@@ -31,7 +38,10 @@ fnc_ShowIndicator = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Show
 fnc_Talk = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Talk.sqf";
 fnc_GetVisibility = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetVisibility.sqf";
 fnc_Undercover = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Undercover.sqf";
+fnc_setCompoundState =  compileFinal preprocessFileLineNumbers  "DCW\fnc\System\setCompoundState.sqf";
+fnc_setCompoundSupport =  compileFinal preprocessFileLineNumbers  "DCW\fnc\System\setCompoundSupport.sqf";
 fnc_surrenderSystem = compile preprocessFileLineNumbers  "DCW\fnc\System\SurrenderSystem.sqf";
+fnc_getMarkerById = compile preprocessFileLineNumbers "DCW\fnc\System\getMarkerById.sqf";
 
 //SPAWN
 fnc_Respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
@@ -55,6 +65,9 @@ fnc_SpawnCrashSite = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Spaw
 fnc_SpawnIED = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnIED.sqf";
 fnc_spawncrate = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnCrate.sqf";
 fnc_SpawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnObjects.sqf";
+fnc_spawnhumanitaryoutpost = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitaryoutpost.sqf";
+fnc_spawnhumanitar = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitar.sqf";
+
 
 //PATROL
 fnc_EnemyCompoundPatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\CompoundPatrol.sqf";
@@ -91,6 +104,7 @@ fnc_AddCivilianAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavio
 fnc_shout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Shout.sqf";
 fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\BadBuyLoadout.sqf";
 fnc_Camp =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\Camp.sqf";
+fnc_ActionCamp =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\ActionCamp.sqf";
 
 
 
@@ -133,12 +147,24 @@ fnc_intro = compileFinal preprocessFileLineNumbers format["DCW\intro\intro-%1.sq
 
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
 
+
+// ACE detection
+if (isClass(configFile >> "CfgPatches" >> "ace_main")) then { ACE_ENABLED = true; } else { ACE_ENABLED = false; };
+
+if (ACE_ENABLED) then {
+    [] call (compileFinal preprocessFileLineNumbers "DCW\config\ace-config.sqf"); 
+};
+
 // Global scope variable
 DCW_STARTED = false;
 publicVariable "DCW_STARTED";
 
+// Global scope variable
+DCW_LOADOUT = false;
+publicVariable "DCW_LOADOUT";
+
 // Wait until everything is ready
-waitUntil {count allPlayers > 0};
+waitUntil {count allPlayers > 0 &&  time > 2 };
 
 GROUP_PLAYERS = group (allPlayers select 0); 
 publicVariable "GROUP_PLAYERS";
@@ -170,5 +196,12 @@ publicVariable "PLAYER_MARKER_LIST";
 
 TALK_QUEUE = [];
 
+RESISTANCE setFriend [EAST, 0];
+RESISTANCE setFriend [WEST, 0];
+
+//DCW_STARTED = true;
+//titleCut ["", "BLACK IN",1];
+
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";
+

@@ -59,13 +59,12 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
     while{_i2 < (count _bPoss)}do{
 
         //Tirage aléatoire
-        _rd = round(random(2));
+        _rd = round(random(3));
 
         /**********GO IN*************/
-        if (_rd == 0) then {
+        if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+        if (_rd <= 1) then {
             
-            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
-
             _newPos = (floor(random(count _bPoss)));
             _newPos = _bPoss select _newPos;
             waitUntil {sleep 4;unitReady _unit || !isNull(_unit findNearestEnemy _unit) || _unit distance _newPos < 2};
@@ -75,11 +74,11 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
             if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
             if (!isNull(_unit findNearestEnemy _unit))then{breakTo "main";};
 
-            sleep (13 + random 5);
+            sleep (30 + random 5);
             _i2 = _i2 + 1;
         }else{
             /**********GO OUT*************/
-            if (_rd==1) then{
+            if (_rd==2) then{
                 _dir = random 360;
                 _curPos = getPos _unit;
                 _newPos = [_curPos ,_range,_range + 30, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
@@ -105,7 +104,8 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
                 if (_unit getVariable["DCW_Suspect",false])then{
                     _unit stop true;
                     _unit playActionNow "medic";
-                    sleep 4;
+                    sleep 8;
+                    _unit stop false;
                 };
 
             }else{

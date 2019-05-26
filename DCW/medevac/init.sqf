@@ -43,9 +43,22 @@ private _soldiersDead = [];
 // Replacement team event handling
 {	
 	if (!isPlayer(_x))then{
+		_x setskill 1;
+		_x setUnitAbility 1;
+		_x allowFleeing 0;
+		_x setskill ["aimingAccuracy", 1];
+		_x setskill ["aimingShake", 1];
+		_x setskill ["aimingSpeed", 1];
+		_x setskill ["spotDistance", 1];
+		_x setskill ["spotTime", 1];
+		_x setskill ["commanding", 1];
+		_x setskill ["courage", 1];
+		_x setskill ["general", 1];
+		_x setskill ["reloadSpeed", 1];
+		_x removeAllEventHandlers "HandleDamage";
 		_x addEventHandler ["HandleDamage",{_this call fnc_HandleDamage;}];
 		_x addMPEventHandler ["MPKilled",{_this call fnc_HandleKilled;}];
-	} ;
+	};
 }foreach (units _group);
 
 _leader = leader(_group);
@@ -59,7 +72,9 @@ while {true} do {
 	if (isPlayer (leader(_group)) && alive (leader(_group)) && _leader != leader(_group)) then {
 		hint "switching Medevac leader";
 		_leader = leader(_group);
-		_leader call fnc_caller;
+		if (!isMultiplayer) then {
+			[_leader,_soldiersDead] call fnc_caller;
+		};
 	};
 
 	//Launch chopper
@@ -102,7 +117,7 @@ while {true} do {
 
 			waitUntil {sleep 3;MEDEVAC_State == "pointselected"};
 			MEDEVAC_State = "inbound";
-			[_leader] call fnc_caller;
+			[_leader,_soldiersDead] call fnc_caller;
 
 			// Chopper spawning
 			_transportHelo = [_group] call fnc_spawnHelo;
@@ -116,7 +131,7 @@ while {true} do {
 	//StandBy
 	if (isNull _transportHelo && count _soldiersDead > 0 && MEDEVAC_State == "standby")then{
 		MEDEVAC_State = "menu";
-		_leader call fnc_caller;
+		[_leader,_soldiersDead] call fnc_caller;
 	}else{
 		if (MEDEVAC_State == "succeeded") then {
 			[HQ,"Medevac mission succeeded",true] remoteExec ["fnc_talk"];

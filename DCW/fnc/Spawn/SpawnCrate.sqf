@@ -22,4 +22,5 @@ if (RESTRICTED_AMMOBOX) then {
 	[_box, _items, true] call BIS_fnc_addVirtualWeaponCargo; 
 	[_box, _items, true] call BIS_fnc_addVirtualMagazineCargo; 
 	[_box, _items, true] call BIS_fnc_addVirtualBackpackCargo;
+
 };
