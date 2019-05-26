@@ -136,7 +136,7 @@ _this addHeadgear "H_Beret_blk";
     
         params["_unit","_asker","_action"];
 
-         if ({_x getVariable["DCW_advisor",false]}count (units GROUP_PLAYER) == 0) exitWith {[_asker,"I need a military advisor first. I can recruit them in already secured camps.",false] call fnc_talk;false;};
+         if ({_x getVariable["DCW_advisor",false]}count (units GROUP_PLAYERS) == 0) exitWith {[_asker,"I need a military advisor first. I can recruit them in already secured camps.",false] call fnc_talk;false;};
         [_asker,"We'll provide you an army advisor for helping you to defend against insurgents.", false] call fnc_talk;
         [_unit,"Thanks for your help !", false] call fnc_talk;
         _unit RemoveAction _action;
@@ -146,7 +146,7 @@ _this addHeadgear "H_Beret_blk";
            if (_x getVariable["DCW_advisor",false]) then {
                _advisor = _x;
            };
-        }foreach (units GROUP_PLAYER);
+        }foreach (units GROUP_PLAYERS);
 
         [_advisor] joinSilent grpNull;
         [_advisor] joinSilent (group _unit);

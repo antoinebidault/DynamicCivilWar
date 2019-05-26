@@ -13,7 +13,6 @@ _unitName =  [_this, 4, CIV_LIST_UNITS call BIS_fnc_selectRandom, ["",[]]] call 
 _friendlieness =  [_this, 5, 100-PERCENTAGE_SUSPECT, [0]] call BIS_fnc_param;
 
 _unit = _group createUnit [_unitName, _pos,[],AI_SKILLS,"NONE"];
-
 [_unit] joinsilent _group;
 //_unit setBehaviour "CARELESS";
 /*_unit allowFleeing 0;
@@ -39,7 +38,7 @@ _unit setDir random 360;
 
 if (_handleFireEvent)then{
     [_unit] spawn fnc_HandleFiredNear;
-    [_unit] remoteEXec ["fnc_AddCivilianAction",0];
+    [_unit] remoteexec ["fnc_AddCivilianAction",0];
 };
 
 UNITS_SPAWNED pushBack _unit;

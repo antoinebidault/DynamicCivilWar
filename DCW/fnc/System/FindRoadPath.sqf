@@ -8,8 +8,6 @@
  * Works but not used
  */
 
-
-
 // Create Road Map 
 _startPos = _this select 0;
 _destPos = _this select 1;

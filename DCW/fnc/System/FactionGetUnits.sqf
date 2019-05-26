@@ -13,7 +13,7 @@
 
 params["_faction","_classes","_patternIncluded"];
 
-_forbidedmenclasses = ["pilot","crew","driver","unarmed","diver","_RV_","_AA_","Survivor","Story","officer"];
+_forbidedmenclasses = ["pilot","crew","driver","unarmed","diver","_VR","_AA_","Survivor","Story","officer"];
 
 _results = [];
 

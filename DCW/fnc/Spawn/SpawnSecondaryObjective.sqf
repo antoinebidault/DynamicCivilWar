@@ -22,7 +22,7 @@ fnc_spawnOfficer = {
     _road = [_initPos,3000, MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
     _roadPos = getPos _road;
     _roadConnectedTo = roadsConnectedTo _road;
-    if (count _roadConnectedTo == 0) exitWith { hint "restart"; [] spawn fnc_SpawnSecondaryObjective; };
+    if (count _roadConnectedTo == 0) exitWith { hint "restart"; [] call fnc_spawnOfficer;  };
     _connectedRoad = _roadConnectedTo select 0;
     _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
 
@@ -151,6 +151,7 @@ fnc_spawnOfficer = {
 // Spawning officers
 for "_i" from 1 to NUMBER_OFFICERS  do {
      OFFICERS pushback([] call fnc_spawnOfficer);
+     sleep 5;
 };
 
 

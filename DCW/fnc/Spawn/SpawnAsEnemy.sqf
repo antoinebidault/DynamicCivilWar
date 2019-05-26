@@ -15,13 +15,15 @@ _radius = 100;
 _pos = position _unit;
 _unit setVariable ["civ_insurgent",true]; 
 
+if(isNil '_unit') exitWith {false};
+if(!alive _unit) exitWith {false};
+
 //Add a bonus wether the shooter is from the enemy side or not
 private _bonus = if (side _gunner == SIDE_ENEMY)then{25}else{-25};
-private _side = if (random 100 > (PERCENTAGE_FRIENDLY_INSURGENTS + _bonus)) then {SIDE_ENEMY}else{SIDE_PLAYER};
+private _side = if (random 100 > (PERCENTAGE_FRIENDLY_INSURGENTS + _bonus)) then {SIDE_ENEMY}else{SIDE_FRIENDLY};
 
-
-if (DEBUG)then{
-	private _marker = _unit getVariable["marker",""];
+if (DEBUG) then {
+    _marker = _unit getVariable["marker",""];
 	_marker setMarkerColor "ColorWhite";
 };
 

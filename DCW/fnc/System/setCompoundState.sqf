@@ -8,6 +8,8 @@ _markerData set [12,_state];
 
 _icon = _markerID + "-icon";
 
+_markerID setMarkerBrush "Solid";
+
 // Set the marker state
 if (_state == "secured") then{
 		_markerID setMarkerColor "ColorGreen";
@@ -33,6 +35,13 @@ if (_state == "secured") then{
 						_markerID setMarkerColor "ColorBlack";
 						_icon setMarkerColor "ColorBlack";
 						_icon setMarkerType "loc_Cross";
+					} else {
+						if (_state == "supporting") then {
+							_markerID setMarkerColor "ColorGreen";
+							_markerID setMarkerBrush "FDiagonal";
+							_icon setMarkerColor "ColorGreen";
+							_icon setMarkerType "loc_tourism";
+						}
 					};
 				};
 			};
@@ -42,7 +51,7 @@ if (_state == "secured") then{
 
 // Add the respawn position if secured only
 if (_state == "secured" ) then{
-	_marker set [15, [SIDE_PLAYER, getMarkerPos _markerID, _marker select 14] call BIS_fnc_addRespawnPosition];
+	_marker set [15, [SIDE_FRIENDLY, getMarkerPos _markerID, _marker select 14] call BIS_fnc_addRespawnPosition];
 } else {
 	if (!((_marker select 15) isEqualTo [])) then {
 		(_marker select 15) remoteExec ["BIS_fnc_RemoveRespawnPosition",0]; 

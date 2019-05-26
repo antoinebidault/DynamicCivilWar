@@ -19,7 +19,7 @@ if (count _buildings == 0) exitWith {[_unit,_radius] call fnc_simplePatrol;};
 //private _buildings = [getPos _unit,_radius] call fnc_findBuildings;
 //if(isNil("_buildings"))exitWith{};
 
-private _building = _buildings select 0; 
+private _building = _buildings call BIS_fnc_selectRandom; 
 //if (isNil "_building")exitWith{};
 
 private _bPoss = [];
@@ -98,6 +98,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
                     _unit stop true;
                     _unit playActionNow "medic";
                     sleep 4;
+                    _unit stop false;
                 };
 
             }else{

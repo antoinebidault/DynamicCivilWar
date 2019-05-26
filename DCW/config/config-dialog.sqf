@@ -104,8 +104,8 @@ fnc_SaveAndGoToLoadoutDialog = {
 	RESTRICTED_AMMOBOX =  2106 call fnc_getValueChkBx;
 	publicVariable "RESTRICTED_AMMOBOX";
 	
-	SIDE_PLAYER = (2111 call fnc_getValue) call BIS_fnc_sideType;
-	publicVariable "SIDE_PLAYER";
+	SIDE_FRIENDLY = (2111 call fnc_getValue) call BIS_fnc_sideType;
+	publicVariable "SIDE_FRIENDLY";
 
 	FACTION_FRIENDLY =  lbData [2113, (2113 call fnc_getValue)];
 	publicVariable "FACTION_FRIENDLY";
@@ -386,16 +386,16 @@ _ctrlRespawnOn cbSetChecked true;
 private _ctrlAmmoOn = _display displayCtrl 2106;
 _ctrlAmmoOn cbSetChecked true;
 
-[SIDE_PLAYER,2111,[2103,2113]] call fnc_rendersideselect;
+[SIDE_FRIENDLY,2111,[2103,2113]] call fnc_rendersideselect;
 
 [SIDE_ENEMY,2107,[2108]] call fnc_rendersideselect;
 
 [SIDE_ENEMY,2108] call fnc_renderfactionselect ;
 
-_factionSelect = [SIDE_PLAYER,2103] call fnc_renderfactionselect ;
+_factionSelect = [SIDE_FRIENDLY,2103] call fnc_renderfactionselect ;
 _factionSelect ctrlAddEventHandler ["LBSelChanged","[ctrlIDC(_this select 0),_this select 1] spawn fnc_SwitchFaction"];
 
-[SIDE_PLAYER,2113] call fnc_renderfactionselect;
+[SIDE_FRIENDLY,2113] call fnc_renderfactionselect;
 
 [SIDE_CIV,2110] call fnc_renderfactionselect ;
 

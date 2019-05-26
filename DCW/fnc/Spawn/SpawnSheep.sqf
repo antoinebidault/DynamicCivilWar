@@ -60,7 +60,7 @@ while{true}do {
 			_goat addMPEventHandler ["MPKilled", {
 				_man = leader (group (_this select 0));
 				if (group(_this select 1) == GROUP_PLAYERS && alive _man && _man isKindOf "Man") then{
-					[_man,-3] call fnc_updateRep;
+					[_man,-3] remoteExec ["fnc_UpdateRep",2];
                 	[_man,"Damn ! Don't touch my sheep !", false] spawn fnc_talk;
 				};
 			}];

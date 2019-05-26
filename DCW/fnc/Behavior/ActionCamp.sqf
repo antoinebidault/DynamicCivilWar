@@ -22,7 +22,7 @@
         if (!(CAMP_RESPAWN_POSITION_ID isEqualTo [])) then {
              CAMP_RESPAWN_POSITION_ID remoteExec ["BIS_fnc_RemoveRespawnPosition",0]; 
         };
-        CAMP_RESPAWN_POSITION_ID =  [SIDE_PLAYER, getMarkerPos CAMP_MARKER,"camp"] call BIS_fnc_addRespawnPosition;
+        CAMP_RESPAWN_POSITION_ID =  [SIDE_FRIENDLY, getMarkerPos CAMP_MARKER,"camp"] call BIS_fnc_addRespawnPosition;
         publicVariable "CAMP_RESPAWN_POSITION_ID";
 
         if (!dialog) then {

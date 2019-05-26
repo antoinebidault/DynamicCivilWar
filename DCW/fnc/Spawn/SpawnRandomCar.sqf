@@ -28,7 +28,7 @@ while{ true }do {
 				if(random 100 > PERCENTAGE_CIVILIAN )then{
 					_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
 					_car = ([getPos _road, _roadDirection,_unitName, SIDE_ENEMY] call bis_fnc_spawnvehicle)  select 0;
-					_nbUnit = (count (fullCrew [_car,"cargo",true]));
+					_nbUnit = 5 min (count (fullCrew [_car,"cargo",true]));
 		
 					//Civilian team spawn.
 					//If we killed them, it's over.

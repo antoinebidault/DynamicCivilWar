@@ -8,7 +8,7 @@ private["_unit"];
 private _pos = _this select 0;
 private _buildings = _this select 1;
 private _succeeded = _this select 2;
-_side = if (_succeeded) then {SIDE_PLAYER} else{SIDE_ENEMY};
+_side = if (_succeeded) then {SIDE_FRIENDLY} else{SIDE_ENEMY};
 _nbBuildings = count _buildings;
 _objs = [];
 _tmpTurrets = compos_turrets;

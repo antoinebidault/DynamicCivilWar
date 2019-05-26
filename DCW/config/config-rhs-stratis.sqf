@@ -23,8 +23,8 @@ SUPPORT_CAR_PARADROP_CLASS = "rhsusf_M1078A1R_SOV_M2_D_fmtv_socom";
 
 
 //FRIENDLIES
-FRIENDLY_LIST_UNITS = ["rhsgref_cdf_un_grenadier_rpg","rhsgref_cdf_un_engineer","rhsgref_cdf_un_machinegunner","rhsgref_cdf_un_medic","rhsgref_cdf_un_officer","rhsgref_cdf_un_rifleman","rhsgref_cdf_un_grenadier","rhsgref_cdf_un_rifleman_lite","rhsgref_cdf_un_squadleader"]; //Units of your side
-FRIENDLY_LIST_CARS = ["rhsgref_un_btr70"]; //Friendly cars
+ALLIED_LIST_UNITS = ["rhsgref_cdf_un_grenadier_rpg","rhsgref_cdf_un_engineer","rhsgref_cdf_un_machinegunner","rhsgref_cdf_un_medic","rhsgref_cdf_un_officer","rhsgref_cdf_un_rifleman","rhsgref_cdf_un_grenadier","rhsgref_cdf_un_rifleman_lite","rhsgref_cdf_un_squadleader"]; //Units of your side
+ALLIED_LIST_CARS = ["rhsgref_un_btr70"]; //Friendly cars
 FRIENDLY_FLAG = "Flag_UNO_F"; //Flag of your side
 FRIENDLY_CHOPPER_CLASS = ["RHS_CH_47F","RHS_UH60M_d","RHS_AH64D"];
 

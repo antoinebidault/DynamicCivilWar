@@ -10,7 +10,7 @@ if (!isServer) exitWith{};
 
 
 // Create a fake HQ unit
-"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_FRIENDLY, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
 	sleep 1;
 	HQ setName "HQ";
@@ -85,8 +85,7 @@ private _clusters = [GAME_ZONE] call fnc_GetClusters;
 CIVILIAN_KILLED = { 
 	params["_unit","_killer"]; 
 	hint format ["%1 %2 was killed by %3",name (_unit),side _unit,name (_killer)];
-	_friends = nearestObjects [position _unit,["Man"],50];
-	{  if (side _x == SIDE_CIV) then { [_x,-4] call fnc_UpdateRep}; }foreach _friends;
+	[_unit,-4] remoteExec ["fnc_UpdateRep",2];
 	[GROUP_PLAYERS,-50,false,_killer] call fnc_updateScore;
 };
 
@@ -214,6 +213,8 @@ _supportScore = 0;
 		if (_isLocation && !_isMilitary) then{
 			_m setMarkerBrush "BDiagonal";
 		};*/
+		
+		_m setMarkerBrush "Solid";
 
 		if (SHOW_SECTOR || DEBUG) then{
 			_m setMarkerAlpha .5;
@@ -226,18 +227,20 @@ _supportScore = 0;
 		_icon setMarkerColor "ColorBlack";
 		_icon setMarkerSize [1,1];
 		_icon setMarkerType "loc_Cross";
+							
 
 		// default = startup state / corrupted / secured / succeeded / massacred = destroyed compound / helped = called the humanitary
 		_compoundState = "default";
 		_supportScore = 50;
 		_respawnId = [];
+
 		if (_secured) then{
 			_supportScore = 100;
 			_compoundState = "secured";
 			_m setMarkerColor "ColorGreen";
 			_icon setMarkerColor "ColorGreen";
 			_icon setMarkerType "loc_Ruin";
-			_respawnId = [SIDE_PLAYER, _pos, _nameLocation] call BIS_fnc_addRespawnPosition
+			_respawnId = [SIDE_FRIENDLY, _pos, _nameLocation] call BIS_fnc_addRespawnPosition
 		}else{
 			if (_forEachIndex >= 10/100*count _clusters) then {
 				_supportScore = 50 + ([1,-1] call BIS_fnc_selectRandom) * (floor (random 25));
@@ -246,21 +249,39 @@ _supportScore = 0;
 				_icon setMarkerColor "ColorBlack";
 				_icon setMarkerType "loc_tourism";
 			}else {
-				if (_forEachIndex > 3/100*count _clusters) then {
+				if (_forEachIndex > 4/100*count _clusters) then {
 					_supportScore = floor (random 25);
 					_compoundState = "bastion";
 					_m setMarkerColor "ColorRed";
 					_icon setMarkerColor "ColorRed";
 					_icon setMarkerType "loc_Ruin";
 				}else {
-					if (_forEachIndex <= 3/100*count _clusters) then {
+					if (_forEachIndex > 2/100*count _clusters) then {
 						_supportScore = 50 + ([1,-1] call BIS_fnc_selectRandom) * (floor (random 25));
 						_compoundState = "humanitary";
 						_m setMarkerColor "ColorBlue";
 						_icon setMarkerColor "ColorBlue";
 						_icon setMarkerType "loc_Hospital";
+					} else {
+						if (_forEachIndex <= 2/100*count _clusters) then {
+							_supportScore = 70 + (floor (random 25));
+							_compoundState = "supporting";
+							_m setMarkerColor "ColorGreen";
+							_m setMarkerBrush "FDiagonal";
+							_icon setMarkerColor "ColorGreen";
+							_icon setMarkerType "loc_tourism";
+						};
 					};
 				};
+			};
+		};
+
+		
+		_defendTaskState = "none";
+		if (_foreachIndex <  30/100*count _clusters && _nbBuildings >= 3) then {
+			_defendTaskState = "planned";
+			if (DEBUG) then {
+				_m setMarkerBrush "FDiagonal";
 			};
 		};
 
@@ -312,7 +333,7 @@ _supportScore = 0;
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
 
-		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId];
+		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState];
 	};
 	
 } foreach (_clusters call BIS_fnc_arrayShuffle);
@@ -421,10 +442,20 @@ while { true } do {
 				_supportScore = _x select 13;
 				_nameLocation = _x select 14;
 				_respawnId = _x select 15;
+				_defendTaskState = _x select 16;
 
 				if (_triggered && !(_currentCompound isEqualTo _currentMarker) && _playerPos distance _pos < _radius) then {
 					_currentMarker = _x;
 					[format["Inhabitants: %1<br/>State: %2<br/>Population support: <t >%3%/100</t><br/>",(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 24] remoteExec ["fnc_ShowIndicator",_player,false];
+					
+					if (_defendTaskState == "planned" && (_compoundState == "default" || _compoundState == "supporting")  ) then {
+						[_currentCompound,_player] spawn {
+							params["_compound"];
+							sleep 30;
+							[_compound] call fnc_spawnDefendTask;
+						};
+						_defendTaskState = "done";
+					};
 				};
 
 				if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE) then{
@@ -483,7 +514,6 @@ while { true } do {
 						_peopleToSpawn = _cacheResult select 0;
 						_units = _units - [_cacheResult select 1];
 						_triggered = false;
-
 					} else {
 
 						// Check if enemies remains in the area;
@@ -499,15 +529,14 @@ while { true } do {
 									[_currentCompound,"default"] call fnc_setCompoundState;
 									_supportScore = _supportScore + 50;
 									[_marker,_radius,_units,_points] remoteExec ["COMPOUND_SECURED"];
-									[_player,format["The compound in %1 is cleared ! Great job team.", getMarkerPos _marker], true] remoteExec ["fnc_talk"];
-									_marker setMarkerColor "ColorGreen";
+									[_player,"The compound is cleared ! Great job team.", true] remoteExec ["fnc_talk"];
 								};
 
 							};
 						};
 					};
 				}; 
-				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId]]; 
+				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState]]; 
 			}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
 		};
 		sleep 1;

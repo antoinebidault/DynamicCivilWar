@@ -16,7 +16,7 @@ _spawnpos = _start;
 };
 
 
-_heli_spawn = [_spawnpos, 0, SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom, SIDE_PLAYER] call BIS_fnc_spawnVehicle;
+_heli_spawn = [_spawnpos, 0, SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom, SIDE_FRIENDLY] call BIS_fnc_spawnVehicle;
 _chopper = _heli_spawn select 0;
 _spawnpos set [2,220];
 _chopper setposatl _spawnpos;

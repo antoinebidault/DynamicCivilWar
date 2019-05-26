@@ -62,6 +62,7 @@ fnc_SpawnSecondaryObjective= compileFinal preprocessFileLineNumbers  "DCW\fnc\Sp
 fnc_SpawnConvoy = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnConvoy.sqf";
 fnc_SpawnPosition = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnPosition.sqf";
 fnc_SpawnCrashSite = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnCrashSite.sqf";
+fnc_SpawnDefendTask = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnDefendTask.sqf";
 fnc_SpawnIED = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnIED.sqf";
 fnc_spawncrate = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnCrate.sqf";
 fnc_SpawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnObjects.sqf";
@@ -169,8 +170,8 @@ waitUntil {count allPlayers > 0 &&  time > 2 };
 GROUP_PLAYERS = group (allPlayers select 0); 
 publicVariable "GROUP_PLAYERS";
 
-SIDE_PLAYER = side(allPlayers select 0); //Side player
-publicVariable "SIDE_PLAYER";
+SIDE_FRIENDLY = side(allPlayers select 0); //Side player
+publicVariable "SIDE_FRIENDLY";
 
 CHASER_TRIGGERED = false;
 publicVariable "CHASER_TRIGGERED";

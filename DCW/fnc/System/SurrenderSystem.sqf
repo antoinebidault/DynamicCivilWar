@@ -79,7 +79,7 @@ fnc_captured = {
 	removeGoggles _player;
 
 	// Join another isolated group
-	[_player] joinSilent (createGroup SIDE_PLAYER);
+	[_player] joinSilent (createGroup SIDE_FRIENDLY);
 
 	_pos = _player  modelToWorld [0,1,0];
 	_general = (createGroup SIDE_ENEMY) createUnit [ENEMY_COMMANDER_CLASS, _pos,[],AI_SKILLS,"CAN_COLLIDE"];
@@ -188,7 +188,7 @@ fnc_captured = {
 			};
 		} foreach allUnits; 
 
-		if ( !alive _player || {side _x == SIDE_PLAYER && (_player distance _x) < 10} count allUnits > 0) then {
+		if ( !alive _player || {side _x == SIDE_FRIENDLY && (_player distance _x) < 10} count allUnits > 0) then {
 			_notWatched = false;
 		};
 
@@ -197,7 +197,7 @@ fnc_captured = {
 
 	hintSilent "You've been watched by enemies. Go back to your troops as fast as possible";
 	
-	waitUntil { sleep .3; !(alive _player)  || { side _x == SIDE_PLAYER && (_player distance _x) < 10} count allUnits > 1 };
+	waitUntil { sleep .3; !(alive _player)  || { side _x == SIDE_FRIENDLY && (_player distance _x) < 10} count allUnits > 1 };
 	
 	_player setVariable ["dcw_surrender_action", false];
 

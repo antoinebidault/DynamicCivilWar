@@ -179,7 +179,7 @@ if (RESPAWN_ENABLED) then{
 		[_player, NUMBER_RESPAWN, false] call BIS_fnc_respawnTickets;
 		REMAINING_RESPAWN = NUMBER_RESPAWN;
 
-		[SIDE_PLAYER, getMarkerPos "marker_base","Base"] call BIS_fnc_addRespawnPosition;
+		[SIDE_FRIENDLY, getMarkerPos "marker_base","Base"] call BIS_fnc_addRespawnPosition;
 		
 		[_player] call fnc_HandleRespawnMultiplayer;
 		

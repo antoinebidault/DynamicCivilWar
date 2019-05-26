@@ -60,7 +60,7 @@ for "_xc" from 1 to _nb  do {
 
     if (!_cancel) then {
       
-   //   _unitName = FRIENDLY_LIST_UNITS call BIS_fnc_selectRandom;
+   //   _unitName = ALLIED_LIST_UNITS call BIS_fnc_selectRandom;
     //  _unit = _grp createUnit [_unitName, _posSelected,[],1,"NONE"];
       _grp = createGroup SIDE_CIV;
       _unit = [_grp,_posSelected,false] call fnc_spawnhumanitar;

@@ -3,10 +3,10 @@
 //GLOBAL
 DEBUG = false; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_PLAYER = side player; //Side player
+SIDE_FRIENDLY = side player; //Side player
 NUMBER_RESPAWN = 3;
 CIVIL_REPUTATION = 50;
-"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_FRIENDLY, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
 	sleep 1;
 	HQ setName "HQ";
@@ -30,8 +30,8 @@ SUPPORT_MEDEVAC_CREW_CLASS = "UK3CB_BAF_Medic_MTP_RM_H";
 SUPPORT_DRONE_CLASS = "B_UAV_02_dynamicLoadout_F";
 
 //FRIENDLIES
-FRIENDLY_LIST_UNITS = ["UK3CB_TKA_B_RIF_2","UK3CB_TKA_B_MK","UK3CB_TKA_B_STATIC_GUN_KORD","UK3CB_TKA_B_STATIC_GUN_NSV","UK3CB_TKA_B_GL","UK3CB_TKA_B_DEM","UK3CB_TKA_B_AR","UK3CB_TKA_B_AT","UK3CB_TKA_B_GL","UK3CB_TKA_B_MD","UK3CB_TKA_B_TL"]; //Units of your side
-FRIENDLY_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"]; //Friendly cars
+ALLIED_LIST_UNITS = ["UK3CB_TKA_B_RIF_2","UK3CB_TKA_B_MK","UK3CB_TKA_B_STATIC_GUN_KORD","UK3CB_TKA_B_STATIC_GUN_NSV","UK3CB_TKA_B_GL","UK3CB_TKA_B_DEM","UK3CB_TKA_B_AR","UK3CB_TKA_B_AT","UK3CB_TKA_B_GL","UK3CB_TKA_B_MD","UK3CB_TKA_B_TL"]; //Units of your side
+ALLIED_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"]; //Friendly cars
 FRIENDLY_FLAG = "Flag_AFG_13";//Flag of your side
 
 //CIVILIAN

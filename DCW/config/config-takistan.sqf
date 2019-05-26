@@ -3,10 +3,10 @@
 //GLOBAL
 DEBUG = true; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_PLAYER = side player; //Side player
+SIDE_FRIENDLY = side player; //Side player
 NUMBER_RESPAWN = 3;
 CIVIL_REPUTATION = 50;
-"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_PLAYER, "this allowDamage false; HQ = this", 0.6, "colonel"];
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_FRIENDLY, "this allowDamage false; HQ = this", 0.6, "colonel"];
 []spawn{
 	sleep 1;
 	HQ setName "HQ";
@@ -17,8 +17,8 @@ SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
 
 //FRIENDLIES
-FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses;
-FRIENDLY_LIST_CARS = ["rhsusf_m1025_d_m2","rhsusf_m1025_d_Mk19","rhsusf_M1220_M153_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1232_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1083A1P2_B_M2_D_fmtv_usarmy","rhsusf_m113d_usarmy_M240"];
+ALLIED_LIST_UNITS = [player,"Man"] call fnc_FactionClasses;
+ALLIED_LIST_CARS = ["rhsusf_m1025_d_m2","rhsusf_m1025_d_Mk19","rhsusf_M1220_M153_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1232_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1083A1P2_B_M2_D_fmtv_usarmy","rhsusf_m113d_usarmy_M240"];
 FRIENDLY_FLAG = "Flag_US_F";
 SUPPORT_DRONE_CLASS="rhs_pchela1t_vvsc";
 

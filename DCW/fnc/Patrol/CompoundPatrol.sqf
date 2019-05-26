@@ -45,7 +45,7 @@ if(isNull(_unit findNearestEnemy _unit))then{
 };
 
 scopeName "main";
-while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariable ["civ_insurgent",false]) }do{
+while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariable ["civ_insurgent",false] && !(_unit getVariable ["DCW_advisor",false])) }do{
 
     _bPoss = [];
 	_i = 0;
@@ -62,7 +62,7 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
         _rd = round(random(3));
 
         /**********GO IN*************/
-        if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+        if (_unit getVariable ["civ_insurgent",false] || (_unit getVariable ["DCW_advisor",false]))then{breakTo "main";};
         if (_rd <= 1) then {
             
             _newPos = (floor(random(count _bPoss)));
@@ -71,8 +71,8 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
             _unit doMove _newPos;
             _timer = time;
             waitUntil {sleep 4;unitReady _unit || _unit distance _newPos < 2 || !isNull(_unit findNearestEnemy _unit) || time > _timer + 150};
-            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
-            if (!isNull(_unit findNearestEnemy _unit))then{breakTo "main";};
+            if (_unit getVariable ["civ_insurgent",false] || (_unit getVariable ["DCW_advisor",false]))then{breakTo "main";};
+            if (!isNull(_unit findNearestEnemy _unit) )then{breakTo "main";};
 
             sleep (30 + random 5);
             _i2 = _i2 + 1;
@@ -87,7 +87,7 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
 
                 waitUntil {sleep 4; unitReady _unit || _unit distance _newPos < 2 || !isNull(_unit findNearestEnemy _unit) || time > _timer + 150};
 
-                if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+                if (_unit getVariable ["civ_insurgent",false] || (_unit getVariable ["DCW_advisor",false]))then{breakTo "main";};
                 if (!isNull(_unit findNearestEnemy _unit))then{breakTo "main";};
 
                 //Sit or not
@@ -99,23 +99,15 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
                 }else{
                     sleep 20 + random 25;
                 };
-               
-                //Play a suspect animation
-                if (_unit getVariable["DCW_Suspect",false])then{
-                    _unit stop true;
-                    _unit playActionNow "medic";
-                    sleep 8;
-                    _unit stop false;
-                };
-
+                
             }else{
                 [_unit,_meetPoint] call fnc_gotomeeting;
-                if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+                if (_unit getVariable ["civ_insurgent",false] || _unit getVariable ["DCW_advisor",false])then{breakTo "main";};
                 if (!isNull(_unit findNearestEnemy _unit))then{breakTo "main";};
                 sleep 20;
             };
 
-            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+            if (_unit getVariable ["civ_insurgent",false] || _unit getVariable ["DCW_advisor",false])then{breakTo "main";};
         };
     };
 };

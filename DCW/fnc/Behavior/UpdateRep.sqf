@@ -9,7 +9,8 @@ params["_unit","_score"];
 
 // Always executed on server side
 if (!isServer) exitWith{};
-if (isNull _unit) exitWith{};
+if (isNil '_unit') exitWith{false};
+if (isnull _unit) exitWith{false};
 
 /*
 _startScore = _unit getVariable["DCW_Friendliness",50];

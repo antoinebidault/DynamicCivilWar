@@ -49,8 +49,9 @@ _this addEventHandler["HandleDamage",{
 			_unit setDamage .3;
 			_unit setUnitPos "UP";
 			_unit setVariable ["unit_injured", false, true];
-			 _unit;
 			[_unit,(_this select 1)] remoteExec ["CIVIL_HEALED",2];
+			[_unit,4] remoteExec ["fnc_updateRep",2];
+			_unit;
 
 		},{
 			   (_this select 1) playActionNow "medicStop";

@@ -33,7 +33,7 @@ if (count _roads > 0) then {
     _road = _roads call BIS_fnc_selectRandom;
     if (!isNil '_road')then{
         _roads = _roads - [_road];
-        _car = ([getPos _road, 0,FRIENDLY_LIST_CARS call BIS_fnc_selectRandom, SIDE_PLAYER] call bis_fnc_spawnvehicle)  select 0;
+        _car = ([getPos _road, 0,ALLIED_LIST_CARS call BIS_fnc_selectRandom, SIDE_FRIENDLY] call bis_fnc_spawnvehicle)  select 0;
         _car setVehicleLock "LOCKED";
         _roadConnectedTo = roadsConnectedTo _road;
         if (count _roadConnectedTo == 0) then{
@@ -64,17 +64,15 @@ for "_xc" from 1 to _nb  do {
     _posSelected = [];
 
     if (count _posSelects > 0)then{
-        _posSelected = _posSelects call BIS_fnc_selectRandom;
-      _posSelects = _posSelects - [_posSelected];
+       _posSelected = _posSelects call BIS_fnc_selectRandom;
+       _posSelects = _posSelects - [_posSelected];
     }else{
         _cancel = true;
     };
 
     if (!_cancel) then {
       
-   //   _unitName = FRIENDLY_LIST_UNITS call BIS_fnc_selectRandom;
-    //  _unit = _grp createUnit [_unitName, _posSelected,[],1,"NONE"];
-      _grp = createGroup SIDE_PLAYER;
+      _grp = createGroup SIDE_FRIENDLY;
       _unit = [_grp,_posSelected,false] call fnc_spawnfriendly;
       _unit setVariable["DCW_Type","friendly"];
       _units pushBack _unit;

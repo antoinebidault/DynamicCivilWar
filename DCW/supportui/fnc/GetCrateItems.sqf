@@ -31,8 +31,21 @@ if (count GEAR_AND_STUFF == 0) then {
       }; 
       } foreach _items; 
     }; 
-  } foreach FRIENDLY_LIST_UNITS; //units (group (leader GROUP_PLAYERS)); 
+  } foreach FRIENDLY_LIST_UNITS;
 
+  _output = [];
+  _weapons = configFile >> "CfgWeapons";
+
+  for "_i" from 1 to ((count _weapons) - 1) do 
+  {
+    _weapon = _weapons select _i;
+
+    if (isClass _weapon && (configName _weapon) isKindOf "Backpacks" ) then 
+    {
+      GEAR_AND_STUFF pushback (configName _weapon);
+    };
+  };
+  _output;
 
   GEAR_AND_STUFF = _gearAndStuffArray;
 };

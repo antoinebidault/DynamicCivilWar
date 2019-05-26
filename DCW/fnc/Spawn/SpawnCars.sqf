@@ -53,7 +53,7 @@ private _roadConnectedTo = objNull;
     _connectedRoad = _roadConnectedTo select 0;
     _car setDir ([_x, _connectedRoad] call BIS_fnc_DirTo);
   };
-  _car setPos [(getPos _car select 0)-3.5, getPos _car select 1, getPos _car select 2];
+  _car setPos [(getPos _car select 0)-2.5, getPos _car select 1, getPos _car select 2];
   _cars pushBack _car;
 } forEach _roadSelects;
 

@@ -192,7 +192,8 @@ addMissionEventHandler
 						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString ) then {
 							_map ctrlMapCursor ["Track","HC_overFriendly"];
 							_marker = [_mapMarker select 1] call fnc_getMarkerById;
-							_people = ((_marker select 0) select 6);
+							_compound = _marker select 0;
+							_people = (_compound select 6);
 							_population = (_people select 0) + (_people select 1) + (_people select 2) + (_people select 5) + (_people select 8); 
 							_dbg =  "";
 							if (DEBUG) then {
@@ -200,6 +201,7 @@ addMissionEventHandler
 								{
 									_dbg =  _dbg + format["<br/><t>%1:%2</t>",_labels select _foreachIndex,_x];
 								}foreach _people;
+								_dbg =  _dbg + format["<br/><t>Defend task state:%1</t>",_compound select 16];
 							};
 							
 							hintsilent parseText format["<t >%1</t><br/><t size='1.3'>Reputation : %2/100</t><br/><t size='1.3'>Population : %3</t>%4",(_marker select 0) select 14,(_marker select 0) select 13,_population,_dbg];

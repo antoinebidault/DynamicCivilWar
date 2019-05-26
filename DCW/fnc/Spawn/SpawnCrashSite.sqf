@@ -81,7 +81,7 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _civ = 0;
     _en = 0;
     if (random 100 > 50) then { _civ = 4;} else { _en  = 4; };
-    MARKERS pushback [_enemyArea,getPos _chopper,false,false,40,[],[_civ,0,_en,0,0,0,0,0,0,0],[], 0,true,false,[],"chopper", 50,"Chopper crash site",[]];
+    MARKERS pushback [_enemyArea,getPos _chopper,false,false,40,[],[_civ,0,_en,0,0,0,0,0,0,0],[], 0,true,false,[],"chopper", 50,"Chopper crash site",[],"none"];
     CRASHSITES pushback _chopper;
 };
 

@@ -114,7 +114,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
 
     _trig = createTrigger["EmptyDetector",getPosATL _mainObj];
 	_trig setTriggerArea[7,7,0,FALSE,3];
-	_trig setTriggerActivation[str SIDE_PLAYER,"PRESENT",false];
+	_trig setTriggerActivation[str SIDE_FRIENDLY,"PRESENT",false];
 	_trig setTriggerTimeout[1,1,1,true];
     _trig setTriggerStatements[
         "this",

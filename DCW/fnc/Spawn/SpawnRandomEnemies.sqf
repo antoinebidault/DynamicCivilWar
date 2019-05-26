@@ -18,7 +18,7 @@ private _worldCenter = [_worldSize/2,_worldSize/2,0];
 
 while{true}do {
 	if ({ _x getVariable["DCW_type",""] == "patrol" } count UNITS_SPAWNED < MAX_RANDOM_PATROL)then{
-		_nbFriendlies = { _x getVariable["DCW_type",""] == "patrol" && side _x == SIDE_PLAYER} count UNITS_SPAWNED;
+		_nbFriendlies = { _x getVariable["DCW_type",""] == "patrol" && side _x == SIDE_FRIENDLY} count UNITS_SPAWNED;
 		//Get random pos
 		_side = SIDE_ENEMY;
 
@@ -30,7 +30,7 @@ while{true}do {
 		} else {
 			_numberOfmen =  (PATROL_SIZE select 0) + round(random(PATROL_SIZE SELECT 1));
 			if (floor (random 100) < PERCENTAGE_FRIENDLIES && _nbFriendlies == 0) then {
-				_side = SIDE_PLAYER;
+				_side = SIDE_FRIENDLY;
 				_numberOfmen = 4;
 			};
 
@@ -38,7 +38,7 @@ while{true}do {
 
 			for "_j" from 1 to _numberOfmen do {
 
-				if (_side == SIDE_PLAYER) then{
+				if (_side == SIDE_FRIENDLY) then{
 					_unit = [_grp,_pos,false] call fnc_spawnFriendly;
 					[_unit] remoteExec ["addActionGiveUsAHand"];
 					

@@ -9,7 +9,7 @@ params["_unit"];
 
 CAMP_OBJS = [];
 
-CAMP_MARKER = createMarker [format["respawn_camp",toLower str SIDE_PLAYER], getPos leader GROUP_PLAYERS];
+CAMP_MARKER = createMarker [format["respawn_camp",toLower str SIDE_FRIENDLY], getPos leader GROUP_PLAYERS];
 CAMP_MARKER setMarkerText "Camp";
 CAMP_MARKER setMarkerShape "ICON";
 CAMP_MARKER setMarkerColor "ColorGreen";

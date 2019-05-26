@@ -4,10 +4,15 @@
  * Author: BIDASS
  * License : GNU (GPL)
  */
+
+
+
 addActionJoinAsAdvisor = {
-      _this addaction ["<t color='#FF0000'>Recruit him as a military advisor (-20pts)</t>",{
+      _this addaction ["<t color='#FF0000'>Recruit him as a military advisor (-30pts)</t>",{
          params["_unit","_asker","_action"];
-         if (!([GROUP_PLAYERS,20] call fnc_afford)) exitWith {[_man,"You need more points !",false] call fnc_talk;false;};
+         if ({_x getVariable["DCW_advisor",false]}count (units GROUP_PLAYERS) >= 2) exitWith {[_asker,"You can't recruit more than two military advisors...",false] call fnc_talk;false;};
+         if (!([GROUP_PLAYERS,30] call fnc_afford)) exitWith {[_asker,"I need more points !",false] call fnc_talk;false;};
+      
         _asker playActionNow "GestureFreeze";
         _unit playActionNow "GestureHi";
         _unit doWatch _asker;
@@ -20,7 +25,7 @@ addActionJoinAsAdvisor = {
         [_unit] join GROUP_PLAYERS;
 
     },nil,1.5,false,true,"","true",3,false,""];
-}
+};
 
 //Menote le mec;
 addActionHandCuff =  {
@@ -132,11 +137,11 @@ addActionLiberate =  {
         if (side _man == SIDE_CIV) then {
             [_man,2] remoteExec ["fnc_updateRep",2];
         };
-        _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
-        _unit stop false;
-        _unit forceWalk false;
-        _unit forceSpeed 10;
-        _unit move _pos;
+        _pos = [getPos _man, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
+        _man stop false;
+        _man forceWalk false;
+        _man forceSpeed 10;
+        _man move _pos;
 
             
     },nil,1.5,false,true,"","true",3,false,""];
@@ -423,11 +428,11 @@ addActionRally = {
        
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !",false] call fnc_Talk;
-            [_unit,SIDE_PLAYER] call fnc_BadBuyLoadout;
+            [_unit,SIDE_FRIENDLY] call fnc_BadBuyLoadout;
             [_unit,3] remoteExec ["fnc_updateRep",2];
             sleep 5;
             [_unit] joinSilent grpNull;
-            [_unit] joinSilent (group _talker);
+            [_unit] join (group _talker);
         }else{
             if (_isSuspect)then{
                 [_unit,"No thanks",false] call fnc_Talk;

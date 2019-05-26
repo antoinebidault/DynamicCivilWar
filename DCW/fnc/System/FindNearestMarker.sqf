@@ -15,8 +15,9 @@ if(count(MARKERS)>0) then {
 	_nearest = (MARKERS select 0) select 0;
 	
 	{
-		private _m = _x select 0;
-		if(((_notSecured && _x select 12 == "default") || !_notSecured) && ((getmarkerpos _m) distance _pos < (getmarkerpos _nearest) distance _pos) &&  (!_excludeTheClosest || ((getmarkerpos _m) distance _pos > 300))  ) then
+	     _m = _x select 0;
+		_state = _x select 12;
+		if(((_notSecured && _state == "default") || !_notSecured) && ((getmarkerpos _m) distance _pos < (getmarkerpos _nearest) distance _pos) &&  (!_excludeTheClosest || ((getmarkerpos _m) distance _pos > 300))  ) then
 		{
 			_return = _x;
 			_nearest = _m;

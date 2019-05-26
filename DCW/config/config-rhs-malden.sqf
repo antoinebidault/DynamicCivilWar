@@ -3,10 +3,10 @@
 //GLOBAL
 DEBUG = false; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_PLAYER = side player; //Side player
+SIDE_FRIENDLY = side player; //Side player
 NUMBER_RESPAWN = 3;
 CIVIL_REPUTATION = 50;
-"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_PLAYER, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
+"B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_FRIENDLY, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
 	sleep 1;
 	HQ setName "HQ";
@@ -17,8 +17,8 @@ SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  550; //Units can't spawn before this distance
 
 //FRIENDLIES
-FRIENDLY_LIST_UNITS = [player,"Man"] call fnc_FactionClasses; //Units of your side
-FRIENDLY_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"]; //Friendly cars
+ALLIED_LIST_UNITS = [player,"Man"] call fnc_FactionClasses; //Units of your side
+ALLIED_LIST_CARS = ["rhs_tigr_sts_3camo_vmf"]; //Friendly cars
 FRIENDLY_FLAG = "rhs_Flag_Russia_F";//Flag of your side
 SUPPORT_DRONE_CLASS="rhs_pchela1t_vvsc";
 
