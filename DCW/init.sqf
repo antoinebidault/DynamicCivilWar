@@ -13,7 +13,6 @@ if (!isNull player) then {
 enableDynamicSimulationSystem true;
 "Group" setDynamicSimulationDistance 600;
 
-
 // CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
@@ -107,8 +106,6 @@ fnc_BadBuyLoadout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Ba
 fnc_Camp =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\Camp.sqf";
 fnc_ActionCamp =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\ActionCamp.sqf";
 
-
-
 //HANDLERS
 fnc_HandleFiredNear = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleFiredNear.sqf";
 fnc_HandleDamaged = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleDamaged.sqf";
@@ -165,7 +162,7 @@ DCW_LOADOUT = false;
 publicVariable "DCW_LOADOUT";
 
 // Wait until everything is ready
-waitUntil {count allPlayers > 0 &&  time > 2 };
+waitUntil {count allPlayers > 0 &&  time > 0 };
 
 GROUP_PLAYERS = group (allPlayers select 0); 
 publicVariable "GROUP_PLAYERS";
@@ -185,7 +182,6 @@ publicVariable "DCW_SCORE";
 CAMP_RESPAWN_POSITION = [];
 publicVariable "CAMP_RESPAWN_POSITION";
 
-
 CIVIL_REPUTATION = 50;
 publicVariable "CIVIL_REPUTATION";
 
@@ -199,6 +195,10 @@ TALK_QUEUE = [];
 
 RESISTANCE setFriend [EAST, 0];
 RESISTANCE setFriend [WEST, 0];
+
+CIVILIAN setFriend [EAST, 1];
+CIVILIAN setFriend [WEST, 1];
+CIVILIAN setFriend [RESISTANCE, 1];
 
 //DCW_STARTED = true;
 //titleCut ["", "BLACK IN",1];

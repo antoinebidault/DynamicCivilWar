@@ -27,6 +27,7 @@ if (_task == "") then {
      sleep .5;
 };
 
+
 // Spawn task successful on each client
 [[_task,((_task call BIS_fnc_taskDescription) select 1) select 0,_objWIthTask],{
     params["_task","_taskName","_objWithTask"];

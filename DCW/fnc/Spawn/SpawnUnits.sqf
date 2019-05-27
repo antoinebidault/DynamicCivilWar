@@ -122,9 +122,9 @@ for "_xc" from 1 to _population do {
     if (count _posSelected > 0) then {
       
       if (_compoundState == "supporting") then {
-        _grp = createGroup SIDE_CIV;
-      }else{
         _grp = createGroup SIDE_FRIENDLY;
+      }else{
+        _grp = createGroup SIDE_CIV;
       };
 
      
@@ -136,7 +136,7 @@ for "_xc" from 1 to _population do {
           _civ setDamage (floor(random 1)) min .3;
         };
         _chief = _civ;
-        
+
       }else{
         if (_xc == 2 && _population > 10)then{
           _civ = [_grp,_posSelected,_chief,false,"C_Marshal_F"] call fnc_SpawnCivil;

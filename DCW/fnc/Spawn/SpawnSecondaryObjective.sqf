@@ -88,7 +88,7 @@ fnc_spawnOfficer = {
                 moveOut _unit;
             };
 
-            [leader GROUP_PLAYERS,"The officer is down ! Let's go talk to him !", true] remoteExec ["fnc_talk",_x,false];
+            [leader GROUP_PLAYERS,"The officer is down ! Let's go talk to him !", true] remoteExec ["fnc_talk", GROUP_PLAYERS,false];
     
             
             //Spasm and unconscious state

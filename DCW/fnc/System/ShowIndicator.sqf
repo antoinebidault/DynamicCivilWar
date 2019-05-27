@@ -43,8 +43,14 @@ _ctrl ctrlCommit 1;
 
 if (_time > 0) then{
 	sleep _time;
+	INDICATOR_SHOWN = false;	
 } else {
-	waitUntil { !INDICATOR_SHOWN; sleep 14; };
+	[] spawn {
+		sleep 24;
+		INDICATOR_SHOWN = false;
+	};
+	waitUntil { !INDICATOR_SHOWN; sleep 1
+	; };
 };
 
 // Hide subtitle
@@ -52,4 +58,3 @@ _ctrl ctrlSetFade 1;
 _ctrl ctrlCommit 1;
 ctrlDelete _ctrl;
 sleep 1;
-INDICATOR_SHOWN = false;

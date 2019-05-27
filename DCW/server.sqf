@@ -46,6 +46,15 @@ ESCORT_UNITS = [];
 IEDS = [];
 publicVariable "IEDS";
 
+STAT_POP_START = 0;
+STAT_POP_CURRENT = 0;
+STAT_SUPPORT_START = 0;
+STAT_SUPPORT_END = 0;
+STAT_COMPOUND_TOTAL = 0;
+STAT_COMPOUND_SECURED = 0;
+STAT_COMPOUND_BASTION = 0;
+
+
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 publicVariable "MARKER_WHITE_LIST";
 
@@ -321,6 +330,7 @@ _supportScore = 0;
 	
 
 
+
 		if (DEBUG) then {
 			/*_marker = createMarker [format["%1-debug", _m], _pos];
 			_marker setMarkerShape "ICON";
@@ -444,11 +454,13 @@ while { true } do {
 				_respawnId = _x select 15;
 				_defendTaskState = _x select 16;
 
-				if (_triggered && !(_currentCompound isEqualTo _currentMarker) && _playerPos distance _pos < _radius) then {
+				if (_triggered  && !(_currentCompound isEqualTo _currentMarker) && _playerPos distance _pos < _radius) then {
 					_currentMarker = _x;
-					[format["Inhabitants: %1<br/>State: %2<br/>Population support: <t >%3%/100</t><br/>",(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 24] remoteExec ["fnc_ShowIndicator",_player,false];
+					INDICATOR_SHOWN = false;
+					[format["Inhabitants: %1<br/>State: %2<br/>Population support: <t >%3%/100</t><br/>",(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], -1] remoteExec ["fnc_ShowIndicator",_player,false];
 					
-					if (_defendTaskState == "planned" && (_compoundState == "default" || _compoundState == "supporting")  ) then {
+
+					if (_defendTaskState == "planned" && _success && (_compoundState == "default" || _compoundState == "supporting")  ) then {
 						[_currentCompound,_player] spawn {
 							params["_compound"];
 							sleep 30;

@@ -430,9 +430,8 @@ addActionRally = {
             [_unit,"Ok, I'm in !",false] call fnc_Talk;
             [_unit,SIDE_FRIENDLY] call fnc_BadBuyLoadout;
             [_unit,3] remoteExec ["fnc_updateRep",2];
-            sleep 5;
             [_unit] joinSilent grpNull;
-            [_unit] join (group _talker);
+            [_unit] join GROUP_PLAYERS;
         }else{
             if (_isSuspect)then{
                 [_unit,"No thanks",false] call fnc_Talk;
