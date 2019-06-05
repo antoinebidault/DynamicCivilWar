@@ -14,6 +14,16 @@ CIV_LIST_CARS = [FACTION_CIV,["Car"],[]] call fnc_factiongetunits;
 
 ENEMY_LIST_UNITS = [ENEMY_LIST_UNITS,[FACTION_ENEMY,["Man"],[]] call fnc_factiongetunits] call fnc_fillSupportParam;
 ENEMY_LIST_CARS = [ENEMY_LIST_CARS,[FACTION_ENEMY,["Car"],[]] call fnc_factiongetunits] call fnc_fillSupportParam;
+
+// Filter the cars classes without turrets
+_removedClasses = [];
+{
+ if (count([_x, false] call BIS_fnc_allTurrets) == 0) then {
+	 _removedClasses pushback _x;
+ };
+}foreach ENEMY_LIST_CARS;
+ENEMY_LIST_CARS = ENEMY_LIST_CARS - _removedClasses;
+
 ENEMY_CHOPPERS =  [ENEMY_CHOPPERS,[FACTION_ENEMY,["Helicopter"],[]] call fnc_factiongetunits] call fnc_fillSupportParam;
 ENEMY_LIST_TANKS = [ENEMY_LIST_TANKS,[FACTION_ENEMY,["Tank"],[]] call fnc_factiongetunits] call fnc_fillSupportParam;
 ENEMY_SNIPER_UNITS =  [ENEMY_SNIPER_UNITS,[FACTION_ENEMY,["Man"], ["sniper"]] call fnc_factiongetunits] call fnc_fillSupportParam;

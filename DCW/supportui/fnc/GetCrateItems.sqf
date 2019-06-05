@@ -33,20 +33,19 @@ if (count GEAR_AND_STUFF == 0) then {
     }; 
   } foreach FRIENDLY_LIST_UNITS;
 
-  _output = [];
-  _weapons = configFile >> "CfgWeapons";
+  
+  _weapons = configFile >> "CfgVehicles";
 
   for "_i" from 1 to ((count _weapons) - 1) do 
   {
     _weapon = _weapons select _i;
 
-    if (isClass _weapon && (configName _weapon) isKindOf "Backpacks" ) then 
+    if (isClass _weapon && (configName _weapon) isKindOf "Bag_Base" ) then 
     {
-      GEAR_AND_STUFF pushback (configName _weapon);
+     _gearAndStuffArray pushback (configName _weapon);
     };
   };
-  _output;
-
+  
   GEAR_AND_STUFF = _gearAndStuffArray;
 };
 

@@ -1,9 +1,9 @@
 
 
 AI_SKILLS = 1;
-DEBUG = true;
+DEBUG = false;
 RESPAWN_ENABLED = true;
-MEDEVAC_ENABLED = true; //Reviving
+MEDEVAC_ENABLED = true; // Reviving
 SHOW_SECTOR = true;
 NUMBER_RESPAWN = 3;
 ENABLE_FILTER = true;

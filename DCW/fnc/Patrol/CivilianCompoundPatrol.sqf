@@ -99,6 +99,8 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
                     _unit playActionNow "medic";
                     sleep 4;
                     _unit stop false;
+                    _unit setUnitPos "AUTO";
+                    _unit playAction "PlayerStand";
                 };
 
             }else{

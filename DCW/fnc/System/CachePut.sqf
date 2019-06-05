@@ -93,7 +93,7 @@ _unitsToRemove = [];
         };
    };
    
-    UNITS_SPAWNED = UNITS_SPAWNED - [_x];
+    UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_x];
 }
 foreach _units;
 

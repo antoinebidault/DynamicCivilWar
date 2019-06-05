@@ -88,7 +88,7 @@ _talker setVariable["DCW_speak",false];
 	_ctrl ctrlSetPosition [_x,1.1*MESS_HEIGHT + _y,_w,_h];	
 	_ctrl ctrlSetFade .4;
 	_ctrl ctrlCommit .3;
-	sleep ((count((TALK_QUEUE select 0) select 1)/10) max 2);
+	sleep ((count((TALK_QUEUE select 0) select 1)/11) max 1.5);
 	_ctrl ctrlSetFade 1;
 	_ctrl ctrlCommit .3;
 } else {

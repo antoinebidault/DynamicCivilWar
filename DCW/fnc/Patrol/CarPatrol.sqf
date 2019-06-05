@@ -3,9 +3,10 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License : GNU (GPL)
+ * Car patrol script
+ * Inspired by SPUn / LostVar
  */
 
-//Inspired by SPUn / LostVar
 private ["_unit","_radius","_centeredOnPlayer","_newPos","_bPoss","_dir","_curPos","_pos"];
 
 _unit = _this select 0;

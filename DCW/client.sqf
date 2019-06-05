@@ -9,11 +9,11 @@ if (isNull player) exitWith{false;};
 
 titleCut ["", "BLACK FADED", 9999];
 
+// Client side 
+TALK_QUEUE = [];
+MESS_SHOWN = false;
+MESS_HEIGHT = 0;
 
-/*
-if (!didJIP) then {
-	setDate [2018, 6, 25, 18, 0]; 
-};*/
 
 //Briefing
 player createDiaryRecord ["Diary",["Keep a good reputation",
@@ -32,8 +32,6 @@ In this singleplayer scenario, you have one major objective : assassinate the en
 
  _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 
-
-
 // If is admin
 if (ENABLE_DIALOG && !didJIP) then {
 	
@@ -43,9 +41,9 @@ if (ENABLE_DIALOG && !didJIP) then {
 		titleCut ["", "BLACK IN", 4];
 
 		[] spawn {
-			sleep 4;
+			uisleep 4;
 			[parseText "<t font='PuristaBold' size='1.6'>Dynamic Civil War</t><br />by Bidass", true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
-			sleep 14;
+			uisleep 14;
 			[
 				[
 					[format["Welcome on %1, ",worldName], "align = 'left' shadow = '1' size = '1.0'"],
@@ -110,18 +108,18 @@ if (!DEBUG ) then {
 	[] call fnc_intro;
 };
 
-sleep .3;
+uisleep .3;
 titleCut ["", "BLACK FADED", 9999];
 // Info text
 [worldName, format["%1km from %2", round(((getPos _loc) distance2D player)/10)/100,text _loc], str(date select 1) + "." + str(date select 2) + "." + str(date select 0)] spawn BIS_fnc_infoText;
-sleep 5;
+uisleep 5;
 "dynamicBlur" ppEffectEnable true;  
 "dynamicBlur" ppEffectAdjust [6];   
 "dynamicBlur" ppEffectCommit 0;     
 "dynamicBlur" ppEffectAdjust [0.0];  
 "dynamicBlur" ppEffectCommit 5;  
 titleCut ["", "BLACK FADED", 1];
-sleep 1;
+uisleep 1;
 titleCut ["", "BLACK IN", 5];
 
 // init user respawn loop

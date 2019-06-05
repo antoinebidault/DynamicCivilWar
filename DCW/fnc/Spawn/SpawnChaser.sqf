@@ -8,7 +8,7 @@ params["_unitChased"];
 private ["_enemy","_unitName"];
 private _units = [];
 
-if ( {_x getVariable["DCW_Type",""] == "chaser"} count UNITS_SPAWNED >= MAX_CHASERS) exitWith {_units;};
+if ( {_x getVariable["DCW_Type",""] == "chaser"} count UNITS_SPAWNED_CLOSE >= MAX_CHASERS) exitWith {_units;};
 
 private _nbUnit = MAX_CHASERS - round(random 3);
 private _grp = createGroup SIDE_ENEMY;

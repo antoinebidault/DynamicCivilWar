@@ -11,7 +11,7 @@ params["_unit","_score"];
 if (!isServer) exitWith{};
 if (isNil '_unit') exitWith{false};
 if (isnull _unit) exitWith{false};
-
+if (_score == 0) exitWith{};
 /*
 _startScore = _unit getVariable["DCW_Friendliness",50];
 _unit setVariable["DCW_Friendliness",(0 max (100 min (_startScore + _score))), true];

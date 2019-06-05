@@ -33,8 +33,7 @@ fnc_spawnOfficer = {
     removeAllWeapons _officer;
     _officer setBehaviour "SAFE";
     _officer execVM "DCW\loadout\loadout-officer.sqf";
-    _unit enableDynamicSimulation false;
-    //_officer enableDynamicSimulation true;
+    _officer enableDynamicSimulation false;
 
     _truckGrp = createGroup SIDE_ENEMY;
     _truck = [_roadPos, _roadDirection, ENEMY_OFFICER_LIST_CARS call bis_fnc_selectrandom,_truckGrp ] call BIS_fnc_spawnVehicle select 0;
@@ -47,7 +46,6 @@ fnc_spawnOfficer = {
     for "_yc" from 1 to _nbUnit  do {
         _unit = [_grp, _initPos, true] call fnc_spawnEnemy;
         _unit enableDynamicSimulation false;
-        ESCORT_UNITS pushback _unit;
         _unit moveInAny _truck;    
     };
 
@@ -88,7 +86,7 @@ fnc_spawnOfficer = {
                 moveOut _unit;
             };
 
-            [leader GROUP_PLAYERS,"The officer is down ! Let's go talk to him !", true] remoteExec ["fnc_talk", GROUP_PLAYERS,false];
+            [leader GROUP_PLAYERS,"The target is down ! Let's go talk to him !", true] remoteExec ["fnc_talk", GROUP_PLAYERS,false];
     
             
             //Spasm and unconscious state

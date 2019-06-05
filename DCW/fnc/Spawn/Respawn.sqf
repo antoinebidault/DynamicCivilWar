@@ -60,7 +60,7 @@ fnc_HandleRespawnSingleplayer =
 	
 	waitUntil{!PLAYER_ALIVE};
 	 
-
+	 
 	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
 	/*deletemarker MARKER
 	_pm = createMarker [format["player-marker-%1",random 1000], getPos _unit];

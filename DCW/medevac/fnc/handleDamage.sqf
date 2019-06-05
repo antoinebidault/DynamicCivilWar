@@ -22,25 +22,15 @@ if (_damage == 0) exitWith {false};
 // Reducing damage with a factor of 3
 _damage = 0.9 min (_damage * 0.33);
 if ( _damage >= .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",false])) then {
-
-	if (vehicle _unit != _unit) then {
-		_unit leaveVehicle (vehicle _unit);
-	};
 	
-	_unit setUnconscious true;
-	_unit setCaptive true;
-	_unit setVariable ["unit_injured", true, true];
+	[_unit] call fnc_injured,
+
+    // [_unit] call fnc_removeFAKS;
+
 	_unit setDamage .9;
 	_damage = .9;
-
-	_deathsound = format ["A3\sounds_f\characters\human-sfx\P0%1\Hit_Max_%2.wss", selectRandom [4,5,6,7,8,9], selectRandom [1,2,3,4,5]];
-	playSound3D [_deathsound, _unit, false, getPosASL _unit, 1.5, 1, 150];	
-	//_unit playActionNow "agonyStart";
-    _unit setHit ["legs", 1]; 
-    [_unit] call fnc_removeFAKS;
-
-	[leader (group _unit), "Shit ! We've got a wounded man here ! We should request a medevac now !",true] spawn fnc_talk;
-    _marker = createMarker [format["body-%1", name _unit], position _unit];
+	
+    _marker = createMarker [format["DCW-injured-%1", name _unit], position _unit];
     _marker setMarkerShape "ICON";
     _marker setMarkerType "mil_dot";
     _marker setMarkerColor "ColorOrange";

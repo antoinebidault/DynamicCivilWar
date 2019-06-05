@@ -10,7 +10,7 @@ _landPos =_this select 1;
 TRANSPORTHELO = _this select 2; 
 _groupToHelp = _this select 3;
 
-interventionGroup = [TRANSPORTHELO,side _groupToHelp] call fnc_SpawnHeloCrew;
+// interventionGroup = [TRANSPORTHELO,side _groupToHelp] call fnc_SpawnHeloCrew;
 
 HASLANDED = false;
 
@@ -91,16 +91,16 @@ if (MEDEVAC_state == "aborted") exitWith{false};
 if (!HASLANDED) exitWith { MEDEVAC_State = "aborted"; };
 
 // Update the dead soldiers
-private _soldiersDead = units _groupToHelp select {_x getVariable["unit_injured",false] };
+private _soldiersDead = units _groupToHelp select {_x getVariable["unit_KIA",false] };
 replacementGroup = [TRANSPORTHELO,side _groupToHelp,_soldiersDead] call fnc_SpawnHeloReplacement;
 
 sleep 1;
 
 TRANSPORTHELO land "GET IN";
 replacementGroup leavevehicle TRANSPORTHELO;
-interventionGroup leavevehicle TRANSPORTHELO; 
+// interventionGroup leavevehicle TRANSPORTHELO; 
 
-waitUntil{sleep 2; { MEDEVAC_state == "aborted" ||  _x in TRANSPORTHELO} count units  replacementGroup == 0 && {_x in TRANSPORTHELO} count units  interventionGroup == 0  };
+waitUntil{sleep 2; { MEDEVAC_state == "aborted" ||  _x in TRANSPORTHELO} count units  replacementGroup == 0 /*&& {_x in TRANSPORTHELO} count units  interventionGroup == 0  */ };
 if (MEDEVAC_state == "aborted") exitWith{false};
 
 replacementGroup move position (leader _groupToHelp);
@@ -111,14 +111,14 @@ replacementGroup move position (leader _groupToHelp);
 //Make replacementGroup join player
 {unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);
 (units replacementGroup) join _groupToHelp;
-[HQ,"Reinforcments arriving.",true] remoteExec ["fnc_talk"];
+[HQ,"Reinforcements arriving.",true] remoteExec ["fnc_talk"];
 
 // Save units
-[HQ,format["We're starting the %1 injured's evacuations.",count _soldiersDead],true] remoteExec ["fnc_talk"];
-[interventionGroup,_soldiersDead,TRANSPORTHELO] spawn fnc_save;
+//[HQ,format["We're starting the %1 injured's evacuations.",count _soldiersDead],true] remoteExec ["fnc_talk"];
+//[interventionGroup,_soldiersDead,TRANSPORTHELO] spawn fnc_save;
 
-waitUntil{sleep 2; MEDEVAC_state == "aborted" || ({_x in TRANSPORTHELO} count (units  interventionGroup) == count (units  interventionGroup)) };
-if (MEDEVAC_state == "aborted") exitWith { false };
+//waitUntil{sleep 2; MEDEVAC_state == "aborted" || ({_x in TRANSPORTHELO} count (units  interventionGroup) == count (units  interventionGroup)) };
+//if (MEDEVAC_state == "aborted") exitWith { false };
 
 // Go back home
 TRANSPORTHELO move _startPos;

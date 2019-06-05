@@ -28,7 +28,7 @@ for "_xc" from 1 to NUMBER_CHOPPERS do {
         _marker setMarkerType "o_air";
         _chopper setVariable["marker",_marker];
     };
-    UNITS_SPAWNED pushback _chopper;
+    UNITS_SPAWNED_CLOSE pushback _chopper;
 
     [_chopper] call fnc_chopperpatrol;
 

@@ -41,6 +41,6 @@ if (_handleFireEvent)then{
     [_unit] remoteexec ["fnc_AddCivilianAction",0];
 };
 
-UNITS_SPAWNED pushBack _unit;
+UNITS_SPAWNED_CLOSE pushBack _unit;
 
 _unit

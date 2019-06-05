@@ -1,12 +1,9 @@
 
-params["_pos","_dist","_type"];
-
-if (isNil '_type') then {_type = "vehicle";};
-_cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { SUPPORT_CAR_PARADROP_CLASS };
+params["_unit","_dist"];
 
 // Spawn CH47
-_startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
-_spawnpos = [_startPos select 0, _startPos select 1, 200];
+_pos = [_unit, _dist, _dist+1, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+_spawnpos = [_pos select 0, _pos select 1, 200];
 
 _heli_spawn = [_spawnpos, 0, SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom, SIDE_FRIENDLY] call BIS_fnc_spawnVehicle;
 _chopper = _heli_spawn select 0;
@@ -14,22 +11,19 @@ _spawnpos set [2,400];
 _chopper setposatl _spawnpos;
 createVehicleCrew (_chopper);
 _spawnpos set [2,300]; 
-_cargo =  _cargoClass createVehicle _spawnpos;
+_cargo =  "CargoNet_01_box_F" createVehicle _spawnpos;
 _cargo setposatl _spawnpos;
 _chopper setSlingLoad _cargo;
 _pilot = driver _chopper;
-_chopper setCaptive true;
-_pilot setCaptive true;
-
 _chopper setCollisionLight true;
 _chopper setPilotLight true;
 _pilot setSkill 1;
 {_pilot disableAI _x} forEach ["TARGET", "AUTOTARGET","AUTOCOMBAT"];
 group _pilot setBehaviour "CARELESS";
 (group (_pilot)) allowFleeing 0;
-_helipad_obj = "Land_HelipadEmpty_F" createVehicle _pos;
+_helipad_obj = "Land_HelipadEmpty_F" createVehicle (getPos _unit);
 
-_waypoint = (group (_pilot)) addWaypoint [_pos, 0];
+_waypoint = (group (_pilot)) addWaypoint [getPos _unit, 0];
 _waypoint setWaypointType "UNHOOK";
 _waypoint setWaypointBehaviour "CARELESS";
 //_Waypoint waypointAttachVehicle _cargo;

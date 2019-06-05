@@ -17,8 +17,8 @@ private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "ma
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
 
 while{true}do {
-	if ({ _x getVariable["DCW_type",""] == "patrol" } count UNITS_SPAWNED < MAX_RANDOM_PATROL)then{
-		_nbFriendlies = { _x getVariable["DCW_type",""] == "patrol" && side _x == SIDE_FRIENDLY} count UNITS_SPAWNED;
+	if ({ _x getVariable["DCW_type",""] == "patrol" } count UNITS_SPAWNED_CLOSE < MAX_RANDOM_PATROL)then{
+		_nbFriendlies = { _x getVariable["DCW_type",""] == "patrol" && side _x == SIDE_FRIENDLY} count UNITS_SPAWNED_CLOSE;
 		//Get random pos
 		_side = SIDE_ENEMY;
 
@@ -64,5 +64,5 @@ while{true}do {
 	};	
 	
 
-	sleep 20;
+	sleep 220;
 };

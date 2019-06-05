@@ -203,7 +203,7 @@ addActionHalt = {
         waitUntil { _asker distance _unit > 13; sleep 4; };
         _unit stop false;
         _unit enableAI "MOVE";
-        RemoveAllActions _this;
+        RemoveAllActions _unit;
         [_man] call fnc_addCivilianAction;
 
     },nil,1.5,false,true,"","true",3,false,""];
@@ -272,6 +272,7 @@ AddActionFeeling = {
             [_unit,1] remoteExec ["fnc_updateRep",2];
             [_unit, _action] remoteExec["removeAction"];
             _message = "No problem, if you stay calm";
+            CIVIL_REPUTATION = ([position _unit,false] call fnc_findNearestMarker) select 13;
             if (CIVIL_REPUTATION  < 10) then {
                 _message = "Go away, before I call all my friends to kick your ass!";
             }else{
@@ -429,6 +430,7 @@ addActionRally = {
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             [_unit,"Ok, I'm in !",false] call fnc_Talk;
             [_unit,SIDE_FRIENDLY] call fnc_BadBuyLoadout;
+            RemoveAllActions _unit;
             [_unit,3] remoteExec ["fnc_updateRep",2];
             [_unit] joinSilent grpNull;
             [_unit] join GROUP_PLAYERS;
@@ -561,3 +563,146 @@ fnc_ActionRest =  {
         
     },nil,1.5,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];
  };
+
+
+
+
+fnc_ActionCorrupt =  {
+    _this addAction ["<t color='#666000'>Corrupt him (30min/-100pts)</t>",{
+          params["_unit","_talker","_action"];
+
+         if (!([GROUP_PLAYERS,100] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
+
+        //Populate with friendlies
+        _curr = ([position _unit,false] call fnc_findNearestMarker);
+    
+        [_talker,"Maybe we could find an arrangement...", false] spawn fnc_talk;
+
+        sleep 1;
+        titleCut ["30 minutes later...", "BLACK IN", 1];
+        showCinemaBorder true;
+        _camPos = _talker modelToWorld [-1,-0.2,1.9];
+        _cam = "camera" camcreate _camPos;
+        _cam cameraeffect ["internal", "back"];
+        _unit disableAI "MOVE";
+        titleCut ["", "BLACK OUT", 1];
+        sleep 1;
+        skipTime .50;
+        detach _talker;
+        _talker switchMove "";
+        sleep 2;
+        titleCut ["", "BLACK IN", 4];
+        sleep 3;
+        _unit stop false;
+        _unit enableAI "ALL";
+        showCinemaBorder false;
+        _cam cameraeffect ["terminate", "back"];
+        camDestroy _cam;
+        
+        if(_curr select 17 == "torture") then{ 
+            if (!isMultiplayer) then {
+                skipTime 6;
+            };
+		    [_unit,20] remoteExec ["fnc_updateRep",2];
+            [_unit,"I accept the deal...", false] spawn fnc_talk; 
+            _unit call fnc_MainObjectiveIntel;
+        } else {
+            [_unit,"You're wasting your time !", false] spawn fnc_talk; 
+            [_unit,-10] remoteExec ["fnc_updateRep",2];
+        };
+
+        _unit removeAction _action;
+
+    },nil,1.5,false,true,"","true",20,false,""];
+};
+
+
+fnc_ActionTorture =  {
+    _this addAction ["<t color='#666000'>Torture him (30min/Bad reputation)</t>",{
+        params["_unit","_talker","_action"];
+        //Populate with friendlies
+        _curr = ([position _unit,false] call fnc_findNearestMarker);
+    
+		[_unit,-20] remoteExec ["fnc_updateRep",2];
+        [_talker,"I need an answer know !! Little piece of shit !!", false] spawn fnc_talk;
+
+        titleCut ["30 minutes later...", "BLACK OUT", 1];
+        sleep 1;
+
+        showCinemaBorder true;
+        _camPos = _talker modelToWorld [-1,-0.2,1.9];
+        _cam = "camera" camcreate _camPos;
+        _cam cameraeffect ["internal", "back"];
+        _unit disableAI "MOVE";
+
+        titleCut ["30 minutes later...", "BLACK IN", 1];
+        sleep 1;
+
+        _cam camSetPos _camPos;
+        _cam camSetTarget _unit;
+        _cam camSetFov 1.0;
+        _cam camCommit 0;
+        _unit stop true;
+        _unit lookAt _talker;
+        _talker lookAt _unit;
+
+
+        // Animation 
+        _talker attachTo [_unit,[-0.9,-0.2,0]]; 
+        _talker setDir (_talker getRelDir _unit); 
+        _talker doWatch _unit;
+	    _talker switchMove "Acts_Executioner_StandingLoop";
+        _talker switchMove "Acts_Executioner_Backhand";
+        _unit switchMove "Acts_ExecutionVictim_Backhand";
+        [_unit] call fnc_shout;
+        _unit setDamage .5;
+        
+        sleep 3.6;
+        
+        // Standing loop
+        _unit switchMove "Acts_ExecutionVictim_Loop";
+        _talker switchMove "Acts_Executioner_StandingLoop";
+        sleep 1;
+
+        // Animation 
+        _talker switchMove "Acts_Executioner_Forehand";
+        _unit switchMove "Acts_ExecutionVictim_Forehand";
+        [_unit] call fnc_shout;
+        _unit setDamage .7;
+
+        sleep 3.6;
+
+        // Standing loop
+        _unit switchMove "Acts_ExecutionVictim_Loop";
+        _talker switchMove "Acts_Executioner_StandingLoop";
+
+        sleep 1;
+      
+        titleCut ["30 minutes later...", "BLACK OUT", 2];
+        sleep 2;
+        skipTime .50;
+        titleCut ["30 minutes later...", "BLACK IN", 4];
+        sleep 3;
+        _unit stop false;
+        _unit enableAI "ALL";
+        showCinemaBorder false;
+        _cam cameraeffect ["terminate", "back"];
+        camDestroy _cam;
+
+        if(_curr select 17 == "torture") then{ 
+            if (!isMultiplayer) then {
+                skipTime 6;
+            };
+            _unit removeAction _action;
+            [_unit,"I know something ! But stop it ! Please !", false] spawn fnc_talk; 
+		    [_unit,10] remoteExec ["fnc_updateRep",2];
+            _unit call fnc_MainObjectiveIntel;
+        } else {
+            [_unit,"Argh... I've told you, I have no idea where he is... Leave me alone ! Please !", false] spawn fnc_talk; 
+            [_unit,-10] remoteExec ["fnc_updateRep",2];
+            _unit removeAction _action; 
+            removeAllActions _unit;
+        };
+
+    },nil,1.5,false,true,"","true",20,false,""];
+};

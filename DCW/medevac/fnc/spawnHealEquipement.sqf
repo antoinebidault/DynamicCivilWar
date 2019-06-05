@@ -15,8 +15,6 @@ if (!local _healer) exitWith {};
 
 sleep 2;
 
-
-
 medequip_array =[];
 // spawn defi and a bloodbag
 _defi_pos = _healer modelToWorld [-0.5,0.2,0];

@@ -1,7 +1,7 @@
  _this addAction ["<t color='#00FF00'>Set up camp (1 hour)</t>", {
         params["_unit","_asker","_action"];
 
-        if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around (100m radius)",false] call fnc_talk;};
+        if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around (100m radius)",false] spawn fnc_talk;};
         if(([getPos _unit, 1, getDir _unit ] call BIS_fnc_relPos) isFlatEmpty  [2, -1, 0.3, 2, 0, false, _unit]  isEqualTo [] )exitWith {[_unit,"Impossible to build the camp here. Check there is not any object in front of you.",false] call fnc_talk;};
 
         {deleteVehicle _x;} foreach CAMP_OBJS;
@@ -61,8 +61,8 @@
             {deleteVehicle _x;} foreach CAMP_OBJS;
             titleCut ["1 hour later...", "BLACK FADED", 9999];
             sleep 3;
-             titleCut ["", "BLACK IN", 3];
-             [_unit, "We've packed up the camp !"] remoteExec ["fnc_talk",0, false];
+            titleCut ["", "BLACK IN", 3];
+            [_asker, "We've packed up the camp !"] remoteExec ["fnc_talk",0, false];
              sleep 3;
            disableUserInput false;
         },nil,4,true,true, ""];

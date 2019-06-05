@@ -8,12 +8,23 @@
 
 params ["_text","_time"];
 
+if (isNull player) exitWith{false;};
+
+if (_text == "") then {
+	("RscCompoundStatus" call BIS_fnc_rscLayer) cutRsc ["RscCompoundStatus", "PLAIN DOWN", 0];
+} else {
+	_color = "#e0e0e0"; 
+	_structuredText = format ["<t align = 'right' shadow = '2' size = '1'><t color = '%1'>" + _text + "</t></t>",_color];
+	("RscCompoundStatus" call BIS_fnc_rscLayer) cutRsc ["RscCompoundStatus","PLAIN"];	
+		disableSerialization;
+		((uiNamespace getVariable "RscCompoundStatus")displayCtrl 55222) ctrlSetStructuredText parseText _structuredText;
+};
+
+/*
 _time = [_this,1,10] call BIS_fnc_param;
 _layer = round (random 99999);
 
 // Create display and control
-waitUntil {!INDICATOR_SHOWN};
-INDICATOR_SHOWN = true;
 disableSerialization;
 _layer cutrsc ["rscDynamicText","plain"];
 _display = displayNull;
@@ -41,20 +52,11 @@ _ctrl ctrlSetStructuredText _text;
 _ctrl ctrlSetFade 0;
 _ctrl ctrlCommit 1;
 
-if (_time > 0) then{
-	sleep _time;
-	INDICATOR_SHOWN = false;	
-} else {
-	[] spawn {
-		sleep 24;
-		INDICATOR_SHOWN = false;
-	};
-	waitUntil { !INDICATOR_SHOWN; sleep 1
-	; };
-};
+sleep _time;
 
 // Hide subtitle
 _ctrl ctrlSetFade 1;
 _ctrl ctrlCommit 1;
 ctrlDelete _ctrl;
 sleep 1;
+INDICATOR_SHOWN = false;	*/

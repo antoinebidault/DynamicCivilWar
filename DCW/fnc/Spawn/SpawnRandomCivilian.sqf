@@ -12,7 +12,7 @@ private _minRange = 300;
 private _firstTrigger = true;
 
 while{true}do {
-	if ({ _x getVariable["DCW_type",""] == "civpatrol" } count UNITS_SPAWNED  < MAX_RANDOM_CIVILIAN)then{
+	if ({ _x getVariable["DCW_type",""] == "civpatrol" } count UNITS_SPAWNED_CLOSE  < MAX_RANDOM_CIVILIAN)then{
 
 		//Get random pos
 		if (_firstTrigger) then {_minRange = 1; _firstTrigger = false;}else{_minRange = 500;};

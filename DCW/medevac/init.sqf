@@ -16,6 +16,7 @@ fnc_HandleKilled = compile preprocessFileLineNumbers  "DCW\medevac\fnc\HandleKil
 fnc_Heal = compile preprocessFileLineNumbers "DCW\medevac\fnc\heal.sqf";
 fnc_Save = compile preprocessFileLineNumbers "DCW\medevac\fnc\save.sqf";
 fnc_Carry = compile preprocessFileLineNumbers "DCW\medevac\fnc\carry.sqf";
+fnc_addActionCarry = compile preprocessFileLineNumbers "DCW\medevac\fnc\addActionCarry.sqf";
 fnc_ChopperPath = compile preprocessFileLineNumbers "DCW\medevac\fnc\chopperpath.sqf";
 fnc_calculateTimeToHeal = compile preprocessFileLineNumbers "DCW\medevac\fnc\calculateTimeToHeal.sqf";
 fnc_spawnHealEquipement = compile preprocessFileLineNumbers "DCW\medevac\fnc\spawnHealEquipement.sqf";
@@ -25,7 +26,7 @@ fnc_help = compile preprocessFileLineNumbers "DCW\medevac\fnc\help.sqf";
 fnc_removeFAKS = compile preprocessFileLineNumbers "DCW\medevac\fnc\removeFAKS.sqf";
 fnc_deleteMedevac = compile preprocessFileLineNumbers "DCW\medevac\fnc\deleteMedevac.sqf";
 fnc_caller = compile preprocessFileLineNumbers "DCW\medevac\fnc\caller.sqf";
-
+fnc_injured = compile preprocessFileLineNumbers "DCW\medevac\fnc\injured.sqf";
 
 REVIVETIME_INSECONDS = 10;
 _transportHelo = objNull;
@@ -66,11 +67,11 @@ _supportHeliMenuId = 0;
 while {true} do {
 
 	//Push dead soldiers
-	_soldiersDead = units _group select { _x getVariable["unit_injured",false] };
+	_soldiersDead = units _group select { _x getVariable["unit_KIA",false] };
 	
 	// If leader
 	if (isPlayer (leader(_group)) && alive (leader(_group)) && _leader != leader(_group)) then {
-		hint "switching Medevac leader";
+		hint "switching MEDEVAC leader";
 		_leader = leader(_group);
 		if (!isMultiplayer) then {
 			[_leader,_soldiersDead] call fnc_caller;

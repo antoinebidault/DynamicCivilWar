@@ -3,10 +3,26 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License : GNU (GPL)
+ * Base server executed code
  */
 
 
 if (!isServer) exitWith{};
+
+
+MARKERS = [];
+publicVariableServer "MARKERS";
+
+// Server scope public variable
+PLAYER_MARKER_LIST = []; //Pass list of marker white list name
+UNITS_SPAWNED_CLOSE = [];
+SHEEP_POOL = [];
+LAST_FLARE_TIME = time;
+REFRESH_TIME = 10; // Refresh time
+WEATHER = .5;
+INITIAL_SPAWN_DISTANCE = SPAWN_DISTANCE;
+GEAR_AND_STUFF = [];
+OFFICERS = [];
 
 
 // Create a fake HQ unit
@@ -16,43 +32,14 @@ if (!isServer) exitWith{};
 	HQ setName "HQ";
 };
 
-
-enableDynamicSimulationSystem true;
-
-// Variable in Global scope
-GAME_ZONE_SIZE=5000;
-MARKER_WHITE_LIST = []; //Pass list of marker white list name
-publicVariable "MARKER_WHITE_LIST";
-
-PLAYER_MARKER_LIST = []; //Pass list of marker white list name
-UNITS_SPAWNED = [];
-INTELS = [];
-UNITS_CACHED = [];
-MARKERS = [];
-SHEEP_POOL = [];
-UNITS_CHASERS = [];
-MESS_SHOWN = false;
-INDICATOR_SHOWN = false;
-MESS_HEIGHT = 0;
-LAST_FLARE_TIME = time;
-REFRESH_TIME = 10; // Refresh time
-WEATHER = .5;
-CONVOY = []; // Current convoy
-ESCORT = []; // List of escorts guys with the commandant
-INITIAL_SPAWN_DISTANCE = SPAWN_DISTANCE;
-GEAR_AND_STUFF = [];
-OFFICERS = [];
-ESCORT_UNITS = [];
-IEDS = [];
-publicVariable "IEDS";
-
 STAT_POP_START = 0;
 STAT_POP_CURRENT = 0;
 STAT_SUPPORT_START = 0;
-STAT_SUPPORT_END = 0;
+STAT_SUPPORT = 0;
 STAT_COMPOUND_TOTAL = 0;
 STAT_COMPOUND_SECURED = 0;
 STAT_COMPOUND_BASTION = 0;
+STAT_COMPOUND_MASSACRED = 0;
 
 
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
@@ -155,8 +142,6 @@ for "_i" from 1 to 10  do {
 		_ammobox call fnc_spawncrate;
 	};
 };
-
-
 
 //TIME
 setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
@@ -287,12 +272,29 @@ _supportScore = 0;
 
 		
 		_defendTaskState = "none";
-		if (_foreachIndex <  30/100*count _clusters && _nbBuildings >= 3) then {
+		if (_foreachIndex <  30/100*count _clusters && _nbBuildings >= 2) then {
 			_defendTaskState = "planned";
 			if (DEBUG) then {
 				_m setMarkerBrush "FDiagonal";
 			};
 		};
+
+		_primaryIntel = "none";
+		
+		if (_foreachIndex >  75/100*count _clusters && _foreachIndex <=  90/100*count _clusters) then {
+			_primaryIntel = "torture";
+			if (DEBUG) then {
+				_m setMarkerBrush "BDiagonal";
+			};
+		};
+		
+		if (_foreachIndex >  90/100*count _clusters) then {
+			_primaryIntel = "hasintel";
+			if (DEBUG) then {
+				_m setMarkerBrush "BDiagonal";
+			};
+		};
+		
 
 		//Nb units to spawn per block
 		_popbase = 1 MAX (MAX_POPULATION MIN (ceil( (POPULATION_INTENSITY * _nbBuildings* RATIO_POPULATION)  + (round random 1))));
@@ -314,10 +316,10 @@ _supportScore = 0;
 		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
 		_nbIeds = (floor(_popbase * .25) + floor(random 2));
 
-		_typeObj = ["hostage","sniper","cache","mortar","","",""] call BIS_fnc_selectRandom;
-		_nbHostages = if (_typeObj == "hostage" || _popbase > 20) then{ 1 }else {0};
+		_typeObj = ["hostage","sniper","cache","mortar","",""] call BIS_fnc_selectRandom;
+		_nbHostages = if (_typeObj == "hostage" || _popbase > 14) then{ 1 }else {0};
 		_nbSnipers = if (_typeObj == "sniper") then{ 2 } else{ 0 };
-		_nbCaches = if (_typeObj == "cache" || _popbase > 20) then{ 1 }else {0};
+		_nbCaches = if (_typeObj == "cache" || _popbase > 14) then{ 1 }else {0};
 		_nbMortars = if (_typeObj == "mortar") then{ 1 }else {0};
 
 		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
@@ -327,9 +329,7 @@ _supportScore = 0;
 			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
 		};
 
-	
-
-
+		STAT_COMPOUND_TOTAL = STAT_COMPOUND_TOTAL + 1;
 
 		if (DEBUG) then {
 			/*_marker = createMarker [format["%1-debug", _m], _pos];
@@ -343,7 +343,7 @@ _supportScore = 0;
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
 
-		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState];
+		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState,_primaryIntel];
 	};
 	
 } foreach (_clusters call BIS_fnc_arrayShuffle);
@@ -361,7 +361,7 @@ _supportScore = 0;
 [] spawn fnc_SpawnCrashSite; //Chopper spawn
 [] spawn fnc_SpawnSecondaryObjective;
 [] spawn fnc_SpawnMainObjective;
-// [390] spawn fnc_SpawnConvoy;
+[] call fnc_refreshMarkerStats;
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{
@@ -383,11 +383,9 @@ private ["_mkr","_cacheResult","_ieds"];
 						_x call fnc_deleteMarker;
 					}
 				};
-			} foreach UNITS_SPAWNED + ESCORT + CONVOY + ESCORT_UNITS;
-
+			} foreach allUnits ; //UNITS_SPAWNED_CLOSE + ESCORT + CONVOY + UNITS_SPAWNED_DISTANT;
 		};
 
-		
 		_tmp = [];
 		{
 			//Update marker position
@@ -418,10 +416,11 @@ while { true } do {
 		_player = _x;
 
 		_playerPos = position _player;
+		_playerInMarker = false;
 		
 		if (!isNil '_playerPos' && alive _x) then{
 
-			_nbUnitSpawned = count UNITS_SPAWNED;
+			_nbUnitSpawned = count UNITS_SPAWNED_CLOSE;
 
 			//Catch flying player
 			_isInFlyingVehicle = false;
@@ -453,14 +452,14 @@ while { true } do {
 				_nameLocation = _x select 14;
 				_respawnId = _x select 15;
 				_defendTaskState = _x select 16;
+				_primaryIntel = _x select 17;
 
-				if (_triggered  && !(_currentCompound isEqualTo _currentMarker) && _playerPos distance _pos < _radius) then {
+				if (_triggered && _playerPos distance _pos < _radius ) then {
 					_currentMarker = _x;
-					INDICATOR_SHOWN = false;
-					[format["Inhabitants: %1<br/>State: %2<br/>Population support: <t >%3%/100</t><br/>",(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], -1] remoteExec ["fnc_ShowIndicator",_player,false];
-					
-
-					if (_defendTaskState == "planned" && _success && (_compoundState == "default" || _compoundState == "supporting")  ) then {
+					_playerInMarker = true;
+					[format["%1<br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["fnc_ShowIndicator",_player,false];
+			
+					if (_defendTaskState == "planned" && (_compoundState == "default" || _compoundState == "supporting")  ) then {
 						[_currentCompound,_player] spawn {
 							params["_compound"];
 							sleep 30;
@@ -548,16 +547,22 @@ while { true } do {
 						};
 					};
 				}; 
-				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState]]; 
+				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState,_primaryIntel]]; 
 			}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
 		};
 		sleep 1;
+
+		if (!_playerInMarker) then {
+			_currentMarker = [];
+			["",0] remoteExec ["fnc_ShowIndicator",_player,false];
+		};
+
 	} foreach allPlayers;
 
 		/*_civilReputationSum = 0;
 		_civilReputationNb = 0;*/
 
-		// foreach UNITS_SPAWNED
+		// foreach UNITS_SPAWNED_CLOSE
 		{
 			_unit = _x;
 
@@ -565,7 +570,7 @@ while { true } do {
 			//Empty the killed units
 			if (!alive _unit)then{
 				_unit call fnc_deletemarker;
-				UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
+				UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
 			};
 			
 			// foreach players
@@ -599,7 +604,7 @@ while { true } do {
 							//Chasers
 							if (CHASER_TRIGGERED && time > (_timerChaser + 20))then{
 								_timerChaser = time - 1;
-								UNITS_SPAWNED = UNITS_SPAWNED + ([_player] call fnc_SpawnChaser);
+								UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE + ([_player] call fnc_SpawnChaser);
 							};
 							
 							[] remoteExec ["fnc_DisplayScore",_player, false];
@@ -625,7 +630,7 @@ while { true } do {
 			} foreach allPlayers;
 
 			// Regulate the spawn distance
-			if (count UNITS_SPAWNED > MAX_SPAWNED_UNITS) then {
+			if (count UNITS_SPAWNED_CLOSE > MAX_SPAWNED_UNITS) then {
 				SPAWN_DISTANCE = 0.75 * INITIAL_SPAWN_DISTANCE max (SPAWN_DISTANCE - 10);
 			} else {
 				SPAWN_DISTANCE = INITIAL_SPAWN_DISTANCE min (SPAWN_DISTANCE + 10);
@@ -634,7 +639,7 @@ while { true } do {
 			// Garbage collection
 			if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{
 				if ({_unit distance _x > SPAWN_DISTANCE + 230} count allPlayers == count allPlayers)then {
-					UNITS_SPAWNED = UNITS_SPAWNED - [_unit];
+					UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
 					 // If it's a vehicle
 					if (vehicle _unit != _unit) then {
 						{ _x call fnc_deletemarker; deletevehicle _x; } foreach crew _unit;
@@ -645,27 +650,8 @@ while { true } do {
 			};
 
 
-			//Calcul du score
-			/*
-			if (_unit getVariable["DCW_Friendliness",-1] != -1) then{
-				_civilReputationSum = _civilReputationSum + (_unit getVariable["DCW_Friendliness",-1]);
-				_civilReputationNb = _civilReputationNb + 1;
-			};*/
-
-		} foreach UNITS_SPAWNED;
-		
-		/*
-		if (_civilReputationNb > 0) then  {
-			_tmp = round(_civilReputationSum/_civilReputationNb);
-			if (_tmp != CIVIL_REPUTATION) then{
-				_diff = (_tmp-CIVIL_REPUTATION);
-				[format["REPUTATION %1% <t color='%2'>%3%4pt</t>",_tmp,if(_diff > 0) then {"#29c46c"} else{"#ea4f4f"},if(_diff > 0) then{"+"}else{""},_diff]] remoteExec ["fnc_ShowIndicator",0,false];
-
-				CIVIL_REPUTATION = _tmp;
-				publicVariable "CIVIL_REPUTATION";
-			};
-			CIVIL_REPUTATION = _tmp;
-		};*/
+		} foreach UNITS_SPAWNED_CLOSE;
+	
 
 
 

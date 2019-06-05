@@ -2,15 +2,18 @@ disabledAI= 0;
 enableDebugConsole[] = {"76561197974435552"};
 allowFunctionsLog = 1;
 author = "Bidass";
+briefing = 0;
 briefingName = "Dynamic Civil War";
-onLoadMission = "A group of Royal Marines is holding the east side of the airport road.";
-loadScreen = "images\loadScreen.jpg"; 
-overviewPicture = "images\loadScreen.jpg"; 
-overviewText = "A group of Royal Marines is holding the east side of the airport road. Your mission is to locate and kill the enemy commander. The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
-overviewTextLocked = "A group of Royal Marines is holding the east side of the airport road. Your mission is to locate and kill the enemy commander. The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
+onLoadMission = "Your objective is to stop the insurgency propagation and locate the enemy commander.";
+loadScreen = "images\loadscreen.jpg"; 
+overviewPicture = "images\loadscreen.jpg"; 
+overviewText = "Your primary objective is to locate and kill the enemy commander. You'll have to prevent the insurgency to spread across the country. The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
+overviewTextLocked = "Your primary objective is to locate and kill the enemy commander. You'll have to prevent the insurgency to spread across the country.The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
 wreckManagerMode = 2;
 respawnOnStart = -1;
-ReviveMode = 1;                         //0: disabled, 1: enabled, 2: controlled by player attributes
+corpseManagerMode = 1;
+corpseLimit = 18; 
+ReviveMode = 0;                         //0: disabled, 1: enabled, 2: controlled by player attributes
 ReviveUnconsciousStateMode = 0;         //0: basic, 1: advanced, 2: realistic
 ReviveRequiredTrait = 0;                //0: none, 1: medic trait is required
 ReviveRequiredItems = 2;                //0: none, 1: medkit, 2: medkit or first aid kit
@@ -19,6 +22,7 @@ ReviveDelay = 10;                        //time needed to revive someone (in sec
 ReviveMedicSpeedMultiplier = 2;         //speed multiplier for revive performed by medic
 ReviveForceRespawnDelay = 3;            //time needed to perform force respawn (in secs)
 ReviveBleedOutDelay = 120;              //unconscious state duration (in secs)
-
+keys[] = {"key1"};
+keysLimit = 1;
 
 #include "DCW\includes.hpp"

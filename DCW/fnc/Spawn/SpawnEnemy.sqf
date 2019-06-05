@@ -22,7 +22,7 @@ if (DEBUG)then{
 [_unit] call fnc_handleAttacked;
 
 if (!_excludedFromSpawnedUnit)then{
-    UNITS_SPAWNED pushback _unit;
+    UNITS_SPAWNED_CLOSE pushback _unit;
 };
 
 _unit

@@ -2,6 +2,8 @@
 sleep 1;
 titleCut ["", "BLACK IN",3];
 
+playMusic "seal";
+
 [player, "All units deployed on the insertion points", 150, 250, 75, 1, [], 0, false] call BIS_fnc_establishingShot;
 
 [] spawn {

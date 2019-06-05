@@ -18,7 +18,7 @@ private _tempList = [];
 
 ENEMY_COMMANDER = objNull;
 _grp = createGroup SIDE_ENEMY;
-ESCORT = [];
+_units = [];
 
 private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_FindSafePos;
 if (_initPos isEqualTo []) exitWith{hint "unable to spawn the commander"};
@@ -34,7 +34,7 @@ COMMANDER_LAST_POS = [];
 
 //Custom variable
 if (DEBUG) then {
-    _marker = createMarker ["commander-marker",position ENEMY_COMMANDER];
+    _marker = createMarker ["commander-marker", position ENEMY_COMMANDER];
     _marker setMarkerShape "ICON";
     _marker setMarkerColor "ColorRed";
     _marker setMarkerType "o_motor_inf";
@@ -42,8 +42,7 @@ if (DEBUG) then {
 };
 
 //Push to units-spawned to update the marker pos
-UNITS_SPAWNED pushback ENEMY_COMMANDER;
-ESCORT pushBack ENEMY_COMMANDER;
+_units pushBack ENEMY_COMMANDER;
 
 //When the commander is attacked by the player group, he would try to flee. If he is far from the player, he would disappear and got respawned in another sector
 ENEMY_COMMANDER addEventHandler ["FiredNear",{
@@ -63,14 +62,14 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
         [_commanderPos, 200, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
 
         _commander move _commanderPos;
-        [_gunner] spawn{
-            params["_gunner"];
-            waitUntil{sleep 1;(_gunner distance ENEMY_COMMANDER) > 500 || !(alive ENEMY_COMMANDER) };
-            if (!alive ENEMY_COMMANDER)exitWith{false};
-            ENEMY_COMMANDER call fnc_deleteMarker;
-            deleteVehicle ENEMY_COMMANDER;
+        [_gunner,_commander] spawn {
+            params["_gunner","_commander"];
+            waitUntil{sleep 1;(_gunner distance _commander) > 500 || !(alive _commander) };
+            if (!alive _commander)exitWith{false};
+            _commander call fnc_deleteMarker;
+            deleteVehicle _commander;
             [_gunner ,"He has definitely left the area... Mission compromised. Maybe we would catch him later..." ,true ] remoteExec ["fnc_talk"];
-            [] call fnc_SpawnMainObjective;
+            [] spawn fnc_SpawnMainObjective;
         };
     };
 }];
@@ -82,12 +81,12 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
         [_killer,{
             [_this,format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _this],true] call fnc_talk;
             sleep 60;
+            activateKey "key1";
             "EveryoneWon" call BIS_fnc_endMissionServer;
         }] remoteExec["spawn",0];
     }else{
         //Start over
         hint "restart...";
-        { ESCORT = ESCORT - [_x]; _x call fnc_deleteMarker; deleteVehicle _x;} forEach ESCORT;
         [] spawn fnc_SpawnMainObjective;
     };
 }];
@@ -98,7 +97,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
 for "_yc" from 1 to 4  do {
     _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
     _unit enableDynamicSimulation false;
-    ESCORT pushback _unit;
+    _units pushback _unit;
 };
 
 sleep 1;
@@ -106,7 +105,7 @@ sleep 1;
 _commanderPos = getPos ENEMY_COMMANDER;
 COMMANDER_LAST_POS = [];
 
-while {leader _grp == ENEMY_COMMANDER}do{
+while {alive (leader _grp) && leader _grp == ENEMY_COMMANDER}do{
 
     //Push indication
     _newObjs = [_commanderPos, random 360, _compos call bis_fnc_selectrandom] call BIS_fnc_ObjectsMapper;
@@ -133,7 +132,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
     _initPos = _commanderPos;
-    _commanderPos = [_commanderPos, 400, 3000, 1, 0, 5, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_FindSafePos;
+    _commanderPos = [_commanderPos, 200, 600, 1, 0, 5, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_FindSafePos;
     _commanderPos = ((selectBestPlaces[_commanderPos, 500, _situation, 5, 1]) select 0 )select 0;
 
     _grp setBehaviour "SAFE";
@@ -145,7 +144,7 @@ while {leader _grp == ENEMY_COMMANDER}do{
         (findDisplay 12 displayCtrl 51) ctrlAddEventHandler ["Draw",format["(_this select 0) drawLine [%1,%2,[244, 93, 93,1]];",_initPos, _commanderPos]];
     };
 
-    waitUntil {sleep 30; ENEMY_COMMANDER distance _commanderPos < 5};
+    waitUntil {sleep 30;!alive (leader _grp) || leader _grp != ENEMY_COMMANDER || ENEMY_COMMANDER distance _commanderPos < 5};
 
     _grp setBehaviour "SAFE";
     _grp setSpeedMode "LIMITED";
@@ -154,8 +153,6 @@ while {leader _grp == ENEMY_COMMANDER}do{
     
 };
 
+{_units = _units - [_x]; _x call fnc_deleteMarker; deleteVehicle _x; } forEach _units;
 
-/*
-{ESCORT = ESCORT - [_x];deleteVehicle _x; } forEach ESCORT;
-*/
 false;

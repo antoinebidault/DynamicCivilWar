@@ -43,7 +43,7 @@ PERCENTAGE_CIVILIAN = 30; //Percentage civilian in a block
 PERCENTAGE_ENEMIES = 70; //Percentage enemies in occupied compound
 PERCENTAGE_INSURGENTS = 50; //Percentage of potential insurgents in the civilians. If the civilian are attacked they might join the east or west wether the shot are coming from (And with probabilities rules...)
 PERCENTAGE_FRIENDLY_INSURGENTS = 50; //Percentage of potential insurgents joining the west.
-PERCENTAGE_SUSPECT = ((PERCENTAGE_INSURGENTS * PERCENTAGE_FRIENDLY_INSURGENTS)/100);
+PERCENTAGE_SUSPECT = 38;
 
 //ENEMIES
 SIDE_ENEMY = EAST; //Enemy side 

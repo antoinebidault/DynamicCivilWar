@@ -11,6 +11,7 @@ params [
 	"_healer",
 	"_injured"
 ];
+
 HEALER = _healer;
 {_healer disableAI _x; true} count ["TARGET","FSM","AUTOTARGET","AUTOCOMBAT"];
 _healer doMove position _injured;

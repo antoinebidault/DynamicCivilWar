@@ -1,10 +1,13 @@
 params["_marker","_state"];
+
+if (!isServer) exitWith { hint "setCompoundState executed on client"};
+
 _markerID = _marker select 0;
 _markerData = [_markerID] call fnc_getMarkerById;
 _marker = _markerData select 0;
 _markerIndex = _markerData select 1;
 
-_markerData set [12,_state];
+_marker set [12,_state];
 
 _icon = _markerID + "-icon";
 
@@ -83,7 +86,8 @@ if (_state == "bastion")then{
 	};
 };
 
-
 MARKERS set [_markerIndex,_marker];
+
+[] call fnc_refreshMarkerStats;
 
 _marker;

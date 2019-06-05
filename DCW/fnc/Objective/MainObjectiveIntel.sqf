@@ -56,7 +56,7 @@ _taskId = "maintask";
  
 }] remoteExec["spawn", GROUP_PLAYERS, false];
 
- [GROUP_PLAYERS,250,false,(leader GROUP_PLAYERS)] call fnc_updatescore;
+[GROUP_PLAYERS,250,false,(leader GROUP_PLAYERS)] call fnc_updatescore;
 
 if (!isMultiplayer) then{
 	saveGame;

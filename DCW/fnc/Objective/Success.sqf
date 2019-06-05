@@ -42,6 +42,7 @@ if (_task == "") then {
 }] remoteExec ["spawn", GROUP_PLAYERS,false];
 
 //Custom callback
+[_objWithTask,_objWithTask getVariable["DCW_Reputation",0]] remoteExec ["fnc_updateRep",2];
 [_task,_objWithTask,_objWithTask getVariable["DCW_Bonus",0]] call OBJECTIVE_ACCOMPLISHED;
 
 //Delete the task after success.

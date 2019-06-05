@@ -10,6 +10,12 @@ if (!isNull player) then {
 	titleCut ["", "BLACK FADED",9999];
 };
 
+// Need some adjustements
+{ 
+	[_x,"MOVE"] remoteExec ["disableAI", 2];
+	[_x,"FSM"] remoteExec ["disableAI", 2];
+ } foreach allUnits;
+
 enableDynamicSimulationSystem true;
 "Group" setDynamicSimulationDistance 600;
 
@@ -19,6 +25,7 @@ fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\Fac
 fnc_FactionList = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionList.sqf";
 fnc_FactionGetSupportUnits =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetSupportUnits.sqf";
 fnc_GetConfigVehicles =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\GetConfigVehicles.sqf";
+call(compileFinal preprocessFileLineNumbers  "DCW\config\config-dialog-functions.sqf");
 fnc_Dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
 fnc_MissionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
 
@@ -41,6 +48,7 @@ fnc_setCompoundState =  compileFinal preprocessFileLineNumbers  "DCW\fnc\System\
 fnc_setCompoundSupport =  compileFinal preprocessFileLineNumbers  "DCW\fnc\System\setCompoundSupport.sqf";
 fnc_surrenderSystem = compile preprocessFileLineNumbers  "DCW\fnc\System\SurrenderSystem.sqf";
 fnc_getMarkerById = compile preprocessFileLineNumbers "DCW\fnc\System\getMarkerById.sqf";
+fnc_refreshMarkerStats = compile preprocessFileLineNumbers "DCW\fnc\System\refreshMarkerStats.sqf";
 
 //SPAWN
 fnc_Respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
@@ -137,14 +145,14 @@ compo_captured =  call (compileFinal preprocessFileLineNumbers "DCW\composition\
 compos_turrets=  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\turrets.sqf");
 compos_objects =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\objects.sqf");
 
-//Switch here the config you need.
+// Switch here the config you need.
 [] call (compileFinal preprocessFileLineNumbers format["DCW\config\config-%1.sqf",_this select 0]); 
 
-// INTRO
+// Mission introduction function
 fnc_intro = compileFinal preprocessFileLineNumbers format["DCW\intro\intro-%1.sqf",_this select 0];
 
+// Base config parameters 
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
-
 
 // ACE detection
 if (isClass(configFile >> "CfgPatches" >> "ace_main")) then { ACE_ENABLED = true; } else { ACE_ENABLED = false; };
@@ -154,44 +162,11 @@ if (ACE_ENABLED) then {
 };
 
 // Global scope variable
-DCW_STARTED = false;
-publicVariable "DCW_STARTED";
 
-// Global scope variable
-DCW_LOADOUT = false;
-publicVariable "DCW_LOADOUT";
+
 
 // Wait until everything is ready
 waitUntil {count allPlayers > 0 &&  time > 0 };
-
-GROUP_PLAYERS = group (allPlayers select 0); 
-publicVariable "GROUP_PLAYERS";
-
-SIDE_FRIENDLY = side(allPlayers select 0); //Side player
-publicVariable "SIDE_FRIENDLY";
-
-CHASER_TRIGGERED = false;
-publicVariable "CHASER_TRIGGERED";
-
-CHASER_VIEWED = false;
-publicVariable "CHASER_VIEWED";
-
-DCW_SCORE = 150;
-publicVariable "DCW_SCORE";
-
-CAMP_RESPAWN_POSITION = [];
-publicVariable "CAMP_RESPAWN_POSITION";
-
-CIVIL_REPUTATION = 50;
-publicVariable "CIVIL_REPUTATION";
-
-CAMP_RESPAWN_POSITION_ID = [];
-publicVariable "CAMP_RESPAWN_POSITION_ID";
-
-PLAYER_MARKER_LIST = []; //Pass list of marker white list name
-publicVariable "PLAYER_MARKER_LIST";
-
-TALK_QUEUE = [];
 
 RESISTANCE setFriend [EAST, 0];
 RESISTANCE setFriend [WEST, 0];
@@ -203,6 +178,7 @@ CIVILIAN setFriend [RESISTANCE, 1];
 //DCW_STARTED = true;
 //titleCut ["", "BLACK IN",1];
 
+call (compileFinal preprocessFileLineNumbers "DCW\variables.sqf"); 
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";
 

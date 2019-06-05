@@ -51,7 +51,7 @@ if (!_isCleared) then{
           [_unit] call fnc_handlekill;
 
           _unit setVariable["DCW_Type","sniper", true];
-          UNITS_SPAWNED pushback _unit;
+          UNITS_SPAWNED_CLOSE pushback _unit;
           
           _unit doWatch _pos;
           if (_xc == 1)then{
@@ -153,15 +153,18 @@ for "_xc" from 1 to _population do {
               _civ setDamage ([1,.9,.5,.7] call BIS_fnc_selectRandom);
             };
             [_civ,_radius,_meetingPointPosition,_buildings] spawn fnc_CivilianCompoundPatrol;
+
+            // If "supporting"
+            if (_compoundState == "supporting") then {
+              [_civ,side _civ] call fnc_BadBuyLoadout;
+            };
+
             _units pushBack _civ;
+
           };
         };
       };
 
-      // If "supporting"
-      if (_compoundState == "supporting") then {
-        [_civ,side _civ] call fnc_BadBuyLoadout;
-      };
     };
 };
 

@@ -46,7 +46,7 @@ while{true}do {
 					_unit action ["sitdown",_unit];
 				};
 
-				UNITS_SPAWNED pushBack _unit;
+				UNITS_SPAWNED_CLOSE pushBack _unit;
 			};
 		};
 
@@ -79,7 +79,7 @@ while{true}do {
 			SHEEP_POOL = SHEEP_POOL - [_x];
 			{
 				_x call fnc_deleteMarker;
-				UNITS_SPAWNED = UNITS_SPAWNED - [_x];
+				UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_x];
 				deleteVehicle _x;
 			}foreach units (_x);
 			deleteGroup (_x);
