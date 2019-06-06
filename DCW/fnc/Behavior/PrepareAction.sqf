@@ -72,6 +72,25 @@ addActionHandCuff =  {
 };
 
 
+addActionInstructor = {
+    
+    if (!isMultiplayer)then {
+        _this addaction ["<t color='#FF0000'>Savegame</t>",{
+        saveGame;
+        },nil,1.5,false,true,"","true",3,false,""];
+    };
+
+     _this addaction ["<t color='#FF0000'>Briefing</t>",{
+        params["_unit"];
+      [_unit, "Your main objective is to seek and neutralize an enemy commander hidden somewhere..."] call fnc_talk;
+      [_unit, "He will be always moving on the map, hiding in forestry area or compounds."] call fnc_talk;
+      [_unit, "You have two way to get info about his location : interrogating civil chief in compound or interrogating one of his officer wandering on the map in trucks..."] call fnc_talk;
+      [_unit, "We've located a few of these officers spreading the insurgency accross the country. It'is highly recommended to neutralize them"] call fnc_talk;
+      [_unit, "The key path is to make the population always supporting you. Give people food, medicine and military training will make our investigations easier."] call fnc_talk;
+      [_unit, "Alright guys ? Any question ? Dismiss !"] call fnc_talk;
+    },nil,1.5,false,true,"","true",3,false,""];
+};
+
 addActionGiveUsAHand =  {
     _this select 0 addaction ["<t color='#FF0000'>Give us a hand (20 points/10 minutes)</t>",{
         _man  = (_this select 0);
@@ -550,6 +569,7 @@ fnc_ActionRest =  {
         sleep 1;
         disableUserInput false;
         sleep 3;
+        savegame;
 
         [_tent,_unit,_action]spawn{
             params["_tent","_unit","_action"];

@@ -323,9 +323,9 @@ class PARAMETERS_DIALOG
         };
 
 
-        class ICE_BUTTON_1000: RscButton
+        class Button_Submit_1000: RscButton
         {
-          idc = -1;
+          idc = 2222;
           text = "Next (Loadout)";
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 22 * GUI_GRID_H + GUI_GRID_Y;

@@ -51,7 +51,7 @@
 	};
 	class DCW_default
 	{
-		name="Default";
+		name="neutral";
 		icon="\DCW\icons\default.paa";
 		color[]={1,1,1,1};
 		size=32;

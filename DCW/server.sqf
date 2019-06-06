@@ -166,7 +166,7 @@ _points = 0;
 _nbSnipers = 0;
 _nbMortars = 0;
 _typeObj = "";
-_compoundState = "default";
+_compoundState = "neutral";
 _supportScore = 0;
 
 {
@@ -224,7 +224,7 @@ _supportScore = 0;
 							
 
 		// default = startup state / corrupted / secured / succeeded / massacred = destroyed compound / helped = called the humanitary
-		_compoundState = "default";
+		_compoundState = "neutral";
 		_supportScore = 50;
 		_respawnId = [];
 
@@ -238,7 +238,7 @@ _supportScore = 0;
 		}else{
 			if (_forEachIndex >= 10/100*count _clusters) then {
 				_supportScore = 50 + ([1,-1] call BIS_fnc_selectRandom) * (floor (random 25));
-				_compoundState = "default";
+				_compoundState = "neutral";
 				_m setMarkerColor "ColorWhite";
 				_icon setMarkerColor "ColorBlack";
 				_icon setMarkerType "loc_tourism";
@@ -459,7 +459,7 @@ while { true } do {
 					_playerInMarker = true;
 					[format["%1<br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["fnc_ShowIndicator",_player,false];
 			
-					if (_defendTaskState == "planned" && (_compoundState == "default" || _compoundState == "supporting")  ) then {
+					if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "supporting")  ) then {
 						[_currentCompound,_player] spawn {
 							params["_compound"];
 							sleep 30;
@@ -498,7 +498,7 @@ while { true } do {
 						};
 
 						
-						if (_compoundState == "bastion" || (_compoundState == "default" && _supportScore < 45)) then {
+						if (_compoundState == "bastion" || (_compoundState == "neutral" && _supportScore < 45)) then {
 							//Cache
 							_units = _units + ([_pos,_radius,(_peopleToSpawn select 5),_buildings] call fnc_cache);
 							//Mortars
@@ -537,7 +537,7 @@ while { true } do {
 								//Cleared success
 								if (!_enemyInMarker)then {
 									_success = true;
-									[_currentCompound,"default"] call fnc_setCompoundState;
+									[_currentCompound,"neutral"] call fnc_setCompoundState;
 									_supportScore = _supportScore + 50;
 									[_marker,_radius,_units,_points] remoteExec ["COMPOUND_SECURED"];
 									[_player,"The compound is cleared ! Great job team.", true] remoteExec ["fnc_talk"];

@@ -10,11 +10,11 @@ private _asker = _this select 1;
 private _withNotif = if (count _this >2)then{_this select 2}else{true};
 
  _type = _intel getVariable["DCW_Type",""];
- _taskId = "default";
- _title = "default";
- _desc = "default";
- _message = "default";
- _messageSuccess = "default";
+ _taskId = "neutral";
+ _title = "neutral";
+ _desc = "neutral";
+ _message = "neutral";
+ _messageSuccess = "neutral";
  _bonus = 0;
  _reputation = 0;
 

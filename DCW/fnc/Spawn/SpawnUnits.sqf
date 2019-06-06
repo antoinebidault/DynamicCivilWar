@@ -20,7 +20,7 @@ private _population = _people select 0;
 private _nbSnipers = _people select 1; 
 private _nbenemies = _people select 2; 
 
-if (_compoundState == "default" || _compoundState == "humanitary" || _compoundState == "secured" || _compoundState == "massacred") then {
+if (_compoundState == "neutral" || _compoundState == "humanitary" || _compoundState == "supporting" || _compoundState == "secured" || _compoundState == "massacred") then {
   _population =  _population + _nbenemies + _nbSnipers;
   _nbenemies = 0;
   _nbsnipers = 0;
@@ -130,7 +130,7 @@ for "_xc" from 1 to _population do {
      
       if (_xc == 1 && _population >= 1 && count _buildings > 0) then {
         _civ = [_grp,_posSelected,_chief,false] call fnc_SpawnCivil;
-        _civ call fnc_localChief;
+        [_civ,_radius] call fnc_localChief;
         _units pushBack _civ;
         if (_compoundState == "massacred" || _compoundState == "humanitary") then {
           _civ setDamage (floor(random 1)) min .3;
@@ -148,7 +148,7 @@ for "_xc" from 1 to _population do {
               _advisor = [_grp, _posSelected, false] call fnc_spawnfriendly;
               _units pushback _advisor;
           } else{
-            _civ = [_grp,_posSelected,_chief,true,nil,_compoundScore] call fnc_SpawnCivil;
+            _civ = [_grp,_posSelected,_chief,if (_compoundState == "supporting") then {false}else{true},nil,_compoundScore] call fnc_SpawnCivil;
             if (_compoundState == "massacred" || _compoundState == "humanitary") then {
               _civ setDamage ([1,.9,.5,.7] call BIS_fnc_selectRandom);
             };
@@ -156,7 +156,8 @@ for "_xc" from 1 to _population do {
 
             // If "supporting"
             if (_compoundState == "supporting") then {
-              [_civ,side _civ] call fnc_BadBuyLoadout;
+              [_civ, SIDE_FRIENDLY] call fnc_BadBuyLoadout;
+              [_civ] remoteexec ["fnc_AddCivilianAction",0];
             };
 
             _units pushBack _civ;

@@ -73,7 +73,7 @@ camDestroy _cam;
 showCinemaBorder false;
 
 _cam cameraeffect ["terminate", "back"];
-["default",5,true] call bis_fnc_setppeffecttemplate;
+["neutral",5,true] call bis_fnc_setppeffecttemplate;
 player switchMove "Acts_welcomeOnHUB02_PlayerWalk_3"; 
 /*
 private _chopper = vehicle player;

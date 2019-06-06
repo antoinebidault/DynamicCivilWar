@@ -71,7 +71,7 @@ fnc_renderfactionselect = {
 
 	// A little correction
 	if (_ctrlId == 2103) then {
-		_ctrlLoadout lbAdd "default";
+		_ctrlLoadout lbAdd "Default (NATO)";
 		_size = (lbSize _ctrlLoadout) - 1;
 		_ctrlLoadout lbSetValue [_size ,_size];
 		_ctrlLoadout lbSetCurSel (_size);
@@ -159,7 +159,7 @@ fnc_SaveAndGoToLoadoutDialog = {
 
 fnc_openLoadoutDialog = {
   	_ok = createDialog "LOADOUT_DIALOG"; 
-    _display = findDisplay 5001;
+    _display = findDisplay 5002;
 	_noesckey = _display displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 	[] call fnc_displayUnitName;
 };
@@ -268,12 +268,14 @@ fnc_SwitchFaction = {
 	params["_ctrl","_val"];
 	
 	_factionName =  lbData [_ctrl,_val];
-	
+	_display = (findDisplay 5001);
 
 	// Set the allied selector to the same faction by default
-	((findDisplay 5001) displayCtrl 2113)  lbSetCurSel (lbCurSel _ctrl);
+	(_display displayCtrl 2113)  lbSetCurSel (lbCurSel _ctrl);
 	
-	((findDisplay 5001) displayCtrl _ctrl)  ctrlEnable false;
+	(_display displayCtrl _ctrl)  ctrlEnable false;
+	(_display displayCtrl 2222)  ctrlEnable false;
+	
 
 	titleCut ["", "BLACK OUT", .3];
 
@@ -307,7 +309,8 @@ fnc_SwitchFaction = {
 
 	sleep .3;
 
-	((findDisplay 5001) displayCtrl _ctrl)  ctrlEnable true;
+	(_display displayCtrl _ctrl)  ctrlEnable true;
+	(_display displayCtrl 2222)  ctrlEnable true;
 
 	disableSerialization;
 

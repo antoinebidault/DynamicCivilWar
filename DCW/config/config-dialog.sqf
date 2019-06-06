@@ -101,7 +101,8 @@ _ctrlAmmoOn cbSetChecked true;
 _factionSelect = [SIDE_FRIENDLY,2103] call fnc_renderfactionselect ;
 _factionSelect ctrlAddEventHandler ["LBSelChanged","[ctrlIDC(_this select 0),_this select 1] spawn fnc_SwitchFaction"];
 
-[SIDE_FRIENDLY,2113] call fnc_renderfactionselect;
+_factionSelectFr = [SIDE_FRIENDLY,2113] call fnc_renderfactionselect;
+_factionSelectFr lbSetCurSel 1; // Select FIA by default
 
 [SIDE_CIV,2110] call fnc_renderfactionselect ;
 

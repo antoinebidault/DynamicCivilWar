@@ -19,7 +19,7 @@ if (_state == "secured") then{
 		_icon setMarkerColor "ColorGreen";
 		_icon setMarkerType "loc_Ruin";
 	}else{
-		if (_state == "default") then {
+		if (_state == "neutral") then {
 			_markerID setMarkerColor "ColorWhite";
 			_icon setMarkerColor "ColorBlack";
 			_icon setMarkerType "loc_tourism";

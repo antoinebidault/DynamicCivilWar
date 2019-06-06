@@ -3,20 +3,22 @@
  * Created: 2017-11-29
  * Author: BIDASS
  * License : GNU (GPL)
+ * Compound chief bases action action
  */
 
+params["_unit","_radius"];
 
-_this remoteExec ["RemoveAllActions",0];
-_this setVariable["DCW_LocalChief",true];
-removeGoggles _this;
-removeHeadgear _this;
-_this allowDamage false;
-_this allowFleeing 0;
-_this addGoggles (["G_Spectacles_Tinted","G_Aviator"] call BIS_fnc_selectRandom);
-_this addHeadgear "H_Beret_blk";
+_unit remoteExec ["RemoveAllActions",0];
+_unit setVariable["DCW_LocalChief",true];
+removeGoggles _unit;
+removeHeadgear _unit;
+_unit allowDamage false;
+_unit allowFleeing 0;
+_unit addGoggles (["G_Spectacles_Tinted","G_Aviator"] call BIS_fnc_selectRandom);
+_unit addHeadgear "H_Beret_blk";
 
 
-[_this,["<t color='#666000'>Interrogate</t>",{
+[_unit,["<t color='#666000'>Interrogate</t>",{
     params["_unit","_asker","_action"];
      //Populate with friendlies
     _curr = ([position _unit,false] call fnc_findNearestMarker);
@@ -41,10 +43,8 @@ _this addHeadgear "H_Beret_blk";
 },nil,1.5,false,true,"","true",20,false,""]] remoteExec ["addAction"];
 
 
-
-
-[_this,["<t color='#666000'>Secure this compound (200 points, 6 hours)</t>",{
-    params["_unit","_asker","_action"];
+[_unit,[format["<t color='#666000'>Secure this compound (%1 points, 6 hours)</t>",_radius max 50],{
+    params["_unit","_asker","_action","_radius"];
     
     //Server execution
     [[_unit,_asker,_action],{
@@ -55,7 +55,7 @@ _this addHeadgear "H_Beret_blk";
         private _success =_curr select 3;
         if(_curr select 12 == "bastion") exitWith{[_unit,"This camp is still occupied by enemy forces, clean up the compound to make this compound available.", false] spawn fnc_talk; false;};
         if(_curr select 13 < 70) exitWith{[_unit,"Improve your reputation first (70 minimum)", false] spawn fnc_talk; false;};
-        if (!([GROUP_PLAYERS,200] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
+        if (!([GROUP_PLAYERS,_radius max 50] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
 
         _unit RemoveAction _action;
 
@@ -117,10 +117,10 @@ _this addHeadgear "H_Beret_blk";
         _unit enableAI "MOVE";
 
     }] remoteExec["spawn",2];
-},nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
+},_radius,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
 
 
-[_this,["<t color='#666000'>Paradrop a food box (50 points)</t>",{
+[_unit,["<t color='#666000'>Paradrop a food box (50 points)</t>",{
     params["_unit","_asker","_action"];
     
     //Server execution
@@ -141,7 +141,7 @@ _this addHeadgear "H_Beret_blk";
 },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
 
 
-[_this,["<t color='#666000'>Call in the humanitary assistance (300 points, 12 hours)</t>",{
+[_unit,["<t color='#666000'>Call in the humanitary assistance (300 points, 12 hours)</t>",{
     params["_unit","_asker","_action"];
     
     //Server execution
@@ -162,12 +162,16 @@ _this addHeadgear "H_Beret_blk";
 },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
 
 
-[_this,["<t color='#666000'>Gives him a military advisor</t>",{
+[_unit,["<t color='#666000'>Gives him a military advisor</t>",{
     params["_unit","_asker","_action"];
     
         params["_unit","_asker","_action"];
+        _curr = ([position _unit,false] call fnc_findNearestMarker);
+        _state = _curr select 12;
 
-         if ({_x getVariable["DCW_advisor",false]} count (units GROUP_PLAYERS) == 0) exitWith {[_asker,"I need a military advisor first. I can recruit them in already secured camps.",false] call fnc_talk;false;};
+
+        if (_state != "neutral") exitWith {[_unit,"This action requires a compound neutral state",false] call fnc_talk; false;};
+        if ({_x getVariable["DCW_advisor",false]} count (units GROUP_PLAYERS) == 0) exitWith {[_asker,"I need a military advisor first. I can recruit them in already secured camps.",false] call fnc_talk;false;};
         [_asker,"We'll provide you an army advisor for helping you to defend against insurgents.", false] call fnc_talk;
         [_unit,"Thanks for your help !", false] call fnc_talk;
         _unit RemoveAction _action;
@@ -182,10 +186,9 @@ _this addHeadgear "H_Beret_blk";
         [_advisor] joinSilent grpNull;
         [_advisor] joinSilent (group _unit);
 
-        _curr = ([position _unit,false] call fnc_findNearestMarker);
 
         {
-            if (side _x == SIDE_CIV && _x != _unit) then {
+            if ( _x isKindOf "Man" && side _x == SIDE_CIV && _x != _unit) then {
                 [_x, SIDE_FRIENDLY] call fnc_BadGuyLoadout;
             };
         }

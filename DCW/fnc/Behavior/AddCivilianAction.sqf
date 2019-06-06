@@ -7,9 +7,6 @@
 
 params ["_unit"];
 
-if (side _unit == SIDE_CIV) then
-{
-    _unit call addActionHalt;
-    _unit call addActionLeave;
-    _unit call addActionHandcuff;
-};
+_unit call addActionHalt;
+_unit call addActionLeave;
+_unit call addActionHandcuff;
