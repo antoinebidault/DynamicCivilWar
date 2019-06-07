@@ -54,7 +54,7 @@ fnc_captured = {
 		_pos = getMarkerPos (_enemyMarker select 0);
 		_radius =  (getMarkerSize (_enemyMarker select 0)) select 0;
 		
-        _foundPos = [_pos, 0, _radius, 15, 0, .4, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+        _foundPos = [_pos, 0, _radius, 15, 0, .4, 0,MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
         COMPO_OBJS = [_foundPos,random 360, compo_captured ] call BIS_fnc_ObjectsMapper;
 		owner (_player) publicVariableClient "COMPO_OBJS";
 

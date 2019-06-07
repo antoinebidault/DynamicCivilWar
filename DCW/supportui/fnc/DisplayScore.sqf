@@ -15,13 +15,14 @@ private _statusUnd = "";
 private _colorUnd = "";
 
 // Chasing status
+/*
 if (CHASER_TRIGGERED) then{
 	_colorChaser = "#e46b6b";
 	_labelChaser = "Calling reinforcements";
 } else {
 	_colorChaser = "#2f9581";
 	_labelChaser = "Safe";
-};
+};*/
 
 // Undercover status
 if (player getVariable["DCW_undercover",false]) then{
@@ -40,4 +41,4 @@ if (player getVariable["DCW_undercover",false]) then{
 ("RscStatusBar" call BIS_fnc_rscLayer) cutRsc ["RscStatusBar","PLAIN"];	
 	disableSerialization;
 	((uiNamespace getVariable "RscStatusBar")displayCtrl 55554) ctrlSetStructuredText
-parseText format ["<t shadow='1' shadowColor='#000000' color='#FFFFFF'>Score : %1 points | Compounds : <t color='#229999'>%2</t>/<t color='#FF0000'>%3</t>/<t color='#000000'>%4</t>/<t>%5</t> | Lives : %6 | Enemies state : <t color='%7'>%8</t> | Undercover : <t color='%9'>%10</t> | Reputation : %11/100</t>",_points,STAT_COMPOUND_SECURED,STAT_COMPOUND_BASTION,STAT_COMPOUND_MASSACRED,STAT_COMPOUND_TOTAL,if (REMAINING_RESPAWN <= -1) then {"∞"} else {REMAINING_RESPAWN},_colorChaser,_labelChaser,_colorUnd,_statusUnd,STAT_SUPPORT];
+parseText format ["<t shadow='1' shadowColor='#000000' color='#FFFFFF'>Score : %1 points | Compounds : <t color='#229999'>%2</t>/<t color='#FF0000'>%3</t>/<t color='#000000'>%4</t>/<t>%5</t> | Lives : %6 | Undercover : <t color='%7'>%8</t> | Reputation : %9/100</t>",_points,STAT_COMPOUND_SECURED,STAT_COMPOUND_BASTION,STAT_COMPOUND_MASSACRED,STAT_COMPOUND_TOTAL,if (REMAINING_RESPAWN <= -1) then {"∞"} else {REMAINING_RESPAWN},_colorUnd,_statusUnd,STAT_SUPPORT];

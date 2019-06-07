@@ -13,7 +13,7 @@ _taskId = format["DCW_defend_%1",str (_compound select 0)];
 
 
 for "_j" from 1 to _nbVehicles do {
-	_spawnPos = [_compound select 1, .75*SPAWN_DISTANCE,.75*(SPAWN_DISTANCE+100), 4, 0, .3, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+	_spawnPos = [_compound select 1, .75*SPAWN_DISTANCE,.75*(SPAWN_DISTANCE+100), 4, 0, .3, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
 	_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
 	_car = ([_spawnPos, random 360,_unitName, _grp] call bis_fnc_spawnvehicle)  select 0;
 	_car enableDynamicSimulation false;

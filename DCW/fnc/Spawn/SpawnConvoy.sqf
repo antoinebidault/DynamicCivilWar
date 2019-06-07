@@ -19,7 +19,7 @@ _roadRadius = 40;
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 _worldCenter = [_worldSize/2,_worldSize/2,0];
 
-_initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_FindSafePos;
+_initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_findSafePos;
 if (_initPos isEqualTo []) exitWith{ hint "unable to spawn the _units"; };
 _road = [_initPos,500,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 _roadPos = getPos _road;
@@ -32,7 +32,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
     [HQ,"There is an enemy _units moving not far from your position. You can destroy them to earn some points.",true] call fnc_talk;
     _roadConnectedTo = roadsConnectedTo _road;
     _connectedRoad = _roadConnectedTo select 0;
-    _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
+    _roadDirection = [_road, _connectedRoad] call BIS_fnc_dirTo;
     _car = [_roadPos, _roadDirection, ENEMY__units_CAR_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
     driver _car enableSimulationGlobal false;
     
@@ -105,8 +105,8 @@ _wpt setMarkerText "_units destination";
 
 
 
-//FIRST STEP => Moving to a random compound
-_nextPos = getMarkerPos (([getPos ((units GROUP_PLAYERS) call BIS_fnc_selectRandom)] call fnc_findNearestMarker) select 0);
+//FIRST STEP => Moving to a random compound enemy
+_nextPos = getMarkerPos (([getPos ((units GROUP_PLAYERS) call BIS_fnc_selectRandom), true, "bastion"] call fnc_findNearestMarker) select 0);
 _nextPos = getPosASL([_nextPos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
 (leader _grp) move _nextPos;
 _wpt setMarkerPos _nextPos;

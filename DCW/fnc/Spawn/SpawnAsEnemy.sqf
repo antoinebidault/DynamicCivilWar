@@ -51,5 +51,5 @@ if (count _houses > 0 ) then{
 //Move to a new position
 sleep 3;
 _dir = random 360;
- _newPos = [_pos ,40,50, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+ _newPos = [_pos ,40,50, 2, 0, 20, 0] call BIS_fnc_findSafePos;
 _unit doMove _newPos;

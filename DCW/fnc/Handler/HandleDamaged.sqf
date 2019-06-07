@@ -38,25 +38,9 @@ _this addEventHandler["HandleDamage",{
 			_marker setMarkerText "Injured civil";
 			_unit setVariable ["marker", _marker];
 		};
-		  [ _unit,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
-			  (_this select 1) playActionNow "medicStart";
-		  },{
-			   (_this select 1) playActionNow "medicStart";
-		  },{
-			(_this select 1) playActionNow "medicStop";
-			_unit = (_this select 0);
-			_unit setUnconscious false;
-			_unit setDamage .3;
-			_unit setUnitPos "UP";
-			_unit setVariable ["unit_injured", false, true];
-			[_unit,(_this select 1)] remoteExec ["CIVIL_HEALED",2];
-			[_unit,4] remoteExec ["fnc_updateRep",2];
-			_unit;
 
-		},{
-			   (_this select 1) playActionNow "medicStop";
-		},[],10,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
-
+		_unit call fnc_addActionHeal;
+		
 	}else{
 		if (_unit getVariable["unit_injured",false])then{_damage = .9;};
 	};

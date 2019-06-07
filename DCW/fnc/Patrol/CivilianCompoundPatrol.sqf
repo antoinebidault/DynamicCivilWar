@@ -75,7 +75,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
             if (_rd==1) then{
                 _dir = random 360;
                 _curPos = getPos _unit;
-                _newPos = [_curPos ,_range,_range + 30, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+                _newPos = [_curPos ,_range,_range + 30, 1, 0, 20, 0] call BIS_fnc_findSafePos;
                 _unit doMove _newPos;
                 _timer = time;
 
@@ -116,7 +116,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
 
 // Go out if you detected enemy;
 if (random 100 > 50) then {
-     _newPos = [getPos _unit ,0, 40, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+     _newPos = [getPos _unit ,0, 40, 2, 0, 20, 0] call BIS_fnc_findSafePos;
     _unit move  _newPos;
 };
 

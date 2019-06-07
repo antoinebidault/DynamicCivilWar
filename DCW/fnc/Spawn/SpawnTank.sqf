@@ -15,7 +15,7 @@ private _tempMarkers = MARKER_WHITE_LIST;
 while {count TANKS < NUMBER_TANKS} do{
     
 
-     _spawnPos = [_worldCenter, 0, (_worldSize/2), 5, 0, .3, 0, _tempMarkers] call BIS_fnc_FindSafePos;
+     _spawnPos = [_worldCenter, 0, (_worldSize/2), 5, 0, .3, 0, _tempMarkers] call BIS_fnc_findSafePos;
     
     // Temp marker with previously spawned tank
     _tmpmarker = createMarker [format["tk-bl-%1",random 10000], _spawnPos];

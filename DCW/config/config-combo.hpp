@@ -22,22 +22,13 @@ class PARAMETERS_DIALOG
     idd = 5001;
     movingenable = false;
     duration = 10e10;
+    
 
     class Controls
     {
 
 
-         class RscFrame_1800: RscFrame
-         {
-          idc = 1800;
-          text = "";
-          x = -20 * GUI_GRID_W + GUI_GRID_X;
-          y =  -3 * GUI_GRID_H;
-          w = 28 * GUI_GRID_W;
-          h = 27 * GUI_GRID_H;
-          shadow = 2;
-          colorBackground[] = {76,170,131,0.5};
-        };
+        
         
          class RscBox_1801: IGUIBack
          {
@@ -104,7 +95,7 @@ class PARAMETERS_DIALOG
      class RscText_1004: RscText
         {
             idc = 1004;
-            text = "People density";
+            text = "Enemy compound percentage";
             x = -19 * GUI_GRID_W + GUI_GRID_X;
             y = 7 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -113,12 +104,12 @@ class PARAMETERS_DIALOG
        class RscCombo_2102: RscCombo
         {
           idc = 2102;
-          text = "People density";
+          text = "Enemy compound percentage";
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 8 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "People density";
+          tooltip = "Enemy compound percentage";
         };
 
         class RscText_1011: RscText

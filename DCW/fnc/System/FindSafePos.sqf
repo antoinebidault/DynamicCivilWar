@@ -1,2 +1,2 @@
 
-_this call BIS_fnc_FindSafePos; 
+_this call BIS_fnc_findSafePos; 

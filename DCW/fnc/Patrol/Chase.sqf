@@ -36,11 +36,11 @@ while { alive _leader && alive _unitChased }do{
         if (CHASER_TRIGGERED)then{
             _leader setBehaviour "AWARE";
             _leader setSpeedMode "FULL";
-            _lastKnownPosition = [position _unitChased , 0, 100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
+            _lastKnownPosition = [position _unitChased , 0, 100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         }else{
             _leader setBehaviour "SAFE";
             _leader setSpeedMode "LIMITED";
-            _lastKnownPosition = [position _leader , 0, 500, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
+            _lastKnownPosition = [position _leader , 0, 500, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         };
     };
 

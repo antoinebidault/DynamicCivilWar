@@ -20,7 +20,7 @@ _marker setMarkerBrush "SolidBorder";
 while {sleep 5;  alive _unit}do{
     _curPos = getPos _truck;
     
-    /*_pos = [_curPos, _radius/2, _radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+    /*_pos = [_curPos, _radius/2, _radius, 2, 0, 20, 0] call BIS_fnc_findSafePos;
     _newPos = getPos([_pos,_radius,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
     _truck move _newPos;*/
     
@@ -32,7 +32,7 @@ while {sleep 5;  alive _unit}do{
     sleep 5 + random 25;*/
 
     _curPos =  getPosASL _driver;
-    _compound = [_curPos, true] call fnc_findNearestMarker;
+    _compound = [_curPos, true, "neutral"] call fnc_findNearestMarker;
 
     _newPos = getMarkerPos(_compound select 0);
 

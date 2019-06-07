@@ -12,7 +12,7 @@ if ( {_x getVariable["DCW_Type",""] == "chaser"} count UNITS_SPAWNED_CLOSE >= MA
 
 private _nbUnit = MAX_CHASERS - round(random 3);
 private _grp = createGroup SIDE_ENEMY;
-private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100, 2, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100, 2, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
 
  for "_xc" from 1 to _nbUnit do {
     _enemy = [_grp,_posSelected, false] call fnc_spawnEnemy;

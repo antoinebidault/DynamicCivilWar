@@ -8,7 +8,6 @@
 params["_unit","_meetingPoint"];
 private _friend = objNull;
 
-//if (isNil '_meetingPoint') then { _meetingPoint = ([getPosATL _unit,false] call fnc_findnearestmarker) select 7; };
 if (isNil '_meetingPoint') exitWith {false;};
 if (count _meetingPoint != 3) exitWith {false;};
 if (!alive _unit) exitWith{false;};
@@ -19,7 +18,7 @@ _anims = ["STAND","STAND_IA","WATCH","WATCH1","WATCH2"];
 //{_unit disableCollisionWith _x;}foreach _chairs;
 //{_unit disableCollisionWith _x;}foreach _objs;
 
-private _newPos =  [_meetingPoint ,.6,1.5,.25, 0, 20, 0] call BIS_fnc_FindSafePos;//[[[_meetingPoint, 2]],[[_meetingPoint,1]]] call BIS_fnc_randomPos;
+private _newPos =  [_meetingPoint ,.6,1.5,.25, 0, 20, 0] call BIS_fnc_findSafePos;//[[[_meetingPoint, 2]],[[_meetingPoint,1]]] call BIS_fnc_randomPos;
 _unit doMove _newPos;
 _timer = time;
 

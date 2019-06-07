@@ -70,7 +70,7 @@ if (isPlayer _unit)then{
 	_unit addAction ["<t color='#00FF00'>Get supports</t>",{
 		hint "With this user interface, you can order supports with your points ! Interrogating civilian, destroying weapons caches, eliminating patrols will give you extra points."; 
 		(_this select 0) call fnc_supportui;
-	},nil,1.5,false,true,"","true",15,false,""];
+	},nil,0.5,false,true,"","true",15,false,""];
 };
 
 [] call fnc_displayscore;

@@ -48,7 +48,7 @@ if (count _roads > 0) then {
   };
 };
 
-private _flagPos = [_pos,0, 20, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
+private _flagPos = [_pos,0, 20, 1, 0, 20, 0] call BIS_fnc_findSafePos;
 _unit = FRIENDLY_FLAG createVehicle _flagPos;
 _units pushBack _unit;
 

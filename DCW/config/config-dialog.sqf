@@ -57,12 +57,12 @@ _ctrlListWeather lbSetCurSel  1;
 
 //Population
 private _ctrlListPopulation = _display displayCtrl 2102;
-_ctrlListPopulation lbAdd "High";
-_ctrlListPopulation lbSetValue  [0,1.25];
-_ctrlListPopulation lbAdd  "Standard";
-_ctrlListPopulation lbSetValue  [1,1];
-_ctrlListPopulation lbAdd "Low";
-_ctrlListPopulation lbSetValue  [2,.7];
+_ctrlListPopulation lbAdd "High (25%)";
+_ctrlListPopulation lbSetValue  [0,25];
+_ctrlListPopulation lbAdd  "Standard (5%)";
+_ctrlListPopulation lbSetValue  [1,5];
+_ctrlListPopulation lbAdd "Low (3%)";
+_ctrlListPopulation lbSetValue  [2,3];
 _ctrlListPopulation lbSetCurSel  1;
 
 

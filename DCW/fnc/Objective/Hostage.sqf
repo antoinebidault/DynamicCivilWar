@@ -74,7 +74,7 @@ for "_j" from 1 to _nb do {
         _hostage allowFleeing 1;
         _hostage setCaptive false;
         _hostage setVariable["DCW_IsIntel",true];
-        _pos = [getPosASL _hostage, 1000, 1200, 3, 0, 20, 0] call BIS_fnc_FindSafePos;
+        _pos = [getPosASL _hostage, 1000, 1200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
         _hostage move _pos;
         
         [_hostage,"Thank you !", false] call fnc_talk;

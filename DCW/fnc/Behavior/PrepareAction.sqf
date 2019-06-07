@@ -24,7 +24,7 @@ addActionJoinAsAdvisor = {
         _unit setVariable["DCW_advisor", true, true];
         [_unit] join GROUP_PLAYERS;
 
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,1,true,true,"","true",3,false,""];
 };
 
 //Menote le mec;
@@ -68,7 +68,7 @@ addActionHandCuff =  {
         hint "Civilian captured";	   
         [_man] remoteExec ["CIVIL_CAPTURED",2];
 
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,9,false,true,"","true",3,false,""];
 };
 
 
@@ -88,7 +88,7 @@ addActionInstructor = {
       [_unit, "We've located a few of these officers spreading the insurgency accross the country. It'is highly recommended to neutralize them"] call fnc_talk;
       [_unit, "The key path is to make the population always supporting you. Give people food, medicine and military training will make our investigations easier."] call fnc_talk;
       [_unit, "Alright guys ? Any question ? Dismiss !"] call fnc_talk;
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,1,true,true,"","true",3,false,""];
 };
 
 addActionGiveUsAHand =  {
@@ -132,7 +132,7 @@ addActionGiveUsAHand =  {
             };
         };
 
-    },nil,12,false,true,"","true",3,false,""];
+    },nil,1,false,true,"","true",5,false,""];
 };
 
 addActionLiberate =  {
@@ -156,14 +156,14 @@ addActionLiberate =  {
         if (side _man == SIDE_CIV) then {
             [_man,2] remoteExec ["fnc_updateRep",2];
         };
-        _pos = [getPos _man, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
+        _pos = [getPos _man, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         _man stop false;
         _man forceWalk false;
         _man forceSpeed 10;
         _man move _pos;
 
             
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,1,false,true,"","true",3,false,""];
 };
 
 
@@ -185,7 +185,7 @@ addActionLookInventory = {
             _human action ["Gear", _unit];
         };
 
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,5,false,true,"","true",3,false,""];
 };
 
 addActionHalt = {
@@ -206,9 +206,7 @@ addActionHalt = {
         
         _unit removeAction _action;
         _unit doWatch _asker;
-        sleep 1;
-        _unit playActionNow "GestureHi";
-        [_unit,format["Hi ! My name is %1.", name _unit],false] spawn fnc_Talk;
+
         _unit call addActionDidYouSee;
         _unit call addActionFeeling;
         _unit call addActionGetIntel;
@@ -217,6 +215,11 @@ addActionHalt = {
         if ( _unit getVariable["DCW_Chief",objNull] != objNull && alive (_unit getVariable["DCW_Chief",objNull])) then {
             [_unit,_unit getVariable["DCW_Chief",objNull]]  call addActionFindChief;
         };
+
+        sleep 1;
+        _unit playActionNow "GestureHi";
+        [_unit,format["Hi ! My name is %1.", name _unit],false] spawn fnc_Talk;
+     
         sleep 0.5;
         _unit disableAI "MOVE";
         waitUntil { _asker distance _unit > 13; sleep 4; };
@@ -225,7 +228,7 @@ addActionHalt = {
         RemoveAllActions _unit;
         [_man] call fnc_addCivilianAction;
 
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,12,false,true,"","true",6,false,""];
 };
 
 addActionDidYouSee = {
@@ -281,7 +284,7 @@ addActionDidYouSee = {
         if (alive _unit) then {
             _unit remoteExec ["addActionDidYouSee"];
         };
-    },nil,1,false,true,"","true",2.5,false,""];
+    },nil,5,false,true,"","true",2.5,false,""];
 };
 
 AddActionFeeling = {
@@ -291,7 +294,7 @@ AddActionFeeling = {
             [_unit,1] remoteExec ["fnc_updateRep",2];
             [_unit, _action] remoteExec["removeAction"];
             _message = "No problem, if you stay calm";
-            CIVIL_REPUTATION = ([position _unit,false] call fnc_findNearestMarker) select 13;
+            CIVIL_REPUTATION = ([position _unit,false,"any"] call fnc_findNearestMarker) select 13;
             if (CIVIL_REPUTATION  < 10) then {
                 _message = "Go away, before I call all my friends to kick your ass!";
             }else{
@@ -332,7 +335,7 @@ AddActionFeeling = {
             sleep 120;
             _unit remoteExec["AddActionFeeling"];
 
-        },nil,1.5,false,true,"","true",3,false,""];
+        },nil,4,false,true,"","true",3,false,""];
 };
 
 
@@ -405,7 +408,7 @@ addActionGetIntel = {
         _unit enableAI "MOVE";
         _unit stop false;
 
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,5,false,true,"","true",3,false,""];
 };
 
 
@@ -462,7 +465,7 @@ addActionRally = {
 
             [_unit,-1 ] remoteExec ["fnc_updateRep",2];
         };
-    },nil,1.5,false,true,"","true",3,false,""];
+    },nil,2,false,true,"","true",3,false,""];
 };
 
 addActionSupportUs = {
@@ -503,7 +506,7 @@ addActionFindChief = {
         }else{
             [_unit,"Our chief is no more... Fucking war !",false] call fnc_Talk;
         };
-    },[_chief],1.5,false,true,"","true",3,false,""];
+    },[_chief],7,false,true,"","true",3,false,""];
 };
 
 
@@ -514,12 +517,12 @@ addActionLeave = {
         _unit remoteExec ["removeAllActions",0];
         _asker playActionNow "gestureGo";
         [_asker,"Sorry sir, you must leave now, go away !",false] remoteExec ["fnc_Talk",0];
-        _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_FindSafePos;
+        _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         _unit stop false;
         _unit forceWalk false;
         _unit forceSpeed 10;
         _unit move _pos;
-    },nil,3.5,false,true,"","true",3,false,""];
+    },nil,8,false,true,"","true",3,false,""];
 };
 
 
@@ -528,7 +531,7 @@ fnc_ActionRest =  {
         params["_tent","_unit","_action"];
         if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around",false] call fnc_talk;};
         _tent removeAction _action;
-        _newObjs = [getPos _unit,getDir _unit, compo_rest ] call BIS_fnc_ObjectsMapper;
+        _newObjs = [getPos _unit,getDir _unit, compo_rest ] call BIS_fnc_objectsMapper;
         _camPos = _unit modelToWorld [.3,2.2,2];
         _cam = "camera" camcreate _camPos;
         _cam cameraeffect ["internal", "back"];
@@ -581,7 +584,7 @@ fnc_ActionRest =  {
             _tent call fnc_ActionRest;
         };
         
-    },nil,1.5,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];
+    },nil,1,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];
  };
 
 
@@ -594,7 +597,7 @@ fnc_ActionCorrupt =  {
          if (!([GROUP_PLAYERS,100] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
 
         //Populate with friendlies
-        _curr = ([position _unit,false] call fnc_findNearestMarker);
+        _curr = ([position _unit,false,"any"] call fnc_findNearestMarker);
     
         [_talker,"Maybe we could find an arrangement...", false] spawn fnc_talk;
 
@@ -633,7 +636,47 @@ fnc_ActionCorrupt =  {
 
         _unit removeAction _action;
 
-    },nil,1.5,false,true,"","true",20,false,""];
+    },nil,1,true,true,"","true",20,false,""];
+};
+
+fnc_AddActionHeal = {
+    // Stabilize
+    [ _this,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
+            params["_injured","_healer"];
+            if (!alive _injured) exitWith {};
+            _healer playActionNow "medicStart";
+            [_injured] spawn fnc_shout;
+            [_healer,_injured,20] spawn fnc_spawnHealEquipement;
+            _offset = [0,0,0]; _dir = 0;
+            _relpos = _healer worldToModel position _injured;
+            if ((_relpos select 0) < 0) then {_offset = [-0.2,0.7,0]; _dir = 90} else {_offset = [0.2,0.7,0]; _dir = 270};
+            _injured attachTo [_healer, _offset];
+            [_injured, _dir] remoteExec ["setDir", 0, false];
+        },{
+            params["_injured","_healer"];
+            //_healer playActionNow "medicStart";
+        
+        },{
+            params["_injured","_healer"];
+            _healer playActionNow "medicStop";
+            detach _injured;
+            _injured setUnconscious false;
+            _injured setDamage 0;
+            _injured setCaptive false;
+            _injured setHit ["legs", 0]; 
+            deleteMarker (_injured getVariable ["unit_marker",  ""]);
+            _injured setVariable ["unit_injured", false, true];
+            [_injured,_healer] remoteExec ["CIVIL_HEALED",2];
+            [_healer,4] remoteExec ["fnc_updateRep",2];
+            removeAllActions _injured;
+            [_healer,["Ok, this helps...","You look better now !"] call BIS_fnc_selectRandom, false] spawn fnc_talk;
+            _injured;
+        },{
+            params["_injured","_healer"];
+            _healer playActionNow "medicStop";
+            detach _injured;
+        },[],15,nil,true,true] remoteExec ["BIS_fnc_holdActionAdd"];
+
 };
 
 
@@ -641,7 +684,7 @@ fnc_ActionTorture =  {
     _this addAction ["<t color='#666000'>Torture him (30min/Bad reputation)</t>",{
         params["_unit","_talker","_action"];
         //Populate with friendlies
-        _curr = ([position _unit,false] call fnc_findNearestMarker);
+        _curr = ([position _unit,false,"any"] call fnc_findNearestMarker);
     
 		[_unit,-20] remoteExec ["fnc_updateRep",2];
         [_talker,"I need an answer know !! Little piece of shit !!", false] spawn fnc_talk;
@@ -708,6 +751,8 @@ fnc_ActionTorture =  {
         showCinemaBorder false;
         _cam cameraeffect ["terminate", "back"];
         camDestroy _cam;
+        detach _talker;
+        _talker switchMove "";
 
         if(_curr select 17 == "torture") then{ 
             if (!isMultiplayer) then {
@@ -724,5 +769,5 @@ fnc_ActionTorture =  {
             removeAllActions _unit;
         };
 
-    },nil,1.5,false,true,"","true",20,false,""];
+    },nil,1,true,true,"","true",20,false,""];
 };

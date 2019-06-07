@@ -20,7 +20,7 @@
 
         // Update the respawn position
         if (!(CAMP_RESPAWN_POSITION_ID isEqualTo [])) then {
-             CAMP_RESPAWN_POSITION_ID remoteExec ["BIS_fnc_RemoveRespawnPosition",0]; 
+             CAMP_RESPAWN_POSITION_ID remoteExec ["BIS_fnc_removeRespawnPosition",0]; 
         };
         CAMP_RESPAWN_POSITION_ID =  [SIDE_FRIENDLY, getMarkerPos CAMP_MARKER,"camp"] call BIS_fnc_addRespawnPosition;
         publicVariable "CAMP_RESPAWN_POSITION_ID";
@@ -36,7 +36,7 @@
         if (!isMultiplayer) then {
             skipTime 1;
         };
-        CAMP_OBJS = [getPos _unit,getDir _unit, compo_camp ] call BIS_fnc_ObjectsMapper;
+        CAMP_OBJS = [getPos _unit,getDir _unit, compo_camp ] call BIS_fnc_objectsMapper;
         sleep 3;
         titleCut ["", "BLACK IN", 3];
         sleep 3;
@@ -71,4 +71,4 @@
         //Rest animations
         (CAMP_OBJS select 18) remoteExec ["fnc_actionrest",0, true];
 
-    },nil,1.5,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];
+    },nil,1,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];

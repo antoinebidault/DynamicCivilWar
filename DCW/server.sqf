@@ -24,7 +24,6 @@ INITIAL_SPAWN_DISTANCE = SPAWN_DISTANCE;
 GEAR_AND_STUFF = [];
 OFFICERS = [];
 
-
 // Create a fake HQ unit
 "B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_FRIENDLY, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
 []spawn{
@@ -40,7 +39,6 @@ STAT_COMPOUND_TOTAL = 0;
 STAT_COMPOUND_SECURED = 0;
 STAT_COMPOUND_BASTION = 0;
 STAT_COMPOUND_MASSACRED = 0;
-
 
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 publicVariable "MARKER_WHITE_LIST";
@@ -97,14 +95,6 @@ COMPOUND_SECURED = {
 
 	//Misa à jour de l'amitié
 	[GROUP_PLAYERS,_points,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
-};
-
-//On success
-OBJECTIVE_ACCOMPLISHED = { 
-	params["_type","_unit","_bonus"]; 
-	if (_bonus > 0) then{
-		[GROUP_PLAYERS,_bonus,false,_unit] call fnc_updateScore;
-	};
 };
 
 //If civilian is healed by player
@@ -236,19 +226,19 @@ _supportScore = 0;
 			_icon setMarkerType "loc_Ruin";
 			_respawnId = [SIDE_FRIENDLY, _pos, _nameLocation] call BIS_fnc_addRespawnPosition
 		}else{
-			if (_forEachIndex >= 10/100*count _clusters) then {
-				_supportScore = 50 + ([1,-1] call BIS_fnc_selectRandom) * (floor (random 25));
-				_compoundState = "neutral";
-				_m setMarkerColor "ColorWhite";
-				_icon setMarkerColor "ColorBlack";
-				_icon setMarkerType "loc_tourism";
+			if (_forEachIndex >= (100-PERCENTAGE_OF_ENEMY_COMPOUND)/100*count _clusters) then {
+				_supportScore = floor (random 25);
+				_compoundState = "bastion";
+				_m setMarkerColor "ColorRed";
+				_icon setMarkerColor "ColorRed";
+				_icon setMarkerType "loc_Ruin";
 			}else {
-				if (_forEachIndex > 4/100*count _clusters) then {
-					_supportScore = floor (random 25);
-					_compoundState = "bastion";
-					_m setMarkerColor "ColorRed";
-					_icon setMarkerColor "ColorRed";
-					_icon setMarkerType "loc_Ruin";
+				if (_forEachIndex > 5/100*count _clusters) then {
+					_supportScore = 50 + ([1,-1] call BIS_fnc_selectRandom) * (floor (random 25));
+					_compoundState = "neutral";
+					_m setMarkerColor "ColorWhite";
+					_icon setMarkerColor "ColorBlack";
+					_icon setMarkerType "loc_tourism";
 				}else {
 					if (_forEachIndex > 2/100*count _clusters) then {
 						_supportScore = 50 + ([1,-1] call BIS_fnc_selectRandom) * (floor (random 25));
@@ -270,7 +260,6 @@ _supportScore = 0;
 			};
 		};
 
-		
 		_defendTaskState = "none";
 		if (_foreachIndex <  30/100*count _clusters && _nbBuildings >= 2) then {
 			_defendTaskState = "planned";
@@ -280,7 +269,6 @@ _supportScore = 0;
 		};
 
 		_primaryIntel = "none";
-		
 		if (_foreachIndex >  75/100*count _clusters && _foreachIndex <=  90/100*count _clusters) then {
 			_primaryIntel = "torture";
 			if (DEBUG) then {
@@ -304,7 +292,7 @@ _supportScore = 0;
 		for "_x" from 1 to _popbase  do
 		{
 			_rnd = random 100;
-			if (_rnd < PERCENTAGE_CIVILIAN && !_isMilitary) then{
+			if ((_rnd < PERCENTAGE_CIVILIAN && !_isMilitary) || _compoundState == "neutral") then {
 				_nbCivilian = _nbCivilian + 1;
 			}else{
 				_nbEnemies = _nbEnemies + 1;
@@ -324,9 +312,9 @@ _supportScore = 0;
 
 		_nbOutpost = [0,0,1] call BIS_fnc_selectRandom; 
 		_points = 1 + _nbEnemies * 10;
-		_meetingPointPosition =  [getPos (_buildings call BIS_fnc_selectRandom), 0, 15, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
+		_meetingPointPosition =  [getPos (_buildings call BIS_fnc_selectRandom), 0, 15, 4, 0, 1, 0] call BIS_fnc_findSafePos;
 		while {isOnRoad _meetingPointPosition} do{
-			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 1, 0] call BIS_fnc_FindSafePos;
+			_meetingPointPosition =  [_pos, 0, .67*_radius, 4, 0, 1, 0] call BIS_fnc_findSafePos;
 		};
 
 		STAT_COMPOUND_TOTAL = STAT_COMPOUND_TOTAL + 1;
@@ -343,7 +331,7 @@ _supportScore = 0;
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
 
-		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState,_primaryIntel];
+		MARKERS pushBack  [_m,_pos,false,_secured,_radius,[],_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState,_primaryIntel, [0,0,0,0,0,0,0,0,0,0]];
 	};
 	
 } foreach (_clusters call BIS_fnc_arrayShuffle);
@@ -453,6 +441,7 @@ while { true } do {
 				_respawnId = _x select 15;
 				_defendTaskState = _x select 16;
 				_primaryIntel = _x select 17;
+				_notSpawnedArray = _x select 18;
 
 				if (_triggered && _playerPos distance _pos < _radius ) then {
 					_currentMarker = _x;
@@ -469,48 +458,64 @@ while { true } do {
 					};
 				};
 
-				if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE) then{
+				if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE && (!_isInFlyingVehicle && _playerPos distance _pos >= _radius)) then{
 					
 					if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
 
 						//Véhicles spawn
 						_units = _units + ([_pos,_radius,(_peopleToSpawn select 3),_compoundState] call fnc_SpawnCars);
+						
 						//Units
 						_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition,_buildings,_compoundState,_supportScore] call fnc_SpawnUnits);
+						
 						//Meeting points
 						_units = _units + ([_meetingPointPosition] call fnc_SpawnMeetingPoint);
+						
 						//Spawn random composition
-						_units = _units + ([_pos,_buildings,_success] call fnc_spawnobjects);
+						_units = _units + ([_pos,_buildings,_success,_compoundState] call fnc_spawnobjects);
 
 						if (_compoundState == "secured")  then {	
 							//Units
 							_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition,_buildings] call fnc_SpawnFriendlyOutpost);
+						} else {
+							_notSpawnedArray set [9,_peopleToSpawn select 9] ;
 						};
 
 						if (_compoundState == "humanitary") then {
 							//Units
-							_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition,_buildings] call fnc_SpawnHumanitaryOutpost);
+							_units = _units + ([_pos,_radius,_peopleToSpawn select 0,_meetingPointPosition,_buildings] call fnc_SpawnHumanitaryOutpost);
 						};
 
 						if (_compoundState != "secured" && _compoundState != "humanitary") then {
 							//IEDs
 							_units = _units +  ([_pos,_radius,(_peopleToSpawn select 4)] call fnc_spawnIED);
+						} else {
+							_notSpawnedArray set [4,_peopleToSpawn select 4] ;
 						};
-
 						
 						if (_compoundState == "bastion" || (_compoundState == "neutral" && _supportScore < 45)) then {
+							//Snipers spawn
+							_units = _units + ([_pos,_radius,(_peopleToSpawn select 2)] call fnc_spawnsnipers);
 							//Cache
 							_units = _units + ([_pos,_radius,(_peopleToSpawn select 5),_buildings] call fnc_cache);
-							//Mortars
-							_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
 							//Hostages
 							_units = _units + ([_pos,_radius,(_peopleToSpawn select 6),_buildings] call fnc_hostage);
+							//Mortars
+							_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call fnc_SpawnMortar);
+						} else {
+							_notSpawnedArray set [2,_peopleToSpawn select 2] ;
+							_notSpawnedArray set [5,_peopleToSpawn select 5] ;
+							_notSpawnedArray set [6,_peopleToSpawn select 6] ;
+							_notSpawnedArray set [7,_peopleToSpawn select 7] ;
 						};
 
-						if (_compoundState == "bastion") then {
+						if (_compoundState == "bastion" ) then {
 							//Outposts
 							_units = _units + ([_marker,(_peopleToSpawn select 8)] call fnc_SpawnOutpost);
+						} else {
+							_notSpawnedArray set [8,_peopleToSpawn select 8] ;
 						};
+
 						_triggered = true;
 
 						//Add a little breath
@@ -521,7 +526,7 @@ while { true } do {
 				}else{
 					//Gestion du cache
 					if(_playerPos distance _pos > (SPAWN_DISTANCE + 150) && _triggered)then {
-						_cacheResult = [_units] call fnc_CachePut;
+						_cacheResult = [_units,_notSpawnedArray] call fnc_CachePut;
 						_peopleToSpawn = _cacheResult select 0;
 						_units = _units - [_cacheResult select 1];
 						_triggered = false;
@@ -531,7 +536,7 @@ while { true } do {
 						if (_triggered && !_success && _compoundState == "bastion") then{
 							if ([_playerPos, _marker] call fnc_isInMarker) then{
 								_enemyInMarker = true;
-								if ({side _x == SIDE_ENEMY && !(captive _x) && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= round (0.1 * (_peopleToSpawn select 2))) then {
+								if ({side _x == SIDE_ENEMY && !(captive _x) && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= floor (0.2 * (_peopleToSpawn select 2))) then {
 									_enemyInMarker = false;
 								};
 								//Cleared success
@@ -547,7 +552,7 @@ while { true } do {
 						};
 					};
 				}; 
-				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState,_primaryIntel]]; 
+				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState,_primaryIntel,_notSpawnedArray]]; 
 			}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
 		};
 		sleep 1;

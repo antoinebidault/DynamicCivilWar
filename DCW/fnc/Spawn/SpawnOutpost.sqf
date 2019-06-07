@@ -16,7 +16,7 @@ _radius = ((getMarkerSize _marker) select 0);
 
  for "_xc" from 1 to _nb do {
      
-    _nicePos = [_pos, _radius, (_radius + 100), 2, 0,.2, 0,MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+    _nicePos = [_pos, _radius, (_radius + 100), 2, 0,.2, 0,MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
     if (isNil "_nicePos")exitWith{[]};
     if (isOnRoad _nicePos)exitWith{[]};
 

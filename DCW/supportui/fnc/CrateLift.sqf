@@ -2,7 +2,7 @@
 params["_unit","_dist"];
 
 // Spawn CH47
-_pos = [_unit, _dist, _dist+1, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+_pos = [_unit, _dist, _dist+1, 0, 0, 20, 0] call BIS_fnc_findSafePos;
 _spawnpos = [_pos select 0, _pos select 1, 200];
 
 _heli_spawn = [_spawnpos, 0, SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom, SIDE_FRIENDLY] call BIS_fnc_spawnVehicle;

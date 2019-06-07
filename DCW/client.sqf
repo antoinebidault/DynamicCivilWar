@@ -55,9 +55,9 @@ if (ENABLE_DIALOG && !didJIP) then {
 			] spawn BIS_fnc_typeText2;
 		};
 
-		_randomPos = [getPos player, 200, 10000, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+		_randomPos = [getPos player, 200, 10000, 0, 0, 20, 0] call BIS_fnc_findSafePos;
 		_randomPos set [2, 140];
-		_targetPos = [_randomPos, 1000, 1100, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+		_targetPos = [_randomPos, 1000, 1100, 0, 0, 20, 0] call BIS_fnc_findSafePos;
 		CONFIG_CAMERA = "camera" camcreate _randomPos;
 		CONFIG_CAMERA cameraeffect ["internal", "back"];
 		showCinemaBorder false;

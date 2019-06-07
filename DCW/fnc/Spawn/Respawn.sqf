@@ -106,7 +106,7 @@ fnc_HandleRespawnSingleplayer =
 	if (!isMultiplayer) then {
 		{ 
 			if(!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
-				_x setPos ([_respawnPos, 5 ,60, 3, 0, 20, 0] call BIS_fnc_FindSafePos);
+				_x setPos ([_respawnPos, 0 ,10, 1, 0, 20, 0] call BIS_fnc_findSafePos);
 				if (ACE_ENABLED) then {
 					[objNull, _x] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
 				};

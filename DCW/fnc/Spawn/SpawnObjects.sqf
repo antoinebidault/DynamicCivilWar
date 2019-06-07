@@ -8,19 +8,28 @@ private["_unit"];
 private _pos = _this select 0;
 private _buildings = _this select 1;
 private _succeeded = _this select 2;
+private _state = _this select 3;
 _side = if (_succeeded) then {SIDE_FRIENDLY} else{SIDE_ENEMY};
 _nbBuildings = count _buildings;
 _objs = [];
+
+
+
 _tmpTurrets = compos_turrets;
 _tmpObjects = compos_objects;
+if (_state == "humanitary") then {
+    _tmpObjects = _tmpObjects + compos_medical
+};
+
 _nbCompos = round(_nbBuildings/3) min 8;
+
 
 
 for "_xc" from 1 to _nbCompos do {
     if (_buildings isEqualTo [])exitWith{};
     _buildingRandom = _buildings call BIS_fnc_selectRandom;
     _buildings = _buildings - [_buildingRandom];
-    _nicePos = [getPos _buildingRandom,2, 19, 6, 0, .3, 0, [], []] call BIS_fnc_FindSafePos;
+    _nicePos = [getPos _buildingRandom, 2, 40, 8, 0, .3, 0, [], []] call BIS_fnc_findSafePos;
 
     if (isNil "_nicePos")exitWith{};
     if (_nicePos isEqualTo [])exitWith{};
@@ -51,6 +60,7 @@ for "_xc" from 1 to _nbCompos do {
         _newObjs = [_nicePos,  random 360, _curr] call BIS_fnc_ObjectsMapper;
          [_newObjs select 0, "ColorWhite"] call fnc_addMarker;
         _objs = _objs + _newObjs;
+
    // };
 };
 

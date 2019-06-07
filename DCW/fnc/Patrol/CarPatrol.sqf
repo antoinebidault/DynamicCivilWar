@@ -16,7 +16,7 @@ _centeredOnPlayer = if (count _this > 2) then {_this select 2;} else {true;};
 while { sleep 5; alive _unit }do{
     _dir = random 360;
     _curPos = if (_centeredOnPlayer) then { getPosASL (allPlayers call BIS_fnc_selectRandom) ; }else{ getPosASL _unit; };
-    _pos = [_curPos, 0, _radius, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+    _pos = [_curPos, 0, _radius, 2, 0, 20, 0] call BIS_fnc_findSafePos;
     _newPos = getPosASL( [_pos,_radius,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
     _unit move _newPos;
     _timer = time;

@@ -19,7 +19,7 @@ if (count _buildings == 0) exitWith {[_unit,_radius] call fnc_simplePatrol;};
 //private _buildings = [getPos _unit,_radius] call fnc_findBuildings;
 //if(isNil("_buildings"))exitWith{};
 
-private _building = _buildings select 0; 
+private _building = _buildings call BIS_fnc_selectRandom; 
 //if (isNil "_building")exitWith{};
 
 private _bPoss = [];
@@ -81,7 +81,7 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
             if (_rd==2) then{
                 _dir = random 360;
                 _curPos = getPos _unit;
-                _newPos = [_curPos ,_range,_range + 30, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+                _newPos = [_curPos ,_range,_range + 30, 2, 0, 20, 0] call BIS_fnc_findSafePos;
                 _unit doMove _newPos;
                 _timer = time;
 
@@ -114,7 +114,7 @@ while { alive _unit && isNull(_unit findNearestEnemy _unit) && !(_unit getVariab
 
 // Go out if you detected enemy;
 if (random 100 > 50) then {
-     _newPos = [getPos _unit ,0, 40, 2, 0, 20, 0] call BIS_fnc_FindSafePos;
+     _newPos = [getPos _unit ,0, 40, 2, 0, 20, 0] call BIS_fnc_findSafePos;
     _unit move  _newPos;
 };
 

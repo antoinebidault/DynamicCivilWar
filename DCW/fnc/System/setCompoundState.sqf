@@ -9,6 +9,8 @@ _markerIndex = _markerData select 1;
 
 _marker set [12,_state];
 
+_populations = _marker select 6;
+
 _icon = _markerID + "-icon";
 
 _markerID setMarkerBrush "Solid";
@@ -54,7 +56,29 @@ if (_state == "secured") then{
 
 // Add the respawn position if secured only
 if (_state == "secured" ) then{
-	_marker set [15, [SIDE_FRIENDLY, getMarkerPos _markerID, _marker select 14] call BIS_fnc_addRespawnPosition];
+
+	_populations = _marker select 6;
+	// Add the friendly unit to compound
+	_populations set [9,(_populations select 0) + ceil(random 3)];
+	_marker  set [6,_populations];
+
+	_units = _marker select 5;
+	_pos = _x select 1;
+	_radius = _x select 4;
+	_meetingPointPosition = _x select 7;
+	_units = _units +  ([_pos,_radius,_populations select 9,_meetingPointPosition, _marker select 11] call fnc_SpawnFriendlyOutpost);
+	_marker  set [5,_units];
+
+	// White list this marker
+	_mkrToAvoid = createMarker [format["secured-whitelist-%1",str _marker select 1],_marker select 1];
+	_mkrToAvoid setMarkerAlpha 0;
+	_mkrToAvoid setMarkerShape "ELLIPSE";
+	_mkrToAvoid setMarkerSize [150 max 1.3*_radius,150 max 1.3*_radius];
+	MARKER_WHITE_LIST pushback _mkrToAvoid;
+
+	_spawnPos =  [_pos, 0,30 max .3*_radius, 2, 0, .4, 0] call BIS_fnc_findSafePos;
+	_marker set [15, [SIDE_FRIENDLY, _spawnPos, _marker select 14] call BIS_fnc_addRespawnPosition];
+	[_units] spawn fnc_compoundsecuredCutScene;
 } else {
 	if (!((_marker select 15) isEqualTo [])) then {
 		(_marker select 15) remoteExec ["BIS_fnc_RemoveRespawnPosition",0]; 
@@ -62,8 +86,13 @@ if (_state == "secured" ) then{
 };
 
 
-if (_state == "bastion")then{
+if (_state == "bastion") then {
 	_marker select 0 setMarkerColor "ColorRed";
+	_civilians = (_populations select 0) + (_populations select 2);
+	_enemies = _civilians - round(_civilians/3);
+	_populations set [0, round(_civilians/3)];
+	_populations set [2, _enemies];
+
 	if (DEBUG) then {HQ sideChat format["%1 is occupied by enemy",_marker select 14];};
 } else {
 	if (_state == "massacred") then {
@@ -86,6 +115,7 @@ if (_state == "bastion")then{
 	};
 };
 
+_marker set [6,_populations];
 MARKERS set [_markerIndex,_marker];
 
 [] call fnc_refreshMarkerStats;

@@ -16,7 +16,7 @@ while{true}do {
 
 		// Pick up a random position around a random player
 		
-		_pos = [position (allPlayers call BIS_fnc_selectRandom), _minRange, 350, 4, 0, 20, 0] call BIS_fnc_FindSafePos;
+		_pos = [position (allPlayers call BIS_fnc_selectRandom), _minRange, 350, 4, 0, 20, 0] call BIS_fnc_findSafePos;
 
 		_numberOfmen = round(random 2);
 		_numberOfSheep = 3 + floor(random 4	);

@@ -18,7 +18,7 @@ if((DCW_SCORE - _price) >= 0)then {
 	
 	if (_type=="UAV")then{
 		[HQ,"An UAV is moving toward your position",true] remoteExec ["fnc_talk"];
-	    _pos = [(leader GROUP_PLAYERS), 2500, 3000, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+	    _pos = [(leader GROUP_PLAYERS), 2500, 3000, 0, 0, 20, 0] call BIS_fnc_findSafePos;
 		_unit = createVehicle [SUPPORT_DRONE_CLASS, [_pos select 0, _pos select 1, 300], [], 0,"FLY"];  
 		createVehicleCrew _unit;  
 		_unit setCaptive true;

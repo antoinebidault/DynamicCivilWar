@@ -30,6 +30,7 @@ for "_j" from 1 to _nb do {
     [_unit,"ColorBrown"] call fnc_addMarker;
     _unit setVariable["DCW_Type","cache"];
     _unit setVariable["DCW_IsIntel",true];
+    
     _unit addMPEventHandler["MPKilled",{ 
         params["_cache","_killer"];
         if (group(_killer) == GROUP_PLAYERS) then {

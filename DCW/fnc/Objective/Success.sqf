@@ -16,7 +16,7 @@ if (!isServer) exitWith{hint format["fnc_success executed on the client %1 ;/", 
 if (_objWithTask getVariable["DCW_Type",""] == "") exitWith { false };
 
 //Task already successful
-if (!(_objWithTask setVariable["DCW_IsIntel",false])) exitWith {false};
+if (!(_objWithTask getVariable["DCW_IsIntel",false])) exitWith {false};
 
 _task = _objWithTask getVariable["DCW_Task",""];
 
@@ -24,28 +24,28 @@ _task = _objWithTask getVariable["DCW_Task",""];
 if (_task == "") then {
     [_objWithTask,(leader GROUP_PLAYERS),false] call fnc_CreateTask;
     _task = _objWithTask getVariable["DCW_Task",""];
-     sleep .5;
 };
 
+_taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
 
 // Spawn task successful on each client
-[[_task,((_task call BIS_fnc_taskDescription) select 1) select 0,_objWIthTask],{
+[[_task,_taskName,_objWIthTask],{
     params["_task","_taskName","_objWithTask"];
-    [_task, "SUCCEEDED",true] call BIS_fnc_taskSetState;
+    [_task, "SUCCEEDED", true] call BIS_fnc_taskSetState;
     [(leader GROUP_PLAYERS), format["Task done : %1",_taskName],true] call fnc_Talk;
-    _objWithTask setVariable["DCW_Task","", true];
-    _objWithTask getVariable["DCW_MarkerIntel",""] setMarkerColor "ColorGreen";
-
      sleep 20;
     [_task,true] call BIS_fnc_deleteTask;
-
 }] remoteExec ["spawn", GROUP_PLAYERS,false];
 
 //Custom callback
 [_objWithTask,_objWithTask getVariable["DCW_Reputation",0]] remoteExec ["fnc_updateRep",2];
-[_task,_objWithTask,_objWithTask getVariable["DCW_Bonus",0]] call OBJECTIVE_ACCOMPLISHED;
+if (_objWithTask getVariable["DCW_Bonus",0] > 0) then{
+    [GROUP_PLAYERS,_objWithTask getVariable["DCW_Bonus",0],false,_unit] call fnc_updateScore;
+};
 
 //Delete the task after success.
+_objWithTask getVariable["DCW_MarkerIntel",""] setMarkerColor "ColorGreen";
+_objWithTask setVariable["DCW_Task","", true];
 _objWithTask setVariable["DCW_Type",""];
 _objWithTask setVariable["DCW_IsIntel",false];
 _objWithTask setVariable["DCW_IsIntelRevealed",false];

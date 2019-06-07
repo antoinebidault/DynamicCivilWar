@@ -16,7 +16,7 @@ fnc_spawnOfficer = {
 
     _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
     _worldCenter = [_worldSize/2,_worldSize/2,0];
-    _initPos = [_worldCenter,0, _worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_FindSafePos;
+    _initPos = [_worldCenter,0, _worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_findSafePos;
 
     //Trucks
     _road = [_initPos,3000, MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;

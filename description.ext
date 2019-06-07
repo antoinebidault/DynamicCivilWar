@@ -24,5 +24,6 @@ ReviveForceRespawnDelay = 3;            //time needed to perform force respawn (
 ReviveBleedOutDelay = 120;              //unconscious state duration (in secs)
 keys[] = {"key1"};
 keysLimit = 1;
+taskManagement_propagate = 1;
 
 #include "DCW\includes.hpp"

@@ -18,7 +18,7 @@ private _offset = 40;
 private _distance = 350 + random 250;
 
 //Get the marker random position
-private _pos = [_initPos, _offset, (_distance - _offset) , 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+private _pos = [_initPos, _offset, (_distance - _offset) , 0, 0, 20, 0] call BIS_fnc_findSafePos;
 
 deleteMarker "dcw_intel_c";
 _marker = createMarker ["dcw_intel_c",_pos];

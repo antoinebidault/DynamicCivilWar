@@ -5,7 +5,7 @@ if (isNil '_type') then {_type = "vehicle";};
 _cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { SUPPORT_CAR_PARADROP_CLASS };
 
 // Spawn CH47
-_startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_FindSafePos;
+_startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_findSafePos;
 _spawnpos = [_startPos select 0, _startPos select 1, 200];
 
 _heli_spawn = [_spawnpos, 0, SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom, SIDE_FRIENDLY] call BIS_fnc_spawnVehicle;

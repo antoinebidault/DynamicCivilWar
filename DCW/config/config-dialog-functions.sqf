@@ -110,8 +110,8 @@ fnc_SaveAndGoToLoadoutDialog = {
 	publicVariable "WEATHER";
 
 	//Time_selected;
-	POPULATION_INTENSITY = (2102 call fnc_getValue);
-	publicVariable "POPULATION_INTENSITY";
+	PERCENTAGE_OF_ENEMY_COMPOUND = (2102 call fnc_getValue);
+	publicVariable "PERCENTAGE_OF_ENEMY_COMPOUND";
 
 	//Revive
 	MEDEVAC_ENABLED =  2104 call fnc_getValueChkBx;

@@ -20,7 +20,7 @@ ENEMY_COMMANDER = objNull;
 _grp = createGroup SIDE_ENEMY;
 _units = [];
 
-private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_FindSafePos;
+private _initPos = [_worldCenter, 0, (_worldSize/2), 1, 0, 4, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
 if (_initPos isEqualTo []) exitWith{hint "unable to spawn the commander"};
 _initPos = ((selectBestPlaces[_initPos, 100, _situation, 5, 1]) select 0 )select 0;
 
@@ -59,7 +59,7 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
         _commander forceSpeed 10;
         _dir = [_gunner,_commander] call BIS_fnc_dirTo; 
         _commanderPos = [(getPos _commander), 2000,_dir] call BIS_fnc_relPos;
-        [_commanderPos, 200, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_FindSafePos;
+        [_commanderPos, 200, 2000, 1, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
 
         _commander move _commanderPos;
         [_gunner,_commander] spawn {
@@ -132,7 +132,7 @@ while {alive (leader _grp) && leader _grp == ENEMY_COMMANDER}do{
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
     _initPos = _commanderPos;
-    _commanderPos = [_commanderPos, 200, 600, 1, 0, 5, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_FindSafePos;
+    _commanderPos = [_commanderPos, 200, 600, 1, 0, 5, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_findSafePos;
     _commanderPos = ((selectBestPlaces[_commanderPos, 500, _situation, 5, 1]) select 0 )select 0;
 
     _grp setBehaviour "SAFE";

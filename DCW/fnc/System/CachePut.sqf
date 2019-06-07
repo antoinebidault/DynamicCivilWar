@@ -12,19 +12,21 @@ The main purpose is to keep the same effective as before with just a randomizati
 BIDASS
 */
 
-private["_type","_units","_nbPeople","_nbSniper","_nbEnemies","_nbCars","_unitsToRemove","_nbIeds"];
+private["_type","_units","_nbPeople","_nbSniper","_nbEnemies","_nbCars","_unitsToRemove","_nbFriendlies","_nbIeds"];
 _units = _this select 0;
+_notSpawnedArray = _this select 1;
 
-_nbPeople = 0;
-_nbSniper = 0;
-_nbEnemies = 0;
-_nbCars = 0;
-_nbIeds = 0;
-_nbHostages = 0;
-_nbCaches = 0;
-_nbMortars = 0;
-_nbOutpost = 0;
-_nbFriendlies = 0;
+_nbPeople = _notSpawnedArray select 0;
+_nbSniper = _notSpawnedArray select 1;
+_nbEnemies = _notSpawnedArray select 2;
+_nbCars = _notSpawnedArray select 3;
+_nbIeds = _notSpawnedArray select 4;
+_nbHostages = _notSpawnedArray select 5;
+_nbCaches = _notSpawnedArray select 6;
+_nbMortars = _notSpawnedArray select 7;
+_nbOutpost = _notSpawnedArray select 8;
+_nbFriendlies = _notSpawnedArray select 9;
+
 _unitsToRemove = [];
 
 {
@@ -44,10 +46,10 @@ _unitsToRemove = [];
                 _x call fnc_failed;
                 _unitsToRemove pushBack _x;
                 
-                if (_type == "civ")then{
+                if (_type == "civ" )then{
                     _nbPeople = _nbPeople+1;
                 }else{
-                    if (_type == "enemy")then{
+                    if (_type == "enemy" )then{
                         _nbEnemies = _nbEnemies+1;
                     }else{
                         if (_type == "sniper")then{

@@ -70,7 +70,7 @@ _markerFriendly = [];
     _res = [_pos,true] call fnc_getRadiusLocation;
     _radius = _res select 0;
 	
-	if (_radius > 0)then {
+	if (_radius > 0 && !(surfaceIsWater _pos))then {
 		_clusters pushback [_pos,_radius,_res select 1,true,if (text _x == "") then {"Unknown location"} else {text _x},_res select 2, _res select 3,str random 10000];
 	};
 } forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Airport","CityCenter"], 25000]; 
@@ -87,15 +87,6 @@ for "_xc" from 0 to _worldNbBlocks do {
 				private _posCenteredOnBuilding = position (_buildings select 0);
 				private _res  = [_posCenteredOnBuilding] call fnc_getRadiusLocation;
 				private _radius = _res select 0;
-
-				/*_isCloseToAnotherCompound = false;
-				{ 
-					private _dist = _posCenteredOnBuilding distance (_x select 0);
-					if( .7*_dist < ((_x select 1)  + _radius) )exitWith{_isCloseToAnotherCompound = true;};
-				} foreach _clusters;
-
-				if (isNil '_isCloseToAnotherCompound')then{_isCloseToAnotherCompound = false;};
-				if (!_isCloseToAnotherCompound)then {*/
 				if (_radius > 0)then {
 					_name = "Compound";
 					if (_radius < 50) then {

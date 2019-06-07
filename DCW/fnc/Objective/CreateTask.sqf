@@ -96,7 +96,7 @@ switch (_type) do {
 
 //Unique ID added to the task id;
 _taskId = format["%1_%2",_taskId,random 200];
-[GROUP_PLAYERS,  _taskId, [_desc,_title,_title],(getPos _intel),"CREATED",1,_withNotif,""] remoteExec ["BIS_fnc_taskCreate", GROUP_PLAYERS];
+[GROUP_PLAYERS,  _taskId, [_desc,_title,_title],(getPos _intel),"CREATED",1,_withNotif,""] call BIS_fnc_taskCreate;
 _intel setVariable["DCW_Bonus",_bonus, true];
 _intel setVariable["DCW_Reputation",_reputation, true];
 _intel setVariable["DCW_Task",_taskId, true];

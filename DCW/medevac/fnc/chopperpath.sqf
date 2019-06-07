@@ -78,7 +78,7 @@ sleep 5;
 } foreach (units _groupToHelp):
 
 deleteWaypoint [_grp, 0];
- private _pos = [getposatl MEDEVAC_SmokeShell, 2, 50, 7, 0, 20, 0] call BIS_fnc_FindSafePos;
+ private _pos = [getposatl MEDEVAC_SmokeShell, 2, 50, 7, 0, 20, 0] call BIS_fnc_findSafePos;
  private _landpad = createVehicle ["Land_HelipadEmpty_F", _pos, [], 0, "CAN_COLLIDE"];
  private _wp01 = _grp addwaypoint [_pos, 0];
 
