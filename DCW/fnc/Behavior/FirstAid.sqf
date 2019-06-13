@@ -53,7 +53,7 @@ _time = time;
 
 
 if (_ambient) then {
-	waitUntil {sleep 10; lifeState _injuredperson != "INCAPACITED" && !alive _healer;};
+	waitUntil {sleep 10; lifeState _injuredperson != "INCAPACITED" || !alive _healer;};
 } else{
 	sleep 1;
 	_skill_factor = 40+(random 10);

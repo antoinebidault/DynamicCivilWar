@@ -30,8 +30,8 @@ fnc_Dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.s
 fnc_MissionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
 
 // INTRO 
-fnc_CamFollow = compileFinal preprocessFileLineNumbers  "DCW\intro\CamFollow.sqf";
-fnc_CompoundsecuredCutScene = compileFinal preprocessFileLineNumbers  "DCW\intro\CompoundsecuredCutScene.sqf";
+fnc_CamFollow = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CamFollow.sqf";
+fnc_CompoundsecuredCutScene = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CompoundsecuredCutScene.sqf";
 
 // SYSTEM
 fnc_getClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClusters.sqf";

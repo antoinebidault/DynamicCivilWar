@@ -23,6 +23,7 @@ WEATHER = .5;
 INITIAL_SPAWN_DISTANCE = SPAWN_DISTANCE;
 GEAR_AND_STUFF = [];
 OFFICERS = [];
+IN_MARKERS_LOOP = false;
 
 // Create a fake HQ unit
 "B_RangeMaster_F" createUnit [[-1000,-1000], createGroup SIDE_FRIENDLY, "this allowDamage false; HQ = this; ", 0.6, "colonel"];
@@ -89,13 +90,6 @@ ENEMY_KILLED = {
 	[GROUP_PLAYERS, 10,true] call fnc_updateScore;
  };
 
-//On compound secured
-COMPOUND_SECURED = { 
-	params["_marker","_radius","_units","_points"]; 
-
-	//Misa à jour de l'amitié
-	[GROUP_PLAYERS,_points,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
-};
 
 //If civilian is healed by player
 CIVIL_HEALED = { 
@@ -285,20 +279,22 @@ _supportScore = 0;
 		
 
 		//Nb units to spawn per block
-		_popbase = 1 MAX (MAX_POPULATION MIN (ceil( (POPULATION_INTENSITY * _nbBuildings* RATIO_POPULATION)  + (round random 1))));
+		_popbase = 1 MAX (MAX_POPULATION MIN (ceil( (POPULATION_INTENSITY * _nbBuildings * RATIO_POPULATION)  + (round random 1))));
 		_nbEnemies = 0;
 		_nbCivilian = 0;
 
 		for "_x" from 1 to _popbase  do
 		{
 			_rnd = random 100;
-			if ((_rnd < PERCENTAGE_CIVILIAN && !_isMilitary) || _compoundState == "neutral") then {
+			if ((_rnd < PERCENTAGE_CIVILIAN && !_isMilitary) || _compoundState != "bastion") then {
 				_nbCivilian = _nbCivilian + 1;
 			}else{
 				_nbEnemies = _nbEnemies + 1;
 			}
 		};
 
+		_nbEnemies = if (_compoundState == "bastion") then { (1 max _nbEnemies) } else { 0 };
+		_nbCivilian = 1 max _nbCivilian; // At least one civilian per compound at start
 		_nbFriendlies = if (_compoundState == "secured") then { ceil (1.3*_popbase) } else { 0 };
 
 		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
@@ -421,6 +417,7 @@ while { true } do {
 			_o = 4;
 
 			// foreach markers
+			IN_MARKERS_LOOP = true;
 			{
 				_currentCompound = _x;
 				_marker =_x select 0;
@@ -446,7 +443,7 @@ while { true } do {
 				if (_triggered && _playerPos distance _pos < _radius ) then {
 					_currentMarker = _x;
 					_playerInMarker = true;
-					[format["%1<br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["fnc_ShowIndicator",_player,false];
+					[format["<t color='#cd8700' size= '.3' >%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["fnc_ShowIndicator",_player,false];
 			
 					if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "supporting")  ) then {
 						[_currentCompound,_player] spawn {
@@ -542,10 +539,13 @@ while { true } do {
 								//Cleared success
 								if (!_enemyInMarker)then {
 									_success = true;
-									[_currentCompound,"neutral"] call fnc_setCompoundState;
-									_supportScore = _supportScore + 50;
-									[_marker,_radius,_units,_points] remoteExec ["COMPOUND_SECURED"];
-									[_player,"The compound is cleared ! Great job team.", true] remoteExec ["fnc_talk"];
+									[_currentCompound,"neutral"] spawn fnc_setCompoundState;
+									[_currentCompound,35 + (ceil random 20),0] spawn fnc_setCompoundSupport;				
+
+									//Misa à jour de l'amitié
+									[GROUP_PLAYERS,_points,false,(leader GROUP_PLAYERS)] call fnc_updateScore;
+
+									[_player,"The compound is clear ! Great job team.", true] remoteExec ["fnc_talk"];
 								};
 
 							};
@@ -553,7 +553,8 @@ while { true } do {
 					};
 				}; 
 				MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState,_primaryIntel,_notSpawnedArray]]; 
-			}foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
+			} foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
+			IN_MARKERS_LOOP = false;
 		};
 		sleep 1;
 

@@ -11,7 +11,7 @@ params ["_unit"];
 _unit setSpeedMode "LIMITED";
 _unit forceWalk  true;
 
-while { !(_unit getVariable ["civ_insurgent", false]) && lifeState _unit == "HEALTHY" && alive _unit && group _unit != GROUP_PLAYERS }do{
+while { !(_unit getVariable ["civ_insurgent", false]) && lifeState _unit == "HEALTHY" && group _unit != GROUP_PLAYERS }do{
 
     _newPos = [getPos (allPlayers call BIS_fnc_selectRandom), 1, 350, 3, 0, 20, 0] call BIS_fnc_findSafePos;
     group _unit move _newPos;

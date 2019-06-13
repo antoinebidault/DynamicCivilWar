@@ -6,10 +6,8 @@
  * 
  * Add a marker to map
  */
-
-
-params["_unit"];
-
+params["_compound"];
 // Set the correct state
-[_securedMarker,"secured"] call fnc_setCompoundState;
-[_securedMarker,50,10] spawn fnc_setCompoundSupport;
+
+[_compound,"secured"] call fnc_setCompoundState;
+[_compound,50,10] spawn fnc_setCompoundSupport;

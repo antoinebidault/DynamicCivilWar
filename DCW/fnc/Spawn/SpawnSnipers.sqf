@@ -12,7 +12,6 @@ private _units = [];
 
 if (_nbSnipers > 0)then{
     _sniperPos = [_pos,1.1*_radius, 1.4*_radius, 2, 0, 20, 0] call BIS_fnc_findSafePos;
-    _obj  =_objs select 0;
     _grp = createGroup SIDE_ENEMY;
     for "_xc" from 1 to _nbSnipers do {
         

@@ -18,7 +18,7 @@ _unit addGoggles (["G_Spectacles_Tinted","G_Aviator"] call BIS_fnc_selectRandom)
 _unit addHeadgear "H_Beret_blk";
 
 
-[_unit,["<t color='#666000'>Interrogate</t>",{
+[_unit,["<t color='#cd8700'>Interrogate</t>",{
     params["_unit","_asker","_action"];
      //Populate with friendlies
     _curr = ([position _unit,false,"any"] call fnc_findNearestMarker);
@@ -43,19 +43,21 @@ _unit addHeadgear "H_Beret_blk";
 },nil,1.5,false,true,"","true",20,false,""]] remoteExec ["addAction"];
 
 
-[_unit,[format["<t color='#666000'>Secure this compound (%1 points, 6 hours)</t>",_radius max 50],{
+[_unit,[format["<t color='#cd8700'>Secure this compound (%1 points, 6 hours)</t>",_radius max 50],{
     params["_unit","_asker","_action","_radius"];
     
     //Server execution
     [[_unit,_asker,_action],{
         params["_unit","_asker","_action"];
+        if (!(_this call fnc_startTalking)) exitWith {};
         [_asker,"Is it possible to set up our camp here ?", false] spawn fnc_talk;
         _curr = ([position _unit,false,"any"] call fnc_findNearestMarker);
-
-        private _success =_curr select 3;
-        if(_curr select 12 == "bastion") exitWith{[_unit,"This camp is still occupied by enemy forces, clean up the compound to make this compound available.", false] spawn fnc_talk; false;};
-        if(_curr select 13 < 70) exitWith{[_unit,"Improve your reputation first (70 minimum)", false] spawn fnc_talk; false;};
-        if (!([GROUP_PLAYERS,_radius max 50] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk;false;};
+        _success =_curr select 3;
+        _radius =_curr select 4;
+        
+        if(_curr select 12 == "bastion") exitWith{[_unit,"This camp is still occupied by enemy forces, clean up the compound to make this compound available.", false] spawn fnc_talk;_this call fnc_endTalking; false;};
+        if(_curr select 13 < 70) exitWith{[_unit,"Improve your reputation first (70 minimum)", false] spawn fnc_talk; _this call fnc_endTalking;  false;};
+        if (!([GROUP_PLAYERS,_radius max 50] call fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn fnc_talk; _this call fnc_endTalking; false;};
 
         _unit RemoveAction _action;
 
@@ -68,19 +70,21 @@ _unit addHeadgear "H_Beret_blk";
         _unit doWatch _asker;
         _asker doWatch _unit;
 
-        [_unit,"You're welcome here ! We need help. You can set up your camp here.", false] remoteExec ["fnc_talk"];
+        [_unit,"You're welcome here ! We need your help.", false] remoteExec ["fnc_talk"];
         [HQ,"Okay, we're sending you some reinforcements", false]  remoteExec ["fnc_talk"];
+        sleep 10;
         
-        _units = _unit spawn fnc_compoundSecured; 
+        [_curr] call fnc_compoundSecured; 
         
         _unit switchMove "";
         _unit enableAI "MOVE";
+        _this call fnc_endTalking; 
 
     }] remoteExec["spawn",2];
 },_radius,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
 
 
-[_unit,["<t color='#666000'>Paradrop a food box (50 points)</t>",{
+[_unit,["<t color='#cd8700'>Paradrop a food box (50 points)</t>",{
     params["_unit","_asker","_action"];
     
     //Server execution
@@ -101,7 +105,7 @@ _unit addHeadgear "H_Beret_blk";
 },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
 
 
-[_unit,[format["<t color='#666000'>Call in the humanitary assistance (%1 points, 12 hours)</t>",round (_radius * 1.5)],{
+[_unit,[format["<t color='#cd8700'>Call in the humanitary assistance (%1 points, 12 hours)</t>",round (_radius * 1.5)],{
     params["_unit","_asker","_action","_radius"];
     
     //Server execution
@@ -122,7 +126,7 @@ _unit addHeadgear "H_Beret_blk";
 },round (_radius * 1.5),2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
 
 
-[_unit,["<t color='#666000'>Gives him a military advisor</t>",{
+[_unit,["<t color='#cd8700'>Gives him a military advisor</t>",{
     params["_unit","_asker","_action"];
 
         _curr = ([position _unit,false,"any"] call fnc_findNearestMarker);

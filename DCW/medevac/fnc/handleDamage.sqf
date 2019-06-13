@@ -29,13 +29,15 @@ if ( _damage >= .9 && !isPlayer _unit && !(_unit getVariable["unit_injured",fals
 
 	_unit setDamage .9;
 	_damage = .9;
+
+	[leader GROUP_PLAYERS, ["Man down ! Man down !",format["%1 is down !",name _unit],format["%1 needs a medic !",name _unit]] call BIS_fnc_selectRandom] remoteExec ["fnc_talk"];
 	
     _marker = createMarker [format["DCW-injured-%1", name _unit], position _unit];
     _marker setMarkerShape "ICON";
     _marker setMarkerType "mil_dot";
     _marker setMarkerColor "ColorOrange";
-    _marker setMarkerText format["An injured comrade %1", name _unit];
-	_unit setVariable ["unit_marker",  _marker];
+    _marker setMarkerText format["An injured comrade : %1", name _unit];
+	_unit setVariable ["DCW_marker_injured",  _marker];
 
 }else{
 	if (_unit getVariable["unit_injured",false])then{

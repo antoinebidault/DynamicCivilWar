@@ -42,7 +42,7 @@ if (ENABLE_DIALOG && !didJIP) then {
 
 		[] spawn {
 			uisleep 4;
-			[parseText "<t font='PuristaBold' size='1.6'>Dynamic Civil War</t><br />by Bidass", true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
+			[parseText "<t font='PuristaBold'  size='1.6'>Dynamic Civil War</t><br />by Bidass", true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
 			uisleep 14;
 			[
 				[
@@ -111,7 +111,7 @@ if (!DEBUG ) then {
 uisleep .3;
 titleCut ["", "BLACK FADED", 9999];
 // Info text
-[worldName, format["%1km from %2", round(((getPos _loc) distance2D player)/10)/100,text _loc], str(date select 1) + "." + str(date select 2) + "." + str(date select 0)] spawn BIS_fnc_infoText;
+[worldName, format["%1km from %2", round(((getPos _loc) distance2D player)/10)/100,text _loc], str(date select 1) + "." + str(date select 2) + "." + str(date select 0), daytime call BIS_fnc_timeToString] spawn BIS_fnc_infoText;
 uisleep 5;
 "dynamicBlur" ppEffectEnable true;  
 "dynamicBlur" ppEffectAdjust [6];   
@@ -197,12 +197,12 @@ addMissionEventHandler
 							if (DEBUG) then {
 								_labels = ["Civilians","Snipers","Enemies","Cars","Ieds","Caches","Hostages","Mortars","Outposts","Friendlies"];
 								{
-									_dbg =  _dbg + format["<br/><t>%1:%2</t>",_labels select _foreachIndex,_x];
+									_dbg =  _dbg + format["<br/><t >%1:%2</t>",_labels select _foreachIndex,_x];
 								}foreach _people;
 								_dbg =  _dbg + format["<br/><t>Defend task state:%1</t>",_compound select 16];
 							};
 							
-							hintsilent parseText format["<t >%1</t><br/><t size='1.3'>Reputation : %2/100</t><br/><t size='1.3'>Population : %3</t>%4",(_marker select 0) select 14,(_marker select 0) select 13,_population,_dbg];
+							hintsilent parseText format["<t color='#cd8700' >%1</t><br/><t size='1.3'>Reputation : %2/100</t><br/><t size='1.3'>Population : %3</t>%4",(_marker select 0) select 14,(_marker select 0) select 13,_population,_dbg];
 						};
 					};
 

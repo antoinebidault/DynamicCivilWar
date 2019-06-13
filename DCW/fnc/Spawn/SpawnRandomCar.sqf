@@ -15,7 +15,7 @@ while{ true }do {
 	if (count _carPool < MAX_RANDOM_CAR)then{
 		//Get random pos
 		// get the next connected roadsegements to determine the direction of the road
-		_pos = [position (allPlayers call BIS_fnc_selectRandom), 500, 700, 0, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
+		_pos = [position (allPlayers call BIS_fnc_selectRandom), 1000, 1500, 0, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
 		if (_pos isEqualTo []) then {
 			sleep 2;
 		} else {
@@ -70,7 +70,7 @@ while{ true }do {
 				_carPool = _carPool - [_veh];
 			};
 
-			if(_veh distance _x > (SPAWN_DISTANCE max 1300))then{
+			if(_veh distance _x > 1600)then{
 				_carPool = _carPool - [_veh];
 				{
 					_x call fnc_deleteMarker;

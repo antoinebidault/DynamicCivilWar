@@ -22,7 +22,7 @@ _task = _objWithTask getVariable["DCW_Task",""];
 
 // Silently create a task if not exists
 if (_task == "") then {
-    [_objWithTask,(leader GROUP_PLAYERS),false] call fnc_CreateTask;
+    [_objWithTask,false] call fnc_CreateTask;
     _task = _objWithTask getVariable["DCW_Task",""];
 };
 
@@ -40,7 +40,7 @@ _taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
 //Custom callback
 [_objWithTask,_objWithTask getVariable["DCW_Reputation",0]] remoteExec ["fnc_updateRep",2];
 if (_objWithTask getVariable["DCW_Bonus",0] > 0) then{
-    [GROUP_PLAYERS,_objWithTask getVariable["DCW_Bonus",0],false,_unit] call fnc_updateScore;
+    [GROUP_PLAYERS,_objWithTask getVariable["DCW_Bonus",0],false,leader GROUP_PLAYERS] call fnc_updateScore;
 };
 
 //Delete the task after success.

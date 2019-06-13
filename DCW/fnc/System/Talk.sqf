@@ -40,7 +40,6 @@ if (_sound) then {
 	[] spawn { playSound (RADIO_CHAT_LIST call BIS_fnc_selectRandom); };
 };*/
 
-
 // Create display and control
 disableSerialization;
 _layer cutrsc ["rscDynamicText","plain"];
@@ -50,6 +49,17 @@ _ctrl = _display displayCtrl 9999;
 uiNamespace setVariable ["BIS_dynamicText", displayNull];
 _ctrlBackground = _display ctrlCreate ["RscText",9999];
 
+SPACEBAR_HIT = false;
+_ehId = (findDisplay 46) displayAddEventHandler ["KeyDown", {
+	switch (_this select 1) do {
+		case 57: {
+			SPACEBAR_HIT = true;
+			true;
+		};
+	};
+	false;
+}]; 
+
 // Position control
  _w = 0.7 * safeZoneW;
  _x = safeZoneX + (0.15 * safeZoneW );
@@ -58,7 +68,7 @@ _ctrlBackground = _display ctrlCreate ["RscText",9999];
 
 
 // Show subtitle
-_text = parseText format ["<t align = 'center' shadow = '2' size = '.8'><t color = '%1'>%2</t></t><br /><t align = 'center' shadow = '1' size = '.63'><t color = '#E0E0E0'>%3</t></t>",_color,name _talker,_say];
+_text = parseText format ["<t font='PuristaSemiBold' align = 'center' shadow = '2' size = '.8'><t color = '%1'>%2</t></t><br /><t align = 'center'  shadow = '1' size = '.63'><t color = '#E0E0E0'>%3</t></t><br/><t size='.3' align = 'center' shadow = '1' color='#cd8700' opacity='.4'>Space to skip</t>",_color,name _talker,_say];
 _ctrl ctrlSetStructuredText _text;
 MESS_HEIGHT = ctrlTextHeight _ctrl;
 MESS_SHOWN = true;
@@ -75,15 +85,20 @@ playSound "FD_CP_Clear_F";
 
 _talker setVariable["DCW_speak",true];
 _talker setRandomLip true;
-sleep ((count(_say)/10) max 2);
+
+_currentTime = time;
+waitUntil { time >= _currentTime + ((count(_say)/10) max 1.5) || SPACEBAR_HIT; };
+SPACEBAR_HIT = false;
+_display displayRemoveEventHandler ["KeyDown",_ehId];
 _talker setRandomLip false;
 _talker setVariable["DCW_speak",false];
 
+if (isNull _ctrl) exitWith{};
 
-
- if (count TALK_QUEUE > 1) then {
+if (count TALK_QUEUE > 1) then {
 	TALK_QUEUE = TALK_QUEUE - [_this];
 	MESS_SHOWN = false;
+	// Wait for the next message to show up
 	waituntil {MESS_SHOWN || count TALK_QUEUE == 0};
 	_ctrl ctrlSetPosition [_x,1.1*MESS_HEIGHT + _y,_w,_h];	
 	_ctrl ctrlSetFade .4;
@@ -100,5 +115,5 @@ _talker setVariable["DCW_speak",false];
 	MESS_SHOWN = false;
 };
 
-// Hide subtitle
+
 ctrlDelete _ctrl;

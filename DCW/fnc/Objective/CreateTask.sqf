@@ -6,8 +6,7 @@
  */
 
 private _intel = _this select 0;
-private _asker = _this select 1;
-private _withNotif = if (count _this >2)then{_this select 2}else{true};
+private _withNotif = if (count _this >1)then{_this select 1}else{true};
 
  _type = _intel getVariable["DCW_Type",""];
  _taskId = "neutral";

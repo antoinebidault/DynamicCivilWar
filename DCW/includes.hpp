@@ -14,6 +14,11 @@ class CfgMusic
           name = "seal";
           sound[] = {"\music\seal.ogg", 1, 1.0};
     };
+     class axe
+    {
+          name = "axe";
+          sound[] = {"\music\axe.ogg", 1, 1.0};
+    };
 };
 
 

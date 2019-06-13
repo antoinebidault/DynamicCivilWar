@@ -5,17 +5,19 @@
  * License : GNU (GPL)
  * Inspired by SPUn / LostVar
  */
-
+private["_marker"];
 _truck = _this select 0;
 _unit = _this select 1;
 _driver = driver _truck;
 _grp = group _unit;
 
-_marker = createMarker [format["officer-patrol-%1",random 13100], getPos _unit];
-_marker setMarkerShape "ELLIPSE";
-_marker setMarkerSize [6,6];
-_marker setMarkerColor "ColorBlack";
-_marker setMarkerBrush "SolidBorder";
+if (DEBUG) then {
+    _marker = createMarker [format["officer-patrol-%1",random 13100], getPos _unit];
+    _marker setMarkerShape "ELLIPSE";
+    _marker setMarkerSize [6,6];
+    _marker setMarkerColor "ColorBlack";
+    _marker setMarkerBrush "SolidBorder";
+};
 
 while {sleep 5;  alive _unit}do{
     _curPos = getPos _truck;
@@ -40,7 +42,10 @@ while {sleep 5;  alive _unit}do{
     if (isNull _road) exitWith { };
     
     _newPos = getPosASL _road; 
+    
+    if (DEBUG) then {
     _marker setMArkerPos _newPos;
+    };
     //_driver move _newPos;
 
     sleep 2; 
@@ -67,7 +72,9 @@ while {sleep 5;  alive _unit}do{
     if (count _HP == 0)exitWith{};
 
     _newPos= selectRandom _HP;
-    _marker setMArkerPos _newPos;
+    if (DEBUG) then {
+        _marker setMArkerPos _newPos;
+    };
     
     sleep 10;
 
@@ -94,7 +101,9 @@ while {sleep 5;  alive _unit}do{
     };
 
     _newPos = (_truck modelToWorld [0,5,0]);
-    _marker setMarkerPos _newPos;
+    if (DEBUG) then {
+        _marker setMarkerPos _newPos;
+    };
  //   sleep 60;
     _unit move _newPos;
     

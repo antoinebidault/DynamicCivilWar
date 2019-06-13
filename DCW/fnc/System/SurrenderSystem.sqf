@@ -230,11 +230,11 @@ while { true } do {
 	&& { _x distance player < 100 } count units GROUP_PLAYERS == 1 ) then {
 		[player] call fnc_shout;
 		if (_actionId == 0) then {
+			playMusic "axe";
 			_actionId = player addAction ["<t color='#000000'>Surrender</t>",{
 				params ["_target", "_caller", "_actionId", "_arguments"];
 				_caller removeAction _actionId;
 				[_caller] call fnc_captured;
-				
 			},nil,1,true,true];
 		};
 	} else {

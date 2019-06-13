@@ -1,10 +1,12 @@
-parasm["_units"];
+params["_units"];
 
 //Execute a little animation
 [[ (_units select { typeOf _x == FRIENDLY_FLAG }) select 0 ],{ 
 	params["_flag"];
-	if (isServer) exitWith{};
-	_asker = player;
+	if (isDedicated) exitWith{};
+
+	titleCut ["", "BLACK OUT", 1];
+	sleep 1;
 	showCinemaBorder true;
 	_cam = "camera" camcreate (_flag modelToWorld [-10,-0.2,2.9]);
 	_cam cameraeffect ["internal", "back"];
@@ -14,20 +16,32 @@ parasm["_units"];
 	_cam camSetPos (_flag modelToWorld [-20,-0.2,3.2]);
 	_cam camCommit 10;
 	
-	titleCut ["6 hours later...", "BLACK OUT", 3];
-	sleep 3;
-	titleCut ["6 hours later...", "BLACK FADED", 999];
-	
+	[parseText format ["<t font='PuristaBold' size='1.6'>The reinforcements arrived</t><br/>%1", daytime call BIS_fnc_timeToString], true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
+
+	sleep 1;
+
+	titleCut ["", "BLACK FADED", 999];
 	if (!isMultiplayer) then {
 		skipTime 6;
 	};
 
 	sleep 1;
-	titleCut ["6 hours later...", "BLACK IN", 4];
-	sleep 10;
+
+	titleCut ["", "BLACK IN", 1];
+
+	sleep 11;
+
+	titleCut ["", "BLACK OUT", 1];
+
+	sleep 1;
+
 
 	showCinemaBorder false;
 	_cam cameraeffect ["terminate", "back"];
 	camDestroy _cam;
+
+	titleCut ["", "BLACK IN", 1];
+
+	sleep 1;
 
 }] remoteExec["spawn"];

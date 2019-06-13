@@ -15,11 +15,11 @@ private _tempMarkers = MARKER_WHITE_LIST;
 
 while {count CRASHSITES < NUMBER_CRASHSITES} do{
 
-     _spawnPos = [_worldCenter, 0, (_worldSize/2)*.8, 5, 0, .3, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
+     _spawnPos = [_worldCenter, 0, (_worldSize/2)*.8, 5, 0, .3, 0, _tempMarkers] call BIS_fnc_findSafePos;
     
     // Temp marker with previously spawned tank
     _tmpmarker = createMarker [format["ch-bl-%1",random 10000], _spawnPos];
-    _tmpmarker setMarkerSize [1000,1000];
+    _tmpmarker setMarkerSize [1400,1400];
     _tmpmarker setMarkerShape "ELLIPSE";
     _tmpmarker setMarkerAlpha 0;
     _tempMarkers = _tempMarkers + [_tmpmarker];
@@ -42,7 +42,7 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _chopper setVariable ["DCW_Type","wreck"];
     _chopper setVariable ["DCW_IsIntel",true];
     
-    _taskData = [_chopper, (leader GROUP_PLAYERS),false] call fnc_createtask;
+    _taskData = [_chopper,false] call fnc_createtask;
     _chopper setVariable["DCW_Task",_taskData select 0];
 
      //Search intel;

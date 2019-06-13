@@ -32,7 +32,9 @@
         titleCut ["", "BLACK OUT", 3];
         sleep 3;
         
-        titleCut ["1 hour later...", "BLACK FADED", 9999];
+        titleCut ["", "BLACK FADED", 9999];
+	    [parseText format ["<t font='PuristaBold' size='1.6'>1 hour later...</t><br/>%1", daytime call BIS_fnc_timeToString], true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
+
         if (!isMultiplayer) then {
             skipTime 1;
         };
@@ -59,7 +61,9 @@
                 skipTime 1;
             };
             {deleteVehicle _x;} foreach CAMP_OBJS;
-            titleCut ["1 hour later...", "BLACK FADED", 9999];
+            titleCut ["", "BLACK FADED", 9999];
+            [parseText format ["<t font='PuristaBold' size='1.6'>1 hour later...</t><br/>%1", daytime call BIS_fnc_timeToString], true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
+
             sleep 3;
             titleCut ["", "BLACK IN", 3];
             [_asker, "We've packed up the camp !"] remoteExec ["fnc_talk",0, false];

@@ -44,6 +44,7 @@ fnc_replaceAllCutsceneSoldiers = {
 	{  
 		if (str _x find "DCW_cutscene_soldier" == 0  ) then {
 			_x setUnitLoadout (getUnitLoadout(_units call BIS_fnc_selectRandom)); 
+			[_x] joinSilent createGroup ((2111 call fnc_getValue) call BIS_fnc_sideType);
 		}; 
 	} foreach allUnits; 
 
@@ -60,7 +61,6 @@ fnc_renderfactionselect = {
 	// Clear the select
 	lbClear _ctrlLoadout;
 
-
 	{
 		_ctrlLoadout lbAdd (_x select 0);
 		_ctrlLoadout lbSetValue [_forEachIndex ,_forEachIndex];
@@ -70,7 +70,7 @@ fnc_renderfactionselect = {
 	_ctrlLoadout lbSetCurSel 0;
 
 	// A little correction
-	if (_ctrlId == 2103) then {
+	if (_ctrlId == 2103 && _side == west) then {
 		_ctrlLoadout lbAdd "Default (NATO)";
 		_size = (lbSize _ctrlLoadout) - 1;
 		_ctrlLoadout lbSetValue [_size ,_size];
@@ -190,6 +190,7 @@ fnc_SaveAndCloseConfigDialog = {
 		if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO; deleteVehicle CHOPPER_DEMO};
 
 		titleCut ["Preparing units...", "BLACK OUT", .5];
+			
 		sleep .5;
 		titleCut ["Preparing units...", "BLACK FADED", 999];
 		[] call fnc_missionsetup;
@@ -210,10 +211,11 @@ fnc_DisplayChopper = {
 	if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO;deleteVehicle CHOPPER_DEMO};
 	sleep .4;
 	SUPPORT_MEDEVAC_CHOPPER_CLASS = [SUPPORT_MEDEVAC_CHOPPER_CLASS,[lbData [2103, (2103 call fnc_getValue)], ["Helicopter"], "Transport"] call fnc_FactionGetSupportUnits] call fnc_fillSupportParam;
-  	CHOPPER_DEMO = ( SUPPORT_MEDEVAC_CHOPPER_CLASS call BIS_fnc_selectRandom) createVehicle  (player modelToWorld[0,-21,0]);
+  	CHOPPER_DEMO = (SUPPORT_MEDEVAC_CHOPPER_CLASS call BIS_fnc_selectRandom) createVehicle  (player modelToWorld[0,-21,0]);
 
 	CHOPPER_DEMO setPos [getPos(CHOPPER_DEMO) select 0, getPos(CHOPPER_DEMO) select 1,0];
 	CHOPPER_DEMO engineOn true;
+    CHOPPER_DEMO allowDamage false;
 	(driver CHOPPER_DEMO) stop true;
 };
 

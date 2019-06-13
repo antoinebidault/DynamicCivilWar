@@ -6,8 +6,14 @@
  */
 
  params["_unit"];
-_unit doWatch player;
-_unit disableAI "MOVE";
+ if (!isNull player) then {
+    _unit doWatch player;
+};
+
+if (!stopped _unit) then {
+    _unit stop true;
+};
+
 sleep .4;
  if(random 1 < .33)then{
         _unit switchMove "Acts_JetsMarshallingClear_in";
@@ -43,4 +49,6 @@ sleep .4;
         };
     };
 
-_unit enableAI "MOVE";
+if (stopped _unit) then {
+    _unit stop false;
+};

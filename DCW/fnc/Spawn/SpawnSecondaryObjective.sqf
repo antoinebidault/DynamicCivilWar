@@ -22,7 +22,7 @@ fnc_spawnOfficer = {
     _road = [_initPos,3000, MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
     _roadPos = getPos _road;
     _roadConnectedTo = roadsConnectedTo _road;
-    if (count _roadConnectedTo == 0) exitWith { hint "restart"; [] call fnc_spawnOfficer;  };
+    if (count _roadConnectedTo == 0) exitWith { hint "restart"; [] call fnc_spawnOfficer; };
     _connectedRoad = _roadConnectedTo select 0;
     _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
 
@@ -55,12 +55,12 @@ fnc_spawnOfficer = {
 
     _officer addMPEventHandler ["MPKilled",{
         params["_unit","_killer"];
-        [format["DCW_secondary_%1", name _unit],"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,true];
+        [format["DCW_secondary_%1", name _unit],"FAILED",true] remoteExec ["BIS_fnc_taskSetState",GROUP_PLAYERS,true];
         OFFICERS = OFFICERS - [_unit];
     }];
 
     _officer removeAllEventHandlers "HandleDamage";
-    _officer addEventHandler ["HandleDamage",{
+    _officer addEventHandler ["HandleDamage", {
         
         params [
             "_unit",			// Object the event handler is assigned to.
@@ -87,8 +87,8 @@ fnc_spawnOfficer = {
             };
 
             [leader GROUP_PLAYERS,"The target is down ! Let's go talk to him !", true] remoteExec ["fnc_talk", GROUP_PLAYERS,false];
-    
-            
+            [format["DCW_secondary_%1", name _unit],_x, ["Talk to the wounded officer","Interrogate the officer","Talk to the wounded officer"],getPos _unit,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",leader GROUP_PLAYERS, true];
+        
             //Spasm and unconscious state
             _unit spawn {
                 sleep .2;
@@ -159,15 +159,16 @@ while {sleep 20; count OFFICERS  > 0 } do {
 
     // Find the closest officer
     _officer = objNull;
-    _dist = 0;
+    _dist = 9999999;
     {
-      if (_dist < (_x distance2D (leader GROUP_PLAYERS))) then {
+      if (_dist > (_x distance2D (leader GROUP_PLAYERS))) then {
           _officer = _x;
           _dist = (_x distance2D (leader GROUP_PLAYERS));
       };
     } count OFFICERS;
 
     _marker = _officer getVariable["marker",""];
+
     _loc =  nearestLocations [getPosWorld _officer, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
     {
         // Task creation

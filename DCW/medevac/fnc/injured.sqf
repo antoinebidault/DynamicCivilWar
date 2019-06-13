@@ -34,7 +34,7 @@ _unit call fnc_addActionCarry;
 		_injured setDamage 0;
 		_injured setCaptive false;
 		_injured setHit ["legs", 0]; 
-		deleteMarker (_injured getVariable ["unit_marker",  ""]);
+		deleteMarker (_injured getVariable ["DCW_marker_injured",  ""]);
 		_injured setVariable ["unit_injured", false, true];
 		removeAllActions _injured;
 		[_healer,["Ok, you're good to go !","Get a cover to take back strength !"] call BIS_fnc_selectRandom, false] spawn fnc_talk;

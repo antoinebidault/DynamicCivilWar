@@ -91,7 +91,7 @@ if (alive _injured) then {
 	_injured setUnitPos "UP";
 	[_injured] join grpNull;
 
-	deleteMarker (_injured getVariable ["unit_marker", ""]) ;
+	deleteMarker (_injured getVariable ["DCW_marker_injured", ""]) ;
 	_injured removeEventHandler ["HandleDamage",0];
 	_injured addMPEventHandler ["MPKilled",{  MEDEVAC_State = "aborted";  }];
 	
@@ -99,7 +99,7 @@ if (alive _injured) then {
 
 	{_injured enableAI _x; } count ["MOVE","TARGET","AUTOTARGET","ANIM"];
 	_injured setVariable ["unit_stabilized", true];
-	_marker = _injured getVariable ["unit_marker", ""];
+	_marker = _injured getVariable ["DCW_marker_injured", ""];
 
 };
 

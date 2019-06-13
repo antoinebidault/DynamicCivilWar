@@ -50,7 +50,7 @@ SIDE_ENEMY = EAST; //Enemy side
 PATROL_SIZE = [1,3]; //Size of patrol => [minimum,random additionnals units]
 MAX_SPAWNED_UNITS = 60; //Max units to spawn
 MAX_CHASERS = 8; //Max hunters who are looking for you !
-MAX_RANDOM_PATROL = 11; //Number of units patroling around the player at the same time
+MAX_RANDOM_PATROL = 15; //Number of units patroling around the player at the same time
 MAX_RANDOM_CAR = 2; //Max car spawned.
 NUMBER_CHOPPERS = 0; // Number of choppers
 NUMBER_CRASHSITES = 2;

@@ -58,15 +58,15 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
         /**********GO IN*************/
         if (_rd == 0) then {
             
-            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+            if (_unit getVariable ["civ_insurgent",false] || !alive _unit)then{breakTo "main";};
 
             _newPos = (floor(random(count _bPoss)));
             _newPos = _bPoss select _newPos;
             waitUntil {sleep 4;unitReady _unit  || _unit distance _newPos < 2};
             _unit doMove _newPos;
             _timer = time;
-            waitUntil {sleep 4;unitReady _unit || _unit distance _newPos < 2  || time > _timer + 150};
-            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+            waitUntil {sleep 4;unitReady _unit || _unit distance _newPos < 2 || !alive _unit  ||  time > _timer + 150};
+            if (_unit getVariable ["civ_insurgent",false] || !alive _unit)then{breakTo "main";};
 
             sleep (13 + random 5);
             _i2 = _i2 + 1;
@@ -79,9 +79,9 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
                 _unit doMove _newPos;
                 _timer = time;
 
-                waitUntil {sleep 4; unitReady _unit || _unit distance _newPos < 2  || time > _timer + 150};
+                waitUntil {sleep 4; unitReady _unit || !alive _unit || _unit distance _newPos < 2  || time > _timer + 150};
 
-                if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+                if (_unit getVariable ["civ_insurgent",false] || !alive _unit)then{breakTo "main";};
 
                 //Sit or not
                 if (round(random 1)==1)then{
@@ -94,7 +94,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
                 };
                
                 //Play a suspect animation
-                if (_unit getVariable["DCW_Suspect",false])then{
+                if (_unit getVariable["DCW_Suspect",false] && !stopped _unit)then{
                     _unit stop true;
                     _unit playActionNow "medic";
                     sleep 4;
@@ -105,11 +105,11 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
 
             }else{
                 [_unit,_meetPoint] call fnc_gotomeeting;
-                if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+                if (_unit getVariable ["civ_insurgent",false] || !alive _unit)then{breakTo "main";};
                 sleep 20;
             };
 
-            if (_unit getVariable ["civ_insurgent",false])then{breakTo "main";};
+            if (_unit getVariable ["civ_insurgent",false] || !alive _unit)then{breakTo "main";};
         };
     };
 };
