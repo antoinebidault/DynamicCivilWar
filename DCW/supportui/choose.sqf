@@ -27,7 +27,7 @@ if((DCW_SCORE - _price) >= 0)then {
 	}else{
 		if (_type=="vehicle") then {
 			[HQ,"A car will be droped at your position",true] remoteExec ["fnc_talk"];
-			COMMMENU_TRANSPORT_ID = [(leader GROUP_PLAYERS), "TransportParadrop"] call BIS_fnc_addCommMenuItem;
+			COMMENU_TRANSPORT_ID = [(leader GROUP_PLAYERS), "TransportParadrop"] call BIS_fnc_addCommMenuItem;
 		} else {
 			[HQ,"Support provided",true] remoteExec ["fnc_talk"];
 			_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;
