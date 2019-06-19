@@ -153,7 +153,7 @@ for "_i" from 1 to NUMBER_OFFICERS  do {
 };
 
 
-sleep 10;
+sleep 240;
 
 while {sleep 20; count OFFICERS  > 0 } do {
 

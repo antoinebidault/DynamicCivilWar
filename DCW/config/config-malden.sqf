@@ -24,6 +24,7 @@ SUPPORT_CAR_PARADROP_CLASS = "B_LSV_01_armed_F";
 FRIENDLY_LIST_UNITS = ["B_Soldier_SL_F","B_soldier_AR_F","B_Soldier_GL_F","B_soldier_M_F","B_soldier_AT_F","B_soldier_AAT_F","B_Soldier_A_F","B_medic_F","B_Soldier_F","B_soldier_LAT_F","B_Soldier_TL_F"];
 ALLIED_LIST_UNITS = ["B_Soldier_SL_F","B_soldier_AR_F","B_Soldier_GL_F","B_soldier_M_F","B_soldier_AT_F","B_soldier_AAT_F","B_Soldier_A_F","B_medic_F","B_Soldier_F","B_soldier_LAT_F","B_Soldier_TL_F"]; //Units of your side
 ALLIED_LIST_CARS = ["B_APC_Tracked_01_rcws_F","B_MRAP_01_gmg_F","B_MRAP_01_hmg_F","B_LSV_01_AT_F"]; //Friendly cars
+FRIENDLY_LIST_CARS = ["B_APC_Tracked_01_rcws_F","B_MRAP_01_gmg_F","B_MRAP_01_hmg_F","B_LSV_01_AT_F"]; //Friendly cars
 FRIENDLY_FLAG = "Flag_UNO_F"; //Flag of your side
 FRIENDLY_CHOPPER_CLASS = ["B_Heli_Transport_01_F", "B_Heli_Transport_03_F"];
 

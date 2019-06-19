@@ -55,8 +55,12 @@ for "_xc" from 1 to _nb  do {
         _posSelected = _posSelects call BIS_fnc_selectRandom;
         _posSelects = _posSelects - [_posSelected];
     }else{
-        _randomBuilding = _enterable call BIS_fnc_selectRandom;
-        _posSelected = [getPos _randomBuilding,1, 40, 1.5, 0, 20, 0] call BIS_fnc_findSafePos;
+        private _spawnPos = _pos;
+        if (count _enterable > 0) then {
+          _randomBuilding = _enterable call BIS_fnc_selectRandom;
+          _spawnPos = getPos _randomBuilding;
+        };
+        _posSelected = [_spawnPos,1, 22, 1.5, 0, 20, 0] call BIS_fnc_findSafePos;
     };
 
       

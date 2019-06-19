@@ -79,12 +79,12 @@ if (side _unit == SIDE_CIV )then{
 	_unit doWatch _newPos;
 	//_unit setDir ([_unit,_newPos] call BIS_fnc_dirTo);
 	if (random 10 > 5)then{
-		[_unit,_anims call BIS_fnc_selectRandom,"FULL"] call BIS_fnc_ambientAnimCombat;
+		[_unit,_anims call BIS_fnc_selectRandom,"FULL"] remoteExec["BIS_fnc_ambientAnimCombat"];
 		if ({side _x == side _unit} count friends > 0) then {
 			_unit doWatch _friend;
 		};
 		sleep  (10 + random 50);
-		_unit spawn BIS_fnc_ambientAnim__terminate;
+		[_unit] remoteExec ["BIS_fnc_ambientAnim__terminate"];
 	}else{
 		_unit stop true;
 		sleep 3;

@@ -27,7 +27,6 @@ class PARAMETERS_DIALOG
     class Controls
     {
 
-
         
         
          class RscBox_1801: IGUIBack
@@ -323,6 +322,28 @@ class PARAMETERS_DIALOG
           w = 26 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
           action = "[] call fnc_SaveAndGoToLoadoutDialog";
+        };
+
+        class RscButton_1601: RscButton
+        {
+          idc = 1601;
+          text = "Choose insertion point"; //--- ToDo: Localize;
+          x = -5 * GUI_GRID_W + GUI_GRID_X;
+          y = 13 * GUI_GRID_H + GUI_GRID_Y;
+          w = 12 * GUI_GRID_W;
+          h = 2 * GUI_GRID_H;
+          action = "[] spawn fnc_ChooseLocation";
+        };
+        
+
+        class test_map: RscMapControl
+        {
+          idc = 122;
+          text = "#(argb,8,8,3)color(1,1,1,1)";
+          x = -21 * GUI_GRID_W + GUI_GRID_X;
+          y = -8 * GUI_GRID_H + GUI_GRID_Y;
+          w = 80 * GUI_GRID_W;
+          h = 40 * GUI_GRID_H;
         };
     };
 };

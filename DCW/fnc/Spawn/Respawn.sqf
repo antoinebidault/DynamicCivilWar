@@ -15,32 +15,38 @@ if (!RESPAWN_ENABLED)then {
 [] spawn fnc_surrenderSystem;
 
 RESPAWN_CHOICE = "";
-INITIAL_RESPAWN_POSITION = getMArkerPos "marker_base"; // getPos _player;
 REMAINING_RESPAWN = NUMBER_RESPAWN;
 
-fnc_HandleRespawnMultiplayer = {
+fnc_HandleRespawnBase = {
 	params["_unit"];
 
 	PLAYER_ALIVE = true;
 
 	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
-	_pm = createMarker [format["player-marker-%1",random 1000], getPos _unit];
+	_pm = createMarker [format["player-marker-%1",name _unit], getPos _unit];
 	_pm setMarkerShape "ELLIPSE";
 	_pm setMarkerColor "ColorGreen";
 	_pm setMarkerAlpha 0;
 	_pm setMarkerSize [200,200];
 	if (DEBUG) then {
-		_pm setMArkerAlpha .3;
+		_pm setMarkerAlpha .3;
 	};
 	_unit setVariable["marker", _pm, true];
 
 	//Default trait
 	_unit setUnitTrait ["explosiveSpecialist",true];
 
+	// Corrected player rating
+	 if (rating _unit < 0) then {
+		_unit addRating ((-(rating _unit)) + 1000);
+	};
+
 	//Squad leader specific
 	sleep 2;
 
+
 	if ((leader GROUP_PLAYERS) == _unit) then {
+		RemoveAllActions _unit;
 		_unit call fnc_ActionCamp;
 		_unit call fnc_supportuiInit;
 	};
@@ -77,31 +83,28 @@ fnc_HandleRespawnSingleplayer =
 	[] call fnc_displayscore;
 	
 
-	 // Corrected player rating
-	 if (rating _unit < 0) then {
-		_unit addRating ((-(rating _unit)) + 1000);
-	};
-
 	//count the remaining lives after death
 	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
 	if (REMAINING_RESPAWN == -1) exitWith{ endMission "LOSER"; };
 	
-	cutText ["You are severly injured","BLACK OUT", 7];
+	cutText ["Respawning...","BLACK OUT", 7];
 	sleep 7;
 	_unit setUnconscious false;
-
+	_unit setDamage 0;
+	
 	_timeSkipped = round(6 + random 12);
-	cutText ["You are severly injured","BLACK FADED", 999];
+	cutText ["Respawning...","BLACK FADED", 999];
 	sleep 2;
 	cutText ["","BLACK FADED",  999];
 	[] call fnc_respawndialog;
-	waitUntil{RESPAWN_CHOICE != ""};
-	cutText [format["Back to %1...",RESPAWN_CHOICE],"BLACK FADED", 999];
+	waitUntil{ RESPAWN_CHOICE != "" };
+	cutText [format["Back to %1...", RESPAWN_CHOICE], "BLACK FADED", 999];
 	sleep 1;
 	
 	// Move the alive AI unit back to position
-	private _respawnPos = if (RESPAWN_CHOICE == "base") then {INITIAL_RESPAWN_POSITION} else {CAMP_RESPAWN_POSITION};
+	private _respawnPos = if (RESPAWN_CHOICE == "base") then {START_POSITION} else {CAMP_RESPAWN_POSITION};
 	RESPAWN_CHOICE = ""; // Reset
+	
 
 	if (!isMultiplayer) then {
 		{ 
@@ -117,41 +120,34 @@ fnc_HandleRespawnSingleplayer =
 
 	sleep 1;
 
-	[_unit,"Acts_welcomeOnHUB01_PlayerWalk_6"] remoteExec ["switchMove",0];
 
 	//Disable chasing if not in multiplayer
 	if (!isMultiplayer) then{
 		CHASER_TRIGGERED = false;
 		publicVariable "CHASER_TRIGGERED";
 	}; 
-	PLAYER_ALIVE = true;
+
+	[player] call fnc_HandleRespawnBase;
+
     resetCamShake;
 
-	//Set new pos and loadout
-	_unit setDamage 0;
 	if (ACE_ENABLED) then {
 		[objNull, player] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
 	};
+
 	_unit setCaptive true;
 	_unit setPos _respawnPos;
 	_unit setUnitLoadout _loadout;
 
-	[_unit,"Acts_welcomeOnHUB01_PlayerWalk_6"] remoteExec ["switchMove",0];
+	_unit switchMove "Acts_welcomeOnHUB01_PlayerWalk_6";
+
 	//Black screen with timer...
 	sleep 2;
 	cutText ["","BLACK FADED", 999];
 	
-	// Wait a bit that the group are made with surrendersystem
-	//Squad leader specific
-	if ((leader GROUP_PLAYERS) == _unit) then {
-		RemoveAllActions _unit;
-		_unit call fnc_ActionCamp;
-		_unit call fnc_supportuiInit;
-	};
-
-
 	BIS_DeathBlur ppEffectAdjust [0.0];
 	BIS_DeathBlur ppEffectCommit 0;
+
 	cutText ["","BLACK FADED", 999];
 	
     if (!isMultiplayer) then {
@@ -177,23 +173,31 @@ if (RESPAWN_ENABLED) then{
 
 	if (isMultiplayer) then {
 		// Add tickets to the player
-		[_player, NUMBER_RESPAWN, false] call BIS_fnc_respawnTickets;
+		if (NUMBER_RESPAWN != -1) then {
+			[_player, NUMBER_RESPAWN, false] call BIS_fnc_respawnTickets;
+		};
 		REMAINING_RESPAWN = NUMBER_RESPAWN;
 
 		[SIDE_FRIENDLY, getMarkerPos "marker_base","Base"] call BIS_fnc_addRespawnPosition;
 		
-		[_player] call fnc_HandleRespawnMultiplayer;
+		[_player] call fnc_HandleRespawnBase;
 		
-	  _player addMPEventHandler ["MPRespawn", {
+		_loadout = getUnitLoadout _player;
+	     _player addMPEventHandler ["MPRespawn", {
 			params ["_unit", "_corpse"];
+			[_unit, [missionNamespace, "inventory_var"]] call BIS_fnc_loadInventory;
 			_unit setVariable["marker", MARKER_PLAYER, true];
-			REMAINING_RESPAWN = [_unit,nil,true] call BIS_fnc_respawnTickets;
-			if (REMAINING_RESPAWN == -1)exitWith{  endMission "LOSER";  };
-			[_unit] spawn fnc_HandleRespawnMultiplayer;
+			if (NUMBER_RESPAWN != -1) then {
+				REMAINING_RESPAWN = [_unit,nil,true] call BIS_fnc_respawnTickets;
+				if (REMAINING_RESPAWN == -1)exitWith{  endMission "LOSER";  };
+			};
+			_player setUnitLoadout _loadout;
+			[_unit] spawn fnc_HandleRespawnBase;
 		}];
 
 		_player addMPEventHandler ["MPKilled",{
 			params ["_unit"	];
+			[_unit, [missionNamespace, "inventory_var"]] call BIS_fnc_saveInventory;
 			[] remoteExec ["PLAYER_KIA",2];
 			PLAYER_ALIVE = false;
 			// Delete the marker with a little delay
@@ -210,7 +214,7 @@ if (RESPAWN_ENABLED) then{
 		enableTeamSwitch false;
 
 		// In Singleplayer
-		[_player] call fnc_HandleRespawnMultiplayer;
+		[_player] call fnc_HandleRespawnBase;
 
 		// Prevent ACE to do bullshit
 		_player removeAllEventHandlers "HandleDamage";

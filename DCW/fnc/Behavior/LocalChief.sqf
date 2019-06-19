@@ -20,6 +20,8 @@ _unit addHeadgear "H_Beret_blk";
 
 [_unit,["<t color='#cd8700'>Interrogate</t>",{
     params["_unit","_asker","_action"];
+    if (!(_this call fnc_startTalking)) exitWith {};
+
      //Populate with friendlies
     _curr = ([position _unit,false,"any"] call fnc_findNearestMarker);
    
@@ -27,18 +29,19 @@ _unit addHeadgear "H_Beret_blk";
      _state =_curr select 12;
     
     [_asker,"Tell us all you know about the insurgent commander !", false] spawn fnc_talk;
-    if(_state == "bastion" && !_success) exitWith{ [_unit,"Secure our position first", false] spawn fnc_talk; false;};
+    _this call fnc_endTalking; 
+    if(_state == "bastion" && !_success) exitWith{ [_unit,"Secure our position first", false] spawn fnc_talk;false;};
 
-        if( _curr select 17 != "hasintel") then{ 
-            _sentence = ["I don't know where he is...","I have no idea...","I wouldn't collaborate... This is too dangerous for my family..."] call BIS_fnc_selectRandom;
-            [_unit,_sentence, false] spawn fnc_talk; 
-            _unit removeAction _action; 
-            _unit call fnc_actionTorture;
-            _unit call fnc_actionCorrupt;
-        } else {
-            _unit removeAction _action;
-            _unit call fnc_MainObjectiveIntel;
-        };
+    if( _curr select 17 != "hasintel") then{ 
+        _sentence = ["I don't know where he is...","I have no idea...","I wouldn't collaborate... This is too dangerous for my family..."] call BIS_fnc_selectRandom;
+        [_unit,_sentence, false] spawn fnc_talk; 
+        _unit removeAction _action; 
+        _unit call fnc_actionTorture;
+        _unit call fnc_actionCorrupt;
+    } else {
+        _unit removeAction _action;
+        _unit call fnc_MainObjectiveIntel;
+    };
 
 },nil,1.5,false,true,"","true",20,false,""]] remoteExec ["addAction"];
 
@@ -131,7 +134,6 @@ _unit addHeadgear "H_Beret_blk";
 
         _curr = ([position _unit,false,"any"] call fnc_findNearestMarker);
         _state = _curr select 12;
-
 
         if (_state != "neutral") exitWith {[_unit,"This action requires a compound neutral state",false] call fnc_talk; false;};
         if ({_x getVariable["DCW_advisor",false]} count (units GROUP_PLAYERS) == 0) exitWith {[_asker,"I need a military advisor first. I can recruit them in already secured camps.",false] call fnc_talk;false;};

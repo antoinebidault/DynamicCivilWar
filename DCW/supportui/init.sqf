@@ -16,6 +16,19 @@ private _logicGroup = createGroup _center;
 
 private _pos = [_unit, 3000, (floor (random 360))] call BIS_fnc_relPos;
 SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",_pos, [], 0, "FORM"]; 
+COMMMENU_TRANSPORT_ID = 0;
+
+// Transport menu config
+TRANSPORTPARADROP_MENU = [["Transport",false]];
+{
+	_displayName = getText(configFile >>  "CfgVehicles" >> _x >> "displayName");
+	TRANSPORTPARADROP_MENU pushBack [_displayName, [_foreachIndex + 2], "", -5, [["expression",format[ "[getPos player,1500,""%1""] execVM ""DCW\supportui\fnc\VehicleLift.sqf"";[player,%2] call BIS_fnc_removeCommMenuItem;",_x, COMMMENU_TRANSPORT_ID]]], "1", "1", "\A3\ui_f\data\IGUI\Cfg\Cursors\iconcursorsupport_ca.paa"];
+}
+foreach SUPPORT_CAR_PARADROP_CLASS;
+publicVariable "TRANSPORTPARADROP_MENU";
+
+
+
 
 {
 	[SUPPORT_REQUESTER, _x, 0] call BIS_fnc_limitSupport;
@@ -73,4 +86,4 @@ if (isPlayer _unit)then{
 	},nil,0.5,false,true,"","true",15,false,""];
 };
 
-[] call fnc_displayscore;
+//[] call fnc_displayscore;

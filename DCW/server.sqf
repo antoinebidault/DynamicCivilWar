@@ -115,6 +115,48 @@ ENEMY_SEARCHED = {
 
 WAITUNTIL {DCW_STARTED;};
 
+// Start spawning troops
+_dest = START_POSITION;
+_grp = createGroup SIDE_FRIENDLY;
+_anims = ["WATCH","WATCH2"] ;
+_spawnpos = [_dest, 18, 30, 10, 0, .77, 0] call BIS_fnc_findSafePos;
+_compoObjs = [_spawnpos,90, compo_startup ] call BIS_fnc_objectsMapper;
+_officerPos = _spawnpos;
+{
+	if (_x isKindOf "ReammoBox_F") then {
+		_x call fnc_spawncrate;
+	};
+} foreach _compoObjs; 
+
+for "_j" from 1 to 6 do {
+	_pos = [_dest, 18, 30, 0.5, 0, .77, 0] call BIS_fnc_findSafePos;
+	_unitName = FRIENDLY_LIST_UNITS call BIS_fnc_selectRandom;
+    _unit = _grp createUnit [_unitName, _pos,[],AI_SKILLS,"NONE"];
+	_unit setDir (180 - ([_unit,_compoObjs select 0 ] call BIS_fnc_dirTo));
+	[_unit] joinsilent _grp;
+	_unit allowDamage false;
+	
+	if (_j == 1) then {
+		_unit call addActionInstructor;
+		[_unit, "GUARD", "LIGHT"] remoteExec ["BIS_fnc_ambientAnim"];
+		_unit enableDynamicSimulation false;
+		_officerPos set [0,(_officerPos select 0) + 2];
+		_officerPos set [1,(_officerPos select 1) + 2];
+		_unit setPos _officerPos;
+		_unit setDir 240;
+	} else{
+		_unit enableDynamicSimulation false;
+		if (count _anims > 0) then {
+			_anim = _anims call BIS_fnc_selectrandom;
+			[_unit, _anim, "FULL"] remoteExec ["BIS_fnc_ambientAnim"];
+			_anims = _anims -  [_anim];
+		} else{
+			[_unit,["Acts_SupportTeam_Back_KneelLoop","Acts_SupportTeam_Front_KneelLoop","Acts_SupportTeam_Right_KneelLoop"] call BIS_fnc_selectrandom] remoteExec ["switchMove"];
+		};
+	};
+};
+
+
 // Fill up all game crate
 _ammobox = missionNamespace getVariable ["ammoBox",objNull];
 if (!isNull _ammobox) then {
@@ -138,7 +180,6 @@ setDate [2018, 6, 25, TIME_OF_DAYS, 0];
 0 setGusts (WEATHER - .3);
 0 setWaves WEATHER;
 forceWeatherChange;
-
 
 
 _popbase = 0;
@@ -333,7 +374,6 @@ _supportScore = 0;
 } foreach (_clusters call BIS_fnc_arrayShuffle);
 
 
-[] call fnc_PrepareAction;
 [] call fnc_camp;
 
 [] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
@@ -443,7 +483,7 @@ while { true } do {
 				if (_triggered && _playerPos distance _pos < _radius ) then {
 					_currentMarker = _x;
 					_playerInMarker = true;
-					[format["<t color='#cd8700' size= '.3' >%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["fnc_ShowIndicator",_player,false];
+					[format["<t color='#cd8700'  >%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["fnc_ShowIndicator",_player,false];
 			
 					if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "supporting")  ) then {
 						[_currentCompound,_player] spawn {

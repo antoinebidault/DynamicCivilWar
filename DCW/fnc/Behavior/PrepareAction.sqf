@@ -77,7 +77,6 @@ addActionHandCuff =  {
 
 addActionInstructor = {
     
-    
     if (!isMultiplayer)then {
         _this addaction ["<t color='#FF0000'>Savegame</t>",{
         saveGame;
@@ -86,14 +85,14 @@ addActionInstructor = {
 
      _this addaction ["<t color='#FF0000'>Briefing</t>",{
         params["_unit"];
-      if (!(_this call fnc_startTalking)) exitWith {};
-      [_unit, "Your main objective is to seek and neutralize an enemy commander hidden somewhere..."] call fnc_talk;
-      [_unit, "He will be always moving on the map, hiding in forestry area or compounds."] call fnc_talk;
-      [_unit, "You have two way to get info about his location : interrogating civil chief in compound or interrogating one of his officer wandering on the map in trucks..."] call fnc_talk;
-      [_unit, "We've located a few of these officers spreading the insurgency accross the country. It's highly recommended to neutralize them"] call fnc_talk;
-      [_unit, "The key path is to make the population always supporting you. Giving people food, medicine and military training will make our investigations easier."] call fnc_talk;
-      [_unit, "Alright guys ? Any question ? Dismiss !"] call fnc_talk;
-      _this call fnc_endTalking;
+        if (!(_this call fnc_startTalking)) exitWith {};
+        [_unit, "Your main objective is to seek and neutralize an enemy commander hidden somewhere..."] call fnc_talk;
+        [_unit, "He will be always moving on the map, hiding in forestry area or compounds."] call fnc_talk;
+        [_unit, "You have two way to get info about his location : interrogating civil chief in compound or interrogating one of his officers wandering on the map in trucks..."] call fnc_talk;
+        [_unit, "We've located a few of these officers spreading the insurgency accross the country. It's highly recommended to neutralize them"] call fnc_talk;
+        [_unit, "The key path is to make the population always supporting you. Giving people food, medicine and military training will make our investigations easier."] call fnc_talk;
+        [_unit, "Alright guys ? Any question ? Dismiss !"] call fnc_talk;
+        _this call fnc_endTalking;
     },nil,1,true,true,"","true",3,false,""];
 };
 
@@ -415,7 +414,7 @@ addActionGetIntel = {
             skipTime .25;
         };
         if (_isSuspect)then{
-            [_unit,"Sorry, I have plenty work to do !",false] call fnc_Talk;
+           [_unit,["Not your business !","I must leave...","Leave me alone please...","I'm a dead man if I talk to you..."] call BIS_fnc_selectRandom,false] call fnc_Talk;
         }else{
            [_unit,_talker] remoteExec ["fnc_GetIntel",2];
            [_unit,3] remoteExec ["fnc_updateRep",2];
@@ -823,6 +822,7 @@ fnc_startTalking = {
     _unit setDir ([_unit,_talker] call BIS_fnc_dirTo);
     _talker doWatch _unit;
     _unit doWatch _talker;
+    _unit lookAt _talker;
     true;
 };
 

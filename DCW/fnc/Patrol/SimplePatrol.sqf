@@ -40,13 +40,13 @@ while { alive _unit }do{
     if (side _unit == SIDE_ENEMY) then{
         _unit stop true;
         sleep 2;
-        [_unit,_anims call BIS_fnc_selectRandom,"FULL"] call BIS_fnc_ambientAnimCombat;
+        [_unit,_anims call BIS_fnc_selectRandom,"FULL"] remoteExec ["BIS_fnc_ambientAnimCombat"];
     };
     sleep 20 + random 25;
     if (side _unit == SIDE_ENEMY) then{
         if (alive _unit)then{
             _unit stop false;
-            _unit call BIS_fnc_ambientAnim__terminate;
+            [_unit] remoteExec ["BIS_fnc_ambientAnim__terminate"];
         };
     };
     sleep 5;

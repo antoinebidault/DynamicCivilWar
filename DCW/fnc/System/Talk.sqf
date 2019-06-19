@@ -34,7 +34,6 @@ if (_side == CIVILIAN) then {
 	};
 };
 
-
 /*
 if (_sound) then {
 	[] spawn { playSound (RADIO_CHAT_LIST call BIS_fnc_selectRandom); };
@@ -87,7 +86,7 @@ _talker setVariable["DCW_speak",true];
 _talker setRandomLip true;
 
 _currentTime = time;
-waitUntil { time >= _currentTime + ((count(_say)/10) max 1.5) || SPACEBAR_HIT; };
+waitUntil { time >= _currentTime + ((count(_say)/13) max 1.5) || (SPACEBAR_HIT && isNull(player getVariable["healer",objNull])); };
 SPACEBAR_HIT = false;
 _display displayRemoveEventHandler ["KeyDown",_ehId];
 _talker setRandomLip false;

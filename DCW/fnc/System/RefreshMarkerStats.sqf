@@ -38,5 +38,3 @@ STAT_COMPOUND_SECURED = _nbSecured;
 STAT_COMPOUND_BASTION = _nbBastion;
 STAT_COMPOUND_MASSACRED = _nbMassacred;
 STAT_SUPPORT = round(_compoundReputationTotal/_total);
-
-[] call fnc_displayScore;

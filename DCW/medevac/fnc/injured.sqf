@@ -12,6 +12,7 @@ _unit call fnc_addActionCarry;
 		params["_injured","_healer"];
 		if (!alive _injured) exitWith {};
 		_healer playActionNow "medicStart";
+		_healer setVariable["healer", _injured];
 		[_injured,"Aaaargh...", false] spawn fnc_talk;
 		[_injured,["Sorry man... I just fucked up...","Shit ! It's a fucking mess...","I am in pain...","Don't forget the letter..."] call BIS_fnc_selectRandom, false] spawn fnc_talk;
 		[_healer,["Don't give up mate !","Stay with us !","Stay alive !","We won't abandon you !"] call BIS_fnc_selectRandom, false] spawn fnc_talk;
@@ -28,6 +29,7 @@ _unit call fnc_addActionCarry;
 	
 	},{
 		params["_injured","_healer"];
+		_healer setVariable["healer", objNull];
 		_healer playActionNow "medicStop";
 		detach _injured;
 		_injured setUnconscious false;
@@ -41,6 +43,7 @@ _unit call fnc_addActionCarry;
 		_injured;
 	},{
 		params["_injured","_healer"];
+		_healer setVariable["healer", objNull];
 		_healer playActionNow "medicStop";
 		detach _injured;
 	},[],15,nil,true,true] remoteExec ["BIS_fnc_holdActionAdd"];

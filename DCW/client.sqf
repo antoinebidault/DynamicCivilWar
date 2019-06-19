@@ -8,12 +8,12 @@
 if (isNull player) exitWith{false;};
 
 titleCut ["", "BLACK FADED", 9999];
+disableUserInput false;
 
 // Client side 
 TALK_QUEUE = [];
 MESS_SHOWN = false;
 MESS_HEIGHT = 0;
-
 
 //Briefing
 player createDiaryRecord ["Diary",["Keep a good reputation",
@@ -124,7 +124,6 @@ titleCut ["", "BLACK IN", 5];
 
 // init user respawn loop
 [player] spawn fnc_respawn; //Respawn loop
-
 
 //Loop to check mines
 iedBlasts=["Bo_Mk82","Rocket_03_HE_F","M_Mo_82mm_AT_LG","Bo_GBU12_LGB","Bo_GBU12_LGB_MI10","HelicopterExploSmall"];

@@ -23,7 +23,7 @@ private _potentialIntel = [];
 
 if (count _potentialIntel == 0 || random 100 > _probability ) exitWith { 
     if (alive _unit) then {
-        [_unit, "I have nothing to tell you ! Leave me alone !",true] remoteExec ["fnc_talk",0]; 
+        [_unit, ["I have no idea...","I can't talk about this..."] call BIS_fnc_selectRandom,true] remoteExec ["fnc_talk",0]; 
     };
 };
 

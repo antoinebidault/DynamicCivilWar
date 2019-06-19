@@ -132,8 +132,8 @@ while {alive (leader _grp) && leader _grp == ENEMY_COMMANDER}do{
     _tempList = MARKER_WHITE_LIST + [_mkrToAvoid];
 
     _initPos = _commanderPos;
-    _commanderPos = [_commanderPos, 200, 600, 1, 0, 5, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_findSafePos;
-    _commanderPos = ((selectBestPlaces[_commanderPos, 500, _situation, 5, 1]) select 0 )select 0;
+    _commanderPos = [_commanderPos, 400, 600, 1, 0, 5, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST] call BIS_fnc_findSafePos;
+    _commanderPos = ((selectBestPlaces[_commanderPos, 350, _situation, 5, 1]) select 0 )select 0;
 
     _grp setBehaviour "SAFE";
     _grp move _commanderPos;

@@ -9,7 +9,7 @@ private _ctrlRespawnBase = _display displayCtrl 4102;
 // Check respawn state
 while {dialog} do {
 	if (CAMP_RESPAWN_POSITION isEqualTo []) then { _ctrlRespawnCamp ctrlEnable false; };
-	if (INITIAL_RESPAWN_POSITION isEqualTo []) then { _ctrlRespawnBase ctrlEnable false; };
+	if (START_POSITION isEqualTo []) then { _ctrlRespawnBase ctrlEnable false; };
 	sleep 1;
 };
 

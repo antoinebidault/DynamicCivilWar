@@ -8,7 +8,7 @@
 private _unit = _this;
 
 if(!alive ENEMY_COMMANDER)exitWith {false};
-if(count COMMANDER_LAST_POS == 0) exitWith {[_unit,"I don't know where he is.",false] remoteExec ["fnc_Talk"];false;};
+if(count COMMANDER_LAST_POS == 0) exitWith {[_unit,"But I think you already know it...",false] remoteExec ["fnc_Talk"];false;};
 
 private _initPos = COMMANDER_LAST_POS call BIS_fnc_selectRandom;
 COMMANDER_LAST_POS = COMMANDER_LAST_POS - [_initPos];

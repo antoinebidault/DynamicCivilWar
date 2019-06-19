@@ -8,6 +8,7 @@
 
 if (!isNull player) then {
 	titleCut ["", "BLACK FADED",9999];
+	disableUserInput true;
 };
 
 // Need some adjustements
@@ -78,7 +79,6 @@ fnc_spawnhumanitaryoutpost = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\s
 fnc_spawnhumanitar = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitar.sqf";
 fnc_spawnSnipers =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnSnipers.sqf";
 
-
 //PATROL
 fnc_enemyCompoundPatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\CompoundPatrol.sqf";
 fnc_civilianCompoundPatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\CivilianCompoundPatrol.sqf";
@@ -111,7 +111,7 @@ fnc_updateRep =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Updat
 fnc_localChief = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\LocalChief.sqf";
 fnc_medic = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Medic.sqf";
 fnc_firstAid =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\FirstAid.sqf";
-fnc_prepareAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\PrepareAction.sqf"; 
+call(compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\PrepareAction.sqf");
 fnc_addCivilianAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\addCivilianAction.sqf";
 fnc_shout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Shout.sqf";
 fnc_badBuyLoadout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\BadBuyLoadout.sqf";
@@ -144,11 +144,11 @@ compos = [compo_camp1,compo_camp2,compo_camp3,compo_camp4,compo_camp5];
 compo_rest =  call (compileFinal preprocessFileLineNumbers "DCW\composition\rest.sqf");
 compo_camp =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp.sqf");
 compo_captured =  call (compileFinal preprocessFileLineNumbers "DCW\composition\captured.sqf");
-
-
+compo_startup =  call (compileFinal preprocessFileLineNumbers "DCW\composition\startup-composition.sqf");
 compos_turrets=  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\turrets.sqf");
 compos_objects =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\objects.sqf");
 compos_medical =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\medical.sqf");
+
 
 // Switch here the config you need.
 [] call (compileFinal preprocessFileLineNumbers format["DCW\config\config-%1.sqf",_this select 0]); 
