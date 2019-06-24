@@ -150,11 +150,11 @@ compos_objects =  call (compileFinal preprocessFileLineNumbers "DCW\composition\
 compos_medical =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\medical.sqf");
 
 
-// Switch here the config you need.
-[] call (compileFinal preprocessFileLineNumbers format["DCW\config\config-%1.sqf",_this select 0]); 
+// Default configuration is called here
+[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-default.sqf"); 
 
 // Mission introduction function
-fnc_intro = compileFinal preprocessFileLineNumbers format["DCW\intro\intro-%1.sqf",_this select 0];
+fnc_intro = compileFinal preprocessFileLineNumbers "DCW\intro\intro.sqf";
 
 // Base config parameters 
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
@@ -179,7 +179,9 @@ CIVILIAN setFriend [RESISTANCE, 1];
 //DCW_STARTED = true;
 //titleCut ["", "BLACK IN",1];
 
+// Public variables
 call (compileFinal preprocessFileLineNumbers "DCW\variables.sqf"); 
+
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";
 

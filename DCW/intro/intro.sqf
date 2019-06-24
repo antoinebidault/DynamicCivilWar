@@ -1,6 +1,6 @@
 
 0 fadeSound .2;
-titleCut ["Stand by...", "BLACK FADED",999];
+titleCut ["Mission loading...", "BLACK FADED",999];
 _cam = "camera" camcreate START_POSITION;
 _cam cameraeffect ["internal", "back"];
 showCinemaBorder true;
@@ -28,7 +28,7 @@ playMusic "seal";
 	nul = ["An arma III scenario",.5,.2,8] spawn BIS_fnc_dynamicText;
 	sleep 14;
 	nul = ["<t color='#cd8700' size = '2.4'>Dynamic Civil War</t>",-1,-1,10,1,0] spawn BIS_fnc_dynamicText;
-	sleep 12;
+	sleep 13;
 	nul = ["Music by Explosion in the sky",.3,.7,5] spawn BIS_fnc_dynamicText;
 };
 
