@@ -60,7 +60,7 @@ private _logicGroupSupportProvider = createGroup _center;
 			_this call fnc_spawncrate;
 		'],
 		["BIS_SUPP_vehicles",_x select 1],		//types of vehicles to use
-		["BIS_SUPP_vehicleinit","_this setCaptive true;"],	//init code for vehicle
+		["BIS_SUPP_vehicleinit","_this setCaptive true; { _x setCaptive true; } foreach crew _this;"],	//init code for vehicle
 		["BIS_SUPP_filter","SIDE"]		//whether default vehicles comes from "SIDE" or "FACTION"
 	];
 	
