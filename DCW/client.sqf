@@ -187,8 +187,8 @@ addMissionEventHandler
 					hintsilent "";
 					_map ctrlMapCursor ["Track","Track"];
 					if (_mapMarker select 0 == "marker"  ) then {
+						_map ctrlMapCursor ["Track","HC_overFriendly"];
 						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString && CurrentMarker != _mapMarker select 1) then {
-							_map ctrlMapCursor ["Track","HC_overFriendly"];
 							CurrentMarker = _mapMarker select 1;
 							_marker = [_mapMarker select 1] call fnc_getMarkerById;
 							_compound = _marker select 0;
