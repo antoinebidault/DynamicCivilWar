@@ -188,7 +188,7 @@ addActionLookInventory = {
             [GROUP_PLAYERS,30,false,_human] remoteExec ["fnc_updateScore",2];   
             _unit remoteExec ["RemoveAllActions",0];
         }else{
-            [_unit,-1] remoteExec ["fnc_updateRep",2];   
+            [_unit,-1] remoteExec ["fnc_updateRep",-2];   
         };
         sleep .4;
         if (alive _unit) then {
@@ -203,7 +203,7 @@ addActionHalt = {
         params["_unit","_talker","_action"];
         if (!(_this call fnc_startTalking)) exitWith {};
         
-        _talker playActionNow "GestureFreeze";
+        _talker remoteExec ["GestureFreeze"];
         
         _unit stop true;
 
@@ -254,8 +254,9 @@ addActionDidYouSee = {
     //Try to gather intel
      _this addaction ["<t color='#FF0000'>Did you see anything recently ?</t>",{
     params["_unit","_talker","_action"];
-        _unit removeAction _action;
         if (!(_this call fnc_startTalking)) exitWith {};
+
+        _unit removeAction _action;
 
         /*if (_unit getVariable["DCW_Friendliness",50] < 40) exitWith {
             [_unit,-2] remoteExec ["fnc_updateRep",2];
@@ -511,7 +512,7 @@ addActionSupportUs = {
         
         [_talker,"What are looking for ? We can provide you food, medicine, water...", false] call fnc_Talk;
         [_unit,1] remoteExec ["fnc_updateRep",(2 + floor random 2)];
-        [_unit,"Thanks for your precious help !",false] call fnc_Talk;
+        [_unit,"Thanks for your precious help !",false] call fnc_Talk;;
         [_unit,"You're welcome !",false] call fnc_Talk;
         _this call fnc_endTalking;
     },nil,1,false,true,"","true",2.5,false,""];
@@ -527,7 +528,7 @@ addActionFindChief = {
         if (!(_this call fnc_startTalking)) exitWith {};
         _chief = (_this select 3) select 0;
         if(alive _chief)then{
-            _marker = createMarkerLocal [format["chief-%1", random 50], getPosWorld _chief];
+            _marker = createMarkerLocal ["localchief", getPosWorld _chief];
             _marker setMarkerShapeLocal "ICON";
             _marker setMarkerTypeLocal "mil_dot";
             _marker setMarkerColorLocal "ColorGreen";
@@ -680,7 +681,7 @@ fnc_ActionCorrupt =  {
 fnc_AddActionHeal = {
     // Stabilize
     [ _this,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
-            params["_injured","_healer"];
+            params["_injured","_healer","_actionId"];
             if (!alive _injured) exitWith {};
             _healer playActionNow "medicStart";
             [_injured] spawn fnc_shout;
@@ -695,18 +696,19 @@ fnc_AddActionHeal = {
             //_healer playActionNow "medicStart";
         
         },{
-            params["_injured","_healer"];
+            params["_injured","_healer","_actionId"];
             _healer playActionNow "medicStop";
             detach _injured;
             _injured setUnconscious false;
             _injured setDamage 0;
             _injured setCaptive false;
+            _injured stop false;
             _injured setHit ["legs", 0]; 
             deleteMarker (_injured getVariable ["DCW_marker_injured",  ""]);
             _injured setVariable ["unit_injured", false, true];
             [_injured,_healer] remoteExec ["CIVIL_HEALED",2];
             [_healer,4] remoteExec ["fnc_updateRep",2];
-            removeAllActions _injured;
+            _injured remoteExec ["RemoveAllActions"];
             [_healer,["Ok, this helps...","You look better now !"] call BIS_fnc_selectRandom, false] spawn fnc_talk;
             _injured;
         },{
@@ -716,7 +718,6 @@ fnc_AddActionHeal = {
         },[],15,nil,true,true] remoteExec ["BIS_fnc_holdActionAdd"];
 
 };
-
 
 fnc_ActionTorture =  {
     _this addAction ["<t color='#000000'>Torture him (2 hours/Bad reputation)</t>",{

@@ -28,13 +28,13 @@ _unit addHeadgear "H_Beret_blk";
      _success =_curr select 3;
      _state =_curr select 12;
     
-    [_asker,"Tell us all you know about the insurgent commander !", false] spawn fnc_talk;
+    [_asker,"Tell us all you know about the insurgent commander !", false] call fnc_talk;
     _this call fnc_endTalking; 
-    if(_state == "bastion" && !_success) exitWith{ [_unit,"Secure our position first", false] spawn fnc_talk;false;};
+    if(_state == "bastion" && !_success) exitWith{ [_unit,"Secure our position first", false] call fnc_talk;false;};
 
     if( _curr select 17 != "hasintel") then{ 
         _sentence = ["I don't know where he is...","I have no idea...","I wouldn't collaborate... This is too dangerous for my family..."] call BIS_fnc_selectRandom;
-        [_unit,_sentence, false] spawn fnc_talk; 
+        [_unit,_sentence, false] call fnc_talk; 
         _unit removeAction _action; 
         _unit call fnc_actionTorture;
         _unit call fnc_actionCorrupt;
@@ -73,8 +73,8 @@ _unit addHeadgear "H_Beret_blk";
         _unit doWatch _asker;
         _asker doWatch _unit;
 
-        [_unit,"You're welcome here ! We need your help.", false] remoteExec ["fnc_talk"];
-        [HQ,"Okay, we're sending you some reinforcements", false]  remoteExec ["fnc_talk"];
+        [_unit,"You're welcome here ! We need your help.", false] call fnc_talk;
+        [HQ,"Okay, we're sending you some reinforcements", false] call fnc_talk;
         sleep 10;
         
         [_curr] call fnc_compoundSecured; 

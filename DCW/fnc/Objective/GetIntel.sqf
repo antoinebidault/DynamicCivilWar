@@ -7,28 +7,29 @@
 
 private _unit = _this select 0;
 private _asker = _this select 1;
-private _probability  =  if (count _this == 3) then { _this select 2 } else { 66 };
+private _probability  =  if (count _this == 3) then { _this select 2 } else { 50 };
 
 private _pos = getPosASL _unit;
 private _potentialIntel = [];
 {
     if (_x select 2)then{
         {
-            if (!(_x getVariable["DCW_IsIntelRevealed",false]) && _x != _unit && _x getVariable["DCW_type",""] != "ied" && _x getVariable["DCW_IsIntel",false] && _pos distance _x < 500)then{
+          //  && _x getVariable["DCW_type",""] != "ied"
+            if (!(_x getVariable["DCW_IsIntelRevealed",false]) && _x != _unit  && _x getVariable["DCW_IsIntel",false] && _pos distance _x < 500)then{
                 _potentialIntel pushBack _x;
             };
         } foreach (_x select 5);
     };
 } forEach MARKERS;
 
-if (count _potentialIntel == 0 || random 100 > _probability ) exitWith { 
+if (count _potentialIntel == 0 || random 100 < _probability ) exitWith { 
     if (alive _unit) then {
         [_unit, ["I have no idea...","I can't talk about this..."] call BIS_fnc_selectRandom,true] remoteExec ["fnc_talk",0]; 
     };
 };
 
 private _intel = _potentialIntel call BIS_fnc_selectRandom;
-_task = [_intel,true] call fnc_createTask;
+_task = [_intel,true] call fnc_createtask;
 _taskId = _task select 0;
 _message = _task select 1;
 _intel setVariable["DCW_IsIntelRevealed",true];

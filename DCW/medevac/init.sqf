@@ -4,8 +4,6 @@
  * Author: BIDASS
  * License : GNU (GPL)
  */
-
-
 _group = _this select 0;
 
 fnc_spawnHelo = compile preprocessFileLineNumbers  "DCW\medevac\fnc\SpawnHelo.sqf";
@@ -32,12 +30,6 @@ REVIVETIME_INSECONDS = 10;
 _transportHelo = objNull;
 _posChopper = objNull;
 _supportHeli = 1000;
-MEDEVAC_State = "standby"; // standby/menu/map/inbound/aborted
-MEDEVAC_MENU_LASTID = 0;
-MEDEVAC_marker = "";
-MEDEVAC_action = "";
-MEDEVAC_SmokeShell = objNull;
-
 
 private _soldiersDead = [];
 
@@ -61,6 +53,15 @@ private _soldiersDead = [];
 		_x addMPEventHandler ["MPKilled",{_this call fnc_HandleKilled;}];
 	};
 }foreach (units _group);
+
+
+
+/*
+MEDEVAC_State = "standby"; // standby/menu/map/inbound/aborted
+MEDEVAC_MENU_LASTID = 0;
+MEDEVAC_marker = "";
+MEDEVAC_action = "";
+MEDEVAC_SmokeShell = objNull;
 
 _leader = leader(_group);
 _supportHeliMenuId = 0;
@@ -157,6 +158,5 @@ while {true} do {
 		};
 	};
 	sleep 3;
-};
-
+};*/
 

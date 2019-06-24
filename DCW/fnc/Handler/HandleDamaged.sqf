@@ -39,7 +39,7 @@ _this addEventHandler["HandleDamage",{
 			_unit setVariable ["marker", _marker];
 		};
 
-		_unit call fnc_addActionHeal;
+		_unit remoteExec ["fnc_addActionHeal"];
 		
 	}else{
 		if (_unit getVariable["unit_injured",false])then{_damage = .9;};

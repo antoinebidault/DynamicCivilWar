@@ -8,6 +8,7 @@
 
  if (didJIP) exitWith {};
 
+waitUntil {count allPlayers > 0};
 
 // True if the mission is set up and started up.
 DCW_STARTED = false;
@@ -35,6 +36,8 @@ publicVariable "CHASER_VIEWED";
 DCW_SCORE = 150;
 publicVariable "DCW_SCORE";
 
+CHOPPER_INTRO = objNull;
+publicVariable "DCW_SCORE";
 
 CAMP_RESPAWN_POSITION = [];
 publicVariable "CAMP_RESPAWN_POSITION";

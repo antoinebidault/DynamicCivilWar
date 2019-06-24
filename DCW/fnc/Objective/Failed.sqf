@@ -12,7 +12,5 @@ if (isnull _unitWithTask) exitWith{false};
 if (_unitWithTask getVariable["DCW_IsIntelRevealed",false])then{
     _unitWithTask setVariable["DCW_IsIntelRevealed",false];
     deleteMarker(_unitWithTask getVariable["DCW_MarkerIntel",""]);
-    {
-        [_x getVariable["DCW_Task",""], "FAILED",true] spawn BIS_fnc_taskSetState;
-    } foreach allPlayers;
+    [_unitWithTask getVariable["DCW_Task",""], "FAILED",true] remoteExec ["BIS_fnc_taskSetState",GROUP_PLAYERS];
 };

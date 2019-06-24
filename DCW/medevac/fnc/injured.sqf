@@ -5,7 +5,7 @@ if (vehicle _unit != _unit) then {
 	_unit leaveVehicle (vehicle _unit);
 };
 
-_unit call fnc_addActionCarry;
+_unit remoteExec ["fnc_addActionCarry"];
 
 // Stabilize
 [ _unit,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{

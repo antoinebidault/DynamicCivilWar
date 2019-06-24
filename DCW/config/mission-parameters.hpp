@@ -1,5 +1,6 @@
 class Params
 {
+	
 	class AISkill
 	{
 		title = "AI Skill"; // Param name visible in the list

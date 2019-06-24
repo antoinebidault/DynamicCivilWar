@@ -166,12 +166,8 @@ if (ACE_ENABLED) then {
     [] call (compileFinal preprocessFileLineNumbers "DCW\config\ace-config.sqf"); 
 };
 
-// Global scope variable
-
-
-
 // Wait until everything is ready
-waitUntil {count allPlayers > 0 &&  time > 0 };
+waitUntil {count allPlayers > 0 && time > 0 };
 
 RESISTANCE setFriend [EAST, 0];
 RESISTANCE setFriend [WEST, 0];

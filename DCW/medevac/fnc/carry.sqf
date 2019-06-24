@@ -12,6 +12,7 @@ fnc_dropAction = {
 	_unit switchMove "AcinPknlMstpSrasWrflDnon_AmovPknlMstpSrasWrflDnon";
 	_injured switchMove "AinjPpneMrunSnonWnonDb_release";
 	_injured setVariable ["unit_dragged", false, true];
+	
 	//lie on back
 
 };
@@ -37,7 +38,7 @@ while {_injured getVariable ["unit_dragged", false]} do {
 		_injured switchMove "AinjPpneMrunSnonWnonDb_still";
 
 		//rotate wounded units so that it is facing the correct direction
-
+		_injured remoteExec ["RemoveAllActions",0];
 		_dropActionId = _unit addAction ["drop", fnc_dropAction,_injured, 0, false, true];
 
 		uiSleep 1;
@@ -61,5 +62,8 @@ while {_injured getVariable ["unit_dragged", false]} do {
 };
 
 _unit removeAction _dropActionId;
-_injured call fnc_addActionCarry;
+if (alive _injured) then {
+	_injured remoteExec ["fnc_addActionHeal"];
+};
+_injured remoteExec ["fnc_addActionCarry"]; 
 

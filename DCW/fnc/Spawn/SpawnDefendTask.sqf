@@ -1,43 +1,45 @@
 params["_compound"];
 
 _units = [];
-_grp = createGroup SIDE_ENEMY;
-_nbVehicles = 1 max ceil(random 2);
+_nbGroups = 1 max ceil(random 2);
 
 _taskId = format["DCW_defend_%1",str (_compound select 0)];
 
-[HQ,format["Be advised, %1 enemy vehicles moving to your localization. You must defend the civilian at any cost.",_nbVehicles]] remoteExec ["fnc_talk"];
+[HQ,format["Be advised, %1 enemy groups moving to your localization. You must defend the civilian at any cost.",_nbGroups]] remoteExec ["fnc_talk"];
 {
 	[_taskId, _x, ["Enemy attack incoming, set up the defenses","Defend civilian","Defend civilian"],_compound select 1,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, false];
 } foreach units GROUP_PLAYERS;     
 
 
-for "_j" from 1 to _nbVehicles do {
-	_spawnPos = [_compound select 1, .75*SPAWN_DISTANCE,.75*(SPAWN_DISTANCE+100), 4, 0, .3, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
-	_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
-	_car = ([_spawnPos, random 360,_unitName, _grp] call bis_fnc_spawnvehicle)  select 0;
-	_car enableDynamicSimulation false;
-	_nbUnits =  10 min (count (fullCrew [_car,"cargo",true]));
-	(driver _car) setBehaviour "AWARE";
+for "_j" from 1 to _nbGroups do {
+	_grp = createGroup SIDE_ENEMY;
+	_spawnPos = [_compound select 1, .65*SPAWN_DISTANCE,.65*(SPAWN_DISTANCE+100), 1, 0, .3, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
+	//_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
+	//_car = ([_spawnPos, random 360,_unitName, _grp] call bis_fnc_spawnvehicle)  select 0;
+	//_car enableDynamicSimulation false;
+	_nbUnits =  4 + floor(random 6); // min (count (fullCrew [_car,"cargo",true]));
+	//(driver _car) setBehaviour "AWARE";
 
-	{_units pushback _x; _x enableDynamicSimulation false; }foreach crew _car;
+	//{_units pushback _x; _x enableDynamicSimulation false; }foreach crew _car;
 
 	for "_xc" from 1 to _nbUnits  do {
 		_unit =[_grp,_spawnPos,true] call fnc_spawnEnemy;
-		_unit moveInCargo _car;
-		_units pushback _unit;
+		//_unit moveInCargo _car;
+		_unit setBehaviour "AWARE";
+		_unit setSpeedMode "FULL";
 		_unit enableDynamicSimulation false;
+		_units pushback _unit;
 	};
 	
 	// If not many units in car. Spawn a little team of soldier 
 	// At the back of the vehicle
-	if (_nbUnits < 7) then {
+	/*if (_nbUnits < 7) then {
 		for "_xc" from 1 to 4  do {
 			_unit =[_grp,[_spawnPos,6,180] call BIS_fnc_relPos,true] call fnc_spawnEnemy;
 			_units pushback _unit;
 			_unit enableDynamicSimulation false;
 		};
-	};
+	};*/
 
 	_dir = round([_spawnPos,_compound select 1] call BIS_fnc_dirTo);
 		
@@ -51,22 +53,18 @@ for "_j" from 1 to _nbVehicles do {
 	_marker setMarkerText "Defend !";
 	_marker setMarkerType "hd_arrow";
 	_marker setMarkerDir _dir;
+
+	_wp =_grp addWaypoint [_compound select 1, 0];
+	_wp setWaypointType "SAD";
+	_wp setWaypointBehaviour "AWARE";
+	_wp setWaypointFormation "LINE";
+	_wp setWaypointCompletionRadius 30;
+
 };
 
 
 
-
-
-sleep 10;
-
-_wp =_grp addWaypoint [_compound select 1, 0];
-_wp setWaypointType "SAD";
-_wp setWaypointBehaviour "AWARE";
-_wp setWaypointFormation "LINE";
-_wp setWaypointCompletionRadius 30;
-
 _sectorToDefend = _compound select 0;
-
 waitUntil {sleep 3; ({_x inArea _sectorToDefend} count (units GROUP_PLAYERS) == 0 && {_x inArea _sectorToDefend} count _units >= 2) || ({ _x distance (_compound select 1) > SPAWN_DISTANCE } count (units GROUP_PLAYERS) == count (units GROUP_PLAYERS)) || ({alive _x && !(captive _x)} count _units <= 2) };
 
 // If eliminated

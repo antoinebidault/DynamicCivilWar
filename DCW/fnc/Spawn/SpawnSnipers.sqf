@@ -37,7 +37,7 @@ if (_nbSnipers > 0)then{
             { 
             params["_unit","_killer"];
             if (group _killer == GROUP_PLAYERS) then{
-                _unit call fnc_success;
+                _unit remoteExec ["fnc_success",2,false];
                 };
             }
         ];

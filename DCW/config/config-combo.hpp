@@ -20,7 +20,7 @@
 class PARAMETERS_DIALOG
 {
     idd = 5001;
-    movingenable = false;
+    movingenable = true;
     duration = 10e10;
     
 
@@ -31,6 +31,7 @@ class PARAMETERS_DIALOG
         
          class RscBox_1801: IGUIBack
          {
+          moving = 1;	
           idc = 1801;
           text = "";
           x = -20 * GUI_GRID_W + GUI_GRID_X;

@@ -1,8 +1,8 @@
  _this addAction ["<t color='#00FF00'>Set up camp (1 hour)</t>", {
         params["_unit","_asker","_action"];
 
-        if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around (100m radius)",false] spawn fnc_talk;};
-        if(([getPos _unit, 1, getDir _unit ] call BIS_fnc_relPos) isFlatEmpty  [2, -1, 0.3, 2, 0, false, _unit]  isEqualTo [] )exitWith {[_unit,"Impossible to build the camp here. Check there is not any object in front of you.",false] call fnc_talk;};
+        if((_unit findNearestEnemy _unit) distance _unit < 100) exitWith {hint "Impossible untill there is enemies around (100m radius)";};
+        if(([getPos _unit, 1, getDir _unit ] call BIS_fnc_relPos) isFlatEmpty  [2, -1, 0.3, 2, 0, false, _unit]  isEqualTo [] ) exitWith { hint "Impossible to build the camp here. Check there is not any object in front of you."; };
 
         {deleteVehicle _x;} foreach CAMP_OBJS;
         

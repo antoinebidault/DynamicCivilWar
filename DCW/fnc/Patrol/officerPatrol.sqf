@@ -92,6 +92,7 @@ while {sleep 5;  alive _unit}do{
     waitUntil {sleep 5; !alive(_unit) || unitReady _unit  || _unit distance2D _newPos < 15 || time > _timer + 250};
     if (!alive _unit) exitWith{false};
 
+    sleep (50 + (_compound select 4));
     if ((_compound select 13) > 70) then {
         [_compound,"massacred"] call fnc_setCompoundState;
         [_compound,15,100] spawn fnc_setCompoundSupport;

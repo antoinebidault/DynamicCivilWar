@@ -29,9 +29,9 @@ for "_j" from 1 to _nb do {
         params["_mortar","_killer"];
         if (isPlayer _killer) then {
             hint "Mortar destroyed";
-            _mortar call fnc_success; 
+            _mortar remoteExec ["fnc_success", 2, false]; 
          }else{
-            _mortar call fnc_failed;
+            _mortar remoteExec ["fnc_failed", 2, false];
         }; 
     }];
 

@@ -145,17 +145,22 @@ fnc_save = {
 	// Number of respawn
 	NUMBER_RESPAWN = (2112 call fnc_getValue);
 	publicVariable "NUMBER_RESPAWN";
+
+	if (SIDE_FRIENDLY == SIDE_ENEMY) exitWith{hintC "Choose a different enemy side !";false};
+
+	true;
 };
 
 //Saving and close method;
 fnc_SaveAndGoToLoadoutDialog = {
 
-	[] call fnc_save;
+	_result = [] call fnc_save;
+	if (_result) then {
+		//kill camera
+		closeDialog 0;
 
-	//kill camera
-	closeDialog 0;
-
-	[] call fnc_openLoadoutDialog;
+		[] call fnc_openLoadoutDialog;
+	};
    
 };
 
@@ -212,17 +217,6 @@ fnc_SaveAndCloseConfigDialog = {
 	2 fadeSound 1;
 
 	[] spawn {
-		{
-			_x addItem "MineDetector";
-			if (ACE_ENABLED) then {
-				_x addItem "ACE_DefusalKit";
-				_x addItem "ACE_EarPlugs";
-			} else {
-				_x addItem "ToolKit";
-			};
-
-			_x setPos START_POSITION;
-		}foreach units GROUP_PLAYERS;
 
 		// Delete the chopper
 		if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO; deleteVehicle CHOPPER_DEMO};
@@ -230,8 +224,10 @@ fnc_SaveAndCloseConfigDialog = {
 		titleCut ["Preparing units...", "BLACK OUT", .5];
 			
 		sleep .5;
+
 		titleCut ["Preparing units...", "BLACK FADED", 999];
-		[] call fnc_missionsetup;
+
+		[] remoteExec ["fnc_missionsetup", 2];
 		
 		CONFIG_CAMERA cameraeffect ["terminate", "back"];
 		camDestroy CONFIG_CAMERA;
@@ -243,18 +239,23 @@ fnc_SaveAndCloseConfigDialog = {
 };
 
 CHOPPER_DEMO = objNull;
-
+CHOPPER_DEMO_POS = (player modelToWorld[0,-21,0]);
 fnc_DisplayChopper = {
 	0 fadeSound 0;
 	if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO;deleteVehicle CHOPPER_DEMO};
 	sleep .4;
-	SUPPORT_MEDEVAC_CHOPPER_CLASS = [SUPPORT_MEDEVAC_CHOPPER_CLASS,[lbData [2103, (2103 call fnc_getValue)], ["Helicopter"], "Transport"] call fnc_FactionGetSupportUnits] call fnc_fillSupportParam;
-  	CHOPPER_DEMO = (SUPPORT_MEDEVAC_CHOPPER_CLASS call BIS_fnc_selectRandom) createVehicle  (player modelToWorld[0,-21,0]);
+	_choppers = [lbData [2103, (2103 call fnc_getValue)], ["Helicopter"], "Transport"] call fnc_FactionGetSupportUnits;
+	if (count _choppers > 0) then {
+		SUPPORT_MEDEVAC_CHOPPER_CLASS = _choppers;
+		SUPPORT_TRANSPORT_CHOPPER_CLASS = _choppers;
+		FRIENDLY_CHOPPER_CLASS = _choppers;
+		CHOPPER_DEMO = (SUPPORT_MEDEVAC_CHOPPER_CLASS call BIS_fnc_selectRandom) createVehicle  CHOPPER_DEMO_POS;
 
-	CHOPPER_DEMO setPos [getPos(CHOPPER_DEMO) select 0, getPos(CHOPPER_DEMO) select 1,0];
-	CHOPPER_DEMO engineOn true;
-    CHOPPER_DEMO allowDamage false;
-	(driver CHOPPER_DEMO) stop true;
+		CHOPPER_DEMO setPos [getPos(CHOPPER_DEMO) select 0, getPos(CHOPPER_DEMO) select 1,0];
+		CHOPPER_DEMO engineOn true;
+		CHOPPER_DEMO allowDamage false;
+		(driver CHOPPER_DEMO) stop true;
+	};
 };
 
 fnc_SwitchUnit = {
@@ -322,26 +323,30 @@ fnc_SwitchFaction = {
 
 	//Weather
 	_unitClasses = [_factionName,["Man"],[]] call fnc_FactionGetUnits;
-	if (count _unitClasses > 0) then {
-		_grp = createGroup east;
-		_phantoms = [];
-		{
-			_rndClass = _unitClasses call BIS_fnc_selectRandom;
-			_phantomUnit = _grp createUnit [_rndClass, [0,0,0], [], 0, "FORM"];
-			_phantoms pushBack _phantomUnit;
-		} foreach units (group player);
 
-		// Add a little time for 3CB to initialize correctly
-		sleep 1;
-
-		{ 
-			_x setUnitLoadout(getUnitLoadout(_phantoms select _foreachIndex));
-			deleteVehicle (_phantoms select _foreachIndex);
-		} foreach units (group player);
-
-
-		deleteGroup _grp;
+	// If nothing found, take the default units
+	if (count _unitClasses == 0) then {
+		_unitClasses = FRIENDLY_LIST_UNITS
 	};
+	
+	_grp = createGroup east;
+	_phantoms = [];
+	{
+		_rndClass = _unitClasses call BIS_fnc_selectRandom;
+		_phantomUnit = _grp createUnit [_rndClass, [0,0,0], [], 0, "FORM"];
+		_phantoms pushBack _phantomUnit;
+	} foreach units (group player);
+
+	// Add a little time for 3CB to initialize correctly
+	sleep 1;
+
+	{ 
+		_x setUnitLoadout(getUnitLoadout(_phantoms select _foreachIndex));
+		deleteVehicle (_phantoms select _foreachIndex);
+	} foreach units (group player);
+
+
+	deleteGroup _grp;
 
 	[] call fnc_DisplayChopper;
 	[_unitClasses] call fnc_replaceAllCutsceneSoldiers;

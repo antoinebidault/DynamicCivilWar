@@ -34,9 +34,9 @@ for "_j" from 1 to _nb do {
     _unit addMPEventHandler["MPKilled",{ 
         params["_cache","_killer"];
         if (group(_killer) == GROUP_PLAYERS) then {
-            _cache call fnc_success; 
+            _cache remoteExec ["fnc_success", 2, false];
          }else{
-            _cache call fnc_failed;
+            _cache remoteExec ["fnc_failed", 2, false]; 
         }; 
     }];
     _units pushBack _unit;

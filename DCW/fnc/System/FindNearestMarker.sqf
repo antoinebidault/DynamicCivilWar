@@ -8,6 +8,7 @@
 params["_pos","_excludeTheClosest","_compoundState"];
 if (isNil '_excludeTheClosest')then {_excludeTheClosest = true;};
 if (isNil '_compoundState')then {_compoundState = "neutral";};
+if (!isServer) then {MARKERS = [ missionNamespace, "MARKERS", []] call BIS_fnc_getServerVariable;};
 
 private _nearest = "";
 private _return = [];

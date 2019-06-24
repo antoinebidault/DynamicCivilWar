@@ -19,6 +19,8 @@ REMAINING_RESPAWN = NUMBER_RESPAWN;
 
 fnc_HandleRespawnBase = {
 	params["_unit"];
+	// Remove units around the player
+	{ if (_unit distance _x < 100 && side _x == SIDE_ENEMY) then {_x setDamage 1;} } foreach allUnits;
 
 	PLAYER_ALIVE = true;
 
@@ -65,6 +67,7 @@ fnc_HandleRespawnSingleplayer =
 	_loadout = getUnitLoadout _unit;
 	
 	waitUntil{!PLAYER_ALIVE};
+	_unit allowDamage false;
 	 
 	 
 	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
@@ -127,16 +130,16 @@ fnc_HandleRespawnSingleplayer =
 		publicVariable "CHASER_TRIGGERED";
 	}; 
 
+    resetCamShake;
+	_unit setPos _respawnPos;
 	[player] call fnc_HandleRespawnBase;
 
-    resetCamShake;
 
 	if (ACE_ENABLED) then {
 		[objNull, player] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
 	};
 
 	_unit setCaptive true;
-	_unit setPos _respawnPos;
 	_unit setUnitLoadout _loadout;
 
 	_unit switchMove "Acts_welcomeOnHUB01_PlayerWalk_6";
@@ -153,6 +156,7 @@ fnc_HandleRespawnSingleplayer =
     if (!isMultiplayer) then {
 		skipTime 6 + random 12;
 	};
+	
 	sleep 5;
 	[worldName, "Back to camp",format["%1 hours later...",_timeSkipped], format ["%1 live%2 left",REMAINING_RESPAWN,if (REMAINING_RESPAWN <= 1) then {""}else{"s"}]] call BIS_fnc_infoText;
 	cutText ["","BLACK IN", 4];
@@ -163,7 +167,9 @@ fnc_HandleRespawnSingleplayer =
 	"dynamicBlur" ppEffectCommit 5;  
 	[] remoteExec ["PLAYER_KIA",2];
 	
+	sleep 5;
 	_unit setCaptive false;
+	_unit allowDamage false;
 };
 
 
@@ -181,7 +187,7 @@ if (RESPAWN_ENABLED) then{
 		[SIDE_FRIENDLY, getMarkerPos "marker_base","Base"] call BIS_fnc_addRespawnPosition;
 		
 		[_player] call fnc_HandleRespawnBase;
-		
+
 		_loadout = getUnitLoadout _player;
 	     _player addMPEventHandler ["MPRespawn", {
 			params ["_unit", "_corpse"];
@@ -230,8 +236,9 @@ if (RESPAWN_ENABLED) then{
 				"_hitPoint"			// hit point Cfg name (String)
 			];
 
-			_damage = .9 min _damage;
-			if (_damage >= .9 && PLAYER_ALIVE)then{
+			// Reducing damage with a factor of 3
+			_damage = 0.9 min (_damage * 0.6);
+			if (_damage >= .9 && lifeState _unit == "HEALTHY")then{
 				PLAYER_ALIVE = false;
 				_unit setUnconscious true;
 				addCamShake [15, 6, 0.7];
@@ -240,13 +247,13 @@ if (RESPAWN_ENABLED) then{
 				_unit setDamage .9;
 				_unit playActionNow "agonyStart";
 			} else {
-				if (!PLAYER_ALIVE)then{
+				if (lifeState _unit != "HEALTHY")then{
 					_damage = .9;
 					_unit setDamage .9;
 				};
 			};
 			
-				_unit setDamage _damage;
+			_damage;
 		}];
 	};
 }else{

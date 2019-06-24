@@ -5,7 +5,7 @@
 class ICE_DIALOG
 {
     idd = 5000;
-    movingenable = true;
+    movingenable = false;
     duration = 10e10;
 
     class Controls
@@ -53,12 +53,12 @@ class ICE_DIALOG
          class ICE_BUTTONAMMO: RscButton
          {
           idc = -1;
-          text = "AMMO (-200 points)";
+          text = "AMMO (-100 points)";
           x = 0.4 * safezoneW + safezoneX;
           y = 0.4 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Drop"",200] ExecVM ""DCW\supportui\choose.sqf""";
+          action = "_nil=[""Drop"",100] ExecVM ""DCW\supportui\choose.sqf""";
         };
          class ICE_BUTTONTRANSPORT: RscButton
          {

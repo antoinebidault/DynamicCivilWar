@@ -9,9 +9,12 @@
 
 if (!isServer) exitWith{};
 
+// Keep only four units in singleplayer
+if (!isMultiplayer)then{
+	{ if (_foreachIndex > 3) then { deleteVehicle _x; } } forEach units GROUP_PLAYERS;
+};
 
 MARKERS = [];
-publicVariableServer "MARKERS";
 
 // Server scope public variable
 PLAYER_MARKER_LIST = []; //Pass list of marker white list name
@@ -33,17 +36,24 @@ IN_MARKERS_LOOP = false;
 };
 
 STAT_POP_START = 0;
+publicVariable "STAT_POP_START";
 STAT_POP_CURRENT = 0;
+publicVariable "STAT_POP_CURRENT";
 STAT_SUPPORT_START = 0;
+publicVariable "STAT_SUPPORT_START";
 STAT_SUPPORT = 0;
+publicVariable "STAT_SUPPORT";
 STAT_COMPOUND_TOTAL = 0;
+publicVariable "STAT_COMPOUND_TOTAL";
 STAT_COMPOUND_SECURED = 0;
+publicVariable "STAT_COMPOUND_SECURED";
 STAT_COMPOUND_BASTION = 0;
+publicVariable "STAT_COMPOUND_BASTION";
 STAT_COMPOUND_MASSACRED = 0;
+publicVariable "STAT_COMPOUND_MASSACRED";
 
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
 publicVariable "MARKER_WHITE_LIST";
-
 
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 _worldCenter = [_worldSize/2,_worldSize/2,0];
@@ -73,8 +83,6 @@ GAME_ZONE setMarkerSize [_worldSize/2,_worldSize/2];
 } forEach [[-1,-1],[-1,1],[-1,3],[3,-1],[3,1],[3,3],[1,3],[1,-1]];
 publicVariable "MARKER_WHITE_LIST";
 
-//Consuming work => getAllClusters
-private _clusters = [GAME_ZONE] call fnc_GetClusters;
 
 //On civilian killed
 CIVILIAN_KILLED = { 
@@ -115,8 +123,74 @@ ENEMY_SEARCHED = {
 
 WAITUNTIL {DCW_STARTED;};
 
-// Start spawning troops
+// Foreach units add itemGPS 
+{
+	_x addWeapon "itemGPS";
+	_x addItem "MineDetector";
+	if (ACE_ENABLED) then {
+		_x addItem "ACE_DefusalKit";
+		_x addItem "ACE_EarPlugs";
+	} else {
+		_x addItem "ToolKit";
+	};
+
+	_x setPos START_POSITION;
+}foreach units GROUP_PLAYERS;
+
+// Consuming work => getAllClusters
+_clusters = [GAME_ZONE] call fnc_GetClusters;
+
+// TIME
+setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
+
+// OVERCAST
+0 setOvercast WEATHER;
+0 setRain (if (WEATHER > .7) then {random 1}else{0});
+// setWind [10*WEATHER, 10*WEATHER, true];
+0 setFog [if (WEATHER > .8) then {.15}else{0},if (WEATHER > .8) then {.04}else{0}, 60];
+0 setGusts (WEATHER - .3);
+0 setWaves WEATHER;
+forceWeatherChange;
+
+// Chopper introduction
 _dest = START_POSITION;
+_spawnpos = [_dest, 1000, 2000, 0, 1, 20, 0] call BIS_fnc_findSafePos;
+_spawnpos set [2,70]; 
+_heli_spawn = [_spawnpos, 0, SUPPORT_MEDEVAC_CHOPPER_CLASS call BIS_fnc_selectRandom, SIDE_FRIENDLY] call BIS_fnc_spawnVehicle;
+_chopper = _heli_spawn select 0;
+_chopper setPos _spawnpos;
+createVehicleCrew (_chopper);
+_pilot = driver _chopper;
+{ _x moveInAny _chopper; } foreach units GROUP_PLAYERS;
+_chopper setCollisionLight true;
+_chopper setPilotLight true;
+_chopper flyInHeight 70;
+_chopper setCaptive true;
+_pilot setSkill 1;
+_chopper flyInHeight 70;
+{_pilot disableAI _x} forEach ["TARGET", "AUTOTARGET", "AUTOCOMBAT"];
+group _pilot setBehaviour "CARELESS";
+(group (_pilot)) allowFleeing 0;
+
+_helipad_obj = "Land_HelipadEmpty_F" createVehicle _dest;
+
+_waypoint = (group (_pilot)) addWaypoint [_dest, 0];
+_waypoint setWaypointType "TR UNLOAD";
+_waypoint setWaypointBehaviour "CARELESS";
+_waypoint setWaypointSpeed "FULL";
+_waypoint setWaypointStatements ["{vehicle _x == this} count units GROUP_PLAYERS == 0", "(vehicle this) land ""GET IN""; GROUP_PLAYERS  leaveVehicle (vehicle this);"];
+_waypoint setWaypointCompletionRadius 4;
+
+_waypoint2 = (group (_pilot)) addWaypoint [_spawnpos, 1];
+_waypoint2 setWaypointType "MOVE";
+_waypoint2 setWaypointSpeed "FULL";
+_waypoint2 setWaypointCompletionRadius 40;
+_waypoint2 setWaypointStatements ["true", "{deleteVehicle _x} foreach crew (vehicle this); deleteVehicle (vehicle this);"];
+
+CHOPPER_INTRO = _chopper;
+publicVariable "CHOPPER_INTRO";
+
+// Start spawning troops
 _grp = createGroup SIDE_FRIENDLY;
 _anims = ["WATCH","WATCH2"] ;
 _spawnpos = [_dest, 18, 30, 10, 0, .77, 0] call BIS_fnc_findSafePos;
@@ -162,25 +236,13 @@ _ammobox = missionNamespace getVariable ["ammoBox",objNull];
 if (!isNull _ammobox) then {
 	_ammobox call fnc_spawncrate;
 };
+
 for "_i" from 1 to 10  do {
 	_ammobox = missionNamespace getVariable [format["ammoBox_%1",str _i],objNull];
 	if (!isNull _ammobox) then {
 		_ammobox call fnc_spawncrate;
 	};
 };
-
-//TIME
-setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
-
-//OVERCAST
-0 setOvercast WEATHER;
-0 setRain (if (WEATHER > .7) then {random 1}else{0});
-//setWind [10*WEATHER, 10*WEATHER, true];
-0 setFog [if (WEATHER > .8) then {.15}else{0},if (WEATHER > .8) then {.04}else{0}, 60];
-0 setGusts (WEATHER - .3);
-0 setWaves WEATHER;
-forceWeatherChange;
-
 
 _popbase = 0;
 _nbFriendlies = 0;
@@ -226,13 +288,6 @@ _supportScore = 0;
 			_m setMarkerColor "ColorGreen";
 		};
 
-		/*if (!_isMilitary) then{
-			_m setMarkerBrush "FDiagonal";
-		};
-		if (_isLocation && !_isMilitary) then{
-			_m setMarkerBrush "BDiagonal";
-		};*/
-		
 		_m setMarkerBrush "Solid";
 
 		if (SHOW_SECTOR || DEBUG) then{
@@ -383,9 +438,9 @@ _supportScore = 0;
 [] execVM "DCW\fnc\spawn\SpawnChopper.sqf"; //Chopper spawn
 [] execVM "DCW\fnc\spawn\SpawnTank.sqf"; //Tanks
 [] spawn fnc_SpawnCrashSite; //Chopper spawn
-[] spawn fnc_SpawnSecondaryObjective;
-[] spawn fnc_SpawnMainObjective;
-[] call fnc_refreshMarkerStats;
+[] spawn fnc_SpawnSecondaryObjective; // Secondary objectives
+[] spawn fnc_SpawnMainObjective; // Main objective
+[] call fnc_refreshMarkerStats; // Refresh marker stats
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{
@@ -562,7 +617,7 @@ while { true } do {
 
 				}else{
 					//Gestion du cache
-					if(_playerPos distance _pos > (SPAWN_DISTANCE + 150) && _triggered)then {
+					if(_playerPos distance _pos > (SPAWN_DISTANCE + 150) && _triggered) then {
 						_cacheResult = [_units,_notSpawnedArray] call fnc_CachePut;
 						_peopleToSpawn = _cacheResult select 0;
 						_units = _units - [_cacheResult select 1];
@@ -570,14 +625,14 @@ while { true } do {
 					} else {
 
 						// Check if enemies remains in the area;
-						if (_triggered && !_success && _compoundState == "bastion") then{
-							if ([_playerPos, _marker] call fnc_isInMarker) then{
+						if (_triggered && !_success && _compoundState == "bastion") then {
+							if ([_playerPos, _marker] call fnc_isInMarker) then {
 								_enemyInMarker = true;
 								if ({side _x == SIDE_ENEMY && !(captive _x) && alive _x && [getPos _x, _marker] call fnc_isInMarker  } count allUnits <= floor (0.2 * (_peopleToSpawn select 2))) then {
 									_enemyInMarker = false;
 								};
 								//Cleared success
-								if (!_enemyInMarker)then {
+								if (!_enemyInMarker) then {
 									_success = true;
 									[_currentCompound,"neutral"] spawn fnc_setCompoundState;
 									[_currentCompound,35 + (ceil random 20),0] spawn fnc_setCompoundSupport;				
@@ -605,102 +660,83 @@ while { true } do {
 
 	} foreach allPlayers;
 
-		/*_civilReputationSum = 0;
-		_civilReputationNb = 0;*/
 
-		// foreach UNITS_SPAWNED_CLOSE
+	// foreach UNITS_SPAWNED_CLOSE
+	{
+		_unit = _x;
+
+		//Empty the killed units
+		if (!alive _unit)then{
+			_unit call fnc_deletemarker;
+			UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
+		};
+		
+		// foreach players
 		{
-			_unit = _x;
-
-
-			//Empty the killed units
-			if (!alive _unit)then{
-				_unit call fnc_deletemarker;
-				UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
+			if (CHASER_TRIGGERED) then {
+				_timerChaser = time;
 			};
-			
-			// foreach players
-			{
-				if (CHASER_TRIGGERED) then {
-				   _timerChaser = time;
-				};
 
-				
+			//Detection
+			if (!CHASER_TRIGGERED && !CHASER_VIEWED && side _unit == SIDE_ENEMY && _unit knowsAbout _x > 1 && !(_x getVariable["DCW_undercover",false]) ) then {
+				[_unit,_x,_timerChaser] spawn {
+					params["_unit","_player","_timerChaser"];
+					CHASER_VIEWED = true;
+					sleep (15 + random 5);
+					CHASER_VIEWED = false;
+					[] remoteExec ["fnc_DisplayScore",_player, false];
+					// || _unit knowsAbout player > 2
+					if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,_player] call fnc_GetVisibility > 20) ) then {
+						if (DEBUG) then  {
+							hint "Alarm !";
+						};
 
-				//Detection
-				if (!CHASER_TRIGGERED && !CHASER_VIEWED && side _unit == SIDE_ENEMY && _unit knowsAbout _x > 1 && !(_x getVariable["DCW_undercover",false]) ) then 
-				{
-					[_unit,_x,_timerChaser] spawn {
-						params["_unit","_player","_timerChaser"];
-						CHASER_VIEWED = true;
-						sleep (15 + random 5);
-						CHASER_VIEWED = false;
+						CHASER_TRIGGERED = true;
+						publicVariable "CHASER_TRIGGERED";
+						
+						//Chasers
+						if (CHASER_TRIGGERED && time > (_timerChaser + 20))then{
+							_timerChaser = time - 1;
+							UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE + ([_player] call fnc_SpawnChaser);
+						};
+						
 						[] remoteExec ["fnc_DisplayScore",_player, false];
-						// || _unit knowsAbout player > 2
-						if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,_player] call fnc_GetVisibility > 20))then{
+						[_player] spawn {
+							params["_player"];
+							sleep 250;
 							if (DEBUG) then  {
-								hint "Alarm !";
+								hint "Alarm off!";
 							};
-							
-							// playMusic (["LeadTrack04a_F","LeadTrack04_F"] call BIS_fnc_selectRandom);
-							
-							CHASER_TRIGGERED = true;
+							sleep 200;
+							CHASER_TRIGGERED = false;
 							publicVariable "CHASER_TRIGGERED";
-							
-							//Chasers
-							if (CHASER_TRIGGERED && time > (_timerChaser + 20))then{
-								_timerChaser = time - 1;
-								UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE + ([_player] call fnc_SpawnChaser);
-							};
-							
 							[] remoteExec ["fnc_DisplayScore",_player, false];
-							[_player] spawn {
-								params["_player"];
-								sleep 250;
-								if (DEBUG) then  {
-									hint "Alarm off!";
-								};
-								sleep 200;
-								CHASER_TRIGGERED = false;
-								publicVariable "CHASER_TRIGGERED";
-								[] remoteExec ["fnc_DisplayScore",_player, false];
-							};
 						};
 					};
 				};
-
-
-				
-				
-
-			} foreach allPlayers;
-
-			// Regulate the spawn distance
-			if (count UNITS_SPAWNED_CLOSE > MAX_SPAWNED_UNITS) then {
-				SPAWN_DISTANCE = 0.75 * INITIAL_SPAWN_DISTANCE max (SPAWN_DISTANCE - 10);
-			} else {
-				SPAWN_DISTANCE = INITIAL_SPAWN_DISTANCE min (SPAWN_DISTANCE + 10);
 			};
+		} foreach allPlayers;
 
-			// Garbage collection
-			if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{
-				if ({_unit distance _x > SPAWN_DISTANCE + 230} count allPlayers == count allPlayers)then {
-					UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
-					 // If it's a vehicle
-					if (vehicle _unit != _unit) then {
-						{ _x call fnc_deletemarker; deletevehicle _x; } foreach crew _unit;
-					};
-					_unit call fnc_deleteMarker;
-					deleteVehicle _unit;
+		// Regulate the spawn distance
+		if (count UNITS_SPAWNED_CLOSE > MAX_SPAWNED_UNITS) then {
+			SPAWN_DISTANCE = 0.75 * INITIAL_SPAWN_DISTANCE max (SPAWN_DISTANCE - 10);
+		} else {
+			SPAWN_DISTANCE = INITIAL_SPAWN_DISTANCE min (SPAWN_DISTANCE + 10);
+		};
+
+		// Garbage collection
+		if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{
+			if ({_unit distance _x > SPAWN_DISTANCE + 230} count allPlayers == count allPlayers)then {
+				UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
+					// If it's a vehicle
+				if (vehicle _unit != _unit) then {
+					{ _x call fnc_deletemarker; deletevehicle _x; } foreach crew _unit;
 				};
+				_unit call fnc_deleteMarker;
+				deleteVehicle _unit;
 			};
-
-
-		} foreach UNITS_SPAWNED_CLOSE;
+		};
+	} foreach UNITS_SPAWNED_CLOSE;
 	
-
-
-
-
 	sleep REFRESH_TIME;
 };

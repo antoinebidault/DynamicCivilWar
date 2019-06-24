@@ -180,14 +180,16 @@ addMissionEventHandler
 		params ["_isOpened","_isForced"];
 		if (_isOpened) then {
 			[] spawn {
+				CurrentMarker = "";
 				["DCW-markerhover", "onEachFrame", {
 					_map = findDisplay 12 displayCtrl 51; 
 					_mapMarker = (ctrlMapMouseOver _map);
 					hintsilent "";
 					_map ctrlMapCursor ["Track","Track"];
 					if (_mapMarker select 0 == "marker"  ) then {
-						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString ) then {
+						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString && CurrentMarker != _mapMarker select 1) then {
 							_map ctrlMapCursor ["Track","HC_overFriendly"];
+							CurrentMarker = _mapMarker select 1;
 							_marker = [_mapMarker select 1] call fnc_getMarkerById;
 							_compound = _marker select 0;
 							_people = (_compound select 6);
@@ -201,8 +203,12 @@ addMissionEventHandler
 								_dbg =  _dbg + format["<br/><t>Defend task state:%1</t>",_compound select 16];
 							};
 							
-							hintsilent parseText format["<t color='#cd8700' >%1</t><br/><t size='1.3'>Reputation : %2/100</t><br/><t size='1.3'>Population : %3</t>%4",(_marker select 0) select 14,(_marker select 0) select 13,_population,_dbg];
+							hintsilent parseText format["<t color='#cd8700' >%1</t><br/><t size='1.3'>State : %2</t><br/><t size='1.3'>Reputation : %3/100</t><br/><t size='1.3'>Population : %4</t>%5",(_marker select 0) select 14,(_marker select 0) select 12,(_marker select 0) select 13,_population,_dbg];
+						} else {
+							CurrentMarker = "";
 						};
+					} else{
+						CurrentMarker = "";
 					};
 
 					if (!visibleMap) then {

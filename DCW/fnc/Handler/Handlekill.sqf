@@ -31,7 +31,7 @@
                     _unit = (_this select 0);
                     _player = (_this select 1);
                     [_unit,_player] remoteExec ["ENEMY_SEARCHED",2];
-                    [_unit, _player,25] remoteExec ["fnc_GetIntel",2];
+                    [_unit, _player,50] remoteExec ["fnc_GetIntel",2];
                 },{},[],1,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd",0 , true];
 
                 [_unit,_killer] call ENEMY_KILLED;

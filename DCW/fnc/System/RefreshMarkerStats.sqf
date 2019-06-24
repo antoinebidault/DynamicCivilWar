@@ -38,3 +38,12 @@ STAT_COMPOUND_SECURED = _nbSecured;
 STAT_COMPOUND_BASTION = _nbBastion;
 STAT_COMPOUND_MASSACRED = _nbMassacred;
 STAT_SUPPORT = round(_compoundReputationTotal/_total);
+
+publicVariable "STAT_POP_START";
+publicVariable "STAT_POP_CURRENT";
+publicVariable "STAT_SUPPORT_START";
+publicVariable "STAT_SUPPORT";
+publicVariable "STAT_COMPOUND_TOTAL";
+publicVariable "STAT_COMPOUND_SECURED";
+publicVariable "STAT_COMPOUND_BASTION";
+publicVariable "STAT_COMPOUND_MASSACRED";

@@ -48,7 +48,7 @@ while {count TANKS < NUMBER_TANKS} do{
          params["_tank","_killer"];
          if (isPlayer _killer || _killer in units GROUP_PLAYERS) then {
             //Task success
-            _tank call fnc_success;
+            _tank remoteExec ["fnc_success",2,false];
          };
     }];
     

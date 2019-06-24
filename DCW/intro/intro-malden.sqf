@@ -1,48 +1,19 @@
 
 0 fadeSound .2;
-
-_dest = START_POSITION;
-_spawnpos = [_dest, 1000, 2000, 0, 1, 20, 0] call BIS_fnc_findSafePos;
-
-
-_cam = "camera" camcreate _spawnpos;
+titleCut ["Stand by...", "BLACK FADED",999];
+_cam = "camera" camcreate START_POSITION;
 _cam cameraeffect ["internal", "back"];
 showCinemaBorder true;
 
+waitUntil {!isNull(CHOPPER_INTRO)};
+_dest = START_POSITION;
+_chopper = CHOPPER_INTRO;
 
-_spawnpos set [2,70]; 
-_heli_spawn = [_spawnpos, 0, SUPPORT_MEDEVAC_CHOPPER_CLASS call BIS_fnc_selectRandom, SIDE_FRIENDLY] call BIS_fnc_spawnVehicle;
-_chopper = _heli_spawn select 0;
-_chopper setPos _spawnpos;
-_cam camSetPos (_chopper modelToWorld[3,50,2]);
-createVehicleCrew (_chopper);
-_pilot = driver _chopper;
-{ _x moveInAny _chopper; } foreach  units GROUP_PLAYERS;
-_chopper setCollisionLight true;
-_chopper setPilotLight true;
-_chopper flyInHeight 70;
-_chopper setCaptive true;
-_pilot setSkill 1;
-_chopper flyInHeight 70;
-{_pilot disableAI _x} forEach ["TARGET", "AUTOTARGET", "AUTOCOMBAT"];
-group _pilot setBehaviour "CARELESS";
-(group (_pilot)) allowFleeing 0;
 
-_helipad_obj = "Land_HelipadEmpty_F" createVehicle _dest;
 
-_waypoint = (group (_pilot)) addWaypoint [_dest, 0];
-_waypoint setWaypointType "TR UNLOAD";
-_waypoint setWaypointBehaviour "CARELESS";
-_waypoint setWaypointSpeed "FULL";
-_waypoint setWaypointStatements ["{vehicle _x == this} count units GROUP_PLAYERS == 0", "(vehicle this) land ""GET IN""; GROUP_PLAYERS  leaveVehicle (vehicle this);"];
-_waypoint setWaypointCompletionRadius 4;
-
-_waypoint2 = (group (_pilot)) addWaypoint [_spawnpos, 1];
-_waypoint2 setWaypointType "MOVE";
-_waypoint2 setWaypointSpeed "FULL";
-_waypoint2 setWaypointCompletionRadius 40;
-_waypoint2 setWaypointStatements ["true", "{deleteVehicle _x} foreach crew (vehicle this); deleteVehicle (vehicle this);"];
-
+if (daytime > 8 && daytime < 20) then {
+	["Mediterranean",3,true] call bis_fnc_setppeffecttemplate;
+};
 
 sleep 1;
 
@@ -61,9 +32,8 @@ playMusic "seal";
 	nul = ["Music by Explosion in the sky",.3,.7,5] spawn BIS_fnc_dynamicText;
 };
 
-_camPos =  [getPos _chopper, 400,[_chopper,_helipad_obj] call BIS_fnc_dirTo] call BIS_fnc_relPos;
+_camPos =  [getPos _chopper, 400,[getPos _chopper,_dest] call BIS_fnc_dirTo] call BIS_fnc_relPos;
 _camPos set[2,30];
-hint str _camPos;
 _cam camSetPos _camPos;
 _cam camsettarget _dest;
 _cam camcommit 0;
@@ -120,6 +90,7 @@ _cam cameraeffect ["terminate", "back"];
 	8 fadeSound 1;	
 };
 
+["",0,true] call bis_fnc_setppeffecttemplate;
 
 //[player, "All units deployed to the insertion point", 150, 250, 75, 1, [], 0, false] call BIS_fnc_establishingShot;
 
