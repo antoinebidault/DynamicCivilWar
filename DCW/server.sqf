@@ -14,7 +14,7 @@ if (!isMultiplayer)then{
 	{ if (_foreachIndex > 3) then { deleteVehicle _x; } } forEach units GROUP_PLAYERS;
 };
 
-MARKERS = [];
+MARKERS = []; 
 
 // Server scope public variable
 PLAYER_MARKER_LIST = []; //Pass list of marker white list name

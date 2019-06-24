@@ -59,8 +59,15 @@ MARKER_WHITE_LIST = [];
 publicVariable "MARKER_WHITE_LIST";
 
 
-_markerBase = createMarker ["marker_base", getPos leader GROUP_PLAYERS];
-_markerBase setMarkerShape "ELLIPSE";
-_markerBase setMarkerBrush "Border";
-_markerBase setMarkerSize [600,600];
-_markerBase setMarkerColor "ColorGreen";
+// Create a marker base if it does not exists
+
+if (getMarkerColor "marker_base" == "") then {
+	_markerBase = createMarker ["marker_base", getPos leader GROUP_PLAYERS];
+	_markerBase setMarkerShape "ELLIPSE";
+	_markerBase setMarkerBrush "Border";
+	_markerBase setMarkerSize [600,600];
+	_markerBase setMarkerColor "ColorGreen";
+};
+
+START_POSITION = getMarkerPos "marker_base";
+publicVariable "START_POSITION";

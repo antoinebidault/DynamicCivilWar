@@ -3,13 +3,20 @@
   "version": "1.0.0",
   "description": "A dynamic singleplayer scenario for Arma III",
   "main": "gulpfile.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-armapbo": "^2.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-header-comment": "^0.6.1",
+    "gulp-rimraf": "^0.2.2",
+    "gulp-watch": "^5.0.1",
     "moment": "^2.19.3"
   },
   "scripts": {
+    "start": "gulp",
+    "build": "gulp copy",
+    "clean": "gulp clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

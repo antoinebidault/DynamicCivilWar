@@ -4,18 +4,18 @@
  * Author: BIDASS
  * License : GNU (GPL)
  * Main components preloading and initialization
- */
+ */ 
 
 if (!isNull player) then {
 	titleCut ["", "BLACK FADED",9999];
-	disableUserInput true;
-};
-
+	disableUserInput true; 
+}; 
+ 
 // Need some adjustements
 { 
 	[_x,"MOVE"] remoteExec ["disableAI", 2];
 	[_x,"FSM"] remoteExec ["disableAI", 2];
- } foreach allUnits;
+ } foreach allUnits; 
 
 enableDynamicSimulationSystem true;
 "Group" setDynamicSimulationDistance 600;

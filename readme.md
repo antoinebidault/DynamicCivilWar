@@ -48,3 +48,19 @@ Credits
 ---
 Thanks to the RHS & 3CB teams for the mods included. 
 Thanks to the BI teams for their awesome game & tooling.
+
+Requirements 
+---
+Node 8+
+NPM
+
+Debug
+---
+Run a npm install
+```
+npm install
+```
+And then 
+```
+npm start
+```
