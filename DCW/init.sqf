@@ -20,6 +20,7 @@ if (!isNull player) then {
 enableDynamicSimulationSystem true;
 "Group" setDynamicSimulationDistance 600;
 
+
 // CONFIG
 fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
@@ -181,6 +182,7 @@ CIVILIAN setFriend [RESISTANCE, 1];
 
 // Public variables
 call (compileFinal preprocessFileLineNumbers "DCW\variables.sqf"); 
+
 
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";

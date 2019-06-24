@@ -57,3 +57,10 @@ publicVariable "IEDS";
 // List of markers to exclude from enemy & civilian path
 MARKER_WHITE_LIST = []; 
 publicVariable "MARKER_WHITE_LIST";
+
+
+_markerBase = createMarker ["marker_base", getPos leader GROUP_PLAYERS];
+_markerBase setMarkerShape "ELLIPSE";
+_markerBase setMarkerBrush "Border";
+_markerBase setMarkerSize [600,600];
+_markerBase setMarkerColor "ColorGreen";
