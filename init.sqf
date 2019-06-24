@@ -8,5 +8,6 @@
  * https://github.com/bidass/DynamicCivilWar
  * You are free to edit or share it
  */
-//Mission loading
+
+ 
 nul = [] execVM "DCW\init.sqf"; 
