@@ -533,12 +533,13 @@ while { true } do {
 				_respawnId = _x select 15;
 				_defendTaskState = _x select 16;
 				_primaryIntel = _x select 17;
-				_notSpawnedArray = _x select 18;
+				_notSpawnedArray = _x select 18; 
+		
 
 				if (_triggered && _playerPos distance _pos < _radius ) then {
 					_currentMarker = _x;
 					_playerInMarker = true;
-					[format["<t color='#cd8700'  >%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["fnc_ShowIndicator",_player,false];
+					[format["<t color='#cd8700'>%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["fnc_ShowIndicator",_player,false];
 			
 					if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "supporting")  ) then {
 						[_currentCompound,_player] spawn {
@@ -549,8 +550,8 @@ while { true } do {
 						_defendTaskState = "done";
 					};
 				};
-
-				if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE && (!_isInFlyingVehicle && _playerPos distance _pos >= _radius)) then{
+				// && _playerPos distance _pos >= _radius
+				if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE && !_isInFlyingVehicle) then{
 					
 					if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
 

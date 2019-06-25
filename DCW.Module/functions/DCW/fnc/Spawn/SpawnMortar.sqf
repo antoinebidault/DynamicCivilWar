@@ -11,7 +11,7 @@ _pos = _this select 0;
 _radius = _this select 1;
 _nb = _this select 2;
 
-private _units = [];
+private _units = []; 
 
 if (_nb == 0)exitWith{_units;};
 
@@ -28,7 +28,7 @@ for "_j" from 1 to _nb do {
     _mortar addMPEventHandler ["MPKilled",{ 
         params["_mortar","_killer"];
         if (isPlayer _killer) then {
-            hint "Mortar destroyed";
+            hint "Mortar destroyed !";
             _mortar remoteExec ["fnc_success", 2, false]; 
          }else{
             _mortar remoteExec ["fnc_failed", 2, false];

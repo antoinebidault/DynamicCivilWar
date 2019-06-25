@@ -527,14 +527,19 @@ addActionFindChief = {
         params["_unit","_talker","_action"];
         if (!(_this call fnc_startTalking)) exitWith {};
         _chief = (_this select 3) select 0;
-        if(alive _chief)then{
-            _marker = createMarkerLocal ["localchief", getPosWorld _chief];
-            _marker setMarkerShapeLocal "ICON";
-            _marker setMarkerTypeLocal "mil_dot";
-            _marker setMarkerColorLocal "ColorGreen";
-            _marker setMarkerTextLocal "LocalChief";
+        if(alive _chief) then {
+
+            _marker = "localchief";
+            if(getMarkerColor "localchief" == "") then {
+                _marker = createMarker ["localchief", getPosWorld _chief];
+            };
+            _marker setMarkerShape "ICON";
+            _marker setMarkerType "mil_dot";
+            _marker setMarkerColor "ColorGreen";
+            _marker setMarkerText "Local chief";
+            _marker setMarkerPos (getPosWorld _chief);
+
             [_unit,format["I marked you the exact position where I last saw %1", name _chief],false] call fnc_Talk;
-           
         }else{
             [_unit,"Our chief is no more... Fucking war !",false] call fnc_Talk;
         };
@@ -817,7 +822,14 @@ fnc_ActionTorture =  {
 
 fnc_startTalking = {
     params["_unit","_talker","_action"];
-    if (_unit getVariable["DCW_talking",false]) exitWith {hint "You can't do multiple action at the same time...";false;};
+     if (_unit getVariable["DCW_talking",false]) exitWith {
+         hint "You can't do multiple action at the same time..."; 
+        [_unit,_talker,_action] spawn {
+            sleep 10;
+            _this call fnc_endTalking;
+        };
+        false;
+    };
     _unit setVariable["DCW_talking",true];
     _unit setFormDir ([_unit,_talker] call BIS_fnc_dirTo);
     _unit setDir ([_unit,_talker] call BIS_fnc_dirTo);

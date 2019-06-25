@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "dependencies": {},
   "devDependencies": {
+    "fancy-log": "^1.3.3",
     "gulp": "^3.9.1",
     "gulp-armapbo": "^2.0.2",
     "gulp-clean": "^0.4.0",

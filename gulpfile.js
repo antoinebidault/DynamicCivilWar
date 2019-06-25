@@ -4,24 +4,27 @@ const moment = require('moment');
 var watch = require('gulp-watch');
 var clean = require('gulp-clean');
 var rimraf = require('gulp-rimraf');
+var log = require('fancy-log');
 
 var directories = ['DCW.Malden', 'DCW.Lythium', 'DCW.Chongo','DCW.Module/functions'];  
 
 // Perform a default watch to the root folder
 gulp.task('default', function () {
+    var source = './DCW'
     // Callback mode, useful if any plugin in the pipeline depends on the `end`/`flush` event
-    return watch('DCW/**/*', function () {
+    var task =  gulp.src(source+'/**/*', {base: source})
+        .pipe(watch(source, {base: source}))
+        .on('change', function(){ log('File change'); })
+        .on('added', function(){ log('File added'); }) 
         for (var i = 0; i < directories.length; i++) {  
-            gulp.src('DCW/**/*')
-            .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
+          task.pipe(gulp.dest('./'+directories[i]+'/DCW'));  
         }
-    });
 });
 
 gulp.task('copy', function () {
     for (var i = 0; i < directories.length; i++) {  
         gulp.src('DCW/**/*')
-            .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
+          .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
     } 
 });
 

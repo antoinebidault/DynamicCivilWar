@@ -5,10 +5,11 @@
  * License : GNU (GPL)
  * Main components preloading and initialization
  */ 
-
 if (!isNull player) then {
 	titleCut ["", "BLACK FADED",9999];
 	disableUserInput true; 
+	enableSentences false;
+	enableRadio false;
 }; 
  
 // Need some adjustements

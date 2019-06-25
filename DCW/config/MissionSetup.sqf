@@ -59,7 +59,7 @@ _tmpChoppers = [];
  if (getNumber(configfile >> "CfgVehicles" >> _x >> "slingLoadMaxCargoMass") >= 11500) then {
 	 _tmpChoppers pushback _x;
  };
-}foreach _choppers;
+}foreach _choppers; 
 if (count _tmpChoppers > 0) then {
 	SUPPORT_HEAVY_TRANSPORT_CLASS = _tmpChoppers;
 };
@@ -70,4 +70,4 @@ SUPPORT_CAR_PARADROP_CLASS = [FACTION_PLAYER,["Car"],"slingload"] call fnc_Facti
 
 
 // EMpty the array for memory saving purposes...
-CONFIG_VEHICLES = [];
+CONFIG_VEHICLES = []; 

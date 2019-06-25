@@ -5,7 +5,7 @@
  * License : GNU (GPL)
  * 
  * Add a marker to map
- */
+ */ 
 params["_compound"];
 // Set the correct state
 

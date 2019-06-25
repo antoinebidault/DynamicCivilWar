@@ -236,21 +236,20 @@ fnc_SaveAndCloseConfigDialog = {
 		publicVariable "DCW_STARTED";
 
 	};
-};
+};  
 
 CHOPPER_DEMO = objNull;
 CHOPPER_DEMO_POS = (player modelToWorld[0,-21,0]);
 fnc_DisplayChopper = {
 	0 fadeSound 0;
-	if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO;deleteVehicle CHOPPER_DEMO};
-	sleep .4;
+	if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO; deleteVehicle CHOPPER_DEMO;};
+	sleep 1;
 	_choppers = [lbData [2103, (2103 call fnc_getValue)], ["Helicopter"], "Transport"] call fnc_FactionGetSupportUnits;
 	if (count _choppers > 0) then {
 		SUPPORT_MEDEVAC_CHOPPER_CLASS = _choppers;
 		SUPPORT_TRANSPORT_CHOPPER_CLASS = _choppers;
 		FRIENDLY_CHOPPER_CLASS = _choppers;
 		CHOPPER_DEMO = (SUPPORT_MEDEVAC_CHOPPER_CLASS call BIS_fnc_selectRandom) createVehicle  CHOPPER_DEMO_POS;
-
 		CHOPPER_DEMO setPos [getPos(CHOPPER_DEMO) select 0, getPos(CHOPPER_DEMO) select 1,0];
 		CHOPPER_DEMO engineOn true;
 		CHOPPER_DEMO allowDamage false;

@@ -108,6 +108,8 @@ if (!DEBUG ) then {
 	[] call fnc_intro;
 };
 
+
+
 uisleep .3;
 titleCut ["", "BLACK FADED", 9999];
 // Info text
@@ -121,6 +123,10 @@ uisleep 5;
 titleCut ["", "BLACK FADED", 1];
 uisleep 1;
 titleCut ["", "BLACK IN", 5];
+
+// Enable radio
+enableSentences true;
+enableRadio true;
 
 // init user respawn loop
 [player] spawn fnc_respawn; //Respawn loop

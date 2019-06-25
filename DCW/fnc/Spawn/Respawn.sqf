@@ -11,7 +11,7 @@ if (!RESPAWN_ENABLED)then {
 	NUMBER_RESPAWN = 0;
 	REMAINING_RESPAWN = 0;
 };
-
+ 
 [] spawn fnc_surrenderSystem;
 
 RESPAWN_CHOICE = "";

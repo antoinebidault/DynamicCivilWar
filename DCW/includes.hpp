@@ -87,10 +87,10 @@ class CfgNotifications
 #include "config\mission-parameters.hpp"
 #include "supportui\Defines.hpp"
 #include "supportui\buySupports.hpp"
+#include "supportui\notification.hpp"
 #include "config\respawn.hpp"
 #include "config\config-combo.hpp"
 #include "config\loadout-combo.hpp"
-#include "medevac\support.hpp"
 //#include "icons\icons.hpp"
 
 class RscTitles {

@@ -82,9 +82,9 @@ for "_xc" from 0 to _worldNbBlocks do {
 		if (_markerPos inArea _markerWhiteList) then {
 			_buildings = [_markerPos, (SIZE_BLOCK)] call fnc_findBuildings;
 			_nbBuildings = count _buildings;
-
 			if (_nbBuildings > 0)then{
-				private _posCenteredOnBuilding = position (_buildings select 0);
+				private _building =  (_buildings select 0);
+				private _posCenteredOnBuilding = position _building;
 				private _res  = [_posCenteredOnBuilding] call fnc_getRadiusLocation;
 				private _radius = _res select 0;
 				if (_radius > 0)then {

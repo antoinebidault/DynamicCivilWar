@@ -5,7 +5,6 @@ SIZE_BLOCK = 400; // Size of blocks
 MAX_CLUSTER_SIZE = 200;
 SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  350; //Units can't spawn before this distance
-//RADIO_CHAT_LIST=["rhs_usa_land_rc_1","rhs_usa_land_rc_2","rhs_usa_land_rc_3","rhs_usa_land_rc_4","rhs_usa_land_rc_5","rhs_usa_land_rc_6","rhs_usa_land_rc_7","rhs_usa_land_rc_7"];
 
 
 // SUPPORT CLASSES

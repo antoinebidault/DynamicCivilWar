@@ -6,7 +6,7 @@ _markerIndex = _markerData select 1;
 
 _support = _marker select 13;
 _support =  (100 min (0 max (_support + _addedPoints)));
-_marker set [13, _support];
+_marker set [13, _support]; 
 
 waitUntil {!IN_MARKERS_LOOP; sleep .5;};
 MARKERS set [_markerIndex,_marker];

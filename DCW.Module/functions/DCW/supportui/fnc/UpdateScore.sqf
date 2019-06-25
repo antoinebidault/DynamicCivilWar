@@ -10,7 +10,7 @@ params ["_group","_bonus","_silent", "_unit"];
 private _silent = if (isNil "_silent") then{ false } else { _silent };
 
 DCW_SCORE = (DCW_SCORE + _bonus);
-publicVariable "DCW_SCORE";
+publicVariable "DCW_SCORE"; 
 private _scoreType = if (_bonus > 0) then {"+"}else{""};
 
 if (!_silent)then{

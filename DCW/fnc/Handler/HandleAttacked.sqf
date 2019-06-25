@@ -11,7 +11,7 @@ _unit addEventHandler["FiredNear",
 		_distance = _this select 2;	
 		_muzzle = _this select 4;	
 		_gunner = _this select 7;	
-		if (!captive _unit && side _gunner == SIDE_FRIENDLY  && count (units (group _unit)) == 1 && damage _unit < .6 && morale _unit < -.9 && _unit distance _gunner < 120) then {
+		if (!captive _unit && side _gunner == SIDE_FRIENDLY  && count (units (group _unit)) == 1 && damage _unit < .6 && morale _unit < -.7 && _unit distance _gunner < 120) then {
 			_unit removeAllEventHandlers "FiredNear";
 			_unit setCaptive true;
 			_unit action ["Surrender", _unit]; 

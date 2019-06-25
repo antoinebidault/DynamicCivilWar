@@ -10,7 +10,7 @@
 
 _file = _this select 0;
 _talkers = _this select 1;
-_array = _this select 2;
+_array = _this select 2; 
 
 			
 	//Add the topics, refer back to the file above

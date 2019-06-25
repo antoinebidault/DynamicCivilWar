@@ -6,14 +6,14 @@
  */
 
 if (isNull player) exitWith{false;};
-
+ 
 
 private _points = DCW_SCORE;
 private _colorChaser = "";
 private _labelChaser = "";
 private _statusUnd = "";
 private _colorUnd = "";
-
+ 
 // Chasing status
 /*
 if (CHASER_TRIGGERED) then{

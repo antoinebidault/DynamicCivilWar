@@ -9,7 +9,7 @@
  * Credits to psycho & BonInf* 
  */
 
-params["_healer","_injuredperson","_ambient"];
+params["_healer","_injuredperson","_ambient"]; 
 
 private ["_injuredperson","_healer","_behaviour","_timenow","_relpos","_dir","_offset","_time","_damage","_isMedic","_healed","_animChangeEVH","_skill_factor"];
 _behaviour = behaviour _healer;

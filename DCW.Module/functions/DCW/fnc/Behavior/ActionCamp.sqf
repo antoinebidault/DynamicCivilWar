@@ -10,7 +10,7 @@
 
         CAMP_MARKER setMarkerPos getPos _unit;
         CAMP_MARKER setMarkerSize [70,70];
-        CAMP_MARKER setMarkerShape "ELLIPSE";
+        CAMP_MARKER setMarkerShape "ELLIPSE"; 
         CAMP_MARKER setMarkerColor "ColorGreen";
         CAMP_MARKER setMarkerAlpha 0.2;
 

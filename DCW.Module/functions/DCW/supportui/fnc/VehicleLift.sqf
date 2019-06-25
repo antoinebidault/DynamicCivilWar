@@ -1,8 +1,10 @@
 
 params["_pos","_dist","_type"];
 
+
 if (isNil '_type') then {_type = "vehicle";};
 _cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { _type };
+
 
 // Spawn CH47
 _startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_findSafePos;
@@ -15,8 +17,21 @@ _chopper setposatl _spawnpos;
 createVehicleCrew (_chopper);
 _spawnpos set [2,300]; 
 _cargo =  _cargoClass createVehicle _spawnpos;
+_cargo setMass [((getMass _cargo) min 11400),0];
+sleep 1;
 _cargo setposatl _spawnpos;
-_chopper setSlingLoad _cargo;
+_success = _chopper setSlingLoad _cargo;
+if (!_success) exitWith { 
+
+	[HQ,"Sorry guy, we are unable to drop this kind of vehicle... Try a lighter vehicle"] remoteExec ["fnc_talk"];
+    [GROUP_PLAYERS,150] remoteExec ["fnc_updateScore",2];   
+	{deleteVehicle _x} foreach crew _chopper; 
+	deleteVehicle _chopper; 
+	deleteVehicle _cargo;
+};
+
+[HQ,format["The %1 transport is in bound !",if (_type == "crate") then {"ammo"}else{"vehicle"}]] remoteExec ["fnc_talk"];
+
 _pilot = driver _chopper;
 _chopper setCaptive true;
 _pilot setCaptive true;

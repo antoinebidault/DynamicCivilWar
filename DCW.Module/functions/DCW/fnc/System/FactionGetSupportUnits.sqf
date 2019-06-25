@@ -27,7 +27,7 @@ _results = [];
 		if ((configName _Vehicle) isKindOf _x) then {
 			
 			if (_type == "slingload" ) then {
-				if (count (getArray(_Vehicle >> "slingLoadCargoMemoryPoints")) > 0 && !((configName _Vehicle) isKindOf "Truck_F")) then {_go = 1;} 
+				if (count (getArray(_Vehicle >> "slingLoadCargoMemoryPoints")) > 0 && getNumber(_Vehicle >> "armor") <= 150 && !((configName _Vehicle) isKindOf "Truck_F")) then {_go = 1;} 
 			} else {
 				if (count getArray(_Vehicle >> "availableForSupportTypes") > 0 &&  getArray(_Vehicle >> "availableForSupportTypes") find  _type >= 0) then {
 					_go = 1;

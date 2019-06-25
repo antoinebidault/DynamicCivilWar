@@ -38,7 +38,11 @@ _cam camSetPos _camPos;
 _cam camsettarget _dest;
 _cam camcommit 0;
 
-sleep 15;
+_camPos set[2,40];
+_cam camSetPos _camPos;
+_cam camcommit 14;
+
+sleep 13;
 
 _cam camsettarget _chopper modelToWorld[0,0,-14];
 _cam camcommit 4;
@@ -66,6 +70,11 @@ _dest set [2,5];
 _cam camSetPos _dest;
 _cam camsettarget _chopper modelToWorld[0,0,-10];
 _cam camcommit 0;
+
+_dest set [2,10]; 
+_cam camSetPos _dest;
+_cam camcommit 10;
+
 sleep 10;
 
 //[_cam,_chopper, [-14,22,-15],7] call fnc_camfollow;
