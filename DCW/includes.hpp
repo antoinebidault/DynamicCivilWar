@@ -88,14 +88,13 @@ class CfgNotifications
 };  
 
 #include "config\mission-parameters.hpp"
-#include "supportui\Defines.hpp"
-#include "supportui\buySupports.hpp"
-#include "supportui\notification.hpp"
+#include "fnc\supportui\Defines.hpp"
+#include "fnc\supportui\buySupports.hpp"
+#include "fnc\supportui\notification.hpp"
 #include "config\respawn.hpp"
 #include "config\config-combo.hpp"
 #include "config\loadout-combo.hpp"
-//#include "icons\icons.hpp"
 
 class RscTitles {
-  #include "supportui\statusBar.hpp"
+  #include "fnc\supportui\statusBar.hpp"
 };

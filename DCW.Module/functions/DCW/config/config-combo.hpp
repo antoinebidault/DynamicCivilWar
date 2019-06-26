@@ -233,6 +233,25 @@ class PARAMETERS_DIALOG
           tooltip = "Enable restricted arsenal";
         };
 
+      class RscText_2121: RscText
+        {
+            idc = 2121;
+            text = "Compound markers visible";
+            x = -3 * GUI_GRID_W + GUI_GRID_X;
+            y = 19 * GUI_GRID_H + GUI_GRID_Y;
+            w = 12 * GUI_GRID_W;
+            h = 1 * GUI_GRID_H;
+        };
+       class RscCombo_2122: RscCheckbox
+        {
+          idc = 2122;
+          x = -5 * GUI_GRID_W + GUI_GRID_X;
+          y = 19 * GUI_GRID_H + GUI_GRID_Y;
+          w = 1 * GUI_GRID_W;
+          h = 1 * GUI_GRID_H;
+          tooltip = "Compound markers visible";
+        };
+
 
        class RscText_1009: RscText
         {

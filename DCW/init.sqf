@@ -53,6 +53,7 @@ fnc_setCompoundSupport =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Syste
 fnc_surrenderSystem = compile preprocessFileLineNumbers  "DCW\fnc\System\SurrenderSystem.sqf";
 fnc_getMarkerById = compile preprocessFileLineNumbers "DCW\fnc\System\getMarkerById.sqf";
 fnc_refreshMarkerStats = compile preprocessFileLineNumbers "DCW\fnc\System\refreshMarkerStats.sqf";
+fnc_teleport = compile preprocessFileLineNumbers  "DCW\fnc\System\teleport.sqf";
 
 //SPAWN
 fnc_respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
@@ -112,7 +113,6 @@ fnc_randomAnimation = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\
 fnc_updateRep =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\UpdateRep.sqf";
 fnc_localChief = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\LocalChief.sqf";
 fnc_medic = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Medic.sqf";
-fnc_firstAid =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\FirstAid.sqf";
 call(compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\PrepareAction.sqf");
 fnc_addCivilianAction = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\addCivilianAction.sqf";
 fnc_shout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Shout.sqf";
@@ -127,12 +127,34 @@ fnc_handlekill = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\Handle
 fnc_handleAttacked = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleAttacked.sqf";
 
 // Support UI
-fnc_supportuiInit = compile preprocessFileLineNumbers  "DCW\supportui\init.sqf";
-fnc_updatescore = compile preprocessFileLineNumbers  "DCW\supportui\fnc\UpdateScore.sqf";
-fnc_afford = compile preprocessFileLineNumbers  "DCW\supportui\fnc\Afford.sqf";
-fnc_supportui = compile preprocessFileLineNumbers  "DCW\supportui\fnc\SupportUI.sqf";
-fnc_displayscore = compile preprocessFileLineNumbers  "DCW\supportui\fnc\DisplayScore.sqf";
-fnc_getCrateItems = compile preprocessFileLineNumbers  "DCW\supportui\fnc\GetCrateItems.sqf";
+fnc_supportuiInit = compile preprocessFileLineNumbers  "DCW\fnc\supportui\init.sqf";
+fnc_updatescore = compile preprocessFileLineNumbers  "DCW\fnc\supportui\UpdateScore.sqf";
+fnc_afford = compile preprocessFileLineNumbers  "DCW\fnc\supportui\Afford.sqf";
+fnc_supportui = compile preprocessFileLineNumbers  "DCW\fnc\supportui\SupportUI.sqf";
+fnc_displayscore = compile preprocessFileLineNumbers  "DCW\fnc\supportui\DisplayScore.sqf";
+fnc_getCrateItems = compile preprocessFileLineNumbers  "DCW\fnc\supportui\GetCrateItems.sqf";
+
+// MEDEVAC
+fnc_spawnHelo = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHelo.sqf";
+fnc_SpawnHeloCrew = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloCrew.sqf";
+fnc_SpawnHeloReplacement = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloReplacement.sqf";
+fnc_HandleDamage = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleDamage.sqf";
+fnc_HandleKilled = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleKilled.sqf";
+fnc_Heal = compile preprocessFileLineNumbers "DCW\fnc\medevac\heal.sqf";
+// fnc_Save = compile preprocessFileLineNumbers "DCW\fnc\medevac\save.sqf";
+fnc_Carry = compile preprocessFileLineNumbers "DCW\fnc\medevac\carry.sqf";
+fnc_addActionCarry = compile preprocessFileLineNumbers "DCW\fnc\medevac\addActionCarry.sqf";
+fnc_ChopperPath = compile preprocessFileLineNumbers "DCW\fnc\medevac\chopperpath.sqf";
+fnc_calculateTimeToHeal = compile preprocessFileLineNumbers "DCW\fnc\medevac\calculateTimeToHeal.sqf";
+fnc_spawnHealEquipement = compile preprocessFileLineNumbers "DCW\fnc\medevac\spawnHealEquipement.sqf";
+fnc_spawnObject = compile preprocessFileLineNumbers "DCW\fnc\medevac\spawnObject.sqf";
+fnc_dropInHelo = compile preprocessFileLineNumbers "DCW\fnc\medevac\dropInHelo.sqf";
+fnc_help = compile preprocessFileLineNumbers "DCW\fnc\medevac\help.sqf";
+fnc_removeFAKS = compile preprocessFileLineNumbers "DCW\fnc\medevac\removeFAKS.sqf";
+fnc_deleteMedevac = compile preprocessFileLineNumbers "DCW\fnc\medevac\deleteMedevac.sqf";
+fnc_caller = compile preprocessFileLineNumbers "DCW\fnc\medevac\caller.sqf";
+fnc_firstAid =  compileFinal preprocessFileLineNumbers "DCW\fnc\medevac\FirstAid.sqf";
+fnc_injured = compile preprocessFileLineNumbers "DCW\fnc\medevac\injured.sqf";
 
 //composition
 compo_camp1 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp1.sqf");

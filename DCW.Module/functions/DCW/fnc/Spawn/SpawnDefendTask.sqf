@@ -54,7 +54,7 @@ for "_j" from 1 to _nbGroups do {
 	_marker setMarkerType "hd_arrow";
 	_marker setMarkerDir _dir;
 
-	_wp =_grp addWaypoint [_compound select 1, 0];
+	_wp = _grp addWaypoint [_compound select 1, 0];
 	_wp setWaypointType "SAD";
 	_wp setWaypointBehaviour "AWARE";
 	_wp setWaypointFormation "LINE";

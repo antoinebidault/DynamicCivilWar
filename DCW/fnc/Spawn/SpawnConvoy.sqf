@@ -34,7 +34,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
     _connectedRoad = _roadConnectedTo select 0;
     _roadDirection = [_road, _connectedRoad] call BIS_fnc_dirTo;
     _car = [_roadPos, _roadDirection, ENEMY__units_CAR_CLASS, _grp] call BIS_fnc_spawnVehicle select 0;
-    driver _car enableSimulationGlobal false;
+    (driver _car) enableSimulationGlobal false;
     
     _car addMPEventHandler ["MPKilled",{
         [GROUP_PLAYERS,100] remoteExec ["fnc_updateScore",2];   

@@ -101,7 +101,7 @@ _unit addHeadgear "H_Beret_blk";
         _unit RemoveAction _action;
         [_unit,"Thank you so much for your help !", false] spawn fnc_talk;
         _cratePos = [_curr select 1, 0, _curr select 4, 4, 0, 20, 0] call BIS_fnc_findSafePos;
-        [_cratePos,1500,"crate"] execVM "DCW\supportui\fnc\VehicleLift.sqf";
+        [_cratePos,1500,"crate"] execVM "DCW\fnc\supportui\VehicleLift.sqf";
         [_curr, 25, 0] call fnc_setCompoundSupport;
         
     }] remoteExec["spawn",2];

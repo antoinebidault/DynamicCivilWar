@@ -17,12 +17,15 @@ if(!isNull (_injuredperson getVariable ["healer", objNull])) exitWith{false};
 _injuredperson setVariable ["healer", _healer, true];
 _injuredperson setUnconscious true;
 
+sleep 4;
+
 if (!isPlayer _healer && {_healer distance _injuredperson > 6}) then {
 	_healer setBehaviour "AWARE";
 	_healer doMove (position _injuredperson);
 	_timenow = time;
 	WaitUntil {
 		sleep 1;
+		!(_injuredperson getVariable["unit_injured",false]) ||
 		_healer distance _injuredperson <= 4		 		||
 		{!alive _injuredperson}			 					||
 		{!alive _healer}				 					||
@@ -30,6 +33,8 @@ if (!isPlayer _healer && {_healer distance _injuredperson > 6}) then {
 	};
 };
 
+// The player as respawneds alone
+if (!(_injuredperson getVariable["unit_injured",false])) exitWith{ _injuredperson setVariable ["healer", objNull, true]; };
 
 _healer selectWeapon primaryWeapon _healer;
 sleep 1;
@@ -53,14 +58,16 @@ _time = time;
 
 
 if (_ambient) then {
-	waitUntil {sleep 10; lifeState _injuredperson != "INCAPACITED" || !alive _healer;};
+	waitUntil {sleep 10; lifeState _injuredperson != "INCAPACITATED" || !alive _healer;};
 } else{
 	sleep 1;
-	_skill_factor = 40+(random 10);
+	_skill_factor = 30+(random 10);
 	_damage = (damage _injuredperson * _skill_factor);
 	if (_damage < 5) then {_damage = 5};
+	[_healer, _injuredperson,_damage] call fnc_spawnHealEquipement;
 	while {
 		time - _time < _damage
+		&& _injuredperson getVariable["unit_injured",false]
 		&& {alive _healer}
 		&& {alive _injuredperson}
 		&& {(_healer distance _injuredperson) < 2}
@@ -72,9 +79,16 @@ if (_ambient) then {
 detach _healer;
 detach _injuredperson;
 
-_injuredperson setDamage 0;
-_injuredperson setUnconscious false;
-_injuredperson setVariable["unit_injured",false];
+if (alive _healer && alive _injuredperson && _injuredperson getVariable["unit_injured",false]) then {
+	_injuredperson setDamage 0;
+	_injuredperson setCaptive false;
+	_injuredperson setUnconscious false;
+	_injuredperson setVariable["unit_injured",false,true];
+	deleteMarker (_injuredperson getVariable ["DCW_marker_injured",  ""]);
+	resetCamShake;
+};
+
+_injuredperson setVariable ["healer",ObjNull,true];
 
 if (!isPlayer _healer) then {
 	_healer stop false;
@@ -91,4 +105,3 @@ if (alive _healer) then {
 
 if (!alive _injuredperson) exitWith {};
 if (!alive _healer) exitWith {};
-_injuredperson setVariable ["healer",ObjNull,true];

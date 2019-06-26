@@ -86,7 +86,7 @@ _talker setVariable["DCW_speak",true];
 _talker setRandomLip true;
 
 _currentTime = time;
-waitUntil { time >= _currentTime + ((count(_say)/13) max 1.5) || (SPACEBAR_HIT && isNull(player getVariable["healer",objNull])); };
+waitUntil { time >= _currentTime + ((count(_say)/13) max 1.6) || (SPACEBAR_HIT && isNull(player getVariable["healer",objNull])); };
 SPACEBAR_HIT = false;
 _display displayRemoveEventHandler ["KeyDown",_ehId];
 _talker setRandomLip false;
@@ -102,7 +102,7 @@ if (count TALK_QUEUE > 1) then {
 	_ctrl ctrlSetPosition [_x,1.1*MESS_HEIGHT + _y,_w,_h];	
 	_ctrl ctrlSetFade .4;
 	_ctrl ctrlCommit .3;
-	sleep ((count((TALK_QUEUE select 0) select 1)/11) max 1.5);
+	sleep ((count((TALK_QUEUE select 0) select 1)/11) max 1.6);
 	_ctrl ctrlSetFade 1;
 	_ctrl ctrlCommit .3;
 } else {

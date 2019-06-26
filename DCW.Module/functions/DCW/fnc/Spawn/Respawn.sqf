@@ -20,9 +20,7 @@ REMAINING_RESPAWN = NUMBER_RESPAWN;
 fnc_HandleRespawnBase = {
 	params["_unit"];
 	// Remove units around the player
-	{ if (_unit distance _x < 100 && side _x == SIDE_ENEMY) then {_x setDamage 1;} } foreach allUnits;
-
-	PLAYER_ALIVE = true;
+	{ if (_unit distance _x < 120 && side _x == SIDE_ENEMY) then {_x setDamage 1;} } foreach allUnits;
 
 	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
 	_pm = createMarker [format["player-marker-%1",name _unit], getPos _unit];
@@ -53,6 +51,10 @@ fnc_HandleRespawnBase = {
 		_unit call fnc_supportuiInit;
 	};
 
+	if (DEBUG) then {
+		_unit call fnc_teleport;
+	};
+
 	// Initial score display
 	[] call fnc_displayscore;
 
@@ -66,9 +68,15 @@ fnc_HandleRespawnSingleplayer =
 
 	_loadout = getUnitLoadout _unit;
 	
-	waitUntil{!PLAYER_ALIVE};
+	// Check the unit state before anything
+	waitUntil{ lifestate _unit == "INCAPACITATED" };
+
 	_unit allowDamage false;
-	 
+	_unit setCaptive true;
+	_unit setVariable["unit_injured",true,true] ;
+	addCamShake [5,999,1.5];
+	
+	sleep 3;
 	 
 	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
 	/*deletemarker MARKER
@@ -88,12 +96,51 @@ fnc_HandleRespawnSingleplayer =
 
 	//count the remaining lives after death
 	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
-	if (REMAINING_RESPAWN == -1) exitWith{ endMission "LOSER"; };
+	if (REMAINING_RESPAWN == -1) exitWith { endMission "LOSER"; };
+
+	DCW_ai_reviving_cancelled = false;
+	_idA = [_unit, "Force respawn","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", "true", "true", {  }, { }, { DCW_ai_reviving_cancelled = true; }, {  }, [], 3, nil, true, true] call BIS_fnc_holdActionAdd;
 	
-	cutText ["Respawning...","BLACK OUT", 7];
-	sleep 7;
-	_unit setUnconscious false;
-	_unit setDamage 0;
+	DCW_ai_current_medic = objNull;
+
+	while {_unit getVariable["unit_injured",false] && !DCW_ai_reviving_cancelled} do {
+
+		private _player = _unit;
+		private _foundCloseUnit = objNull;
+		private _dist = 999999;
+		
+		if (!isNull DCW_ai_current_medic && lifeState DCW_ai_current_medic != "HEALTHY" && lifeState DCW_ai_current_medic != "INJURED") exitWith {DCW_ai_current_medic = objNull;};
+
+		{
+			if(alive _x && (_x distance _player) < _dist && (lifeState _x == "HEALTHY" || lifeState _x == "INJURED")) then {
+				_foundCloseUnit = _x;
+				_dist = _x distance _player;
+			};
+
+		}foreach units GROUP_PLAYERS;
+
+		// Check the status
+		if (_dist == 999999 || isNull _foundCloseUnit) exitWith { DCW_ai_current_medic = objNull; };
+		
+		if (!isNull _foundCloseUnit && isNull DCW_ai_current_medic) then {
+			_player setVariable ["healer", objNull, true];
+			DCW_ai_current_medic = _foundCloseUnit;
+			[_foundCloseUnit, _player,false] spawn fnc_firstAid;
+		};
+ 
+		hintSilent format["Medic at %1m",str round _dist];
+
+		sleep .5;
+	
+	};
+
+	hintSilent "";
+	[ _unit,_idA ] call BIS_fnc_holdActionRemove;
+	if ( !(_unit getVariable["unit_injured",true]) ) exitWith { };
+	_unit setVariable["unit_injured",false,true];
+
+	cutText ["Respawning...","BLACK OUT", 2];
+	sleep 2;
 	
 	_timeSkipped = round(6 + random 12);
 	cutText ["Respawning...","BLACK FADED", 999];
@@ -132,11 +179,13 @@ fnc_HandleRespawnSingleplayer =
 
     resetCamShake;
 	_unit setPos _respawnPos;
-	[player] call fnc_HandleRespawnBase;
-
+	[_unit] call fnc_HandleRespawnBase;
+	
+	_unit setUnconscious false;
+	_unit setDamage 0;
 
 	if (ACE_ENABLED) then {
-		[objNull, player] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
+		[objNull, _unit] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
 	};
 
 	_unit setCaptive true;
@@ -168,8 +217,10 @@ fnc_HandleRespawnSingleplayer =
 	[] remoteExec ["PLAYER_KIA",2];
 	
 	sleep 5;
+	_unit setVariable["unit_injured",false,true] ;
 	_unit setCaptive false;
 	_unit allowDamage true;
+	GROUP_PLAYERS selectLeader _unit;
 };
 
 
@@ -205,7 +256,6 @@ if (RESPAWN_ENABLED) then{
 			params ["_unit"	];
 			[_unit, [missionNamespace, "inventory_var"]] call BIS_fnc_saveInventory;
 			[] remoteExec ["PLAYER_KIA",2];
-			PLAYER_ALIVE = false;
 			// Delete the marker with a little delay
 			[_unit] spawn {
 				params["_unit"];
@@ -237,17 +287,16 @@ if (RESPAWN_ENABLED) then{
 			];
 
 			// Reducing damage with a factor of 3
-			_damage = 0.9 min (_damage * 0.6);
-			if (_damage >= .9 && PLAYER_ALIVE)then{
-				PLAYER_ALIVE = false;
+			if (_damage >= .9 && lifeState _unit != "INCAPACITATED" )then{
 				_unit setUnconscious true;
+				_unit setVariable ["unit_injured",true,true];
 				addCamShake [15, 6, 0.7];
-				[_unit] spawn fnc_HandleRespawnSinglePlayer;
 				_damage = .9;
 				_unit setDamage .9;
-				_unit playActionNow "agonyStart";
+				[_unit] spawn fnc_HandleRespawnSinglePlayer;
+				//_unit playActionNow "agonyStart";
 			} else {
-				if (!PLAYER_ALIVE)then{
+				if (lifeState _unit == "INCAPACITATED")then{
 					_damage = .9;
 					_unit setDamage .9;
 				};
@@ -259,8 +308,7 @@ if (RESPAWN_ENABLED) then{
 }else{
 	// If nothing activated, just use the vanilla system
 	_player addMPEventHandler ["MPKilled",{
-		params [	"_unit"	];
-		PLAYER_ALIVE = false;
+		params ["_unit"];
 		[] remoteExec ["PLAYER_KIA",2];
 	}];
 };

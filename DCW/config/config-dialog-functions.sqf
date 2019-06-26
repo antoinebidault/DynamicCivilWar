@@ -146,6 +146,9 @@ fnc_save = {
 	NUMBER_RESPAWN = (2112 call fnc_getValue);
 	publicVariable "NUMBER_RESPAWN";
 
+	SHOW_SECTOR = 2122 call fnc_getValueChkBx;
+	publicVariable "SHOW_SECTOR";
+
 	if (SIDE_FRIENDLY == SIDE_ENEMY) exitWith{hintC "Choose a different enemy side !";false};
 
 	true;
@@ -453,6 +456,12 @@ fnc_openConfigDialog = {
 	//Respawn
 	private _ctrlAmmoOn = _display displayCtrl 2106;
 	_ctrlAmmoOn cbSetChecked true;
+
+	//Respawn
+	private _ctrlShowSector = _display displayCtrl 2122;
+	_ctrlShowSector cbSetChecked true;
+
+	
 
 	[SIDE_FRIENDLY,2111,[2103,2113]] call fnc_rendersideselect;
 

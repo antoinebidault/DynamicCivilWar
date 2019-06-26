@@ -161,7 +161,9 @@ _chopper = _heli_spawn select 0;
 _chopper setPos _spawnpos;
 createVehicleCrew (_chopper);
 _pilot = driver _chopper;
-{ _x moveInAny _chopper; } foreach units GROUP_PLAYERS;
+if (!DEBUG) then {
+	{ _x moveInAny _chopper; } foreach units GROUP_PLAYERS;
+};
 _chopper setCollisionLight true;
 _chopper setPilotLight true;
 _chopper flyInHeight 70;
@@ -212,7 +214,7 @@ for "_j" from 1 to 6 do {
 	
 	if (_j == 1) then {
 		_unit call addActionInstructor;
-		[_unit, "GUARD", "LIGHT"] remoteExec ["BIS_fnc_ambientAnim"];
+		[_unit, "BRIEFING_POINT_LEFT", "MEDIUM"] remoteExec ["BIS_fnc_ambientAnim"];
 		_unit enableDynamicSimulation false;
 		_officerPos set [0,(_officerPos select 0) + 2];
 		_officerPos set [1,(_officerPos select 1) + 2];
@@ -291,7 +293,7 @@ _supportScore = 0;
 		_m setMarkerBrush "Solid";
 
 		if (SHOW_SECTOR || DEBUG) then{
-			_m setMarkerAlpha .5;
+			_m setMarkerAlpha .3;
 		}else{
 			_m setMarkerAlpha 0;
 		};
@@ -444,7 +446,7 @@ _supportScore = 0;
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{
-	[GROUP_PLAYERS] execVM "DCW\medevac\init.sqf";
+	[GROUP_PLAYERS] execVM "DCW\fnc\medevac\init.sqf";
 };
 
 
