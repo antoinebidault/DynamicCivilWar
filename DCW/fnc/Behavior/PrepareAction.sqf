@@ -824,7 +824,7 @@ fnc_startTalking = {
     params["_unit","_talker","_action"];
      if (_unit getVariable["DCW_talking",false]) exitWith {
          hint "You can't do multiple action at the same time..."; 
-        [_unit,_talker,_action] spawn {
+        _this spawn {
             sleep 10;
             _this call fnc_endTalking;
         };

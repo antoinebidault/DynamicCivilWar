@@ -8,18 +8,18 @@
 
 private _minRange = 300;
 private _firstTrigger = true;
-while{true}do {
+while {true} do {
 	if (count SHEEP_POOL < MAX_SHEEP_HERD)then{
 	
 		//Get random pos
-		if (_firstTrigger) then {_minRange = 20; _firstTrigger = false;}else{_minRange = 300;};
+		if (_firstTrigger) then {_minRange = 20; _firstTrigger = false;}else{_minRange = 280;};
 
 		// Pick up a random position around a random player
 		
-		_pos = [position (allPlayers call BIS_fnc_selectRandom), _minRange, 350, 4, 0, 20, 0] call BIS_fnc_findSafePos;
+		_pos = [position (allPlayers call BIS_fnc_selectRandom), _minRange, 350, 4, 0, 2, 0] call BIS_fnc_findSafePos;
 
 		_numberOfmen = round(random 2);
-		_numberOfSheep = 3 + floor(random 4	);
+		_numberOfSheep = 4 + floor(random 4	);
 
 		_goatgroup = createGroup SIDE_CIV; 
 
@@ -46,7 +46,6 @@ while{true}do {
 					_unit action ["sitdown",_unit];
 				};
 
-				UNITS_SPAWNED_CLOSE pushBack _unit;
 			};
 		};
 
@@ -75,11 +74,11 @@ while{true}do {
 	// garbage collection
 	{
 		// Delete all sheeps when all players are away !
-		if(  ({(leader _x) distance _x > 400 } count allPlayers) == count allPlayers)then {
+		_cheepLeader = leader _x;
+		if( isNull _x || ({_cheepLeader distance _x > 400 } count allPlayers) == count allPlayers)then {
 			SHEEP_POOL = SHEEP_POOL - [_x];
 			{
 				_x call fnc_deleteMarker;
-				UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_x];
 				deleteVehicle _x;
 			}foreach units (_x);
 			deleteGroup (_x);

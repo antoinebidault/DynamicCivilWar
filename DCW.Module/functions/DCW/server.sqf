@@ -393,7 +393,7 @@ _supportScore = 0;
 		_nbCivilian = 1 max _nbCivilian; // At least one civilian per compound at start
 		_nbFriendlies = if (_compoundState == "secured") then { ceil (1.3*_popbase) } else { 0 };
 
-		_nbCars = ([0,1] call BIS_fnc_selectRandom) MAX (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
+		_nbCars = floor (6 MIN (floor((_nbBuildings)*(RATIO_CARS))));
 		_nbIeds = (floor(_popbase * .25) + floor(random 2));
 
 		_typeObj = ["hostage","sniper","cache","mortar","",""] call BIS_fnc_selectRandom;

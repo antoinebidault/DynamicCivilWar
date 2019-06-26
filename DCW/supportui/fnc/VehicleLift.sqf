@@ -30,7 +30,7 @@ if (!_success) exitWith {
 	deleteVehicle _cargo;
 };
 
-[HQ,format["The %1 transport is in bound !",if (_type == "crate") then {"ammo"}else{"vehicle"}]] remoteExec ["fnc_talk"];
+[HQ,format["The %1 transport is in bound !",if (_type == "crate") then {"supply"}else{"vehicle"}]] remoteExec ["fnc_talk"];
 
 _pilot = driver _chopper;
 _chopper setCaptive true;

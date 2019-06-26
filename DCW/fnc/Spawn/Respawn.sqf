@@ -169,7 +169,7 @@ fnc_HandleRespawnSingleplayer =
 	
 	sleep 5;
 	_unit setCaptive false;
-	_unit allowDamage false;
+	_unit allowDamage true;
 };
 
 
@@ -238,7 +238,7 @@ if (RESPAWN_ENABLED) then{
 
 			// Reducing damage with a factor of 3
 			_damage = 0.9 min (_damage * 0.6);
-			if (_damage >= .9 && lifeState _unit == "HEALTHY")then{
+			if (_damage >= .9 && PLAYER_ALIVE)then{
 				PLAYER_ALIVE = false;
 				_unit setUnconscious true;
 				addCamShake [15, 6, 0.7];
@@ -247,7 +247,7 @@ if (RESPAWN_ENABLED) then{
 				_unit setDamage .9;
 				_unit playActionNow "agonyStart";
 			} else {
-				if (lifeState _unit != "HEALTHY")then{
+				if (!PLAYER_ALIVE)then{
 					_damage = .9;
 					_unit setDamage .9;
 				};
