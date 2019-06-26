@@ -3,7 +3,7 @@
 private ["_unit","_injured","_pos","_dir","_addAction"];
 params ["_unit","_injured"];
 
-fnc_dropAction = {
+DCW_fnc_dropAction = {
 	_unit = _this select 0;
 	_injured = _this select 3;
 
@@ -39,7 +39,7 @@ while {_injured getVariable ["unit_dragged", false]} do {
 
 		//rotate wounded units so that it is facing the correct direction
 		_injured remoteExec ["RemoveAllActions",0];
-		_dropActionId = _unit addAction ["drop", fnc_dropAction,_injured, 0, false, true];
+		_dropActionId = _unit addAction ["drop", DCW_fnc_dropAction,_injured, 0, false, true];
 
 		uiSleep 1;
 		_addAction = true;
@@ -55,7 +55,7 @@ while {_injured getVariable ["unit_dragged", false]} do {
 
 	if (vehicle _unit != _unit) then {
 		_unit action ["eject", vehicle _unit];
-		[cursorTarget, _unit, _unconscious, _injured] call fnc_dropAction;
+		[cursorTarget, _unit, _unconscious, _injured] call DCW_fnc_dropAction;
 	};
 
 	uiSleep 0.001;
@@ -63,7 +63,7 @@ while {_injured getVariable ["unit_dragged", false]} do {
 
 _unit removeAction _dropActionId;
 if (alive _injured) then {
-	_injured remoteExec ["fnc_addActionHeal"];
+	_injured remoteExec ["DCW_fnc_addActionHeal"];
 };
-_injured remoteExec ["fnc_addActionCarry"]; 
+_injured remoteExec ["DCW_fnc_addActionCarry"]; 
 

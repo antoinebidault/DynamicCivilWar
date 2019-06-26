@@ -39,19 +39,19 @@ while{true}do {
 			for "_j" from 1 to _numberOfmen do {
 
 				if (_side == SIDE_FRIENDLY) then{
-					_unit = [_grp,_pos,false] call fnc_spawnFriendly;
-					[_unit] remoteExec ["addActionGiveUsAHand"];
+					_unit = [_grp,_pos,false] call DCW_fnc_spawnFriendly;
+					[_unit] remoteExec ["DCW_fnc_addActionGiveUsAHand"];
 					
 					/*	if (_j == 1) then {
 						_grpMarker = createMarker["mkr-"+str(floor random 10000), _pos];
 						_grpMarker setMarkerShape "ICON";
 						_grpMarker setMarkerColor "ColorGreen";
 						_grpMarker setMarkerType "o_motor_inf";
-						_unit call fnc_deleteMarker;
+						_unit call DCW_fnc_deleteMarker;
 						_unit setVariable["marker", _grpMarker];
 					};*/
 				} else {
-					_unit = [_grp,_pos,false] call fnc_spawnEnemy;
+					_unit = [_grp,_pos,false] call DCW_fnc_spawnEnemy;
 				};
 
 				_unit setVariable["DCW_Type","patrol"];
@@ -59,7 +59,7 @@ while{true}do {
 				_unit setBehaviour "SAFE";
 				sleep .4;
 			};
-			[leader _grp, 120] spawn fnc_simplePatrol;
+			[leader _grp, 120] spawn DCW_fnc_simplePatrol;
 		};
 	};	
 	

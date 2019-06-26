@@ -34,7 +34,7 @@ while {sleep 5;  alive _unit}do{
     sleep 5 + random 25;*/
 
     _curPos =  getPosASL _driver;
-    _compound = [_curPos, true, "neutral"] call fnc_findNearestMarker;
+    _compound = [_curPos, true, "neutral"] call DCW_fnc_findNearestMarker;
 
     _newPos = getMarkerPos(_compound select 0);
 
@@ -94,11 +94,11 @@ while {sleep 5;  alive _unit}do{
 
     sleep (50 + (_compound select 4));
     if ((_compound select 13) > 70) then {
-        [_compound,"massacred"] call fnc_setCompoundState;
-        [_compound,15,100] spawn fnc_setCompoundSupport;
+        [_compound,"massacred"] call DCW_fnc_setCompoundState;
+        [_compound,15,100] spawn DCW_fnc_setCompoundSupport;
     } else {
-        [_compound,"bastion"] call fnc_setCompoundState;
-        [_compound,-30,100] spawn fnc_setCompoundSupport;
+        [_compound,"bastion"] call DCW_fnc_setCompoundState;
+        [_compound,-30,100] spawn DCW_fnc_setCompoundSupport;
     };
 
     _newPos = (_truck modelToWorld [0,5,0]);

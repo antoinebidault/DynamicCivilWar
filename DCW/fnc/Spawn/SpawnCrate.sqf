@@ -17,7 +17,7 @@ if (RESTRICTED_AMMOBOX) then {
 	[_box,[true],true] call BIS_fnc_removeVirtualBackpackCargo;
 	[_box,[true],true] call BIS_fnc_removeVirtualMagazineCargo;
 
-	_items = [] call fnc_getcrateitems;
+	_items = [] call DCW_fnc_getcrateitems;
 	[_box, _items, true] call BIS_fnc_addVirtualItemCargo;
 	[_box, _items, true] call BIS_fnc_addVirtualWeaponCargo; 
 	[_box, _items, true] call BIS_fnc_addVirtualMagazineCargo; 

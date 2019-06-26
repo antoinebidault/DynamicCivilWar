@@ -9,5 +9,5 @@
 params["_compound"];
 // Set the correct state
 
-[_compound,"secured"] call fnc_setCompoundState;
-[_compound,50,10] spawn fnc_setCompoundSupport;
+[_compound,"secured"] call DCW_fnc_setCompoundState;
+[_compound,50,10] spawn DCW_fnc_setCompoundSupport;

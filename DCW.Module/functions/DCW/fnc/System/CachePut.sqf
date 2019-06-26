@@ -33,17 +33,17 @@ _unitsToRemove = [];
     _type = _x getVariable["DCW_Type",""];
 
     if (_type == "") then{
-        _x call fnc_deleteMarker;
+        _x call DCW_fnc_deleteMarker;
         deleteVehicle _x;
     }else{
         
         //If dead, we remove him
         if (!alive _x)then{
-             _x call fnc_deleteMarker;
+             _x call DCW_fnc_deleteMarker;
             _unitsToRemove pushBack _x;
             deleteVehicle _x;
         }else{
-                _x call fnc_failed;
+                _x call DCW_fnc_failed;
                 _unitsToRemove pushBack _x;
                 
                 if (_type == "civ" )then{
@@ -88,9 +88,9 @@ _unitsToRemove = [];
 
             // If it's a vehicle
             if (vehicle _x != _x) then {
-                { _x call fnc_deletemarker; deletevehicle _x; } foreach crew _x;
+                { _x call DCW_fnc_deletemarker; deletevehicle _x; } foreach crew _x;
             };
-             _x call fnc_deleteMarker;
+             _x call DCW_fnc_deleteMarker;
             deleteVehicle _x;
         };
    };

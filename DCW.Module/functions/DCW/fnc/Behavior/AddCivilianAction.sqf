@@ -7,6 +7,6 @@
 
 params ["_unit"];
 
-_unit call addActionHalt;
-_unit call addActionLeave;
-_unit call addActionHandcuff;
+_unit call DCW_fnc_addActionHalt;
+_unit call DCW_fnc_addActionLeave;
+_unit call DCW_fnc_addActionHandcuff;

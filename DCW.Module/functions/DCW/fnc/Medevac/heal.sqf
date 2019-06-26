@@ -18,7 +18,7 @@ _healer doMove position _injured;
 waitUntil { sleep 3; _healer distance _injured < 4 || speed _healer == 0 };
 sleep 5;
 
-if (speed _healer == 0) exitWith{ [_healer,_injured] call fnc_heal;};
+if (speed _healer == 0) exitWith{ [_healer,_injured] call DCW_fnc_heal;};
 
 _injured setVariable ["unit_healed", _healer, true];
 
@@ -26,7 +26,7 @@ _injured setVariable ["unit_healed", _healer, true];
 if (!isNull objectParent _injured) exitWith {
 	_injured action["Eject", vehicle _injured];
 	sleep 1;
-    [_healer, _injured] call fnc_heal;
+    [_healer, _injured] call DCW_fnc_heal;
 };
 
 //[_injured, "AinjPpneMstpSnonWrflDnon_rolltoback"] remoteExec ['playMove', 0];
@@ -51,8 +51,8 @@ if ((_relpos select 0) < 0) then {_offset = [-0.2,0.7,0]; _dir = 90} else {_offs
 _injured attachTo [_healer, _offset];
 [_injured, _dir] remoteExec ["setDir", 0, false];
 
-private _duration = [_healer, _injured] call fnc_calculateTimeToHeal;
-[_healer, _injured,_duration] call fnc_spawnHealEquipement;
+private _duration = [_healer, _injured] call DCW_fnc_calculateTimeToHeal;
+[_healer, _injured,_duration] call DCW_fnc_spawnHealEquipement;
 
 _injured setVariable ["unit_stabilized", false];
 

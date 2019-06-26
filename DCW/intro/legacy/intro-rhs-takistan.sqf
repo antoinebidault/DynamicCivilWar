@@ -26,9 +26,9 @@ _cam camSetPos (_chopper modelToWorld[3,50,2]);
 	nul = ["Dynamic Civil War",-1,-1,4,1,0] spawn BIS_fnc_dynamicText;
 };
 
-[_chopper, [30,2,17], 6] call fnc_camFollow;
-[_chopper, [0,45,4], 13] call fnc_camFollow;
-[_chopper, [7,40,20], 17] call fnc_camFollow;
+[_chopper, [30,2,17], 6] call DCW_fnc_camFollow;
+[_chopper, [0,45,4], 13] call DCW_fnc_camFollow;
+[_chopper, [7,40,20], 17] call DCW_fnc_camFollow;
 titleCut ["", "BLACK OUT", 3];
 sleep 3;
 titleCut ["", "BLACK FADED", 9999];

@@ -45,11 +45,11 @@ for "_xc" from 1 to _nbCompos do {
             _turret = _turrets select 0;  
             
             if (_side == SIDE_ENEMY) then {
-                _unit = [createGroup _side, _nicePos, false] call fnc_spawnenemy;
+                _unit = [createGroup _side, _nicePos, false] call DCW_fnc_spawnenemy;
             } else{
-                _unit = [createGroup _side, _nicePos, false] call fnc_spawnfriendly;
+                _unit = [createGroup _side, _nicePos, false] call DCW_fnc_spawnfriendly;
             };
-            [_newObjs select 0, "ColorPink"] call fnc_addMarker;
+            [_newObjs select 0, "ColorPink"] call DCW_fnc_addMarker;
             _unit moveInGunner _turret;
             _objs = _objs + _newObjs;
         };
@@ -58,7 +58,7 @@ for "_xc" from 1 to _nbCompos do {
          _curr = _tmpObjects call bis_fnc_selectrandom;
         _tmpObjects = _tmpObjects - [_curr];
         _newObjs = [_nicePos,  random 360, _curr] call BIS_fnc_ObjectsMapper;
-         [_newObjs select 0, "ColorWhite"] call fnc_addMarker;
+         [_newObjs select 0, "ColorWhite"] call DCW_fnc_addMarker;
         _objs = _objs + _newObjs;
 
    // };

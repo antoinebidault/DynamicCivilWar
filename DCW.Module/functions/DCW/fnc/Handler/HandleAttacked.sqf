@@ -28,11 +28,11 @@ _unit addEventHandler["FiredNear",
 			_speed = 1.5;
 			_weaponHolder setVelocity [_speed * sin(_dir), _speed * cos(_dir),4];  
 
-			_unit call addActionLiberate;
-			_unit call addActionLookInventory;
-			_unit call addActionGetIntel;
-			[_unit] call fnc_shout;
-			[_gunner, ["This enemy is surrendering","He gives up !","Hands up !", "Your hands in the hair !"] call BIS_fnc_selectRandom, false] spawn fnc_talk;
+			_unit call DCW_fnc_addActionLiberate;
+			_unit call DCW_fnc_addActionLookInventory;
+			_unit call DCW_fnc_addActionGetIntel;
+			[_unit] call DCW_fnc_shout;
+			[_gunner, ["This enemy is surrendering","He gives up !","Hands up !", "Your hands in the hair !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
 		};
 	}
 ];

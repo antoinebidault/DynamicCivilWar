@@ -14,7 +14,7 @@ private _unit = _group createUnit [_unitName, _pos,[],AI_SKILLS,"NONE"];
 [_unit] joinsilent _group;
 
 if (DEBUG)then{
-    [_unit,"ColorBlue"] call fnc_addmarker;
+    [_unit,"ColorBlue"] call DCW_fnc_addmarker;
 };
 
 if (!_excludedFromSpawnedUnit)then{

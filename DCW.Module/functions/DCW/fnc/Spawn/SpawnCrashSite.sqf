@@ -42,7 +42,7 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _chopper setVariable ["DCW_Type","wreck"];
     _chopper setVariable ["DCW_IsIntel",true];
     
-    _taskData = [_chopper,false] call fnc_createtask;
+    _taskData = [_chopper,false] call DCW_fnc_createtask;
     _chopper setVariable["DCW_Task",_taskData select 0];
 
      //Search intel;
@@ -54,17 +54,17 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
           [[_this select 0, _this select 1], {
                params["_chopper","_player"];
 
-               [_player,"30 seconds before detonation", false] spawn fnc_talk;
+               [_player,"30 seconds before detonation", false] spawn DCW_fnc_talk;
                sleep 24;
-               [_player,"5...", false] call fnc_talk;
-               [_player,"...4...", false] call fnc_talk;
-               [_player,"...3...", false] call fnc_talk;
-               [_player,"...2...", false]  call fnc_talk;
-               [_player,"...1", false]  call fnc_talk;
+               [_player,"5...", false] call DCW_fnc_talk;
+               [_player,"...4...", false] call DCW_fnc_talk;
+               [_player,"...3...", false] call DCW_fnc_talk;
+               [_player,"...2...", false]  call DCW_fnc_talk;
+               [_player,"...1", false]  call DCW_fnc_talk;
 
                _bomb = "HelicopterExploBig";
                _boom = _bomb createVehicle getPos _chopper;
-               _chopper remoteExec ["fnc_success",2, false];
+               _chopper remoteExec ["DCW_fnc_success",2, false];
                sleep 1;
                deleteVehicle _chopper;
 

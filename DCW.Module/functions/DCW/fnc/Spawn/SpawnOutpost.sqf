@@ -24,18 +24,18 @@ _radius = ((getMarkerSize _marker) select 0);
 
     private _objBase = (_newObjs select 0);
 
-    [_objBase, "ColorOrange"] call fnc_addMarker;
+    [_objBase, "ColorOrange"] call DCW_fnc_addMarker;
     _objBase setVariable["DCW_IsIntel",true];
     _objBase setVariable["DCW_Type","outpost"];
     _soldiers = [];
     _nbUnit = ceil (random 3);
     for "_xc" from 1 to _nbUnit do {
         _grp = createGroup SIDE_ENEMY;
-        _enemy = [_grp,_nicePos,false] call fnc_spawnEnemy;
+        _enemy = [_grp,_nicePos,false] call DCW_fnc_spawnEnemy;
         _enemy setDir random 360;
 
         //Add torch to soldiers
-        [_enemy,10] spawn fnc_simplepatrol;
+        [_enemy,10] spawn DCW_fnc_simplepatrol;
 
         _soldiers pushback _enemy;
         _newObjs pushback _enemy;
@@ -47,7 +47,7 @@ _radius = ((getMarkerSize _marker) select 0);
     },{},{
     _objBase = (_this select 0);
     _newObjs = (_this  select 3) select 0;
-    [_objBase, _this select 1]  remoteExec ["fnc_GetIntel",2];
+    [_objBase, _this select 1]  remoteExec ["DCW_fnc_GetIntel",2];
 
     {
         if (alive _x )then{
@@ -55,7 +55,7 @@ _radius = ((getMarkerSize _marker) select 0);
         };
     }foreach _newObjs;
     
-    _objBase remoteExec ["fnc_success",2,false];
+    _objBase remoteExec ["DCW_fnc_success",2,false];
     },{},[_newObjs],3,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
     _units = _units + _newObjs;

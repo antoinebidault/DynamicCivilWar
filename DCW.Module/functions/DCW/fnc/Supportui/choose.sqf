@@ -14,10 +14,10 @@ if((DCW_SCORE - _price) >= 0)then {
 	
 	//Fermeture plus MAJ score 
 	closeDialog 0;
-	[GROUP_PLAYERS,-_price] remoteExec ["fnc_updateScore",2];   
+	[GROUP_PLAYERS,-_price] remoteExec ["DCW_fnc_updateScore",2];   
 	
 	if (_type=="UAV")then{
-		[HQ,"An UAV is moving toward your position",true] remoteExec ["fnc_talk"];
+		[HQ,"An UAV is moving toward your position",true] remoteExec ["DCW_fnc_talk"];
 	    _pos = [(leader GROUP_PLAYERS), 2500, 3000, 0, 0, 20, 0] call BIS_fnc_findSafePos;
 		_unit = createVehicle [SUPPORT_DRONE_CLASS, [_pos select 0, _pos select 1, 300], [], 0,"FLY"];  
 		createVehicleCrew _unit;  
@@ -26,10 +26,10 @@ if((DCW_SCORE - _price) >= 0)then {
 		(leader GROUP_PLAYERS) connectTerminalToUAV _unit;
 	}else{
 		if (_type=="vehicle") then {
-			[HQ,"A car will be droped at your position",true] remoteExec ["fnc_talk"];
+			[HQ,"A car will be droped at your position",true] remoteExec ["DCW_fnc_talk"];
 			COMMENU_TRANSPORT_ID = [(leader GROUP_PLAYERS), "TransportParadrop"] call BIS_fnc_addCommMenuItem;
 		} else {
-			[HQ,"Support provided",true] remoteExec ["fnc_talk"];
+			[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
 			_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;
 			[SUPPORT_REQUESTER, _type,_nb] call BIS_fnc_limitSupport;
 			BIS_supp_refresh = TRUE; 

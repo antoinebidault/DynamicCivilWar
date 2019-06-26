@@ -27,16 +27,16 @@ for "_j" from 1 to _nb do {
     _unitName = _boxeClasses call BIS_fnc_selectRandom;
     _unit = createVehicle [_unitName,_posToSpawn,[],0,"CAN_COLLIDE"]; 
     _unit setDir (random 359);
-    [_unit,"ColorBrown"] call fnc_addMarker;
+    [_unit,"ColorBrown"] call DCW_fnc_addMarker;
     _unit setVariable["DCW_Type","cache"];
     _unit setVariable["DCW_IsIntel",true];
     
     _unit addMPEventHandler["MPKilled",{ 
         params["_cache","_killer"];
         if (group(_killer) == GROUP_PLAYERS) then {
-            _cache remoteExec ["fnc_success", 2, false];
+            _cache remoteExec ["DCW_fnc_success", 2, false];
          }else{
-            _cache remoteExec ["fnc_failed", 2, false]; 
+            _cache remoteExec ["DCW_fnc_failed", 2, false]; 
         }; 
     }];
     _units pushBack _unit;
@@ -46,7 +46,7 @@ for "_j" from 1 to _nb do {
         if (count _posBuildings == 0) exitWith{_units};
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
          _posBuildings = _posBuildings -[_posToSpawn];
-        _enemy = [_grp,_posToSpawn,false] call fnc_SpawnEnemy;
+        _enemy = [_grp,_posToSpawn,false] call DCW_fnc_SpawnEnemy;
         _units pushBack _enemy;
     };
 

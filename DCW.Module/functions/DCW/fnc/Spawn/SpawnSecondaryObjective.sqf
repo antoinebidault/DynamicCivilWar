@@ -9,7 +9,7 @@
 
 if (!isServer) exitWith{false};
 
-fnc_spawnOfficer = {
+DCW_fnc_spawnOfficer = {
     
     _newPos = [];
     _radiusSpawnRange = [1000,5400];
@@ -22,7 +22,7 @@ fnc_spawnOfficer = {
     _road = [_initPos,3000, MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
     _roadPos = getPos _road;
     _roadConnectedTo = roadsConnectedTo _road;
-    if (count _roadConnectedTo == 0) exitWith { hint "restart"; [] call fnc_spawnOfficer; };
+    if (count _roadConnectedTo == 0) exitWith { hint "restart"; [] call DCW_fnc_spawnOfficer; };
     _connectedRoad = _roadConnectedTo select 0;
     _roadDirection = [_road, _connectedRoad] call BIS_fnc_DirTo;
 
@@ -44,14 +44,14 @@ fnc_spawnOfficer = {
     _nbUnit = (count (fullCrew [_truck,"cargo",true])) - 1 min 8;
     _unit = objNull;
     for "_yc" from 1 to _nbUnit  do {
-        _unit = [_grp, _initPos, true] call fnc_spawnEnemy;
+        _unit = [_grp, _initPos, true] call DCW_fnc_spawnEnemy;
         _unit enableDynamicSimulation false;
         _unit moveInAny _truck;    
     };
 
     _grp selectLeader _officer;
 
-    [_truck,_officer] spawn fnc_officerPatrol;
+    [_truck,_officer] spawn DCW_fnc_officerPatrol;
 
     _officer addMPEventHandler ["MPKilled",{
         params["_unit","_killer"];
@@ -77,7 +77,7 @@ fnc_spawnOfficer = {
         
         if (_damage > .9 && !(_unit getVariable["DCW_isUnconscious",false])) then {
             _unit setVariable["DCW_isUnconscious",true];
-            [_unit] remoteExec ["fnc_shout", 0];	
+            [_unit] remoteExec ["DCW_fnc_shout", 0];	
             _unit remoteExec ["removeAllActions",0];
             _unit setDamage .9;
             _unit setHit ["legs", 1];
@@ -86,7 +86,7 @@ fnc_spawnOfficer = {
                 moveOut _unit;
             };
 
-            [leader GROUP_PLAYERS,"The target is down ! Let's go talk to him !", true] remoteExec ["fnc_talk", GROUP_PLAYERS,false];
+            [leader GROUP_PLAYERS,"The target is down ! Let's go talk to him !", true] remoteExec ["DCW_fnc_talk", GROUP_PLAYERS,false];
             [format["DCW_secondary_%1", name _unit],_x, ["Talk to the wounded officer","Interrogate the officer","Talk to the wounded officer"],getPos _unit,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",leader GROUP_PLAYERS, true];
         
             //Spasm and unconscious state
@@ -120,7 +120,7 @@ fnc_spawnOfficer = {
                     _unit setDamage 1;
                 };
                 
-                _unit call fnc_MainObjectiveIntel;
+                _unit call DCW_fnc_MainObjectiveIntel;
             },{
             (_this select 1) playActionNow "medicStop";
             },[],3,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
@@ -148,7 +148,7 @@ fnc_spawnOfficer = {
 
 // Spawning officers
 for "_i" from 1 to NUMBER_OFFICERS  do {
-     OFFICERS pushback([] call fnc_spawnOfficer);
+     OFFICERS pushback([] call DCW_fnc_spawnOfficer);
      sleep 5;
 };
 
@@ -177,7 +177,7 @@ while {sleep 20; count OFFICERS  > 0 } do {
         [format["DCW_secondary_%1", _officerName],_x, [format["Our drones give us some informations about an insurgent's officer location. Move to his location and try to gather infomration. His name is %1",_officerName],"Interrogate the officer","Interrogate the officer"],_officerPos,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, true];
         
         // HQ message
-        [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",_officerName,round(((getPos _loc) distance2D (_x))/100)/100,text _loc], true] remoteExec ["fnc_talk",_x,false];
+        [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",_officerName,round(((getPos _loc) distance2D (_x))/100)/100,text _loc], true] remoteExec ["DCW_fnc_talk",_x,false];
     } foreach allPlayers;
 
     _marker setMarkerAlpha 1;
@@ -185,8 +185,8 @@ while {sleep 20; count OFFICERS  > 0 } do {
     sleep 600 + random 200;
 };
 
-[HQ,format["Good job team, it seems you stopped the propagation of the insurgency... The %1 officers have been neutralized.", NUMBER_OFFICERS], true] remoteExec ["fnc_talk"];
-[HQ,format["Next step is to consolidate our position and catch the main commander of the movement %1...", name ENEMY_COMMANDER], true] remoteExec ["fnc_talk"];
+[HQ,format["Good job team, it seems you stopped the propagation of the insurgency... The %1 officers have been neutralized.", NUMBER_OFFICERS], true] remoteExec ["DCW_fnc_talk"];
+[HQ,format["Next step is to consolidate our position and catch the main commander of the movement %1...", name ENEMY_COMMANDER], true] remoteExec ["DCW_fnc_talk"];
   
-[100] call fnc_spawnConvoy;
+[100] call DCW_fnc_spawnConvoy;
 false;

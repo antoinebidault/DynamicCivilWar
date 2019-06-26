@@ -1,7 +1,7 @@
 _actionId = 0;
 COMPO_OBJS = [];
 
-fnc_captured = {
+DCW_fnc_captured = {
 	params["_player"];
 
 	_player action ["Surrender", _player]; 
@@ -110,14 +110,14 @@ fnc_captured = {
 
 	sleep 3;
 
-	[_player, "I think you made a huge mistake, asshole !",false] call fnc_talk;
-	[_general, "Shut up american... you just betrayed all of your team members.  You're just a traitor !",false] call fnc_talk;
-	[_general, "And do you know what we do in our country to traitors like you ?",false] call fnc_talk;
+	[_player, "I think you made a huge mistake, asshole !",false] call DCW_fnc_talk;
+	[_general, "Shut up american... you just betrayed all of your team members.  You're just a traitor !",false] call DCW_fnc_talk;
+	[_general, "And do you know what we do in our country to traitors like you ?",false] call DCW_fnc_talk;
 	
 	// Animation 
 	_general switchMove "Acts_Executioner_Backhand";
 	_player switchMove "Acts_ExecutionVictim_Backhand";
-	[_player] call fnc_shout;
+	[_player] call DCW_fnc_shout;
 	
 	sleep 3.6;
 	
@@ -129,7 +129,7 @@ fnc_captured = {
 	// Animation 
 	_general switchMove "Acts_Executioner_Forehand";
 	_player switchMove "Acts_ExecutionVictim_Forehand";
-	[_player] call fnc_shout;
+	[_player] call DCW_fnc_shout;
 
 	sleep 3.6;
 
@@ -151,7 +151,7 @@ fnc_captured = {
 		setAccTime 44;
 	};
 	_player switchMove "Acts_UnconsciousStandUp_part1";
-	[_player, "Where is the guard ?", false] call fnc_talk;
+	[_player, "Where is the guard ?", false] call DCW_fnc_talk;
 	sleep 10;
 	
 	sleep 15;
@@ -179,8 +179,8 @@ fnc_captured = {
 			};
 
 			if (side _x == SIDE_ENEMY && _x knowsAbout _player > 1) then{
-				_know =  [_x,_player] call fnc_getVisibility; 
-				if ([_x,_player] call fnc_getVisibility > 50 && alive _x) then{
+				_know =  [_x,_player] call DCW_fnc_getVisibility; 
+				if ([_x,_player] call DCW_fnc_getVisibility > 50 && alive _x) then{
 					hint "You've been watched";
 					_notWatched = false;
 					_player setCaptive false;
@@ -209,10 +209,10 @@ fnc_captured = {
 
 	if (_wasKIA) then {
 		waitUntil {PLAYER_ALIVE};
-		[leader GROUP_PLAYERS,"Good to see you back home !",false] call fnc_talk;
+		[leader GROUP_PLAYERS,"Good to see you back home !",false] call DCW_fnc_talk;
 	} else {
-		[leader GROUP_PLAYERS,"Welcome back mate, you seem to have some interresting news !",false] call fnc_talk;
-		[_player] remoteExec ["fnc_mainobjectiveIntel"];
+		[leader GROUP_PLAYERS,"Welcome back mate, you seem to have some interresting news !",false] call DCW_fnc_talk;
+		[_player] remoteExec ["DCW_fnc_mainobjectiveIntel"];
 	};
 
 	{deleteVehicle _x;} foreach COMPO_OBJS;
@@ -228,13 +228,13 @@ while { true } do {
 	&& (damage player > .3 || morale player < -0.5)
 	&& (player findNearestEnemy player) distance player < 60 
 	&& { _x distance player < 100 } count units GROUP_PLAYERS == 1 ) then {
-		[player] call fnc_shout;
+		[player] call DCW_fnc_shout;
 		if (_actionId == 0) then {
 			playMusic "axe";
 			_actionId = player addAction ["<t color='#000000'>Surrender</t>",{
 				params ["_target", "_caller", "_actionId", "_arguments"];
 				_caller removeAction _actionId;
-				[_caller] call fnc_captured;
+				[_caller] call DCW_fnc_captured;
 			},nil,1,true,true];
 		};
 	} else {

@@ -10,7 +10,7 @@ private _task = "";
 private _taskName = "";
 
 // Success
-if (!isServer) exitWith{hint format["fnc_success executed on the client %1 ;/", _objWithTask getVariable["DCW_Task",""]]; };
+if (!isServer) exitWith{hint format["DCW_fnc_success executed on the client %1 ;/", _objWithTask getVariable["DCW_Task",""]]; };
 
 //Task type unknown
 if (_objWithTask getVariable["DCW_Type",""] == "") exitWith { false };
@@ -22,7 +22,7 @@ _task = _objWithTask getVariable["DCW_Task",""];
 
 // Silently create a task if not exists
 if (_task == "") then {
-    [_objWithTask,false] call fnc_CreateTask;
+    [_objWithTask,false] call DCW_fnc_CreateTask;
     _task = _objWithTask getVariable["DCW_Task",""];
 };
 
@@ -32,15 +32,15 @@ _taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
 [[_task,_taskName,_objWIthTask],{
     params["_task","_taskName","_objWithTask"];
     [_task, "SUCCEEDED", true] call BIS_fnc_taskSetState;
-    [(leader GROUP_PLAYERS), format["Task done : %1",_taskName],true] call fnc_Talk;
+    [(leader GROUP_PLAYERS), format["Task done : %1",_taskName],true] call DCW_fnc_Talk;
      sleep 20;
     [_task,true] call BIS_fnc_deleteTask;
 }] remoteExec ["spawn", GROUP_PLAYERS,false];
 
 //Custom callback
-[_objWithTask,_objWithTask getVariable["DCW_Reputation",0]] remoteExec ["fnc_updateRep",2];
+[_objWithTask,_objWithTask getVariable["DCW_Reputation",0]] remoteExec ["DCW_fnc_updateRep",2];
 if (_objWithTask getVariable["DCW_Bonus",0] > 0) then{
-    [GROUP_PLAYERS,_objWithTask getVariable["DCW_Bonus",0],false,leader GROUP_PLAYERS] call fnc_updateScore;
+    [GROUP_PLAYERS,_objWithTask getVariable["DCW_Bonus",0],false,leader GROUP_PLAYERS] call DCW_fnc_updateScore;
 };
 
 //Delete the task after success.

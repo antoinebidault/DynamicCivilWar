@@ -43,14 +43,14 @@
         titleCut ["", "BLACK IN", 3];
         sleep 3;
         disableUserInput false;
-        [_unit, "The camp is set up !"] remoteExec ["fnc_talk",0, false];
+        [_unit, "The camp is set up !"] remoteExec ["DCW_fnc_talk",0, false];
 
         hint "If you want to pack up the camp, watch the map on the ground and use the action button : 'pack up the camp'. Get close to the tent to make your unit rest (and accelerate the time of the day in singleplayer only).";
          
         // Pack up camp
         (CAMP_OBJS select 0) addAction ["<t color='#00FF00'>Pack up camp</t>", {
             params["_unit","_asker","_action"];
-            _unit call fnc_actioncamp;
+            _unit call DCW_fnc_actioncamp;
            CAMP_RESPAWN_POSITION = [];
            publicVariable "CAMP_RESPAWN_POSITION";
            
@@ -66,13 +66,13 @@
 
             sleep 3;
             titleCut ["", "BLACK IN", 3];
-            [_asker, "We've packed up the camp !"] remoteExec ["fnc_talk",0, false];
+            [_asker, "We've packed up the camp !"] remoteExec ["DCW_fnc_talk",0, false];
              sleep 3;
            disableUserInput false;
         },nil,4,true,true, ""];
 
         
         //Rest animations
-        (CAMP_OBJS select 18) remoteExec ["fnc_actionrest",0, true];
+        (CAMP_OBJS select 18) remoteExec ["DCW_fnc_actionrest",0, true];
 
     },nil,1,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];

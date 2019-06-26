@@ -30,8 +30,8 @@ private _soldiersDead = [];
 		_x setskill ["general", 1];
 		_x setskill ["reloadSpeed", 1];
 		_x removeAllEventHandlers "HandleDamage";
-		_x addEventHandler ["HandleDamage",{_this call fnc_HandleDamage;}];
-		_x addMPEventHandler ["MPKilled",{_this call fnc_HandleKilled;}];
+		_x addEventHandler ["HandleDamage",{_this call DCW_fnc_HandleDamage;}];
+		_x addMPEventHandler ["MPKilled",{_this call DCW_fnc_HandleKilled;}];
 	};
 }foreach (units _group);
 
@@ -56,7 +56,7 @@ while {true} do {
 		hint "switching MEDEVAC leader";
 		_leader = leader(_group);
 		if (!isMultiplayer) then {
-			[_leader,_soldiersDead] call fnc_caller;
+			[_leader,_soldiersDead] call DCW_fnc_caller;
 		};
 	};
 
@@ -67,7 +67,7 @@ while {true} do {
 
 		deleteMarker "medevac_marker";
 
-		[HQ,"We're waiting now for your mark on the map !",true] remoteExec ["fnc_talk"];
+		[HQ,"We're waiting now for your mark on the map !",true] remoteExec ["DCW_fnc_talk"];
 
 		//open the map
 		if ((count _soldiersDead > 0) && isPlayer _leader) then {
@@ -92,7 +92,7 @@ while {true} do {
 				publicVariableServer "MEDEVAC_State";
 
 				_leader onMapSingleClick "";
-				[HQ,"I copy!",true] remoteExec ["fnc_talk"];
+				[HQ,"I copy!",true] remoteExec ["DCW_fnc_talk"];
 				sleep 1;
 				openMap false;
 
@@ -100,39 +100,39 @@ while {true} do {
 
 			waitUntil {sleep 3;MEDEVAC_State == "pointselected"};
 			MEDEVAC_State = "inbound";
-			[_leader,_soldiersDead] call fnc_caller;
+			[_leader,_soldiersDead] call DCW_fnc_caller;
 
 			// Chopper spawning
-			_transportHelo = [_group] call fnc_spawnHelo;
+			_transportHelo = [_group] call DCW_fnc_spawnHelo;
 			_posChopper = position _transportHelo;
 
 			// Startup the chopper path
-			[group _transportHelo,getMarkerPos "medevac_marker",_transportHelo,_group] spawn fnc_ChopperPath;
+			[group _transportHelo,getMarkerPos "medevac_marker",_transportHelo,_group] spawn DCW_fnc_ChopperPath;
 		};
 	};
 
 	//StandBy
 	if (isNull _transportHelo && count _soldiersDead > 0 && MEDEVAC_State == "standby")then{
 		MEDEVAC_State = "menu";
-		[_leader,_soldiersDead] call fnc_caller;
+		[_leader,_soldiersDead] call DCW_fnc_caller;
 	}else{
 		if (MEDEVAC_State == "succeeded") then {
-			[HQ,"Medevac mission succeeded",true] remoteExec ["fnc_talk"];
-			[_transportHelo,_group] call fnc_deleteMedevac;
+			[HQ,"Medevac mission succeeded",true] remoteExec ["DCW_fnc_talk"];
+			[_transportHelo,_group] call DCW_fnc_deleteMedevac;
 			MEDEVAC_State = "standby";
 			sleep 120;
 		} else {
 			if (MEDEVAC_State == "aborted") then {
-				[HQ,"Medevac mission aborted",true] remoteExec ["fnc_talk"];
+				[HQ,"Medevac mission aborted",true] remoteExec ["DCW_fnc_talk"];
 				_transportHelo move _posChopper;
 				sleep 120;
-				[_transportHelo,_group] call fnc_deleteMedevac;
+				[_transportHelo,_group] call DCW_fnc_deleteMedevac;
 				MEDEVAC_State = "standby";
 			} else {
 				if (MEDEVAC_State == "inbound" && (!alive _transportHelo || damage _transportHelo > .6)) then {
-					[HQ,"The chopper is destroyed ! MEDEVAC helicopter available in 2 minutes",true] remoteExec ["fnc_talk"];
+					[HQ,"The chopper is destroyed ! MEDEVAC helicopter available in 2 minutes",true] remoteExec ["DCW_fnc_talk"];
 					sleep 120;	
-					[_transportHelo,_group] call fnc_deleteMedevac;
+					[_transportHelo,_group] call DCW_fnc_deleteMedevac;
 					MEDEVAC_State = "standby";
 				};
 			};

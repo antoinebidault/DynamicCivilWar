@@ -23,23 +23,23 @@ _unit setSpeedMode "LIMITED";*/
 //Si c'est un mauvais
 _unit setVariable["DCW_Chief",_chief, true];
 
-[_unit] call fnc_handlekill;
-_unit call fnc_handleDamaged;
+[_unit] call DCW_fnc_handlekill;
+_unit call DCW_fnc_handleDamaged;
 
 //By default, it takes the average civil reputation;
 _unit setVariable["DCW_Suspect", if(random 100 > _friendlieness) then {true}else{false} ];
 // _unit setVariable["DCW_Friendliness",CIVIL_REPUTATION, true];
 
 if (DEBUG)then{
-    [_unit, if (_unit getVariable["DCW_Suspect", false])then{"ColorOrange"}else{"ColorBlue"}] call fnc_addmarker;
+    [_unit, if (_unit getVariable["DCW_Suspect", false])then{"ColorOrange"}else{"ColorBlue"}] call DCW_fnc_addmarker;
 };
 
 _unit setVariable["DCW_Type","civ"];
 _unit setDir random 360;
 
 if (_handleFireEvent)then{
-    [_unit] spawn fnc_HandleFiredNear;
-    [_unit] remoteexec ["fnc_AddCivilianAction",0];
+    [_unit] spawn DCW_fnc_HandleFiredNear;
+    [_unit] remoteexec ["DCW_fnc_AddCivilianAction",0];
 };
 
 UNITS_SPAWNED_CLOSE pushBack _unit;

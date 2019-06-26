@@ -20,7 +20,7 @@ _grp setBehaviour "CARELESS";
 
 {
 	_target = _x;
-	[_leader,_assistant,_target,_helo] call fnc_help;
+	[_leader,_assistant,_target,_helo] call DCW_fnc_help;
 	waitUntil{ !alive _leader || !alive _assistant || !alive _target || {_target getVariable["unit_stabilized",false]}};
 	if (!alive _leader || !alive _assistant) exitWith{ MEDEVAC_State = "aborted"; };
 	_nbUnitSaved = _nbUnitSaved + 1;

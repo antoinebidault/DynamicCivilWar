@@ -14,9 +14,9 @@ private _meetPoint = _this select 2;
 private _buildings = _this select 3;
 
 // If no building exit loop and do a basic patrol
-if (count _buildings == 0) exitWith {[_unit,_radius] call fnc_simplePatrol;};
+if (count _buildings == 0) exitWith {[_unit,_radius] call DCW_fnc_simplePatrol;};
 
-//private _buildings = [getPos _unit,_radius] call fnc_findBuildings;
+//private _buildings = [getPos _unit,_radius] call DCW_fnc_findBuildings;
 //if(isNil("_buildings"))exitWith{};
 
 private _building = _buildings call BIS_fnc_selectRandom; 
@@ -104,7 +104,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
                 };
 
             }else{
-                [_unit,_meetPoint] call fnc_gotomeeting;
+                [_unit,_meetPoint] call DCW_fnc_gotomeeting;
                 if (_unit getVariable ["civ_insurgent",false] || !alive _unit)then{breakTo "main";};
                 sleep 20;
             };

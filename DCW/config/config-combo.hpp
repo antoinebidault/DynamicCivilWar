@@ -341,7 +341,7 @@ class PARAMETERS_DIALOG
           y = 22 * GUI_GRID_H + GUI_GRID_Y;
           w = 26 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          action = "[] call fnc_SaveAndGoToLoadoutDialog";
+          action = "[] call DCW_fnc_SaveAndGoToLoadoutDialog";
         };
 
         class RscButton_1601: RscButton
@@ -352,7 +352,7 @@ class PARAMETERS_DIALOG
           y = 13 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 2 * GUI_GRID_H;
-          action = "[] spawn fnc_ChooseLocation";
+          action = "[] spawn DCW_fnc_ChooseLocation";
         };
         
 

@@ -49,7 +49,7 @@ _cam camcommit 4;
 
 sleep 14;
 
-//[_cam,_chopper, [14,2,17], 7] call fnc_camfollow;
+//[_cam,_chopper, [14,2,17], 7] call DCW_fnc_camfollow;
 
 _smoke = "SmokeShellYellow" createVehicle  _dest; 
 
@@ -63,7 +63,7 @@ _smoke = "SmokeShellYellow" createVehicle  _dest;
 	_chopper action ["useWeapon",_chopper,driver _chopper,1];
 };
 
-[_cam,_chopper, [0,40,4], 7] call fnc_camfollow;
+[_cam,_chopper, [0,40,4], 7] call DCW_fnc_camfollow;
 
 deleteVehicle _smoke;
 _dest set [2,5];
@@ -77,7 +77,7 @@ _cam camcommit 10;
 
 sleep 10;
 
-//[_cam,_chopper, [-14,22,-15],7] call fnc_camfollow;
+//[_cam,_chopper, [-14,22,-15],7] call DCW_fnc_camfollow;
 
 titleCut ["", "BLACK OUT", 1];
 sleep 1;

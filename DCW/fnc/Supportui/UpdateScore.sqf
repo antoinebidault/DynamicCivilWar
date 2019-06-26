@@ -16,4 +16,4 @@ private _scoreType = if (_bonus > 0) then {"+"}else{""};
 if (!_silent)then{
 	["ScoreAdded",[format["Total points = %1",str DCW_SCORE],_bonus,_scoreType]] remoteExec ["BIS_fnc_showNotification", _group, false];
 };
-[] remoteExec ["fnc_displayscore",_group, false];
+[] remoteExec ["DCW_fnc_displayscore",_group, false];

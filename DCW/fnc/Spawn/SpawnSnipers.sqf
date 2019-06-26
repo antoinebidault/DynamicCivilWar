@@ -19,8 +19,8 @@ if (_nbSnipers > 0)then{
         _unit = _grp createUnit [_unitName, _sniperPos,[],AI_SKILLS,"NONE"];
         [_unit] joinSilent _grp;
 
-        [_unit,"ColorRed"] call fnc_addmarker;
-        [_unit] call fnc_handlekill;
+        [_unit,"ColorRed"] call DCW_fnc_addmarker;
+        [_unit] call DCW_fnc_handlekill;
 
         _unit setVariable["DCW_Type","sniper", true];
         UNITS_SPAWNED_CLOSE pushback _unit;
@@ -37,7 +37,7 @@ if (_nbSnipers > 0)then{
             { 
             params["_unit","_killer"];
             if (group _killer == GROUP_PLAYERS) then{
-                _unit remoteExec ["fnc_success",2,false];
+                _unit remoteExec ["DCW_fnc_success",2,false];
                 };
             }
         ];

@@ -51,7 +51,7 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
     _gunner = _this select 7;	
 
     if (group _gunner == GROUP_PLAYERS && _distance < 50)then{
-        [_gunner,"Shit ! this asshole is fleeing.",false]  remoteExec ["fnc_talk"];
+        [_gunner,"Shit ! this asshole is fleeing.",false]  remoteExec ["DCW_fnc_talk"];
         _commander removeAllEventHandlers "FiredNear";
         [_commander] joinSilent (createGroup SIDE_ENEMY);
         _commander setBehaviour "CARELESS";
@@ -66,10 +66,10 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
             params["_gunner","_commander"];
             waitUntil{sleep 1;(_gunner distance _commander) > 500 || !(alive _commander) };
             if (!alive _commander)exitWith{false};
-            _commander call fnc_deleteMarker;
+            _commander call DCW_fnc_deleteMarker;
             deleteVehicle _commander;
-            [_gunner ,"He has definitely left the area... Mission compromised. Maybe we would catch him later..." ,true ] remoteExec ["fnc_talk"];
-            [] spawn fnc_SpawnMainObjective;
+            [_gunner ,"He has definitely left the area... Mission compromised. Maybe we would catch him later..." ,true ] remoteExec ["DCW_fnc_talk"];
+            [] spawn DCW_fnc_SpawnMainObjective;
         };
     };
 }];
@@ -79,7 +79,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
 
     if (group _killer == GROUP_PLAYERS)then{
         [_killer,{
-            [_this,format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _this],true] call fnc_talk;
+            [_this,format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _this],true] call DCW_fnc_talk;
             sleep 60;
             activateKey "key1";
             "EveryoneWon" call BIS_fnc_endMissionServer;
@@ -87,7 +87,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
     }else{
         //Start over
         hint "restart...";
-        [] spawn fnc_SpawnMainObjective;
+        [] spawn DCW_fnc_SpawnMainObjective;
     };
 }];
 
@@ -95,7 +95,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
 //If we killed them, it's over.
 
 for "_yc" from 1 to 4  do {
-    _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
+    _unit =[_grp,_initPos,true] call DCW_fnc_spawnEnemy;
     _unit enableDynamicSimulation false;
     _units pushback _unit;
 };
@@ -117,7 +117,7 @@ while {alive (leader _grp) && leader _grp == ENEMY_COMMANDER}do{
 	_trig setTriggerTimeout[1,1,1,true];
     _trig setTriggerStatements[
         "this",
-        " [thisList select 0] spawn fnc_foundCommander;",
+        " [thisList select 0] spawn DCW_fnc_foundCommander;",
         "deleteVehicle thisTrigger;"
     ];
 
@@ -153,6 +153,6 @@ while {alive (leader _grp) && leader _grp == ENEMY_COMMANDER}do{
     
 };
 
-{_units = _units - [_x]; _x call fnc_deleteMarker; deleteVehicle _x; } forEach _units;
+{_units = _units - [_x]; _x call DCW_fnc_deleteMarker; deleteVehicle _x; } forEach _units;
 
 false;

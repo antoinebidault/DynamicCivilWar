@@ -29,14 +29,14 @@ for "_j" from 1 to _nb do {
         params["_mortar","_killer"];
         if (isPlayer _killer) then {
             hint "Mortar destroyed !";
-            _mortar remoteExec ["fnc_success", 2, false]; 
+            _mortar remoteExec ["DCW_fnc_success", 2, false]; 
          }else{
-            _mortar remoteExec ["fnc_failed", 2, false];
+            _mortar remoteExec ["DCW_fnc_failed", 2, false];
         }; 
     }];
 
     _mortar setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
-    [_mortar,"ColorPink"] call fnc_addMarker;
+    [_mortar,"ColorPink"] call DCW_fnc_addMarker;
     _units pushback _mortar;
 
     _nbGuards = 2 + round(random 1);
@@ -46,11 +46,11 @@ for "_j" from 1 to _nb do {
     [_pos,_radius,_mortar] spawn {
         params["_pos","_radius","_mortar"];
         waitUntil{sleep 15; { alive _x && !captive _x && getPosATL _x distance _pos < _radius } count allPlayers > 0 };
-        [_mortar,(leader GROUP_PLAYERS),_pos,_radius] call fnc_mortarbombing;
+        [_mortar,(leader GROUP_PLAYERS),_pos,_radius] call DCW_fnc_mortarbombing;
     };
                     
     for "_i" from 1 to _nbGuards do {
-        _enemy = [_grp,_posToSpawn,false] call fnc_spawnEnemy;
+        _enemy = [_grp,_posToSpawn,false] call DCW_fnc_spawnEnemy;
         _enemy setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
 
         _units pushBack _enemy;

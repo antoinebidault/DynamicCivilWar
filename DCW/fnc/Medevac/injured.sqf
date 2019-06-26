@@ -5,7 +5,7 @@ if (vehicle _unit != _unit) then {
 	_unit leaveVehicle (vehicle _unit);
 };
 
-_unit remoteExec ["fnc_addActionCarry"];
+_unit remoteExec ["DCW_fnc_addActionCarry"];
 
 // Stabilize
 [ _unit,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
@@ -13,11 +13,11 @@ _unit remoteExec ["fnc_addActionCarry"];
 		if (!alive _injured) exitWith {};
 		_healer playActionNow "medicStart";
 		_healer setVariable["healer", _injured];
-		[_injured,"Aaaargh...", false] spawn fnc_talk;
-		[_injured,["Sorry man... I just fucked up...","Shit ! It's a fucking mess...","I am in pain...","Don't forget the letter..."] call BIS_fnc_selectRandom, false] spawn fnc_talk;
-		[_healer,["Don't give up mate !","Stay with us !","Stay alive !","We won't abandon you !"] call BIS_fnc_selectRandom, false] spawn fnc_talk;
-		[_injured] spawn fnc_shout;
-		[_healer,_injured,20] spawn fnc_spawnHealEquipement;
+		[_injured,"Aaaargh...", false] spawn DCW_fnc_talk;
+		[_injured,["Sorry man... I just fucked up...","Shit ! It's a fucking mess...","I am in pain...","Don't forget the letter..."] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+		[_healer,["Don't give up mate !","Stay with us !","Stay alive !","We won't abandon you !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+		[_injured] spawn DCW_fnc_shout;
+		[_healer,_injured,20] spawn DCW_fnc_spawnHealEquipement;
 		_offset = [0,0,0]; _dir = 0;
 		_relpos = _healer worldToModel position _injured;
 		if ((_relpos select 0) < 0) then {_offset = [-0.2,0.7,0]; _dir = 90} else {_offset = [0.2,0.7,0]; _dir = 270};
@@ -39,7 +39,7 @@ _unit remoteExec ["fnc_addActionCarry"];
 		_injured setHit ["legs", 0]; 
 		deleteMarker (_injured getVariable ["DCW_marker_injured",  ""]);
 		removeAllActions _injured;
-		[_healer,["Ok, you're good to go !","Get a cover to take back strength !"] call BIS_fnc_selectRandom, false] spawn fnc_talk;
+		[_healer,["Ok, you're good to go !","Get a cover to take back strength !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
 		_injured;
 	},{
 		params["_injured","_healer"];

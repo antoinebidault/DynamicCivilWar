@@ -27,7 +27,7 @@ if (DEBUG) then {
 	_marker setMarkerColor "ColorWhite";
 };
 
-_houses  = [getPosATL _unit, _radius] call fnc_findbuildings; 
+_houses  = [getPosATL _unit, _radius] call DCW_fnc_findbuildings; 
 
 sleep 3;
 _unit forceWalk false;
@@ -40,12 +40,12 @@ if (count _houses > 0 ) then{
 	if (_unit distance _posBuilding < 70) then{
 		_unit doMove _posBuilding ;
 		waitUntil {_unit distance _posBuilding < 2};
-		[_unit,_side] call fnc_BadBuyLoadout;
+		[_unit,_side] call DCW_fnc_BadBuyLoadout;
 	}else{
-		[_unit,_side] call fnc_BadBuyLoadout;
+		[_unit,_side] call DCW_fnc_BadBuyLoadout;
 	};
 }else{
-	[_unit,_side] call fnc_BadBuyLoadout;
+	[_unit,_side] call DCW_fnc_BadBuyLoadout;
 };
 
 //Move to a new position

@@ -15,6 +15,6 @@ if (_score < 0) then{
 	hint "Can't afford this";
 	false;
 }else{
-	[_group,-_price] remoteExec ["fnc_updateScore",2];   
+	[_group,-_price] remoteExec ["DCW_fnc_updateScore",2];   
 	true;
 };

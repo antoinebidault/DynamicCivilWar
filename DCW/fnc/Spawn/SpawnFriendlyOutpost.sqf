@@ -17,7 +17,7 @@ private _units = [];
 
 //List positions;
 private _posResult = [];
-private _posResult = [_pos,_radius] call fnc_SpawnPosition;
+private _posResult = [_pos,_radius] call DCW_fnc_SpawnPosition;
 private _posSelects = _posResult select 0;
 private _enterable = _posResult select 1;
 private _cancel = true;
@@ -53,7 +53,7 @@ _unit = FRIENDLY_FLAG createVehicle _flagPos;
 _units pushBack _unit;
 
 _ammoBox = "Box_Syndicate_Ammo_F" createVehicle (_unit modelToWorld [1,1,0]);
-_ammoBox call fnc_spawncrate;
+_ammoBox call DCW_fnc_spawncrate;
 _units pushBack _ammoBox;
 
 
@@ -73,12 +73,12 @@ for "_xc" from 1 to _nb  do {
     if (!_cancel) then {
       
       _grp = createGroup SIDE_FRIENDLY;
-      _unit = [_grp,_posSelected,false] call fnc_spawnfriendly;
+      _unit = [_grp,_posSelected,false] call DCW_fnc_spawnfriendly;
       _unit setVariable["DCW_Type","friendly"];
       _units pushBack _unit;
 
       //Si c'est une patrouille
-      [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_EnemyCompoundPatrol;
+      [leader _grp,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_EnemyCompoundPatrol;
       
     };
 };

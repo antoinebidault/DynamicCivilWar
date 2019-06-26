@@ -17,7 +17,7 @@ private _units = [];
 
 //List positions;
 private _posResult = [];
-private _posResult = [_pos,_radius] call fnc_SpawnPosition;
+private _posResult = [_pos,_radius] call DCW_fnc_SpawnPosition;
 private _posSelects = _posResult select 0;
 private _enterable = _posResult select 1;
 
@@ -67,12 +67,12 @@ for "_xc" from 1 to _nb  do {
    //   _unitName = ALLIED_LIST_UNITS call BIS_fnc_selectRandom;
     //  _unit = _grp createUnit [_unitName, _posSelected,[],1,"NONE"];
       _grp = createGroup SIDE_CIV;
-      _unit = [_grp,_posSelected,false] call fnc_spawnhumanitar;
+      _unit = [_grp,_posSelected,false] call DCW_fnc_spawnhumanitar;
       _unit setVariable["DCW_Type","humanitar"];
       _units pushBack _unit;
 
       //Si c'est une patrouille
-      [_unit,_radius,_meetingPointPosition,_buildings,_pos] spawn fnc_HumanitarPatrol;
+      [_unit,_radius,_meetingPointPosition,_buildings,_pos] spawn DCW_fnc_HumanitarPatrol;
 };
 
 _units;

@@ -23,14 +23,14 @@ _cargo setposatl _spawnpos;
 _success = _chopper setSlingLoad _cargo;
 if (!_success) exitWith { 
 
-	[HQ,"Sorry guy, we are unable to drop this kind of vehicle... Try a lighter vehicle"] remoteExec ["fnc_talk"];
-    [GROUP_PLAYERS,150] remoteExec ["fnc_updateScore",2];   
+	[HQ,"Sorry guy, we are unable to drop this kind of vehicle... Try a lighter vehicle"] remoteExec ["DCW_fnc_talk"];
+    [GROUP_PLAYERS,150] remoteExec ["DCW_fnc_updateScore",2];   
 	{deleteVehicle _x} foreach crew _chopper; 
 	deleteVehicle _chopper; 
 	deleteVehicle _cargo;
 };
 
-[HQ,format["The %1 transport is in bound !",if (_type == "crate") then {"supply"}else{"vehicle"}]] remoteExec ["fnc_talk"];
+[HQ,format["The %1 transport is in bound !",if (_type == "crate") then {"supply"}else{"vehicle"}]] remoteExec ["DCW_fnc_talk"];
 
 _pilot = driver _chopper;
 _chopper setCaptive true;

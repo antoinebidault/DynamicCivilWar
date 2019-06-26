@@ -29,7 +29,7 @@ _car = objNull;
 CAR_DESTROYED = 0;
 
 if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
-    [HQ,"There is an enemy _units moving not far from your position. You can destroy them to earn some points.",true] call fnc_talk;
+    [HQ,"There is an enemy _units moving not far from your position. You can destroy them to earn some points.",true] call DCW_fnc_talk;
     _roadConnectedTo = roadsConnectedTo _road;
     _connectedRoad = _roadConnectedTo select 0;
     _roadDirection = [_road, _connectedRoad] call BIS_fnc_dirTo;
@@ -37,7 +37,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
     (driver _car) enableSimulationGlobal false;
     
     _car addMPEventHandler ["MPKilled",{
-        [GROUP_PLAYERS,100] remoteExec ["fnc_updateScore",2];   
+        [GROUP_PLAYERS,100] remoteExec ["DCW_fnc_updateScore",2];   
         CAR_DESTROYED = CAR_DESTROYED + 1;
     }];
 
@@ -49,7 +49,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
     //Civilian team spawn.
     //If we killed them, it's over.
     for "_xc" from 1 to _nbUnit  do {
-        _unit =[_grp,_initPos,true] call fnc_spawnEnemy;
+        _unit =[_grp,_initPos,true] call DCW_fnc_spawnEnemy;
         _unit enableSimulationGlobal false;
         _unit moveInCargo _car;
         _units pushback _unit;
@@ -61,7 +61,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
         _truck = [_car modelToWorld [0,-(_xc*15),0], _roadDirection, ENEMY__units_TRUCK_CLASS call BIS_fnc_selectRandom, _grp] call BIS_fnc_spawnVehicle select 0;
         _nbUnit = (count (fullCrew [_truck,"cargo",true]));
         for "_yc" from 1 to _nbUnit  do {
-            _unit = [_grpTruck,_initPos,true] call fnc_spawnEnemy;
+            _unit = [_grpTruck,_initPos,true] call DCW_fnc_spawnEnemy;
             _unit enableSimulationGlobal false;
             _unit moveInCargo _truck;
             _units pushback _unit;
@@ -74,7 +74,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
          };
 
          _truck addMPEventHandler ["MPKilled",{
-            [GROUP_PLAYERS,100] remoteExec ["fnc_updateScore",2];   
+            [GROUP_PLAYERS,100] remoteExec ["DCW_fnc_updateScore",2];   
             CAR_DESTROYED = CAR_DESTROYED + 1;
          }];
     };
@@ -86,7 +86,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
 }else{
  hint "Error ! Not enough road to spawn objective... Restarting...";
  sleep 10;
- [30] call fnc_Spawn_units;
+ [30] call DCW_fnc_Spawn_units;
 };
 
 deleteMarker "_units-start-marker";
@@ -106,7 +106,7 @@ _wpt setMarkerText "_units destination";
 
 
 //FIRST STEP => Moving to a random compound enemy
-_nextPos = getMarkerPos (([getPos ((units GROUP_PLAYERS) call BIS_fnc_selectRandom), true, "bastion"] call fnc_findNearestMarker) select 0);
+_nextPos = getMarkerPos (([getPos ((units GROUP_PLAYERS) call BIS_fnc_selectRandom), true, "bastion"] call DCW_fnc_findNearestMarker) select 0);
 _nextPos = getPosASL([_nextPos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
 (leader _grp) move _nextPos;
 _wpt setMarkerPos _nextPos;
@@ -121,16 +121,16 @@ _nextPos = _initPos;
 waitUntil {sleep 5; CAR_DESTROYED == _nbVeh || (leader _grp)  distance _nextPos < 10 };
 
 if (CAR_DESTROYED == _nbVeh) exitWith {
-    [HQ,"You successfully ambushed the _units ! Well done !",true] remoteExec ["fnc_talk"];
-    [300] spawn fnc_spawn_units;
+    [HQ,"You successfully ambushed the _units ! Well done !",true] remoteExec ["DCW_fnc_talk"];
+    [300] spawn DCW_fnc_spawn_units;
 };
 
 sleep 100;
 
 //Unspawn unit
 waitUntil {sleep 12; CAR_DESTROYED == _nbVeh || {_x distance (leader _grp) > 700} count allPlayers == count allPlayers};
-{_units = _units - [_x]; _x call fnc_deleteMarker; deleteVehicle _x; } forEach _units;
+{_units = _units - [_x]; _x call DCW_fnc_deleteMarker; deleteVehicle _x; } forEach _units;
 
-[HQ,"You missed the _units ! Out !",true] remoteExec ["fnc_talk"];
-[300] spawn fnc_spawn_units;
+[HQ,"You missed the _units ! Out !",true] remoteExec ["DCW_fnc_talk"];
+[300] spawn DCW_fnc_spawn_units;
 false;

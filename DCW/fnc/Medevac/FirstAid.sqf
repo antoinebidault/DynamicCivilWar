@@ -57,7 +57,7 @@ _injuredperson setDir _dir;
 _time = time;
 
 // Pop a smoke
-if ([0,1] call fnc_selectRandom == 1 && !_ambient) then {
+if ([0,1] call DCW_fnc_selectRandom == 1 && !_ambient) then {
 	_smoke = "SmokeShell" createVehicle  (_injuredperson modelToWorld[.5 + random 2,.5 + random 1,0]); 
 };
 
@@ -68,7 +68,7 @@ if (_ambient) then {
 	_skill_factor = 30+(random 10);
 	_damage = (damage _injuredperson * _skill_factor);
 	if (_damage < 5) then {_damage = 5};
-	[_healer, _injuredperson,_damage] call fnc_spawnHealEquipement;
+	[_healer, _injuredperson,_damage] call DCW_fnc_spawnHealEquipement;
 	while {
 		time - _time < _damage
 		&& _injuredperson getVariable["unit_injured",false]
@@ -91,7 +91,7 @@ if (alive _healer && alive _injuredperson && _injuredperson getVariable["unit_in
 	deleteMarker (_injuredperson getVariable ["DCW_marker_injured",  ""]);
 	resetCamShake;
 } else {
-	_injuredperson remoteExec ["fnc_addActionCarry"]; 
+	_injuredperson remoteExec ["DCW_fnc_addActionCarry"]; 
 };
 
 _injuredperson setVariable ["healer",ObjNull,true];

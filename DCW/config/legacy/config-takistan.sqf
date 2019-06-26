@@ -17,7 +17,7 @@ SPAWN_DISTANCE = 750; //Distance uniuts are spawned
 MIN_SPAWN_DISTANCE =  150; //Units can't spawn before this distance
 
 //FRIENDLIES
-ALLIED_LIST_UNITS = [player,"Man"] call fnc_FactionClasses;
+ALLIED_LIST_UNITS = [player,"Man"] call DCW_fnc_FactionClasses;
 ALLIED_LIST_CARS = ["rhsusf_m1025_d_m2","rhsusf_m1025_d_Mk19","rhsusf_M1220_M153_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1232_M2_usarmy_d","rhsusf_M1230_MK19_usarmy_d","rhsusf_M1083A1P2_B_M2_D_fmtv_usarmy","rhsusf_m113d_usarmy_M240"];
 FRIENDLY_FLAG = "Flag_US_F";
 SUPPORT_DRONE_CLASS="rhs_pchela1t_vvsc";

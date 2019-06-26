@@ -24,12 +24,12 @@ private _potentialIntel = [];
 
 if (count _potentialIntel == 0 || random 100 < _probability ) exitWith { 
     if (alive _unit) then {
-        [_unit, ["I have no idea...","I can't talk about this..."] call BIS_fnc_selectRandom,true] remoteExec ["fnc_talk",0]; 
+        [_unit, ["I have no idea...","I can't talk about this..."] call BIS_fnc_selectRandom,true] remoteExec ["DCW_fnc_talk",0]; 
     };
 };
 
 private _intel = _potentialIntel call BIS_fnc_selectRandom;
-_task = [_intel,true] call fnc_createtask;
+_task = [_intel,true] call DCW_fnc_createtask;
 _taskId = _task select 0;
 _message = _task select 1;
 _intel setVariable["DCW_IsIntelRevealed",true];
@@ -38,6 +38,6 @@ _marker setMarkerShape "ICON";
 _marker setMarkerColor "ColorBlack";
 _marker setMarkerType "hd_objective";
 _intel setVariable["DCW_MarkerIntel",_marker];
-[_asker, "HQ, I found some informations !",true] remoteExec ["fnc_talk"];
-[HQ, "Good job, keep up the good work !",true] remoteExec ["fnc_talk"];
+[_asker, "HQ, I found some informations !",true] remoteExec ["DCW_fnc_talk"];
+[HQ, "Good job, keep up the good work !",true] remoteExec ["DCW_fnc_talk"];
 [true,_message];

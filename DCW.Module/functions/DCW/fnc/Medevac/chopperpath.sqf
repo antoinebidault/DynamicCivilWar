@@ -10,12 +10,12 @@ _landPos =_this select 1;
 TRANSPORTHELO = _this select 2; 
 _groupToHelp = _this select 3;
 
-// interventionGroup = [TRANSPORTHELO,side _groupToHelp] call fnc_SpawnHeloCrew;
+// interventionGroup = [TRANSPORTHELO,side _groupToHelp] call DCW_fnc_SpawnHeloCrew;
 
 HASLANDED = false;
 
 private _startPos = position TRANSPORTHELO;
-[HQ,format["Be advised: medevac chopper in bound ! ETA : %1min",ceil((_landPos distance _startPos)/1000)*.333] ,true] remoteExec ["fnc_talk", _groupToHelp, false];
+[HQ,format["Be advised: medevac chopper in bound ! ETA : %1min",ceil((_landPos distance _startPos)/1000)*.333] ,true] remoteExec ["DCW_fnc_talk", _groupToHelp, false];
 
  private _wp0 = _grp addwaypoint [_landPos, 10];
  _wp0 setwaypointtype "MOVE";
@@ -40,7 +40,7 @@ TRANSPORTHELO addEventHandler ["handleDamage", {
 waitUntil {MEDEVAC_State == "aborted" || TRANSPORTHELO distance2D _landPos < 200};
 if (MEDEVAC_State == "aborted") exitWith { false };
 
-[HQ,"Squad leader, throw a smoke to mark the LZ !" ,true] remoteExec ["fnc_talk"];
+[HQ,"Squad leader, throw a smoke to mark the LZ !" ,true] remoteExec ["DCW_fnc_talk"];
 hint "50 seconds before the chopper RTB...";
 
 // Silently add a green smoke to group leader
@@ -71,7 +71,7 @@ sleep 5;
 	TRANSPORTHELO action ["useWeapon",TRANSPORTHELO,driver TRANSPORTHELO,1];
 };
 
-[HQ,"Landing procedure started !" ,true] remoteExec ["fnc_talk"];
+[HQ,"Landing procedure started !" ,true] remoteExec ["DCW_fnc_talk"];
 
 {
  	_x removeEventHandler ["Fired", 0];
@@ -92,7 +92,7 @@ if (!HASLANDED) exitWith { MEDEVAC_State = "aborted"; };
 
 // Update the dead soldiers
 private _soldiersDead = units _groupToHelp select {_x getVariable["unit_KIA",false] };
-replacementGroup = [TRANSPORTHELO,side _groupToHelp,_soldiersDead] call fnc_SpawnHeloReplacement;
+replacementGroup = [TRANSPORTHELO,side _groupToHelp,_soldiersDead] call DCW_fnc_SpawnHeloReplacement;
 
 sleep 1;
 
@@ -111,11 +111,11 @@ replacementGroup move position (leader _groupToHelp);
 //Make replacementGroup join player
 {unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);
 (units replacementGroup) join _groupToHelp;
-[HQ,"Reinforcements arriving.",true] remoteExec ["fnc_talk"];
+[HQ,"Reinforcements arriving.",true] remoteExec ["DCW_fnc_talk"];
 
 // Save units
-//[HQ,format["We're starting the %1 injured's evacuations.",count _soldiersDead],true] remoteExec ["fnc_talk"];
-//[interventionGroup,_soldiersDead,TRANSPORTHELO] spawn fnc_save;
+//[HQ,format["We're starting the %1 injured's evacuations.",count _soldiersDead],true] remoteExec ["DCW_fnc_talk"];
+//[interventionGroup,_soldiersDead,TRANSPORTHELO] spawn DCW_fnc_save;
 
 //waitUntil{sleep 2; MEDEVAC_state == "aborted" || ({_x in TRANSPORTHELO} count (units  interventionGroup) == count (units  interventionGroup)) };
 //if (MEDEVAC_state == "aborted") exitWith { false };

@@ -1,12 +1,12 @@
 
-fnc_getValue = {
+DCW_fnc_getValue = {
 	private _ctrlId = _this;
 	private _display = findDisplay 5001;
 	private _ctrl =  _display displayCtrl _ctrlId;
 	_ctrl lbValue (lbCurSel _ctrl);
 };
 
-fnc_getValueChkBx = {
+DCW_fnc_getValueChkBx = {
 	private _ctrlId = _this;
 	private _display = findDisplay 5001;
 	private _ctrl =  _display displayCtrl _ctrlId;
@@ -15,10 +15,10 @@ fnc_getValueChkBx = {
 
 
 //Faction render
-fnc_rendersideselect = {
+DCW_fnc_rendersideselect = {
 	params["_side","_ctrlId","_dependentFactionCtrlIds"];
     _display = findDisplay 5001;
-	_factions = [_side] call fnc_factionlist;
+	_factions = [_side] call DCW_fnc_factionlist;
 	private _ctrlLoadout = _display displayCtrl _ctrlId;
 	
 	// Clear the select
@@ -32,30 +32,30 @@ fnc_rendersideselect = {
 	}foreach [west,east,resistance];
 
 	{
-		_ctrlLoadout ctrlAddEventHandler ["LBSelChanged",format["[(lbValue[ctrlIDC(_this select 0),_this select 1]) call BIS_fnc_sideType, %1] spawn fnc_renderfactionselect",_x]];
+		_ctrlLoadout ctrlAddEventHandler ["LBSelChanged",format["[(lbValue[ctrlIDC(_this select 0),_this select 1]) call BIS_fnc_sideType, %1] spawn DCW_fnc_renderfactionselect",_x]];
 	} foreach _dependentFactionCtrlIds;
 	_ctrlLoadout;
 };
 
 
-fnc_replaceAllCutsceneSoldiers = {
+DCW_fnc_replaceAllCutsceneSoldiers = {
 	params["_units"];
 	// REPLACE LOADOUT OF ALL CUTSCENE SOLDIERS
 	{  
 		if (str _x find "DCW_cutscene_soldier" == 0  ) then {
 			_x setUnitLoadout (getUnitLoadout(_units call BIS_fnc_selectRandom)); 
-			[_x] joinSilent createGroup ((2111 call fnc_getValue) call BIS_fnc_sideType);
+			[_x] joinSilent createGroup ((2111 call DCW_fnc_getValue) call BIS_fnc_sideType);
 		}; 
 	} foreach allUnits; 
 
 };
 
 //Faction render
-fnc_renderfactionselect = {
+DCW_fnc_renderfactionselect = {
 	params["_side","_ctrlId"];
 
     _display = findDisplay 5001;
-	_factions = [_side] call fnc_factionlist;
+	_factions = [_side] call DCW_fnc_factionlist;
 	private _ctrlLoadout = _display displayCtrl _ctrlId;
 
 	// Clear the select
@@ -82,7 +82,7 @@ fnc_renderfactionselect = {
 };
 
 
-fnc_fillSupportParam = {
+DCW_fnc_fillSupportParam = {
 	params["_param", "_array"];
 	if (count _array > 0) then {
 		_param = _array;
@@ -91,62 +91,62 @@ fnc_fillSupportParam = {
 };
 
 
-fnc_pointTo = {
+DCW_fnc_pointTo = {
 	params["_cam","_unit"];
 	_cam camSetPos (_unit modelToWorld[1,3,.6]);
 	_cam camSetTarget (_unit modelToWorld[.3,0,1.3]); 
 	_cam camCommit 0.5;
 };
 
-fnc_save = {
+DCW_fnc_save = {
 	//Time of the day;
-	TIME_OF_DAYS = 2100 call fnc_getValue;
+	TIME_OF_DAYS = 2100 call DCW_fnc_getValue;
 	publicVariable "TIME_OF_DAYS";
 
 	//Weather
-	WEATHER = (2101 call fnc_getValue) / 100;
+	WEATHER = (2101 call DCW_fnc_getValue) / 100;
 	publicVariable "WEATHER";
 
 	//Time_selected;
-	PERCENTAGE_OF_ENEMY_COMPOUND = (2102 call fnc_getValue);
+	PERCENTAGE_OF_ENEMY_COMPOUND = (2102 call DCW_fnc_getValue);
 	publicVariable "PERCENTAGE_OF_ENEMY_COMPOUND";
 
 	//Revive
-	MEDEVAC_ENABLED =  2104 call fnc_getValueChkBx;
+	MEDEVAC_ENABLED =  2104 call DCW_fnc_getValueChkBx;
 	publicVariable "MEDEVAC_ENABLED";
 
 	//Respawn
-	RESPAWN_ENABLED =  2105 call fnc_getValueChkBx;
+	RESPAWN_ENABLED =  2105 call DCW_fnc_getValueChkBx;
 	publicVariable "RESPAWN_ENABLED";
 
 	// Ammobox restricted
-	RESTRICTED_AMMOBOX =  2106 call fnc_getValueChkBx;
+	RESTRICTED_AMMOBOX =  2106 call DCW_fnc_getValueChkBx;
 	publicVariable "RESTRICTED_AMMOBOX";
 	
-	SIDE_FRIENDLY = (2111 call fnc_getValue) call BIS_fnc_sideType;
+	SIDE_FRIENDLY = (2111 call DCW_fnc_getValue) call BIS_fnc_sideType;
 	publicVariable "SIDE_FRIENDLY";
 
-	FACTION_FRIENDLY =  lbData [2113, (2113 call fnc_getValue)];
+	FACTION_FRIENDLY =  lbData [2113, (2113 call DCW_fnc_getValue)];
 	publicVariable "FACTION_FRIENDLY";
 
-	FACTION_PLAYER = lbData [2103, (2103 call fnc_getValue)];
+	FACTION_PLAYER = lbData [2103, (2103 call DCW_fnc_getValue)];
 	publicVariable "FACTION_PLAYER";
 
-	FACTION_ENEMY = lbData [2108, (2108 call fnc_getValue)];
+	FACTION_ENEMY = lbData [2108, (2108 call DCW_fnc_getValue)];
 	publicVariable "FACTION_ENEMY";
 
-	SIDE_ENEMY = (2107 call fnc_getValue) call BIS_fnc_sideType;
+	SIDE_ENEMY = (2107 call DCW_fnc_getValue) call BIS_fnc_sideType;
 	publicVariable "SIDE_ENEMY";
 
 	// Civilian faction
-	FACTION_CIV = lbData [2110, (2110 call fnc_getValue)];
+	FACTION_CIV = lbData [2110, (2110 call DCW_fnc_getValue)];
 	publicVariable "FACTION_CIV";
 
 	// Number of respawn
-	NUMBER_RESPAWN = (2112 call fnc_getValue);
+	NUMBER_RESPAWN = (2112 call DCW_fnc_getValue);
 	publicVariable "NUMBER_RESPAWN";
 
-	SHOW_SECTOR = 2122 call fnc_getValueChkBx;
+	SHOW_SECTOR = 2122 call DCW_fnc_getValueChkBx;
 	publicVariable "SHOW_SECTOR";
 
 	if (SIDE_FRIENDLY == SIDE_ENEMY) exitWith{hintC "Choose a different enemy side !";false};
@@ -155,19 +155,19 @@ fnc_save = {
 };
 
 //Saving and close method;
-fnc_SaveAndGoToLoadoutDialog = {
+DCW_fnc_SaveAndGoToLoadoutDialog = {
 
-	_result = [] call fnc_save;
+	_result = [] call DCW_fnc_save;
 	if (_result) then {
 		//kill camera
 		closeDialog 0;
 
-		[] call fnc_openLoadoutDialog;
+		[] call DCW_fnc_openLoadoutDialog;
 	};
    
 };
 
-fnc_ChooseLocation = {
+DCW_fnc_ChooseLocation = {
 	_ctrlMap = ((findDisplay 5001) displayCtrl 122);
 	_ctrlMap ctrlShow  true;
 	ctrlSetFocus _ctrlMap;
@@ -201,14 +201,14 @@ fnc_ChooseLocation = {
 	
 };
 
-fnc_openLoadoutDialog = {
+DCW_fnc_openLoadoutDialog = {
   	_ok = createDialog "LOADOUT_DIALOG"; 
     _display = findDisplay 5002;
 	_noesckey = _display displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
-	[] call fnc_displayUnitName;
+	[] call DCW_fnc_displayUnitName;
 };
 
-fnc_SaveAndCloseConfigDialog = {
+DCW_fnc_SaveAndCloseConfigDialog = {
 
 	//kill camera
 	closeDialog 0;
@@ -230,7 +230,7 @@ fnc_SaveAndCloseConfigDialog = {
 
 		titleCut ["Preparing units...", "BLACK FADED", 999];
 
-		[] remoteExec ["fnc_missionsetup", 2];
+		[] remoteExec ["DCW_fnc_missionsetup", 2];
 		
 		CONFIG_CAMERA cameraeffect ["terminate", "back"];
 		camDestroy CONFIG_CAMERA;
@@ -243,11 +243,11 @@ fnc_SaveAndCloseConfigDialog = {
 
 CHOPPER_DEMO = objNull;
 CHOPPER_DEMO_POS = (player modelToWorld[0,-21,0]);
-fnc_DisplayChopper = {
+DCW_fnc_DisplayChopper = {
 	0 fadeSound 0;
 	if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO; deleteVehicle CHOPPER_DEMO;};
 	sleep 1;
-	_choppers = [lbData [2103, (2103 call fnc_getValue)], ["Helicopter"], "Transport"] call fnc_FactionGetSupportUnits;
+	_choppers = [lbData [2103, (2103 call DCW_fnc_getValue)], ["Helicopter"], "Transport"] call DCW_fnc_FactionGetSupportUnits;
 	if (count _choppers > 0) then {
 		SUPPORT_MEDEVAC_CHOPPER_CLASS = _choppers;
 		SUPPORT_TRANSPORT_CHOPPER_CLASS = _choppers;
@@ -260,7 +260,7 @@ fnc_DisplayChopper = {
 	};
 };
 
-fnc_SwitchUnit = {
+DCW_fnc_SwitchUnit = {
 	params["_dir"];
 
 	_len = count (units GROUP_PLAYERS);
@@ -275,16 +275,16 @@ fnc_SwitchUnit = {
 	
 	// If player, you're not allowed to edit their loadout
 	if (isPlayer UNIT_SHOWCASE && UNIT_SHOWCASE != leader GROUP_PLAYERS) then {
-		[_dir] call fnc_switchUnit;
+		[_dir] call DCW_fnc_switchUnit;
 	};
 	
-	[] call fnc_displayUnitName;
+	[] call DCW_fnc_displayUnitName;
 	
 	selectPlayer UNIT_SHOWCASE;
-	[CONFIG_CAMERA,UNIT_SHOWCASE] call fnc_pointTo;
+	[CONFIG_CAMERA,UNIT_SHOWCASE] call DCW_fnc_pointTo;
 };
 
-fnc_editLoadout = {
+DCW_fnc_editLoadout = {
 
 	camDestroy CONFIG_CAMERA;
 	closeDialog 0;
@@ -300,15 +300,15 @@ fnc_editLoadout = {
 			if (isNull ( uiNamespace getVariable [ "BIS_fnc_arsenal_cam", objNull ])) then {
 				hintSilent "done";
 				["dcw-arsenalof", "onEachFrame" ] call BIS_fnc_removeStackedEventHandler ;
-				[] spawn fnc_initcamera;
-				[] call fnc_openLoadoutDialog;
+				[] spawn DCW_fnc_initcamera;
+				[] call DCW_fnc_openLoadoutDialog;
 			}; 
 		}] call BIS_fnc_addStackedEventHandler ;
 	};
 };
 
 //Saving and close method;
-fnc_SwitchFaction = {
+DCW_fnc_SwitchFaction = {
 	params["_ctrl","_val"];
 	
 	_factionName =  lbData [_ctrl,_val];
@@ -324,7 +324,7 @@ fnc_SwitchFaction = {
 	titleCut ["", "BLACK OUT", .3];
 
 	//Weather
-	_unitClasses = [_factionName,["Man"],[]] call fnc_FactionGetUnits;
+	_unitClasses = [_factionName,["Man"],[]] call DCW_fnc_FactionGetUnits;
 
 	// If nothing found, take the default units
 	if (count _unitClasses == 0) then {
@@ -350,8 +350,8 @@ fnc_SwitchFaction = {
 
 	deleteGroup _grp;
 
-	[] call fnc_DisplayChopper;
-	[_unitClasses] call fnc_replaceAllCutsceneSoldiers;
+	[] call DCW_fnc_DisplayChopper;
+	[_unitClasses] call DCW_fnc_replaceAllCutsceneSoldiers;
  
 	titleCut ["", "BLACK IN", 2];
 
@@ -364,23 +364,23 @@ fnc_SwitchFaction = {
 
 };
 
-fnc_displayUnitName ={
+DCW_fnc_displayUnitName ={
 	_ctrl = ((findDisplay 5001) displayCtrl 4444) ;
 	 //getText(configfile >> "CfgVehicles" >> typeOf UNIT_SHOWCASE >> "displayName")
 	_text = format["%1 %2", name UNIT_SHOWCASE,if ( UNIT_SHOWCASE == leader GROUP_PLAYERS ) then {"(player)"} else { "" }];
     ctrlSetText [4444,_text];
 };
 
-fnc_initcamera = {
+DCW_fnc_initcamera = {
 	CONFIG_CAMERA = "camera" camcreate (getPos UNIT_SHOWCASE);
 	CONFIG_CAMERA cameraeffect ["internal", "back"];
 	showCinemaBorder false;
-	[CONFIG_CAMERA, UNIT_SHOWCASE] call fnc_pointTo;
+	[CONFIG_CAMERA, UNIT_SHOWCASE] call DCW_fnc_pointTo;
 };
 
 
 
-fnc_openConfigDialog = {
+DCW_fnc_openConfigDialog = {
 	_ok = createDialog "PARAMETERS_DIALOG"; 
 	_display = findDisplay 5001;
 	_noesckey = _display displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
@@ -463,19 +463,19 @@ fnc_openConfigDialog = {
 
 	
 
-	[SIDE_FRIENDLY,2111,[2103,2113]] call fnc_rendersideselect;
+	[SIDE_FRIENDLY,2111,[2103,2113]] call DCW_fnc_rendersideselect;
 
-	[SIDE_ENEMY,2107,[2108]] call fnc_rendersideselect;
+	[SIDE_ENEMY,2107,[2108]] call DCW_fnc_rendersideselect;
 
-	[SIDE_ENEMY,2108] call fnc_renderfactionselect ;
+	[SIDE_ENEMY,2108] call DCW_fnc_renderfactionselect ;
 
-	_factionSelect = [SIDE_FRIENDLY,2103] call fnc_renderfactionselect ;
-	_factionSelect ctrlAddEventHandler ["LBSelChanged","[ctrlIDC(_this select 0),_this select 1] spawn fnc_SwitchFaction"];
+	_factionSelect = [SIDE_FRIENDLY,2103] call DCW_fnc_renderfactionselect ;
+	_factionSelect ctrlAddEventHandler ["LBSelChanged","[ctrlIDC(_this select 0),_this select 1] spawn DCW_fnc_SwitchFaction"];
 
-	_factionSelectFr = [SIDE_FRIENDLY,2113] call fnc_renderfactionselect;
+	_factionSelectFr = [SIDE_FRIENDLY,2113] call DCW_fnc_renderfactionselect;
 	_factionSelectFr lbSetCurSel 1; // Select FIA by default
 
-	[SIDE_CIV,2110] call fnc_renderfactionselect ;
+	[SIDE_CIV,2110] call DCW_fnc_renderfactionselect ;
 
-	[] call fnc_DisplayChopper;
+	[] call DCW_fnc_DisplayChopper;
 };

@@ -14,14 +14,14 @@ params["_unit","_enemy"];
 private _inventory = getUnitLoadout _enemy;
 private _inventoryBackUp = getUnitLoadout _unit;
 
-if (CHASER_TRIGGERED || CHASER_VIEWED || _unit getVariable["DCW_undercover",false]) exitWith{[_unit,"I can't do this...", false] spawn fnc_talk;false;};
+if (CHASER_TRIGGERED || CHASER_VIEWED || _unit getVariable["DCW_undercover",false]) exitWith{[_unit,"I can't do this...", false] spawn DCW_fnc_talk;false;};
 
 private _grpUnit = group _unit;
 
 _unit playActionNow "medic";
 _unit setCaptive true;
 _unit setVariable["DCW_undercover",true];
-_unit call fnc_displayscore;
+_unit call DCW_fnc_displayscore;
 
 sleep 2;
 
@@ -34,7 +34,7 @@ sleep 1;
 
 private _clothes = [uniform _unit,vest _unit,headgear _unit];
 
-_null = [_unit,"Good idea ! I'm gonna infiltrate their line.", false] spawn fnc_talk; 
+_null = [_unit,"Good idea ! I'm gonna infiltrate their line.", false] spawn DCW_fnc_talk; 
 
 private _idFiredNear = _unit addEventHandler["FiredNear",{
 	params["_unit","_veh","_dist","_weap","_muz","_mode","_am","_gunner"];
@@ -69,14 +69,14 @@ while {_unit getVariable["DCW_undercover",false]}do{
 		if (side _x == SIDE_ENEMY)then{
 			
 			if (_x knowsAbout _unit > 2) then{
-				private _know =  [_x,_unit] call fnc_getVisibility; //[ position _x, getDir _x, 45, position _unit] call BIS_fnc_inAngleSector;
+				private _know =  [_x,_unit] call DCW_fnc_getVisibility; //[ position _x, getDir _x, 45, position _unit] call BIS_fnc_inAngleSector;
 				private _en = _x;
 				//Check if units is shooting at him
 				if (_know > 20 && alive _en && !captive _unit && behaviour _en != "SAFE")then{
 					if (!(_en getVariable["DCW_Watching",false])) then{
 						_en setVariable["DCW_Watching",true];
 						_unit setVariable["DCW_Watched",true];
-						_unit call fnc_displayscore;
+						_unit call DCW_fnc_displayscore;
 						_en forceSpeed 0;
 						_en doWatch _unit;
 					    if (!weaponLowered _en)then{
@@ -91,8 +91,8 @@ while {_unit getVariable["DCW_undercover",false]}do{
 						    if (weaponLowered _en)then{
 								_en  action ["WeaponOnBack", _en];
 							};
-							_unit call fnc_displayscore;
-							if (([_en,_unit] call fnc_getVisibility > 50 && alive _en) && _unit getVariable["DCW_undercover", false]) then{
+							_unit call DCW_fnc_displayscore;
+							if (([_en,_unit] call DCW_fnc_getVisibility > 50 && alive _en) && _unit getVariable["DCW_undercover", false]) then{
 								hint "Attacked !";
 								_unit setVariable["DCW_undercover", false];
 							};
@@ -111,7 +111,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 						hint "You're looking suspicious !";
 						_en setVariable["DCW_Watching",true];
 						_unit setVariable["DCW_Watched",true];
-						_unit call  fnc_displayscore;
+						_unit call  DCW_fnc_displayscore;
 						_en forceSpeed 0;
 						_en doWatch _unit;
 						if (!weaponLowered _en)then{
@@ -123,11 +123,11 @@ while {_unit getVariable["DCW_undercover",false]}do{
 							_en forceSpeed (0-1);
 							_en setVariable["DCW_Watching",false];
 							_unit setVariable["DCW_Watched",false];
-							_unit call  fnc_displayscore;
+							_unit call  DCW_fnc_displayscore;
 							 if (weaponLowered _en)then{
 								_en  action ["WeaponOnBack", _en];
 							};
-							if ([_en,_unit] call fnc_getVisibility > 50  && _en distance _unit < 50 &&  ((weaponLowered _en && !weaponLowered _unit) || (behaviour _en == "SAFE" && stance _unit != "STAND" ) || speed _unit > 14) && alive _en && _unit getVariable["DCW_undercover", false]) then{
+							if ([_en,_unit] call DCW_fnc_getVisibility > 50  && _en distance _unit < 50 &&  ((weaponLowered _en && !weaponLowered _unit) || (behaviour _en == "SAFE" && stance _unit != "STAND" ) || speed _unit > 14) && alive _en && _unit getVariable["DCW_undercover", false]) then{
 								hint "Watched !";
 								_unit setVariable["DCW_undercover", false];
 							};
@@ -141,7 +141,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 						hint "You're too close !";
 						_en setVariable["DCW_Watching",true];
 						_unit setVariable["DCW_Watched",true];
-						_unit call  fnc_displayscore;
+						_unit call  DCW_fnc_displayscore;
 						_en forceSpeed 0;
 						_en doWatch _unit;
 						_null = [_unit,_en] spawn {
@@ -150,11 +150,11 @@ while {_unit getVariable["DCW_undercover",false]}do{
 							_en forceSpeed (0-1);
 							_en setVariable["DCW_Watching",false];
 							_unit setVariable["DCW_Watched",false];
-							_unit call  fnc_displayscore;
+							_unit call  DCW_fnc_displayscore;
 							 if (weaponLowered _en)then{
 								_en  action ["WeaponOnBack", _en];
 							};
-							if ([_en,_unit] call fnc_getVisibility > 50  && _unit distance _en < 4 && alive _en && (_unit getVariable["DCW_undercover", false])) then {
+							if ([_en,_unit] call DCW_fnc_getVisibility > 50  && _unit distance _en < 4 && alive _en && (_unit getVariable["DCW_undercover", false])) then {
 								hint "Watched !";
 								_unit setVariable["DCW_undercover", false];
 							};
@@ -172,7 +172,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 	sleep .1;
 };
 
-_unit call  fnc_displayscore;
+_unit call  DCW_fnc_displayscore;
 _unit setCaptive false;
 _unit removeEventHandler ["FiredNear",_idFiredNear];
 _unit removeEventHandler ["Fired",_idFired];

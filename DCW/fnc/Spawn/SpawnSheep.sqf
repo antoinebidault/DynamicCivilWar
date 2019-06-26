@@ -32,7 +32,7 @@ while {true} do {
 		if (_numberOfmen > 0)then{
 			for "_j" from 1 to _numberOfmen  do {
 			
-				_unit = [_goatgroup,_pos] call fnc_SpawnCivil;
+				_unit = [_goatgroup,_pos] call DCW_fnc_SpawnCivil;
 			
 				if(_j==1)then{
 					_unit setBehaviour "SAFE";
@@ -59,12 +59,12 @@ while {true} do {
 			_goat addMPEventHandler ["MPKilled", {
 				_man = leader (group (_this select 0));
 				if (group(_this select 1) == GROUP_PLAYERS && alive _man && _man isKindOf "Man") then{
-					[_man,-3] remoteExec ["fnc_UpdateRep",2];
-                	[_man,"Damn ! Don't touch my sheep !", false] spawn fnc_talk;
+					[_man,-3] remoteExec ["DCW_fnc_UpdateRep",2];
+                	[_man,"Damn ! Don't touch my sheep !", false] spawn DCW_fnc_talk;
 				};
 			}];
 			if (DEBUG)then{
-				[_goat,"ColorGrey"] call fnc_addmarker;
+				[_goat,"ColorGrey"] call DCW_fnc_addmarker;
 			};
 		};
 		
@@ -78,7 +78,7 @@ while {true} do {
 		if( isNull _x || ({_cheepLeader distance _x > 400 } count allPlayers) == count allPlayers)then {
 			SHEEP_POOL = SHEEP_POOL - [_x];
 			{
-				_x call fnc_deleteMarker;
+				_x call DCW_fnc_deleteMarker;
 				deleteVehicle _x;
 			}foreach units (_x);
 			deleteGroup (_x);

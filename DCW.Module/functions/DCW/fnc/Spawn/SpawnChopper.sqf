@@ -30,7 +30,7 @@ for "_xc" from 1 to NUMBER_CHOPPERS do {
     };
     UNITS_SPAWNED_CLOSE pushback _chopper;
 
-    [_chopper] call fnc_chopperpatrol;
+    [_chopper] call DCW_fnc_chopperpatrol;
 
     sleep 50;
     

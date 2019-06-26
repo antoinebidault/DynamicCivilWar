@@ -7,7 +7,7 @@
 
 // return array of enterable building objects which have min 3 positions inside
 // passed params are [[pos], radius]
-// usage : _avaible_buildings = [[pos], radius] call fnc_findbuildings;
+// usage : _avaible_buildings = [[pos], radius] call DCW_fnc_findbuildings;
 params ["_center","_radius"];
 private _blackList = [ "Land_Lighthouse_03_red_F" , "Land_Lighthouse_03_green_F" , "Land_LightHouse_F","Land_Nasypka","Land_HouseV2_03"];
 private _buildings = nearestObjects [_center, ["house"], _radius];

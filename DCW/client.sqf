@@ -67,7 +67,7 @@ if (ENABLE_DIALOG && !didJIP) then {
 		CONFIG_CAMERA camSetPos _targetPos;
 		CONFIG_CAMERA camCommit 500;
 	} else { // He is the team leader => he administrates the mission
-		[] call fnc_dialog;
+		[] call DCW_fnc_dialog;
 	};
 
 	// Just in case there is no config at all
@@ -105,7 +105,7 @@ if (ENABLE_DIALOG && !didJIP) then {
 
 
 if (!DEBUG ) then {
-	[] call fnc_intro;
+	[] call DCW_fnc_intro;
 };
 
 
@@ -129,7 +129,7 @@ enableSentences true;
 enableRadio true;
 
 // init user respawn loop
-[player] spawn fnc_respawn; //Respawn loop
+[player] spawn DCW_fnc_respawn; //Respawn loop
 
 //Loop to check mines
 iedBlasts=["Bo_Mk82","Rocket_03_HE_F","M_Mo_82mm_AT_LG","Bo_GBU12_LGB","Bo_GBU12_LGB_MI10","HelicopterExploSmall"];
@@ -161,7 +161,7 @@ iedAct={
 				if (player distance _junk < 250) then{
 
 					// The mine is defused by the player
-					_junk remoteExec ["fnc_success", 2, false];
+					_junk remoteExec ["DCW_fnc_success", 2, false];
 
 					// Delete the mine
 					IEDS = IEDS - [_x];
@@ -196,7 +196,7 @@ addMissionEventHandler
 						_map ctrlMapCursor ["Track","HC_overFriendly"];
 						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString && CurrentMarker != _mapMarker select 1) then {
 							CurrentMarker = _mapMarker select 1;
-							_marker = [_mapMarker select 1] call fnc_getMarkerById;
+							_marker = [_mapMarker select 1] call DCW_fnc_getMarkerById;
 							_compound = _marker select 0;
 							_people = (_compound select 6);
 							_population = (_people select 0) + (_people select 1) + (_people select 2) + (_people select 5) + (_people select 8); 
@@ -234,5 +234,5 @@ sleep 30;
 
 if (!isMultiplayer) then{saveGame;};
 // Initial score display
-[] call fnc_displayscore;
+[] call DCW_fnc_displayscore;
 

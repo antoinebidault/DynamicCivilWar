@@ -2,7 +2,7 @@ disableSerialization;
 
 
 // List of vehicle config
-CONFIG_VEHICLES = [] call fnc_GetConfigVehicles;
+CONFIG_VEHICLES = [] call DCW_fnc_GetConfigVehicles;
 
 titleCut ["", "BLACK FADED", 999];
 
@@ -23,7 +23,7 @@ foreach units group player;
 titleCut ["", "BLACK IN", 7];
 
 // Start the camera 
-[] call fnc_initCamera;
+[] call DCW_fnc_initCamera;
 
 // Open the dialog
-[] call fnc_openConfigDialog;
+[] call DCW_fnc_openConfigDialog;

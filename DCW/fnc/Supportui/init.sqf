@@ -57,7 +57,7 @@ private _logicGroupSupportProvider = createGroup _center;
 	}forEach [
 		["BIS_SUPP_crateInit",
 		'
-			_this call fnc_spawncrate;
+			_this call DCW_fnc_spawncrate;
 		'],
 		["BIS_SUPP_vehicles",_x select 1],		//types of vehicles to use
 		["BIS_SUPP_vehicleinit","_this setCaptive true; { _x setCaptive true; } foreach crew _this;"],	//init code for vehicle
@@ -83,8 +83,8 @@ private _logicGroupSupportProvider = createGroup _center;
 if (isPlayer _unit)then{
 	_unit addAction ["<t color='#00FF00'>Get supports</t>",{
 		hint "With this user interface, you can order supports with your points ! Interrogating civilian, destroying weapons caches, eliminating patrols will give you extra points."; 
-		(_this select 0) call fnc_supportui;
+		(_this select 0) call DCW_fnc_supportui;
 	},nil,0.5,false,true,"","true",15,false,""];
 };
 
-//[] call fnc_displayscore;
+//[] call DCW_fnc_displayscore;

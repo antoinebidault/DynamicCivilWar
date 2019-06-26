@@ -14,7 +14,7 @@ private _isMilitary = false;
 private _clusters = [];
 private _markerWhiteList = _this select 0;
 
-fnc_isMilitary = {
+DCW_fnc_isMilitary = {
 	params["_buildings"];
 	_isMilitary = false;
 	//Check military houses
@@ -26,7 +26,7 @@ fnc_isMilitary = {
 	false;
 };
 
-fnc_getRadiusLocation = {
+DCW_fnc_getRadiusLocation = {
 	params ["_locpos"];
 	_locpos set [2,0];
 	private _houseCount = 0;
@@ -39,7 +39,7 @@ fnc_getRadiusLocation = {
 	for "_radius" from 50 to MAX_CLUSTER_SIZE step 50 do
 	{
 		_houses = []; 
-		_houses = [_locPos,_radius] call fnc_findBuildings;
+		_houses = [_locPos,_radius] call DCW_fnc_findBuildings;
 		_count = (count _houses);
 		_totalHouses = _totalHouses + _houses;
 		if (_count == _prevHouseCount) exitWith { _rad = _radius-50; };
@@ -47,7 +47,7 @@ fnc_getRadiusLocation = {
 		_rad = _radius;
 	};
 
-	_isMilitary = [_totalHouses] call fnc_isMilitary;
+	_isMilitary = [_totalHouses] call DCW_fnc_isMilitary;
 
 	[_rad, _count,_isMilitary,_totalHouses];
 };
@@ -58,7 +58,7 @@ _markerFriendly = [];
 {
 	_locPos = getMarkerPos _x;
 	_radius = getMarkerSize _x select 0;
-	_result = [_locPos] call fnc_getRadiusLocation;
+	_result = [_locPos] call DCW_fnc_getRadiusLocation;
 	if (_radius > 0)then {
 		_clusters pushback [_locPos,_radius,_result select 1,true,_x,true, _result select 3,str random 10000];
 	};
@@ -67,7 +67,7 @@ _markerFriendly = [];
 
 {
 	_pos = getPos _x;
-    _res = [_pos,true] call fnc_getRadiusLocation;
+    _res = [_pos,true] call DCW_fnc_getRadiusLocation;
     _radius = _res select 0;
 	
 	if (_radius > 0 && !(surfaceIsWater _pos))then {
@@ -80,12 +80,12 @@ for "_xc" from 0 to _worldNbBlocks do {
 	for "_yc" from 0 to _worldNbBlocks do {
 		_markerPos = [(_xc*SIZE_BLOCK),(_yc*SIZE_BLOCK),0];
 		if (_markerPos inArea _markerWhiteList) then {
-			_buildings = [_markerPos, (SIZE_BLOCK)] call fnc_findBuildings;
+			_buildings = [_markerPos, (SIZE_BLOCK)] call DCW_fnc_findBuildings;
 			_nbBuildings = count _buildings;
 			if (_nbBuildings > 0)then{
 				private _building =  (_buildings select 0);
 				private _posCenteredOnBuilding = position _building;
-				private _res  = [_posCenteredOnBuilding] call fnc_getRadiusLocation;
+				private _res  = [_posCenteredOnBuilding] call DCW_fnc_getRadiusLocation;
 				private _radius = _res select 0;
 				if (_radius > 0)then {
 					_name = "Compound";

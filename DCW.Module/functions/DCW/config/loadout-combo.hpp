@@ -52,7 +52,7 @@ class LOADOUT_DIALOG
         class ICE_BUTTON_1000: RscButton
         {
           idc = 1000;
-          action = "[] call fnc_SaveAndCloseConfigDialog";
+          action = "[] call DCW_fnc_SaveAndCloseConfigDialog";
           text = "Start mission"; //--- ToDo: Localize;
           x = 7 * GUI_GRID_W + GUI_GRID_X;
           y = 23.5 * GUI_GRID_H + GUI_GRID_Y;
@@ -62,7 +62,7 @@ class LOADOUT_DIALOG
         class ICE_BUTTON_1001: RscButton
         {
           idc = 1001;
-          action = "[""prev""] call fnc_switchUnit;";
+          action = "[""prev""] call DCW_fnc_switchUnit;";
           text = "Previous unit"; //--- ToDo: Localize;
           x = 0 * GUI_GRID_W + GUI_GRID_X;
           y = 20 * GUI_GRID_H + GUI_GRID_Y;
@@ -72,7 +72,7 @@ class LOADOUT_DIALOG
         class ICE_BUTTON_1003: RscButton
         {
           idc = 1002;
-          action = "[] call fnc_editloadout;";
+          action = "[] call DCW_fnc_editloadout;";
 
           text = "Edit loadout"; //--- ToDo: Localize;
           x = 12 * GUI_GRID_W + GUI_GRID_X;
@@ -83,7 +83,7 @@ class LOADOUT_DIALOG
         class ICE_BUTTON_1002: RscButton
         {
           idc = 1003;
-          action = "[""next""] call fnc_switchUnit;";
+          action = "[""next""] call DCW_fnc_switchUnit;";
 
           text = "Next unit"; //--- ToDo: Localize;
           x = 31 * GUI_GRID_W + GUI_GRID_X;

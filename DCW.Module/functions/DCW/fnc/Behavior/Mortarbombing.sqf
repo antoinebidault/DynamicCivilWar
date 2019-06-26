@@ -28,7 +28,7 @@ deleteVehicle _refUnit;
 private _mag = (magazines _mortar) select 0;  // def = 8Rnd_82mm_Mo_shells
 
 if ({alive _x} count crew(_mortar) == count crew(_mortar))  then{
-    [_targetedUnit,format["Mortar incoming ! Bearing %1",_dir], true] remoteExec ["fnc_talk"];
+    [_targetedUnit,format["Mortar incoming ! Bearing %1",_dir], true] remoteExec ["DCW_fnc_talk"];
     while{alive _mortar && alive _targetedUnit }do{
         _shootingPos = [getPos _targetedUnit, 25, 260, 0, 0, 20, 0] call BIS_fnc_findSafePos;
         _mortar doArtilleryFire [_shootingPos, _mag, 1];

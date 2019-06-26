@@ -24,12 +24,12 @@ while{true}do {
 			_group = createGroup SIDE_CIV;
 
 			for "_j" from 1 to _numberOfmen do {
-				_unit = [_group,_pos] call fnc_SpawnCivil;
+				_unit = [_group,_pos] call DCW_fnc_SpawnCivil;
 				_unit setVariable["DCW_type","civpatrol"]; // overload
 				_unit setBehaviour "SAFE";
 				sleep .4;
 			};
-			[leader _group] spawn fnc_civilianPatrol;
+			[leader _group] spawn DCW_fnc_civilianPatrol;
 		};
 	};	
 

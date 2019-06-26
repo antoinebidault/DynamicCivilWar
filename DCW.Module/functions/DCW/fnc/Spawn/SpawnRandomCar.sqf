@@ -34,7 +34,7 @@ while{ true }do {
 					//If we killed them, it's over.
 					_grp = group _car;
 					for "_xc" from 1 to _nbUnit  do {
-						_unit =[_grp,_pos,true] call fnc_spawnEnemy;
+						_unit =[_grp,_pos,true] call DCW_fnc_spawnEnemy;
 						_unit moveInCargo _car;
 					};
 					
@@ -49,14 +49,14 @@ while{ true }do {
 
 				{
 					_unit = _x;
-					[_unit] call fnc_handlekill;
-					[_unit] call fnc_addTorch;
-					[_unit, if(side _unit == SIDE_CIV) then { "ColorBlue" } else { "ColorRed" } ] call fnc_addMarker;
+					[_unit] call DCW_fnc_handlekill;
+					[_unit] call DCW_fnc_addTorch;
+					[_unit, if(side _unit == SIDE_CIV) then { "ColorBlue" } else { "ColorRed" } ] call DCW_fnc_addMarker;
 					_unit setVariable["DCW_type","carpatrol"];
 					UNITS_SPAWNED_CLOSE pushBack _unit;
 				} foreach (crew _car);
 
-				[driver _car, 1500,true] spawn fnc_carPatrol;
+				[driver _car, 1500,true] spawn DCW_fnc_carPatrol;
 				
 			};
 		};	
@@ -73,10 +73,10 @@ while{ true }do {
 			if(_veh distance _x > 1600)then{
 				_carPool = _carPool - [_veh];
 				{
-					_x call fnc_deleteMarker;
+					_x call DCW_fnc_deleteMarker;
 					deleteVehicle _x;
 				} foreach (crew _veh);
-				_veh call fnc_deleteMarker;
+				_veh call DCW_fnc_deleteMarker;
 				deleteVehicle _veh;
 			};
 		} foreach allPlayers;

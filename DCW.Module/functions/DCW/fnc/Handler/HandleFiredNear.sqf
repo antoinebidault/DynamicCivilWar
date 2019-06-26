@@ -19,7 +19,7 @@ _this select 0 addEventHandler["FiredNear",
 		
 		//Remove the eventHandler to prevent spamming
 		_civ removeAllEventHandlers "FiredNear";
-		[_civ,_gunner] spawn fnc_SpawnAsEnemy;
+		[_civ,_gunner] spawn DCW_fnc_SpawnAsEnemy;
 	}else{
 		group _civ setspeedmode "FULL";
 		_civ forceWalk false;
@@ -49,7 +49,7 @@ _this select 0 addEventHandler["FiredNear",
 
 		//Make unit shout
 		if (_distance < 40)then{
-			[_civ] call fnc_shout;
+			[_civ] call DCW_fnc_shout;
 		};
 		
 		_civ setVariable["civ_affraid",true];
@@ -64,23 +64,23 @@ _this select 0 addEventHandler["FiredNear",
 				if (!weaponLowered _asker)then{
 				_asker  action ["WeaponOnBack", _asker];
 			};
-			[_asker,"Calm down my friend !",false] call fnc_Talk;
+			[_asker,"Calm down my friend !",false] call DCW_fnc_Talk;
 			_unit stop true;
 			_unit  setVariable["civ_affraid",false];
 			sleep .3;
 			[_unit,""] remoteExec ["switchMove",0];
 			sleep .3;
-			[_unit] remoteExec ["fnc_addCivilianAction",0];
-			[_unit,2] remoteExec ["fnc_UpdateRep",2];
+			[_unit] remoteExec ["DCW_fnc_addCivilianAction",0];
+			[_unit,2] remoteExec ["DCW_fnc_UpdateRep",2];
 			sleep 15;
 			_unit stop false;
-			[_unit]  remoteExec ["fnc_handleFiredNear",0];
+			[_unit]  remoteExec ["DCW_fnc_handleFiredNear",0];
 		},nil,1.5,false,true,"","true",2,false,""]] remoteExec ["addAction"];
 
 		if (isPlayer _gunner )then {
-			[_unit,-5] remoteExec ["fnc_UpdateRep",2];
+			[_unit,-5] remoteExec ["DCW_fnc_UpdateRep",2];
 		}else{
-			[_unit,1] remoteExec ["fnc_UpdateRep",2];
+			[_unit,1] remoteExec ["DCW_fnc_UpdateRep",2];
 		};
 	};
 

@@ -26,7 +26,7 @@ if (_compoundState == "neutral" || _compoundState == "humanitary" || _compoundSt
 
 //List positions;
 private _posResult = [];
-private _posResult = [_pos,_radius] call fnc_SpawnPosition;
+private _posResult = [_pos,_radius] call DCW_fnc_SpawnPosition;
 private _posSelects = _posResult select 0;
 private _enterable = _posResult select 1;
 
@@ -45,13 +45,13 @@ for "_xc" from 1 to _nbenemies  do {
 
     _grp = createGroup SIDE_ENEMY;
     for "_xc" from 1 to _nbUnit do {
-      _enemy = [_grp,_posSelected,false] call fnc_spawnEnemy;
+      _enemy = [_grp,_posSelected,false] call DCW_fnc_spawnEnemy;
       _enemy setVariable["DCW_Type","enemy"];
       _enemy setDir random 360;
       _units pushBack _enemy;
     };
 
-    [leader _grp,_radius,_meetingPointPosition,_buildings] spawn fnc_EnemyCompoundPatrol;
+    [leader _grp,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_EnemyCompoundPatrol;
 };
 
 //Civilians
@@ -81,8 +81,8 @@ for "_xc" from 1 to _population do {
 
      
       if (_xc == 1 && _population >= 1 && count _buildings > 0) then {
-        _civ = [_grp,_posSelected,_chief,false] call fnc_SpawnCivil;
-        [_civ,_radius] call fnc_localChief;
+        _civ = [_grp,_posSelected,_chief,false] call DCW_fnc_SpawnCivil;
+        [_civ,_radius] call DCW_fnc_localChief;
         _units pushBack _civ;
         if (_compoundState == "massacred" || _compoundState == "humanitary") then {
           _civ setDamage (floor(random 1)) min .3;
@@ -91,33 +91,33 @@ for "_xc" from 1 to _population do {
 
       }else{
         if (_xc == 2 && _population > 10)then{
-          _civ = [_grp,_posSelected,_chief,false,"C_Marshal_F"] call fnc_SpawnCivil;
+          _civ = [_grp,_posSelected,_chief,false,"C_Marshal_F"] call DCW_fnc_SpawnCivil;
          removeAllWeapons _civ;
-          _civ call fnc_Medic;
+          _civ call DCW_fnc_Medic;
           _units pushBack _civ;
         }else{
           if (_xc == 3 && _compoundState == "supporting") then {
-              _advisor = [_grp, _posSelected, false] call fnc_spawnfriendly;
+              _advisor = [_grp, _posSelected, false] call DCW_fnc_spawnfriendly;
               _units pushback _advisor;
           } else{
-            _civ = [_grp,_posSelected,_chief,if (_compoundState == "supporting") then {false}else{true},nil,_compoundScore] call fnc_SpawnCivil;
+            _civ = [_grp,_posSelected,_chief,if (_compoundState == "supporting") then {false}else{true},nil,_compoundScore] call DCW_fnc_SpawnCivil;
             if (_compoundState == "massacred" || _compoundState == "humanitary") then {
               
               _civ setDamage ([.9,.85,.5,.7,.3] call BIS_fnc_selectRandom);
               if (damage _civ <= .6) then {
-		            _civ call fnc_addActionHeal;
+		            _civ call DCW_fnc_addActionHeal;
               };
               if (damage _civ < .8) then {
                 _civ setUnconscious true;
                 _civ setPos ([_posSelected,1, 45, 2, 0, 10, 0] call BIS_fnc_findSafePos);
               };
             };
-            [_civ,_radius,_meetingPointPosition,_buildings] spawn fnc_CivilianCompoundPatrol;
+            [_civ,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_CivilianCompoundPatrol;
 
             // If "supporting"
             if (_compoundState == "supporting") then {
-              [_civ, SIDE_FRIENDLY] call fnc_BadBuyLoadout;
-              [_civ] remoteexec ["fnc_AddCivilianAction",0];
+              [_civ, SIDE_FRIENDLY] call DCW_fnc_BadBuyLoadout;
+              [_civ] remoteexec ["DCW_fnc_AddCivilianAction",0];
             };
             
 

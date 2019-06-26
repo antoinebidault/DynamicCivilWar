@@ -12,12 +12,12 @@ if (!RESPAWN_ENABLED)then {
 	REMAINING_RESPAWN = 0;
 };
  
-[] spawn fnc_surrenderSystem;
+[] spawn DCW_fnc_surrenderSystem;
 
 RESPAWN_CHOICE = "";
 REMAINING_RESPAWN = NUMBER_RESPAWN;
 
-fnc_HandleRespawnBase = {
+DCW_fnc_HandleRespawnBase = {
 	params["_unit"];
 	// Remove units around the player
 	{ if (_unit distance _x < 120 && side _x == SIDE_ENEMY) then {_x setDamage 1;} } foreach allUnits;
@@ -47,22 +47,22 @@ fnc_HandleRespawnBase = {
 
 	if ((leader GROUP_PLAYERS) == _unit) then {
 		RemoveAllActions _unit;
-		_unit call fnc_ActionCamp;
-		_unit call fnc_supportuiInit;
+		_unit call DCW_fnc_ActionCamp;
+		_unit call DCW_fnc_supportuiInit;
 	};
 
 	if (DEBUG) then {
-		_unit call fnc_teleport;
+		_unit call DCW_fnc_teleport;
 	};
 
 	// Initial score display
-	[] call fnc_displayscore;
+	[] call DCW_fnc_displayscore;
 
 };
 
 //Respawn handling
 // Singleplayer
-fnc_HandleRespawnSingleplayer =
+DCW_fnc_HandleRespawnSingleplayer =
 {
 	params["_unit"];
 
@@ -91,7 +91,7 @@ fnc_HandleRespawnSingleplayer =
 	//_unit setVariable["marker", _pm, true];
 
 	// Initial score display
-	[] call fnc_displayscore;
+	[] call DCW_fnc_displayscore;
 	
 
 	//count the remaining lives after death
@@ -125,7 +125,7 @@ fnc_HandleRespawnSingleplayer =
 		if (!isNull _foundCloseUnit && isNull DCW_ai_current_medic) then {
 			_player setVariable ["healer", objNull, true];
 			DCW_ai_current_medic = _foundCloseUnit;
-			[_foundCloseUnit, _player,false] spawn fnc_firstAid;
+			[_foundCloseUnit, _player,false] spawn DCW_fnc_firstAid;
 		};
  
 		hintSilent format["Medic at %1m",str round _dist];
@@ -146,7 +146,7 @@ fnc_HandleRespawnSingleplayer =
 	cutText ["Respawning...","BLACK FADED", 999];
 	sleep 2;
 	cutText ["","BLACK FADED",  999];
-	[] call fnc_respawndialog;
+	[] call DCW_fnc_respawndialog;
 	waitUntil{ RESPAWN_CHOICE != "" };
 	cutText [format["Back to %1...", RESPAWN_CHOICE], "BLACK FADED", 999];
 	sleep 1;
@@ -162,7 +162,7 @@ fnc_HandleRespawnSingleplayer =
 				_x setPos ([_respawnPos, 0 ,10, 1, 0, 20, 0] call BIS_fnc_findSafePos);
 				_x getVariable["DCW_marker_injured",""] setMarkerPos (getPos _x);
 				if (ACE_ENABLED) then {
-					[objNull, _x] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
+					[objNull, _x] call ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal;
 				};
 			}; 
 		}foreach  units (group _unit);
@@ -179,13 +179,13 @@ fnc_HandleRespawnSingleplayer =
 
     resetCamShake;
 	_unit setPos _respawnPos;
-	[_unit] call fnc_HandleRespawnBase;
+	[_unit] call DCW_fnc_HandleRespawnBase;
 	
 	_unit setUnconscious false;
 	_unit setDamage 0;
 
 	if (ACE_ENABLED) then {
-		[objNull, _unit] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
+		[objNull, _unit] call ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal;
 	};
 
 	_unit setCaptive true;
@@ -237,7 +237,7 @@ if (RESPAWN_ENABLED) then{
 
 		[SIDE_FRIENDLY, getMarkerPos "marker_base","Base"] call BIS_fnc_addRespawnPosition;
 		
-		[_player] call fnc_HandleRespawnBase;
+		[_player] call DCW_fnc_HandleRespawnBase;
 
 		_loadout = getUnitLoadout _player;
 	     _player addMPEventHandler ["MPRespawn", {
@@ -249,7 +249,7 @@ if (RESPAWN_ENABLED) then{
 				if (REMAINING_RESPAWN == -1)exitWith{  endMission "LOSER";  };
 			};
 			_player setUnitLoadout _loadout;
-			[_unit] spawn fnc_HandleRespawnBase;
+			[_unit] spawn DCW_fnc_HandleRespawnBase;
 		}];
 
 		_player addMPEventHandler ["MPKilled",{
@@ -260,7 +260,7 @@ if (RESPAWN_ENABLED) then{
 			[_unit] spawn {
 				params["_unit"];
 				sleep 10;
-				_unit call fnc_deletemarker;
+				_unit call DCW_fnc_deletemarker;
 			};
 		}];
 
@@ -270,7 +270,7 @@ if (RESPAWN_ENABLED) then{
 		enableTeamSwitch false;
 
 		// In Singleplayer
-		[_player] call fnc_HandleRespawnBase;
+		[_player] call DCW_fnc_HandleRespawnBase;
 
 		// Prevent ACE to do bullshit
 		_player removeAllEventHandlers "HandleDamage";
@@ -293,7 +293,7 @@ if (RESPAWN_ENABLED) then{
 				addCamShake [15, 6, 0.7];
 				_damage = .9;
 				_unit setDamage .9;
-				[_unit] spawn fnc_HandleRespawnSinglePlayer;
+				[_unit] spawn DCW_fnc_HandleRespawnSinglePlayer;
 				//_unit playActionNow "agonyStart";
 			} else {
 				if (lifeState _unit == "INCAPACITATED")then{

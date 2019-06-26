@@ -1,6 +1,6 @@
 params["_marker","_addedPoints","_timeInSeconds"];
 _markerID = _marker select 0;
-_markerData = [_markerID] call fnc_getMarkerById;
+_markerData = [_markerID] call DCW_fnc_getMarkerById;
 _marker = _markerData select 0;
 _markerIndex = _markerData select 1;
 

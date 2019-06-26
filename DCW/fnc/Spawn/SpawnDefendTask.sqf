@@ -5,7 +5,7 @@ _nbGroups = 1 max ceil(random 2);
 
 _taskId = format["DCW_defend_%1",str (_compound select 0)];
 
-[HQ,format["Be advised, %1 enemy groups moving to your localization. You must defend the civilian at any cost.",_nbGroups]] remoteExec ["fnc_talk"];
+[HQ,format["Be advised, %1 enemy groups moving to your localization. You must defend the civilian at any cost.",_nbGroups]] remoteExec ["DCW_fnc_talk"];
 {
 	[_taskId, _x, ["Enemy attack incoming, set up the defenses","Defend civilian","Defend civilian"],_compound select 1,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, false];
 } foreach units GROUP_PLAYERS;     
@@ -23,7 +23,7 @@ for "_j" from 1 to _nbGroups do {
 	//{_units pushback _x; _x enableDynamicSimulation false; }foreach crew _car;
 
 	for "_xc" from 1 to _nbUnits  do {
-		_unit =[_grp,_spawnPos,true] call fnc_spawnEnemy;
+		_unit =[_grp,_spawnPos,true] call DCW_fnc_spawnEnemy;
 		//_unit moveInCargo _car;
 		_unit setBehaviour "AWARE";
 		_unit setSpeedMode "FULL";
@@ -35,7 +35,7 @@ for "_j" from 1 to _nbGroups do {
 	// At the back of the vehicle
 	/*if (_nbUnits < 7) then {
 		for "_xc" from 1 to 4  do {
-			_unit =[_grp,[_spawnPos,6,180] call BIS_fnc_relPos,true] call fnc_spawnEnemy;
+			_unit =[_grp,[_spawnPos,6,180] call BIS_fnc_relPos,true] call DCW_fnc_spawnEnemy;
 			_units pushback _unit;
 			_unit enableDynamicSimulation false;
 		};
@@ -71,25 +71,25 @@ waitUntil {sleep 3; ({_x inArea _sectorToDefend} count (units GROUP_PLAYERS) == 
 if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 
 	{
-		[HQ, "Good job ! The compound is safe now."] remoteExec ["fnc_talk",_x,false];
+		[HQ, "Good job ! The compound is safe now."] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach allPlayers;    
 
-	[_compound,"supporting"] call fnc_setCompoundState;
-	[_compound, 30, 10] call fnc_setCompoundSupport;         
+	[_compound,"supporting"] call DCW_fnc_setCompoundState;
+	[_compound, 30, 10] call DCW_fnc_setCompoundSupport;         
 
 } else {
 	{
-		[HQ, "The compound wasn't defended..."] remoteExec ["fnc_talk",_x,false];
+		[HQ, "The compound wasn't defended..."] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"FAILED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach allPlayers;       
 
-	[_compound,"bastion"] call fnc_setCompoundState;
-	[_compound,-35, 10] call fnc_setCompoundSupport;
+	[_compound,"bastion"] call DCW_fnc_setCompoundState;
+	[_compound,-35, 10] call DCW_fnc_setCompoundSupport;
 };
 
 // Delete all units
-{ { _x call fnc_deleteMarker; deleteVehicle _x; } foreach crew _x; _x call fnc_deleteMarker; deleteVehicle _x; } foreach _units;
+{ { _x call DCW_fnc_deleteMarker; deleteVehicle _x; } foreach crew _x; _x call DCW_fnc_deleteMarker; deleteVehicle _x; } foreach _units;
 
 _units = [];
 

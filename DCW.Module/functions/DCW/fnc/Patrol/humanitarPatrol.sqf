@@ -23,9 +23,9 @@ sleep 10 + floor(random 30);
 } foreach nearestObjects [_center,["Man"],_radius];
 
 if (!isNull _foundInjuredUnit) then {
-    [_unit, _foundInjuredUnit,true] spawn fnc_firstaid;
+    [_unit, _foundInjuredUnit,true] spawn DCW_fnc_firstaid;
 } else {
-    [_unit,_radius,_meetPoint,_buildings] spawn fnc_CivilianCompoundPatrol;
+    [_unit,_radius,_meetPoint,_buildings] spawn DCW_fnc_CivilianCompoundPatrol;
 };
 
 false;

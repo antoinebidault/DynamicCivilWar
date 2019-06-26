@@ -22,7 +22,7 @@ _this addEventHandler["HandleDamage",{
 	if (_damage == 0) exitWith {false};
 	
 	if ( _damage > .9 && !(_unit getVariable["unit_injured",false])) then {
-		[_unit] spawn fnc_shout;	
+		[_unit] spawn DCW_fnc_shout;	
 		_unit setUnconscious true;
 		_unit setVariable ["unit_injured", true, true];
 		
@@ -39,7 +39,7 @@ _this addEventHandler["HandleDamage",{
 			_unit setVariable ["marker", _marker];
 		};
 
-		_unit remoteExec ["fnc_addActionHeal"];
+		_unit remoteExec ["DCW_fnc_addActionHeal"];
 		
 	}else{
 		if (_unit getVariable["unit_injured",false])then{_damage = .9;};

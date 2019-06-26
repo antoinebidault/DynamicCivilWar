@@ -15,15 +15,15 @@ private _grp = createGroup SIDE_ENEMY;
 private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100, 2, 0, 20, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
 
  for "_xc" from 1 to _nbUnit do {
-    _enemy = [_grp,_posSelected, false] call fnc_spawnEnemy;
+    _enemy = [_grp,_posSelected, false] call DCW_fnc_spawnEnemy;
     _enemy setVariable["DCW_Type","chaser"];
     _enemy setDir random 360;
     _units pushback _enemy;
  };
 
-[HQ, format["Be careful, our drone has watched %1 of them moving straight to your position, and there are other reinforcements incoming !",_nbUnit], true] remoteExec["fnc_talk", GROUP_PLAYERS, false];
+[HQ, format["Be careful, our drone has watched %1 of them moving straight to your position, and there are other reinforcements incoming !",_nbUnit], true] remoteExec["DCW_fnc_talk", GROUP_PLAYERS, false];
 
  //Trigger chase
- [leader _grp, _unitChased] spawn fnc_chase;
+ [leader _grp, _unitChased] spawn DCW_fnc_chase;
 
  _units;

@@ -3,7 +3,7 @@ params["_marker","_state"];
 if (!isServer) exitWith { hint "setCompoundState executed on client"};
 
 _markerID = _marker select 0;
-_markerData = [_markerID] call fnc_getMarkerById;
+_markerData = [_markerID] call DCW_fnc_getMarkerById;
 _marker = _markerData select 0;
 _markerIndex = _markerData select 1;
 
@@ -66,7 +66,7 @@ if (_state == "secured" ) then{
 	_pos = _marker select 1;
 	_radius = _marker select 4;
 	_meetingPointPosition = _marker select 7;
-	_units = _units +  ([_pos,_radius,_populations select 9,_meetingPointPosition, _marker select 11] call fnc_SpawnFriendlyOutpost);
+	_units = _units +  ([_pos,_radius,_populations select 9,_meetingPointPosition, _marker select 11] call DCW_fnc_SpawnFriendlyOutpost);
 	_marker  set [5,_units];
 
 	// White list this marker
@@ -78,7 +78,7 @@ if (_state == "secured" ) then{
 
 	_spawnPos =  [_pos, 0, (30 max (.3*_radius)), 2, 0, 1, 0] call BIS_fnc_findSafePos;
 	_marker set [15, [SIDE_FRIENDLY, _spawnPos, _marker select 14] call BIS_fnc_addRespawnPosition];
-	[_units] spawn fnc_compoundsecuredCutScene;
+	[_units] spawn DCW_fnc_compoundsecuredCutScene;
 } else {
 	if (!((_marker select 15) isEqualTo [])) then {
 		(_marker select 15) remoteExec ["BIS_fnc_RemoveRespawnPosition",0]; 
@@ -120,6 +120,6 @@ _marker set [6,_populations];
 waitUntil {!IN_MARKERS_LOOP};
 MARKERS set [_markerIndex,_marker];
 
-[] call fnc_refreshMarkerStats;
+[] call DCW_fnc_refreshMarkerStats;
 
 _marker;

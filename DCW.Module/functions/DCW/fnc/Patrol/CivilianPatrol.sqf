@@ -17,9 +17,9 @@ while { !(_unit getVariable ["civ_insurgent", false]) && lifeState _unit == "HEA
     group _unit move _newPos;
     waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 || _unit getVariable ["civ_insurgent", false] || lifeState _unit != "HEALTHY" };
     if (lifeState _unit != "HEALTHY" || _unit getVariable ["civ_insurgent", false]) exitWith {false};
-    [_unit] call fnc_randomAnimation;
+    [_unit] call DCW_fnc_randomAnimation;
    
-    _rndMarker = ([position _unit, true, "any"] call fnc_findNearestMarker) select 0;
+    _rndMarker = ([position _unit, true, "any"] call DCW_fnc_findNearestMarker) select 0;
     
     _rndPos = getMarkerPos _rndMarker;
     _radius = (getMarkerSize _rndMarker) select 0;
@@ -28,7 +28,7 @@ while { !(_unit getVariable ["civ_insurgent", false]) && lifeState _unit == "HEA
     
     waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 || lifeState _unit != "HEALTHY" };
      if (lifeState _unit != "HEALTHY") exitWith {false};
-    [_unit] call fnc_randomAnimation;
+    [_unit] call DCW_fnc_randomAnimation;
    
     _potentialIntel = [];
     {
@@ -45,11 +45,11 @@ while { !(_unit getVariable ["civ_insurgent", false]) && lifeState _unit == "HEA
         group _unit move _newPos;
          waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 || lifeState _unit != "HEALTHY" };
         if (lifeState _unit != "HEALTHY" || _unit getVariable ["civ_insurgent", false]) exitWith {false};
-         [_unit] call fnc_randomAnimation;
+         [_unit] call DCW_fnc_randomAnimation;
     };
 
     sleep 5;
-	[_unit] call fnc_gotomeeting;
+	[_unit] call DCW_fnc_gotomeeting;
     sleep 5;
 };
 

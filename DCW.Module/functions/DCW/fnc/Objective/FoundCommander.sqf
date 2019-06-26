@@ -16,15 +16,15 @@ _marker setMarkerText "Last direction of the Commander !";
 _marker setMarkerType "hd_arrow";
 _marker setMarkerDir _dir;
 
-[_unit,"HQ, this is bravo team, we've found the presumed camp where the commander rested at night. We'll keep you in touch", true] remoteExec ["fnc_talk",GROUP_PLAYERS];
+[_unit,"HQ, this is bravo team, we've found the presumed camp where the commander rested at night. We'll keep you in touch", true] remoteExec ["DCW_fnc_talk",GROUP_PLAYERS];
 sleep 10;
-[HQ,"Copy", true] remoteExec ["fnc_talk"];
+[HQ,"Copy", true] remoteExec ["DCW_fnc_talk"];
 sleep 10;
-[_unit,format["There is some step foots over here ! I think he moved to this direction : %1deg",str (_dir)], true] remoteExec ["fnc_talk",GROUP_PLAYERS];
+[_unit,format["There is some step foots over here ! I think he moved to this direction : %1deg",str (_dir)], true] remoteExec ["DCW_fnc_talk",GROUP_PLAYERS];
 sleep 10;
-[_unit,format["When I see the state of the fireplace, I think he is approximately at %1 meters from our position... I marked it on the map.",str _distance], true] remoteExec ["fnc_talk",GROUP_PLAYERS];
+[_unit,format["When I see the state of the fireplace, I think he is approximately at %1 meters from our position... I marked it on the map.",str _distance], true] remoteExec ["DCW_fnc_talk",GROUP_PLAYERS];
 sleep 10;
-[HQ,"Good job soldiers ! Go as fast as possible to this position. ", true] remoteExec ["fnc_talk",GROUP_PLAYERS];
+[HQ,"Good job soldiers ! Go as fast as possible to this position. ", true] remoteExec ["DCW_fnc_talk",GROUP_PLAYERS];
 
 if (getMarkerColor "dcw_commander_pos" != "") then {
 	deleteMarker "dcw_commander_pos";

@@ -50,13 +50,13 @@ for "_j" from 1 to _nb do {
 
 
     _hostage setDir (random 359);
-    [_hostage,"ColorBlue"] call fnc_addMarker;
+    [_hostage,"ColorBlue"] call DCW_fnc_addMarker;
     _hostage setVariable["DCW_Type","hostage"];
 
     _hostage addMPEventHandler ["MPKilled", {
         [_this select 0, (_this select 0) getVariable["DCW_Act",0]]call BIS_fnc_holdActionRemove;
-        [_this select 1,"HQ, we have an hostage down here...", true] spawn fnc_talk;
-        (_this select 0)  remoteExec ["fnc_failed", 2, false];
+        [_this select 1,"HQ, we have an hostage down here...", true] spawn DCW_fnc_talk;
+        (_this select 0)  remoteExec ["DCW_fnc_failed", 2, false];
     }];
 
     [ _hostage,"Secure Prisoner","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa","_this distance _target < 2","true",{
@@ -77,11 +77,11 @@ for "_j" from 1 to _nb do {
         _pos = [getPosASL _hostage, 1000, 1200, 3, 0, 20, 0] call BIS_fnc_findSafePos;
         _hostage move _pos;
         
-        [_hostage,"Thank you !", false] call fnc_talk;
-        [(_this select 1),"HQ, this is bravo team, we've liberated a hostage held down in a compound.", true] remoteExec ["fnc_talk",0,false];
+        [_hostage,"Thank you !", false] call DCW_fnc_talk;
+        [(_this select 1),"HQ, this is bravo team, we've liberated a hostage held down in a compound.", true] remoteExec ["DCW_fnc_talk",0,false];
 
         //Task success
-        _hostage remoteExec ["fnc_success",2, false];
+        _hostage remoteExec ["DCW_fnc_success",2, false];
         
     },{},[],4,nil,true,false] remoteExecCall ["BIS_fnc_holdActionAdd",0];
 
@@ -93,7 +93,7 @@ for "_j" from 1 to _nb do {
         if (count _posBuildings == 0) exitWith{_units};
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
          _posBuildings = _posBuildings -[_posToSpawn];
-        _enemy = [_grp,_posToSpawn,false] call fnc_SpawnEnemy;
+        _enemy = [_grp,_posToSpawn,false] call DCW_fnc_SpawnEnemy;
         _units pushBack _enemy;
     };
 

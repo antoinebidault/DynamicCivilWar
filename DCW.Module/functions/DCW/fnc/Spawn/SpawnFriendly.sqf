@@ -14,10 +14,10 @@ private _unit = _group createUnit [_unitName, _pos,[],AI_SKILLS,"NONE"];
 [_unit] joinsilent _group;
 
 if (DEBUG)then{
-    [_unit,"ColorGreen"] call fnc_addmarker;
+    [_unit,"ColorGreen"] call DCW_fnc_addmarker;
 };
 
-_unit call addActionJoinAsAdvisor;
+_unit call DCW_fnc_addActionJoinAsAdvisor;
 
 // Remove all action on death
 _unit addMPEventHandler ["MPKilled",

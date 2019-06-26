@@ -48,7 +48,7 @@ while {_i > 0} do {
 	_iedJunk setVariable ["DCW_Type","ied"];
 	_iedJunk setVariable ["DCW_IsIntel",true];
 	_iedJunk allowDamage false;
-	[_iedJunk,"ColorBlue"] call fnc_addMarker;
+	[_iedJunk,"ColorBlue"] call DCW_fnc_addMarker;
 
 	_ieds pushBack _iedJunk;
 
