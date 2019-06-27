@@ -11,6 +11,7 @@ var directories = ['DCW.Malden', 'DCW.Lythium', 'DCW.Chongo','DCW.Module/functio
 // Perform a default watch to the root folder
 gulp.task('default', function () {
     var source = './DCW'
+    gulp.start('copy');
     // Callback mode, useful if any plugin in the pipeline depends on the `end`/`flush` event
     var task =  gulp.src(source+'/**/*', {base: source})
         .pipe(watch(source, {base: source}))

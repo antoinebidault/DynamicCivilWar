@@ -70,75 +70,25 @@ DCW_fnc_HandleRespawnSingleplayer =
 	
 	// Check the unit state before anything
 	waitUntil{ lifestate _unit == "INCAPACITATED" };
-
-	_unit allowDamage false;
-	_unit setCaptive true;
-	_unit setVariable["unit_injured",true,true] ;
+	
 	addCamShake [5,999,1.5];
 	
 	sleep 3;
+
+	// Injured soldiers
+	[_unit] call DCW_fnc_injured;
 	 
-	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
-	/*deletemarker MARKER
-	_pm = createMarker [format["player-marker-%1",random 1000], getPos _unit];
-	_pm setMarkerShape "ELLIPSE";
-	_pm setMarkerColor "ColorGreen";
-	_pm setMarkerAlpha 0;
-	_pm setMarkerSize [200,200];
-	if (DEBUG) then {
-		_pm setMArkerAlpha .3;
-	};*/
-	//_unit setVariable["marker", _pm, true];
-
-	// Initial score display
-	[] call DCW_fnc_displayscore;
+	// The player is alive !
+	if(lifestate _unit == "HEALTHY") exitWith {};
 	
-
 	//count the remaining lives after death
 	REMAINING_RESPAWN = REMAINING_RESPAWN - 1;
 	if (REMAINING_RESPAWN == -1) exitWith { endMission "LOSER"; };
 
-	DCW_ai_reviving_cancelled = false;
-	_idA = [_unit, "Force respawn","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", "true", "true", {  }, { }, { DCW_ai_reviving_cancelled = true; }, {  }, [], 3, nil, true, true] call BIS_fnc_holdActionAdd;
-	
-	DCW_ai_current_medic = objNull;
+	// Initial score display
+	[] call DCW_fnc_displayscore;
 
-	while {_unit getVariable["unit_injured",false] && !DCW_ai_reviving_cancelled} do {
-
-		private _player = _unit;
-		private _foundCloseUnit = objNull;
-		private _dist = 999999;
-		
-		if (!isNull DCW_ai_current_medic && lifeState DCW_ai_current_medic != "HEALTHY" && lifeState DCW_ai_current_medic != "INJURED") exitWith {DCW_ai_current_medic = objNull;};
-
-		{
-			if(alive _x && (_x distance _player) < _dist && (lifeState _x == "HEALTHY" || lifeState _x == "INJURED")) then {
-				_foundCloseUnit = _x;
-				_dist = _x distance _player;
-			};
-
-		}foreach units GROUP_PLAYERS;
-
-		// Check the status
-		if (_dist == 999999 || isNull _foundCloseUnit) exitWith { DCW_ai_current_medic = objNull; };
-		
-		if (!isNull _foundCloseUnit && isNull DCW_ai_current_medic) then {
-			_player setVariable ["healer", objNull, true];
-			DCW_ai_current_medic = _foundCloseUnit;
-			[_foundCloseUnit, _player,false] spawn DCW_fnc_firstAid;
-		};
- 
-		hintSilent format["Medic at %1m",str round _dist];
-
-		sleep .5;
-	
-	};
-
-	hintSilent "";
-	[ _unit,_idA ] call BIS_fnc_holdActionRemove;
-	if ( !(_unit getVariable["unit_injured",true]) ) exitWith { };
-	_unit setVariable["unit_injured",false,true];
-
+	_unit allowDamage false;
 	cutText ["Respawning...","BLACK OUT", 2];
 	sleep 2;
 	

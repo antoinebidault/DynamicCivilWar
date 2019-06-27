@@ -16,7 +16,10 @@ _behaviour = behaviour _healer;
 if(!isNull (_injuredperson getVariable ["healer", objNull])) exitWith{false};
 _injuredperson setVariable ["healer", _healer, true];
 _injuredperson setUnconscious true;
-_injuredperson remoteExec ["RemoveAllActions"];
+if (!isPlayer _injuredPerson ) then {
+	_injuredperson remoteExec ["RemoveAllActions"];
+};
+
 sleep 4;
 
 if (!isPlayer _healer && {_healer distance _injuredperson > 6}) then {
@@ -57,10 +60,11 @@ _injuredperson setDir _dir;
 _time = time;
 
 // Pop a smoke
-if ([0,1] call DCW_fnc_selectRandom == 1 && !_ambient) then {
+if ([0,1] call BIS_fnc_selectRandom == 1 && !_ambient) then {
 	_smoke = "SmokeShell" createVehicle  (_injuredperson modelToWorld[.5 + random 2,.5 + random 1,0]); 
 };
 
+[_injuredperson,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
 if (_ambient) then {
 	waitUntil {sleep 10; lifeState _injuredperson != "INCAPACITATED" || !alive _healer;};
 } else{
@@ -91,7 +95,7 @@ if (alive _healer && alive _injuredperson && _injuredperson getVariable["unit_in
 	deleteMarker (_injuredperson getVariable ["DCW_marker_injured",  ""]);
 	resetCamShake;
 } else {
-	_injuredperson remoteExec ["DCW_fnc_addActionCarry"]; 
+	[_injuredperson,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
 };
 
 _injuredperson setVariable ["healer",ObjNull,true];
@@ -108,6 +112,7 @@ if (alive _healer) then {
 	_healer playAction "medicStop";
 	_healer setBehaviour _behaviour;
 };
+
 
 if (!alive _injuredperson) exitWith {};
 if (!alive _healer) exitWith {};

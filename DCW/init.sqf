@@ -54,6 +54,8 @@ DCW_fnc_surrenderSystem = compile preprocessFileLineNumbers  "DCW\fnc\System\Sur
 DCW_fnc_getMarkerById = compile preprocessFileLineNumbers "DCW\fnc\System\getMarkerById.sqf";
 DCW_fnc_refreshMarkerStats = compile preprocessFileLineNumbers "DCW\fnc\System\refreshMarkerStats.sqf";
 DCW_fnc_teleport = compile preprocessFileLineNumbers  "DCW\fnc\System\teleport.sqf";
+DCW_fnc_AddAction = compile preprocessFileLineNumbers "DCW\fnc\system\AddAction.sqf";
+DCW_fnc_RemoveAction = compile preprocessFileLineNumbers "DCW\fnc\system\RemoveAction.sqf";
 
 //SPAWN
 DCW_fnc_respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
@@ -141,9 +143,7 @@ DCW_fnc_SpawnHeloReplacement = compile preprocessFileLineNumbers  "DCW\fnc\medev
 DCW_fnc_HandleDamage = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleDamage.sqf";
 DCW_fnc_HandleKilled = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleKilled.sqf";
 DCW_fnc_Heal = compile preprocessFileLineNumbers "DCW\fnc\medevac\heal.sqf";
-// DCW_fnc_Save = compile preprocessFileLineNumbers "DCW\fnc\medevac\save.sqf";
 DCW_fnc_Carry = compile preprocessFileLineNumbers "DCW\fnc\medevac\carry.sqf";
-DCW_fnc_addActionCarry = compile preprocessFileLineNumbers "DCW\fnc\medevac\DCW_fnc_addActionCarry.sqf";
 DCW_fnc_ChopperPath = compile preprocessFileLineNumbers "DCW\fnc\medevac\chopperpath.sqf";
 DCW_fnc_calculateTimeToHeal = compile preprocessFileLineNumbers "DCW\fnc\medevac\calculateTimeToHeal.sqf";
 DCW_fnc_spawnHealEquipement = compile preprocessFileLineNumbers "DCW\fnc\medevac\spawnHealEquipement.sqf";
