@@ -155,6 +155,8 @@ DCW_fnc_deleteMedevac = compile preprocessFileLineNumbers "DCW\fnc\medevac\delet
 DCW_fnc_caller = compile preprocessFileLineNumbers "DCW\fnc\medevac\caller.sqf";
 DCW_fnc_firstAid =  compileFinal preprocessFileLineNumbers "DCW\fnc\medevac\FirstAid.sqf";
 DCW_fnc_injured = compile preprocessFileLineNumbers "DCW\fnc\medevac\injured.sqf";
+DCW_fnc_removeActionHEal =  compileFinal preprocessFileLineNumbers "DCW\fnc\medevac\removeActionHEal.sqf";
+DCW_fnc_addActionHeal = compile preprocessFileLineNumbers "DCW\fnc\medevac\addActionHeal.sqf";
 
 //composition
 compo_camp1 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp1.sqf");

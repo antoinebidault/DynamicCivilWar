@@ -37,7 +37,6 @@ if (player getVariable["DCW_undercover",false]) then{
 	_colorUnd = "#e46b6b";
 };
 
-
 ("RscStatusBar" call BIS_fnc_rscLayer) cutRsc ["RscStatusBar","PLAIN"];	
 	disableSerialization;
 	((uiNamespace getVariable "RscStatusBar")displayCtrl 55554) ctrlSetStructuredText

@@ -16,9 +16,6 @@ _behaviour = behaviour _healer;
 if(!isNull (_injuredperson getVariable ["healer", objNull])) exitWith{false};
 _injuredperson setVariable ["healer", _healer, true];
 _injuredperson setUnconscious true;
-if (!isPlayer _injuredPerson ) then {
-	_injuredperson remoteExec ["RemoveAllActions"];
-};
 
 sleep 4;
 
@@ -32,12 +29,18 @@ if (!isPlayer _healer && {_healer distance _injuredperson > 6}) then {
 		_healer distance _injuredperson <= 4		 		||
 		{!alive _injuredperson}			 					||
 		{!alive _healer}				 					||
-		{_timenow + 120 < time}
+		{_timenow + 220 < time}
 	};
 };
 
-// The player as respawneds alone
-if (!(_injuredperson getVariable["unit_injured",false])) exitWith{ _injuredperson setVariable ["healer", objNull, true]; };
+// The player has revived him before
+if (!(_injuredperson getVariable["unit_injured",false]) ) exitWith{ _injuredperson setVariable ["healer", objNull, true]; };
+
+// Another player is healing him
+if (_injuredperson getVariable ["healer", objNull] != _healer ) exitWith{}; 
+
+// The injured is dragged by another player
+if (_injuredperson getVariable ["unit_dragged", false]) exitWith{}; 
 
 _healer selectWeapon primaryWeapon _healer;
 sleep 1;
@@ -64,7 +67,9 @@ if ([0,1] call BIS_fnc_selectRandom == 1 && !_ambient) then {
 	_smoke = "SmokeShell" createVehicle  (_injuredperson modelToWorld[.5 + random 2,.5 + random 1,0]); 
 };
 
-[_injuredperson,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
+[_injuredperson,"DCW_fnc_carry"] call DCW_fnc_removeAction;
+_injuredperson call DCW_fnc_removeActionHeal;
+
 if (_ambient) then {
 	waitUntil {sleep 10; lifeState _injuredperson != "INCAPACITATED" || !alive _healer;};
 } else{
@@ -78,6 +83,7 @@ if (_ambient) then {
 		&& _injuredperson getVariable["unit_injured",false]
 		&& {alive _healer}
 		&& {alive _injuredperson}
+		&& lifeState _healer != "INCAPACITATED"
 		&& {(_healer distance _injuredperson) < 2}
 	} do {
 		sleep 0.5;
@@ -96,6 +102,7 @@ if (alive _healer && alive _injuredperson && _injuredperson getVariable["unit_in
 	resetCamShake;
 } else {
 	[_injuredperson,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
+	_injuredperson call DCW_fnc_addActionHeal;
 };
 
 _injuredperson setVariable ["healer",ObjNull,true];

@@ -10,6 +10,9 @@ params ["_text","_time"];
 
 if (isNull player) exitWith{false;};
 
+
+
+
 if (_text == "") then {
 	("RscCompoundStatus" call BIS_fnc_rscLayer) cutRsc ["RscCompoundStatus", "PLAIN DOWN", 0];
 } else {
@@ -19,7 +22,6 @@ if (_text == "") then {
 		disableSerialization;
 		((uiNamespace getVariable "RscCompoundStatus")displayCtrl 55222) ctrlSetStructuredText parseText _structuredText;
 };
-
 /*
 _time = [_this,1,10] call BIS_fnc_param;
 _layer = round (random 99999);

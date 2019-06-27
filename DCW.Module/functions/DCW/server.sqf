@@ -272,6 +272,7 @@ _supportScore = 0;
 	{ 
 		if(_pos inArea _x)exitWith{_return = true;};
 	} foreach MARKER_WHITE_LIST;
+
 	if (isNil{_return})then{_return = false;};
 	if (!_return)then
 	{
@@ -443,6 +444,7 @@ _supportScore = 0;
 [] spawn DCW_fnc_SpawnSecondaryObjective; // Secondary objectives
 [] spawn DCW_fnc_SpawnMainObjective; // Main objective
 [] call DCW_fnc_refreshMarkerStats; // Refresh marker stats
+[] call DCW_fnc_displayScore;
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{
@@ -721,11 +723,12 @@ while { true } do {
 		} foreach allPlayers;
 
 		// Regulate the spawn distance
+		/*
 		if (count UNITS_SPAWNED_CLOSE > MAX_SPAWNED_UNITS) then {
 			SPAWN_DISTANCE = 0.75 * INITIAL_SPAWN_DISTANCE max (SPAWN_DISTANCE - 10);
 		} else {
 			SPAWN_DISTANCE = INITIAL_SPAWN_DISTANCE min (SPAWN_DISTANCE + 10);
-		};
+		};*/
 
 		// Garbage collection
 		if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{

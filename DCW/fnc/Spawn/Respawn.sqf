@@ -109,8 +109,19 @@ DCW_fnc_HandleRespawnSingleplayer =
 	if (!isMultiplayer) then {
 		{ 
 			if(!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
-				_x setPos ([_respawnPos, 0 ,10, 1, 0, 20, 0] call BIS_fnc_findSafePos);
+				
+				
+				_x setDamage 0;
+				_x enableAI "ALL";
+				_x stop false;
+				_x setCaptive false;
+				_x setUnconscious false;
+				_x switchMove "";
+				detach _x;
+				_x setVariable["DCW_fnc_carry",-1,true];
+				_x setVariable["DCW_fnc_addActionHeal",-1,true];
 				_x getVariable["DCW_marker_injured",""] setMarkerPos (getPos _x);
+				_x setPos ([_respawnPos, 0 ,10, 1, 0, 20, 0] call BIS_fnc_findSafePos);
 				if (ACE_ENABLED) then {
 					[objNull, _x] call ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal;
 				};

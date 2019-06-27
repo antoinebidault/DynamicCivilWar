@@ -24,7 +24,7 @@ DCW_fnc_addActionJoinAsAdvisor = {
         _unit removeAction _action;
         sleep .3;
         _unit setVariable["DCW_advisor", true, true];
-         _unit stop false;
+        _unit stop false;
         [_unit] join GROUP_PLAYERS;
         _this call DCW_fnc_endTalking;
 

@@ -9,10 +9,11 @@
 
 
 
-[_this,{
+[_this, {
 	params["_unit","_actionName"];
-	_actionID = _unit getVariable[_actionName, 0];
-	if (_actionId != 0) then {
+	_actionID = _unit getVariable[_actionName, -1];
+	if (_actionId != -1) then {
 		[_unit,_actionID] remoteExec ["removeAction"]; 
+		_unit setVariable[_actionName, -1];
 	};
 }] remoteExecCall ["call", 0]; 

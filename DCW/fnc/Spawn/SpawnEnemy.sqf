@@ -10,7 +10,7 @@ private _pos = _this select 1;
 private _excludedFromSpawnedUnit = _this select 2;
 
 private _unitName = ENEMY_LIST_UNITS call BIS_fnc_selectRandom;
-private _unit = _group createUnit [_unitName, _pos,[],AI_SKILLS,"NONE"];
+private _unit = _group createUnit [_unitName, _pos,[], AI_SKILLS,"NONE"];
 [_unit] joinsilent _group;
 
 if (DEBUG)then{

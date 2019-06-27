@@ -12,7 +12,6 @@ DCW_fnc_dropAction = {
 	_unit switchMove "AcinPknlMstpSrasWrflDnon_AmovPknlMstpSrasWrflDnon";
 	_injured switchMove "AinjPpneMrunSnonWnonDb_release";
 	_injured setVariable ["unit_dragged", false, true];
-	
 };
 
 
@@ -59,7 +58,7 @@ while {_injured getVariable ["unit_dragged", false]} do {
 
 _unit removeAction _dropActionId;
 if (alive _injured) then {
-	_injured remoteExec ["DCW_fnc_addActionHeal"];
+	_injured call DCW_fnc_addActionHeal;
+	[_injured,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
 };
-[_injured,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
 

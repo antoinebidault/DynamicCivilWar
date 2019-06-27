@@ -4,59 +4,16 @@ if (vehicle _unit != _unit) then {
 	_unit leaveVehicle (vehicle _unit);
 };
 
-_unit setUnconscious true;
+_unit setUnconscious true; 
 _unit setCaptive true;
 _unit setVariable ["unit_injured", true, true];
 _unit setHit ["legs", 1];  
+
+sleep 6;
+
+// Stabilize action
+_unit call DCW_fnc_addActionHeal;
 [_unit,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
-
-// Stabilize
-
-[_unit, {
-	_actionId = [_this,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
-			params["_injured","_healer"];
-			if (!alive _injured) exitWith {};
-			_healer playActionNow "medicStart";
-			[_injured,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
-			_healer setVariable["healer", _injured];
-			[_injured,"Aaaargh...", false] spawn DCW_fnc_talk;
-			[_injured,["Sorry man... I just fucked up...","Shit ! It's a fucking mess...","I am in pain...","Don't forget the letter..."] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
-			[_healer,["Don't give up mate !","Stay with us !","Stay alive !","We won't abandon you !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
-			[_injured] spawn DCW_fnc_shout;
-			[_healer,_injured,20] spawn DCW_fnc_spawnHealEquipement;
-			_offset = [0,0,0]; _dir = 0;
-			_relpos = _healer worldToModel position _injured;
-			if ((_relpos select 0) < 0) then {_offset = [-0.2,0.7,0]; _dir = 90} else {_offset = [0.2,0.7,0]; _dir = 270};
-			_injured attachTo [_healer, _offset];
-			[_injured, _dir] remoteExec ["setDir", 0, false];
-		},{
-			params["_injured","_healer"];
-			//_healer playActionNow "medicStart";
-		},{
-			params["_injured","_healer","_action"];
-			_healer setVariable["healer", objNull];
-			_injured setVariable ["unit_injured", false, true];
-			_healer playActionNow "medicStop";
-			detach _injured;
-			_injured setUnconscious false;
-			_injured setDamage 0;
-			_injured setCaptive false;
-			_injured setHit ["legs", 0]; 
-			_injured call DCW_fnc_carryRemoveAction; 
-			[_injured,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
-			deleteMarker (_injured getVariable ["DCW_marker_injured",  ""]);
-			[_healer,["Ok, you're good to go !","Get a cover to take back strength !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
-			_injured;
-		},{
-			params["_injured","_healer"];
-			_healer setVariable["healer", objNull];
-			_healer playActionNow "medicStop";
-			[_injured, "DCW_fnc_carry"] call DCW_fnc_AddAction; 
-			detach _injured;
-		},[],15,nil,true,false] call BIS_fnc_holdActionAdd;
-	_this setVariable["DCW_addAction_Injured",_actionId];
-}] remoteExec ["call",0];
-
 
 _deathsound = format ["A3\sounds_f\characters\human-sfx\P0%1\Hit_Max_%2.wss", selectRandom [4,5,6,7,8,9], selectRandom [1,2,3,4,5]];
 playSound3D [_deathsound, _unit, false, getPosASL _unit, 1.5, 1, 150];	
@@ -81,7 +38,7 @@ if (isPlayer _unit && _unit == player) then {
 				_dist = _x distance _unit;
 			};
 
-		}foreach units GROUP_PLAYERS;
+		}foreach units GROUP_PLAYERS; 
 
 		// Check the status
 		if (_dist == 999999 || isNull _foundCloseUnit) exitWith { DCW_ai_current_medic = objNull; };
@@ -101,10 +58,22 @@ if (isPlayer _unit && _unit == player) then {
 	hintSilent "";
 	[_unit,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
 	[_unit,_idAction] remoteExec ["BIS_fnc_holdActionRemove"];
-	[_unit, {
-		[_this,_this getVariable["DCW_addAction_Injured", 0]] call BIS_fnc_holdActionRemove;
-	}] remoteExec["call",0];
-
+	_unit call DCW_fnc_removeActionHeal;
 	if ( !(_unit getVariable["unit_injured",true]) ) exitWith { };
 	_unit setVariable["unit_injured",false,true];
+
+} else {
+	_foundCloseUnit = objNull;
+	_dist = 200;
+	{
+		if(!isPlayer _x && alive _x && (_x distance _unit) < _dist && (lifeState _x == "HEALTHY" || lifeState _x == "INJURED")) then {
+			_foundCloseUnit = _x;
+			_dist = _x distance _unit;
+		};
+	}foreach units GROUP_PLAYERS;
+
+	if (!isNull _foundCloseUnit) then {
+		[_foundCloseUnit, ["I'm on it sir !","I'm gonna help him !","I am looking after him !"] call BIS_fnc_selectRandom] remoteExec ["DCW_fnc_talk"];
+		[_foundCloseUnit,_unit,false] spawn DCW_fnc_firstAid;
+	};
 };

@@ -15,11 +15,11 @@ while{ true }do {
 	if (count _carPool < MAX_RANDOM_CAR)then{
 		//Get random pos
 		// get the next connected roadsegements to determine the direction of the road
-		_pos = [position (allPlayers call BIS_fnc_selectRandom), 1000, 1500, 0, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
+		_pos = [position (allPlayers call BIS_fnc_selectRandom), 1500, 1900, 0, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
 		if (_pos isEqualTo []) then {
 			sleep 2;
 		} else {
-			_road = [_pos,1000,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
+			_road = [_pos,600,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 			if (isOnRoad(getPos _road) && (getPos _road) distance (allPlayers call BIS_fnc_selectRandom) > 400 )then{
 				_roadConnectedTo = roadsConnectedTo _road;
 				_connectedRoad = _roadConnectedTo select 0;
@@ -56,7 +56,7 @@ while{ true }do {
 					UNITS_SPAWNED_CLOSE pushBack _unit;
 				} foreach (crew _car);
 
-				[driver _car, 1500,true] spawn DCW_fnc_carPatrol;
+				[driver _car, 1900,true] spawn DCW_fnc_carPatrol;
 				
 			};
 		};	
