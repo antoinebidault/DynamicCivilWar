@@ -6,7 +6,7 @@ if (vehicle _unit != _unit) then {
 
 _unit setUnconscious true; 
 _unit setCaptive true;
-_unit setVariable ["unit_injured", true, true];
+_unit setVariable ["DCW_unit_injured", true, true];
 _unit setHit ["legs", 1];  
 
 sleep 6;
@@ -25,7 +25,7 @@ if (isPlayer _unit && _unit == player) then {
 	DCW_ai_current_medic = objNull;
 
 	// Reviving loop
-	while {_unit getVariable["unit_injured",false] && !DCW_ai_reviving_cancelled} do {
+	while {_unit getVariable["DCW_unit_injured",false] && !DCW_ai_reviving_cancelled} do {
 
 		private _foundCloseUnit = objNull;
 		private _dist = 999999;
@@ -44,7 +44,7 @@ if (isPlayer _unit && _unit == player) then {
 		if (_dist == 999999 || isNull _foundCloseUnit) exitWith { DCW_ai_current_medic = objNull; };
 		
 		if (!isNull _foundCloseUnit && isNull DCW_ai_current_medic) then {
-			_unit setVariable ["healer", objNull, true];
+			_unit setVariable ["DCW_healer", objNull, true];
 			DCW_ai_current_medic = _foundCloseUnit;
 			[_foundCloseUnit, _unit,false] spawn DCW_fnc_firstAid;
 		};
@@ -59,8 +59,10 @@ if (isPlayer _unit && _unit == player) then {
 	[_unit,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
 	[_unit,_idAction] remoteExec ["BIS_fnc_holdActionRemove"];
 	_unit call DCW_fnc_removeActionHeal;
-	if ( !(_unit getVariable["unit_injured",true]) ) exitWith { };
-	_unit setVariable["unit_injured",false,true];
+	// The soldier has been revived successfully
+	if (isMultiplayer) then {_unit setDamage 1;};
+	if ( !(_unit getVariable["DCW_unit_injured",true]) ) exitWith { };
+	_unit setVariable["DCW_unit_injured",false,true];
 
 } else {
 	_foundCloseUnit = objNull;

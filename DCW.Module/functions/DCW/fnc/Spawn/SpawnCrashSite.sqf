@@ -47,7 +47,9 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
 
      //Search intel;
      [_chopper,"Secure and put the charge on...","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","_this distance _target < 6","true",
-     {(_this select 1) playActionNow "medic";},
+     {
+          [(_this select 1), "medic"] remoteExec ["playActionNow"];
+     },
      {},
      {
           _chopper = (_this select 0);

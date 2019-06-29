@@ -9,31 +9,38 @@ DCW_fnc_dropAction = {
 
 	detach _unit;
 	detach _injured;
-	_unit switchMove "AcinPknlMstpSrasWrflDnon_AmovPknlMstpSrasWrflDnon";
-	_injured switchMove "AinjPpneMrunSnonWnonDb_release";
-	_injured setVariable ["unit_dragged", false, true];
+	[_unit, "AcinPknlMstpSrasWrflDnon_AmovPknlMstpSrasWrflDnon"] remoteExec["switchMove"];
+	[_injured , "AinjPpneMrunSnonWnonDb_release"] remoteExec["switchMove"];
+
+	_injured setVariable ["DCW_unit_dragged", false, true];
+	_injured selectWeapon (primaryWeapon _injured);
+
+	waitUntil {animationState _injured != "AinjPpneMrunSnonWnonDb_release"};
+	[_injured,"unconsciousrevivedefault"] remoteExec ["switchMove"] ;
+	_injured call DCW_fnc_addActionHeal;
 };
 
 
 if (isNull _injured) exitWith {};
 if (!alive _injured) exitWith {};
-if (!(_injured getVariable ["unit_injured", false])) exitWith {};
+if (!(_injured getVariable ["DCW_unit_injured", false])) exitWith {};
 
 _addAction = false;
 _dropActionId = 0;
-_injured setVariable ["unit_dragged", true, true];
+_injured setVariable ["DCW_unit_dragged", true, true];
 
-while {_injured getVariable ["unit_dragged", false]} do {
+while {_injured getVariable ["DCW_unit_dragged", false]} do {
 	if (!_addAction) then {
 
-		_unit playActionNow "grabDrag";
+		[_unit, "grabDrag"] remoteExec ["playActionNow"];
 		_injured attachto [_unit,[0.1, 1.01, 0]];
 		_injured setDir 180;
-		_injured switchMove "AinjPpneMrunSnonWnonDb_grab";
+		[_injured,"AinjPpneMrunSnonWnonDb_grab"] remoteExec ["switchMove"] ;
 		uiSleep 2;
-		_injured switchMove "AinjPpneMrunSnonWnonDb_still";
+		[_injured,"AinjPpneMrunSnonWnonDb_still"] remoteExec ["switchMove"] ;
 
 		[_injured,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
+		_injured call DCW_fnc_removeActionHeal;
 		_dropActionId = _unit addAction ["drop", DCW_fnc_dropAction,_injured, 0, false, true];
 
 		uiSleep 1;
@@ -41,10 +48,10 @@ while {_injured getVariable ["unit_dragged", false]} do {
 	};
 
 	if (speed _unit != 0) then {
-		_injured switchMove "AinjPpneMrunSnonWnonDb";
+		[_injured,"AinjPpneMrunSnonWnonDb"] remoteExec ["switchMove"];
 		sleep 1;
 	} else {
-		_injured switchMove "AinjPpneMrunSnonWnonDb_still";
+		[_injured,"AinjPpneMrunSnonWnonDb_still"] remoteExec ["switchMove"];
 	};
 	
 

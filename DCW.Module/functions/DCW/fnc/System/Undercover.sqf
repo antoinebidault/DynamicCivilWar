@@ -18,7 +18,7 @@ if (CHASER_TRIGGERED || CHASER_VIEWED || _unit getVariable["DCW_undercover",fals
 
 private _grpUnit = group _unit;
 
-_unit playActionNow "medic";
+[_unit, "medic"] remoteExec ["playActionNow"];
 _unit setCaptive true;
 _unit setVariable["DCW_undercover",true];
 _unit call DCW_fnc_displayscore;

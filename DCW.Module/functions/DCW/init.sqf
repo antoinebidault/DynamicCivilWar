@@ -12,6 +12,15 @@ if (!isNull player) then {
 	enableRadio false;
 }; 
  
+// Reload hud
+addMissionEventHandler ["Loaded",{ 
+    [] spawn {
+		hint "mission loaded";
+		sleep 4;
+		[] call DCW_fnc_displayscore;
+    };
+}];
+
 // Need some adjustements
 { 
 	[_x,"MOVE"] remoteExec ["disableAI", 2];
@@ -157,7 +166,8 @@ DCW_fnc_firstAid =  compileFinal preprocessFileLineNumbers "DCW\fnc\medevac\Firs
 DCW_fnc_injured = compile preprocessFileLineNumbers "DCW\fnc\medevac\injured.sqf";
 DCW_fnc_removeActionHEal =  compileFinal preprocessFileLineNumbers "DCW\fnc\medevac\removeActionHEal.sqf";
 DCW_fnc_addActionHeal = compile preprocessFileLineNumbers "DCW\fnc\medevac\addActionHeal.sqf";
-
+DCW_fnc_resetState = compile preprocessFileLineNumbers "DCW\fnc\medevac\resetState.sqf";
+ 
 //composition
 compo_camp1 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp1.sqf");
 compo_camp2 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp2.sqf");

@@ -13,8 +13,8 @@ params["_healer","_injuredperson","_ambient"];
 
 private ["_injuredperson","_healer","_behaviour","_timenow","_relpos","_dir","_offset","_time","_damage","_isMedic","_healed","_animChangeEVH","_skill_factor"];
 _behaviour = behaviour _healer;
-if(!isNull (_injuredperson getVariable ["healer", objNull])) exitWith{false};
-_injuredperson setVariable ["healer", _healer, true];
+if(!isNull (_injuredperson getVariable ["DCW_healer", objNull])) exitWith{false};
+_injuredperson setVariable ["DCW_healer", _healer, true];
 _injuredperson setUnconscious true;
 
 sleep 4;
@@ -25,7 +25,7 @@ if (!isPlayer _healer && {_healer distance _injuredperson > 6}) then {
 	_timenow = time;
 	WaitUntil {
 		sleep 1;
-		!(_injuredperson getVariable["unit_injured",false]) ||
+		!(_injuredperson getVariable["DCW_unit_injured",false]) ||
 		_healer distance _injuredperson <= 4		 		||
 		{!alive _injuredperson}			 					||
 		{!alive _healer}				 					||
@@ -34,13 +34,13 @@ if (!isPlayer _healer && {_healer distance _injuredperson > 6}) then {
 };
 
 // The player has revived him before
-if (!(_injuredperson getVariable["unit_injured",false]) ) exitWith{ _injuredperson setVariable ["healer", objNull, true]; };
+if (!(_injuredperson getVariable["DCW_unit_injured",false]) ) exitWith{ _injuredperson setVariable ["DCW_healer", objNull, true]; };
 
 // Another player is healing him
-if (_injuredperson getVariable ["healer", objNull] != _healer ) exitWith{}; 
+if (_injuredperson getVariable ["DCW_healer", objNull] != _healer ) exitWith{}; 
 
 // The injured is dragged by another player
-if (_injuredperson getVariable ["unit_dragged", false]) exitWith{}; 
+if (_injuredperson getVariable ["DCW_unit_dragged", false]) exitWith{}; 
 
 _healer selectWeapon primaryWeapon _healer;
 sleep 1;
@@ -80,7 +80,7 @@ if (_ambient) then {
 	[_healer, _injuredperson,_damage] call DCW_fnc_spawnHealEquipement;
 	while {
 		time - _time < _damage
-		&& _injuredperson getVariable["unit_injured",false]
+		&& _injuredperson getVariable["DCW_unit_injured",false]
 		&& {alive _healer}
 		&& {alive _injuredperson}
 		&& lifeState _healer != "INCAPACITATED"
@@ -93,19 +93,29 @@ if (_ambient) then {
 detach _healer;
 detach _injuredperson;
 
-if (alive _healer && alive _injuredperson && _injuredperson getVariable["unit_injured",false]) then {
+if (alive _healer && alive _injuredperson && _injuredperson getVariable["DCW_unit_injured",false]) then {
 	_injuredperson setDamage 0;
 	_injuredperson setCaptive false;
 	_injuredperson setUnconscious false;
-	_injuredperson setVariable["unit_injured",false,true];
+	_injuredperson setVariable["DCW_unit_injured",false,true];
 	deleteMarker (_injuredperson getVariable ["DCW_marker_injured",  ""]);
+	
+	if (isPlayer _injuredperson && (leader GROUP_PLAYERS) == _injuredperson) then {
+		_injuredperson remoteExec ["removeAllActions"];
+		sleep .3;
+		_injuredperson call DCW_fnc_ActionCamp;
+		_injuredperson call DCW_fnc_supportuiInit;
+	};
+
 	resetCamShake;
 } else {
-	[_injuredperson,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
-	_injuredperson call DCW_fnc_addActionHeal;
+	if (damage _injuredperson >= .9 && lifeState _injuredperson =="INCAPACITATED") then {
+		[_injuredperson,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
+		_injuredperson call DCW_fnc_addActionHeal;
+	};
 };
 
-_injuredperson setVariable ["healer",ObjNull,true];
+_injuredperson setVariable ["DCW_healer",ObjNull,true];
 
 if (!isPlayer _healer) then {
 	_healer stop false;

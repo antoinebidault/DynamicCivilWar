@@ -49,7 +49,7 @@ if (side _unit == SIDE_CIV )then{
 				_unit doWatch _friend;
 			};
 			sleep  (10 + random 50);
-			_unit switchMove "";
+			[_unit, ""] remoteExec ["switchMove"];
 		} else {
 			_unit stop true;
 			sleep 3;
@@ -69,9 +69,9 @@ if (side _unit == SIDE_CIV )then{
 		//_unit setDir ([_unit,_friend] call BIS_fnc_dirTo);
 		//_friend setDir ([_friend,_unit] call BIS_fnc_dirTo);
 		_unit stop true;
-		_unit playAction "salute";
+		[_unit, "salute"] remoteExec ["playAction"];
 		sleep 2;	
-		_unit playAction "saluteOff";
+		[_unit, "salute"] remoteExec ["saluteOff"];
 		sleep 2;	
 		_unit stop false;	
 	};

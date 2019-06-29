@@ -1,7 +1,5 @@
-
-
-AI_SKILLS = 1;
-DEBUG = true;
+DEBUG = false;
+AI_SKILLS = .8;
 RESPAWN_ENABLED = true;
 MEDEVAC_ENABLED = true; // Reviving
 SHOW_SECTOR = true;

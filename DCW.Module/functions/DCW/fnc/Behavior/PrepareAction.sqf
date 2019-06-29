@@ -14,11 +14,11 @@ DCW_fnc_addActionJoinAsAdvisor = {
          if ({_x getVariable["DCW_advisor",false]}count (units GROUP_PLAYERS) >= 2) exitWith {[_talker,"You can't recruit more than two military advisors...",false] call DCW_fnc_talk;_this call DCW_fnc_endTalking;false;};
          if (!([GROUP_PLAYERS,30] call DCW_fnc_afford)) exitWith {[_talker,"I need more points !",false] call DCW_fnc_talk;_this call DCW_fnc_endTalking;false;};
       
+        _unit stop true;
         _talker playActionNow "GestureFreeze";
         _unit playActionNow "GestureHi";
        
         sleep .3;
-        _unit stop true;
         [_talker,"Hi buddy, I would need a military advisor, are you in ?!",false] call DCW_fnc_Talk;
         [_unit,"I'm in ! Let's go",false] call DCW_fnc_Talk;
         _unit removeAction _action;
@@ -39,9 +39,9 @@ DCW_fnc_addActionHandCuff =  {
         _unit  setVariable["civ_affraid",false];
 
         sleep .2;
-        _unit switchMove "";
+        [_unit,""] remoteExec ["switchMove"];
         sleep .2;
-        (_this select 1) playActionNow "PutDown";
+        [ (_this select 1),"PutDown"] remoteExec ["playActionNow"];
         _unit SetBehaviour "CARELESS";
         _unit setCaptive true;
         [_unit,-4] remoteExec ["DCW_fnc_updateRep",2];
@@ -684,46 +684,46 @@ DCW_fnc_ActionCorrupt =  {
     },nil,1,true,true,"","true",20,false,""];
 };
 
+/*
 DCW_fnc_AddActionHeal = {
     // Stabilize
-    [ _this,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
-            params["_injured","_healer","_actionId"];
-            if (!alive _injured) exitWith {};
-            _healer playActionNow "medicStart";
-            [_injured] spawn DCW_fnc_shout;
-            [_healer,_injured,20] spawn DCW_fnc_spawnHealEquipement;
-            _offset = [0,0,0]; _dir = 0;
-            _relpos = _healer worldToModel position _injured;
-            if ((_relpos select 0) < 0) then {_offset = [-0.2,0.7,0]; _dir = 90} else {_offset = [0.2,0.7,0]; _dir = 270};
-            _injured attachTo [_healer, _offset];
-            [_injured, _dir] remoteExec ["setDir", 0, false];
-        },{
-            params["_injured","_healer"];
-            //_healer playActionNow "medicStart";
-        
-        },{
-            params["_injured","_healer","_actionId"];
-            _healer playActionNow "medicStop";
-            detach _injured;
-            _injured setUnconscious false;
-            _injured setDamage 0;
-            _injured setCaptive false;
-            _injured stop false;
-            _injured setHit ["legs", 0]; 
-            deleteMarker (_injured getVariable ["DCW_marker_injured",  ""]);
-            _injured setVariable ["unit_injured", false, true];
-            [_injured,_healer] remoteExec ["CIVIL_HEALED",2];
-            [_healer,4] remoteExec ["DCW_fnc_updateRep",2];
-            _injured remoteExec ["RemoveAllActions"];
-            [_healer,["Ok, this helps...","You look better now !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
-            _injured;
-        },{
-            params["_injured","_healer"];
-            _healer playActionNow "medicStop";
-            detach _injured;
-        },[],15,nil,true,true] remoteExec ["BIS_fnc_holdActionAdd"];
-
-};
+[ _this,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
+        params["_injured","_healer","_actionId"];
+        if (!alive _injured) exitWith {};
+        _healer playActionNow "medicStart";
+        [_injured] spawn DCW_fnc_shout;
+        [_healer,_injured,20] spawn DCW_fnc_spawnHealEquipement;
+        _offset = [0,0,0]; _dir = 0;
+        _relpos = _healer worldToModel position _injured;
+        if ((_relpos select 0) < 0) then {_offset = [-0.2,0.7,0]; _dir = 90} else {_offset = [0.2,0.7,0]; _dir = 270};
+        _injured attachTo [_healer, _offset];
+        [_injured, _dir] remoteExec ["setDir", 0, false];
+    },{
+        params["_injured","_healer"];
+        //_healer playActionNow "medicStart";
+    
+    },{
+        params["_injured","_healer","_actionId"];
+        _healer playActionNow "medicStop";
+        detach _injured;
+        _injured setUnconscious false;
+        _injured setDamage 0;
+        _injured setCaptive false;
+        _injured stop false;
+        _injured setHit ["legs", 0]; 
+        deleteMarker (_injured getVariable ["DCW_marker_injured",  ""]);
+        _injured setVariable ["DCW_unit_injured", false, true];
+        [_injured,_healer] remoteExec ["CIVIL_HEALED",2];
+        [_healer,4] remoteExec ["DCW_fnc_updateRep",2];
+        _injured remoteExec ["RemoveAllActions"];
+        [_healer,["Ok, this helps...","You look better now !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+        _injured;
+    },{
+        params["_injured","_healer"];
+        _healer playActionNow "medicStop";
+        detach _injured;
+    },[],15,nil,true,true] remoteExec ["BIS_fnc_holdActionAdd"];
+};*/
 
 DCW_fnc_ActionTorture =  {
     _this addAction ["<t color='#000000'>Torture him (2 hours/Bad reputation)</t>",{

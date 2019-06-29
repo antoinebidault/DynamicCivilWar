@@ -444,7 +444,6 @@ _supportScore = 0;
 [] spawn DCW_fnc_SpawnSecondaryObjective; // Secondary objectives
 [] spawn DCW_fnc_SpawnMainObjective; // Main objective
 [] call DCW_fnc_refreshMarkerStats; // Refresh marker stats
-[] call DCW_fnc_displayScore;
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{

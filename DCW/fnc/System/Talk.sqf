@@ -6,6 +6,7 @@
  * License : GNU (GPL)
  * Show chat
  */
+ if (isNull player) exitWith{};
 _talker = _this select 0;
 _say = _this select 1;
 _sound = _this select 2;
@@ -86,7 +87,7 @@ _talker setVariable["DCW_speak",true];
 _talker setRandomLip true;
 
 _currentTime = time;
-waitUntil { time >= _currentTime + ((count(_say)/13) max 1.6) || (SPACEBAR_HIT && isNull(player getVariable["healer",objNull])); };
+waitUntil { time >= _currentTime + ((count(_say)/13) max 1.6) || (SPACEBAR_HIT && isNull(player getVariable["DCW_healer",objNull])); };
 SPACEBAR_HIT = false;
 _display displayRemoveEventHandler ["KeyDown",_ehId];
 _talker setRandomLip false;

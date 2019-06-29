@@ -10,6 +10,13 @@ _taskId = format["DCW_defend_%1",str (_compound select 0)];
 	[_taskId, _x, ["Enemy attack incoming, set up the defenses","Defend civilian","Defend civilian"],_compound select 1,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, false];
 } foreach units GROUP_PLAYERS;     
 
+_unitsInCompound = _compounds select 5;
+{
+	if (side _x == SIDE_CIV) then {
+		[_x] joinSilent (createGroup SIDE_FRIENDLY);
+	};
+}
+foreach _unitsInCompound;
 
 for "_j" from 1 to _nbGroups do {
 	_grp = createGroup SIDE_ENEMY;
@@ -19,7 +26,6 @@ for "_j" from 1 to _nbGroups do {
 	//_car enableDynamicSimulation false;
 	_nbUnits =  4 + floor(random 6); // min (count (fullCrew [_car,"cargo",true]));
 	//(driver _car) setBehaviour "AWARE";
-
 	//{_units pushback _x; _x enableDynamicSimulation false; }foreach crew _car;
 
 	for "_xc" from 1 to _nbUnits  do {
@@ -73,7 +79,7 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 	{
 		[HQ, "Good job ! The compound is safe now."] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
-	} foreach allPlayers;    
+	} foreach [] call DCW_fnc_allPlayers;    
 
 	[_compound,"supporting"] call DCW_fnc_setCompoundState;
 	[_compound, 30, 10] call DCW_fnc_setCompoundSupport;         
@@ -82,7 +88,7 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 	{
 		[HQ, "The compound wasn't defended..."] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"FAILED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
-	} foreach allPlayers;       
+	} foreach [] call DCW_fnc_allPlayers;       
 
 	[_compound,"bastion"] call DCW_fnc_setCompoundState;
 	[_compound,-35, 10] call DCW_fnc_setCompoundSupport;

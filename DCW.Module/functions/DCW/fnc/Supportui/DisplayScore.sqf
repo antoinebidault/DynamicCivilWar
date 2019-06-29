@@ -38,6 +38,6 @@ if (player getVariable["DCW_undercover",false]) then{
 };
 
 ("RscStatusBar" call BIS_fnc_rscLayer) cutRsc ["RscStatusBar","PLAIN"];	
-	disableSerialization;
+disableSerialization;
 	((uiNamespace getVariable "RscStatusBar")displayCtrl 55554) ctrlSetStructuredText
 parseText format ["<t shadow='1' shadowColor='#000000' color='#FFFFFF'>Score : %1 points <t color='#cd8700'>|</t> Compounds : <t color='#229999'>%2</t>/<t color='#FF0000'>%3</t>/<t color='#000000'>%4</t>/<t>%5</t> <t color='#cd8700'>|</t> Lives : %6 <t color='#cd8700'>|</t> Undercover : <t color='%7'>%8</t> <t color='#cd8700'>|</t> Reputation : %9/100</t>",_points,STAT_COMPOUND_SECURED,STAT_COMPOUND_BASTION,STAT_COMPOUND_MASSACRED,STAT_COMPOUND_TOTAL,if (REMAINING_RESPAWN <= -1) then {"∞"} else {REMAINING_RESPAWN},_colorUnd,_statusUnd,STAT_SUPPORT];

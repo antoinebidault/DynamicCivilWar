@@ -17,7 +17,7 @@ private _foundInjuredUnit = objNull;
 sleep 10 + floor(random 30);
 
 {
-    if (side _x == SIDE_CIV && isNull(_x getVariable["healer",objNull]) && lifeState _x == "INCAPACITATED") then {
+    if (side _x == SIDE_CIV && isNull(_x getVariable["DCW_healer",objNull]) && lifeState _x == "INCAPACITATED") then {
         _foundInjuredUnit = _x;
     };
 } foreach nearestObjects [_center,["Man"],_radius];

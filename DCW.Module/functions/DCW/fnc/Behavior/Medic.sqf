@@ -38,8 +38,7 @@ _this stop true;
         };
     } foreach units (group (_unit));
 
-    _medic playActionNow "medic";
-
+    [_medic , "medic"] remoteExec ["playActionNow"];
     sleep 1;
     [_medic,"You and your team should go better.", false] call DCW_fnc_talk;
 

@@ -43,7 +43,7 @@ _radius = ((getMarkerSize _marker) select 0);
 
     // Add action to dismantle camp
     [ _objBase,"Secure and search intel","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","true","true",{
-        (_this select 1) playActionNow "medic";
+        [(_this select 1), "medic"] remoteExec ["playActionNow"];
     },{},{
     _objBase = (_this select 0);
     _newObjs = (_this  select 3) select 0;

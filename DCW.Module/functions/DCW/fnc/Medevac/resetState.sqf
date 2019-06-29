@@ -1,0 +1,40 @@
+// Reset all the unit's specific states
+
+detach _this;
+_this setDamage 0;
+_this enableAI "ALL";
+_this stop false;
+_this setCaptive false;
+_this setUnconscious false;
+[_this,""] remoteExec["switchMove"];
+_this call DCW_fnc_RemoveActionHeal;
+[_this,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
+_this setVariable["DCW_fnc_carry",-1,true];
+_this setVariable["DCW_fnc_addActionHeal",-1,true];
+_this setVariable["DCW_this_injured",false,true];
+_this setVariable["DCW_this_dragged",false,true];
+_this setVariable["DCW_healer",objNull,true];
+_this getVariable["DCW_marker_injured",""] setMarkerPos (getPos _this);
+if (ACE_ENABLED) then {
+	[objNull, _this] remoteExec ["ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal"];
+};
+
+
+//Default trait
+_this setUnitTrait ["explosiveSpecialist",true];
+
+// Corrected player rating
+if (rating _this < 0) then {
+	_this addRating ((-(rating _this)) + 1000);
+};
+
+if (isPlayer _this && (leader GROUP_PLAYERS) == _this) then {
+	_this remoteExec ["removeAllActions"];
+	sleep .3;
+	_this call DCW_fnc_ActionCamp;
+	_this call DCW_fnc_supportuiInit;
+};
+
+if (isPlayer _this && DEBUG) then {
+	_this call DCW_fnc_teleport;
+};

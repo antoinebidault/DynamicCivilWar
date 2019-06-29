@@ -41,7 +41,7 @@ _healer setPos (getPos _injured);	// avoid to move the injured a few metres away
 
 _healer stop true;
 
-_healer playActionNow "medicStart";
+[_healer, "medicStart"] remoteExec ["playActionNow"];
 sleep 1;
 
 _offset = [0,0,0]; _dir = 0;
@@ -69,7 +69,7 @@ detach _healer;
 detach _injured;
 
 if (!alive _healer) exitWith {};
-_healer playActionNow "medicStop";
+[_healer, "medicStop"] remoteExec ["playActionNow"];
 
 _healer stop false;
 _healer setBehaviour "CARELESS";

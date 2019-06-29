@@ -64,3 +64,7 @@ And then
 ```
 npm start
 ```
+
+Credits
+---
+Thanks to Novakat77 for giving me access to the developement dedicated server

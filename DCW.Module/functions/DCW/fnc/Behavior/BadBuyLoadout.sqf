@@ -14,7 +14,7 @@ params ["_unit","_side"];
 
 [_unit] joinSilent grpNull;
 [_unit] joinSilent (createGroup _side);
-_unit switchMove "";
+[_unit,""] remoteExec ["switchMove"];
 
 private _marker = _unit getVariable["marker",""];
 

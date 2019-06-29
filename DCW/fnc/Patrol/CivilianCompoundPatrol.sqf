@@ -96,7 +96,7 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
                 //Play a suspect animation
                 if (_unit getVariable["DCW_Suspect",false] && !stopped _unit)then{
                     _unit stop true;
-                    _unit playActionNow "medic";
+                    [_unit, "medic"] remoteExec ["playActionNow"];
                     sleep 4;
                     _unit stop false;
                     _unit setUnitPos "AUTO";

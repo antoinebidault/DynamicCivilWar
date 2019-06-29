@@ -38,7 +38,7 @@
             };
         };
         _unit setVariable["DCW_IsIntel",false];
-        _unit setVariable["unit_injured",false, true];
+        _unit setVariable["DCW_unit_injured",false, true];
         _unit call DCW_fnc_deleteMarker;
 
     }

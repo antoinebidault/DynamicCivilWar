@@ -6,7 +6,7 @@
 
         {deleteVehicle _x;} foreach CAMP_OBJS;
         
-         _unit playActionNow "medic";
+		[_unit, "medic"] remoteExec ["playActionNow"];
 
         CAMP_MARKER setMarkerPos getPos _unit;
         CAMP_MARKER setMarkerSize [70,70];

@@ -10,14 +10,6 @@ if (isNull player) exitWith{false;};
 titleCut ["", "BLACK FADED", 9999];
 disableUserInput false;
 
-// Reload hud
-addMissionEventHandler ["Loaded",{ 
-    [] spawn {
-		("RscStatusBar" call BIS_fnc_rscLayer) cutRsc ["RscStatusBar","PLAIN"];	
-		("RscCompoundStatus" call BIS_fnc_rscLayer) cutRsc ["RscStatusBar","PLAIN"];	
-		[] call DCW_fnc_displayscore;
-    };
-}];
 
 // Client side 
 TALK_QUEUE = [];

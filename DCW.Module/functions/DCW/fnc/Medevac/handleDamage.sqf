@@ -22,11 +22,11 @@ if (isPlayer _unit) exitWith{false};
 // Reducing damage with a factor of 3
 //_damage = 0.9 min _damage;
 
-if (_damage >= .9  && !(_unit getVariable["unit_injured",false])) then {
+if (_damage >= .9  && !(_unit getVariable["DCW_unit_injured",false])) then {
 
 	_unit setDamage .9;
 	_damage = .9;
-	_unit setVariable ["unit_injured", true,true];
+	_unit setVariable ["DCW_unit_injured", true,true];
 	[_unit] spawn DCW_fnc_injured;
 	
 	[leader GROUP_PLAYERS, ["Man down ! Man down !",format["%1 is down !",name _unit],format["%1 needs a medic !",name _unit]] call BIS_fnc_selectRandom] remoteExec ["DCW_fnc_talk"];
@@ -39,7 +39,7 @@ if (_damage >= .9  && !(_unit getVariable["unit_injured",false])) then {
 	_unit setVariable ["DCW_marker_injured",  _marker];
 	
 } else {
-	if (_unit getVariable["unit_injured",false])then{
+	if (_unit getVariable["DCW_unit_injured",false])then{
 		_damage = .9;
 		_unit setDamage .9;
 	};

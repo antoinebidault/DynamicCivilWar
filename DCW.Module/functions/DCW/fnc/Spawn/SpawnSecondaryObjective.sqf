@@ -101,12 +101,13 @@ DCW_fnc_spawnOfficer = {
 
 
             [ _unit,"Interrogate","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","true","true",{
-                (_this select 1) playActionNow "medicStart";
+                 [(_this select 1), "medicStart"] remoteExec ["playActionNow"];
             },{
-                (_this select 1) playActionNow "medicStart";
+               
+               [(_this select 1), "medicStart"] remoteExec ["playActionNow"];
             },{
                 params["_unit","_player"];
-                _player playActionNow "medicStop";
+                [_player, "medicStop"] remoteExec ["playActionNow"];
                 {
                     [format["DCW_secondary_%1", name _unit],"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,true];
                 } foreach allPlayers;
@@ -122,7 +123,7 @@ DCW_fnc_spawnOfficer = {
                 
                 _unit call DCW_fnc_MainObjectiveIntel;
             },{
-            (_this select 1) playActionNow "medicStop";
+            [(_this select 1), "medicStop"] remoteExec ["playActionNow"];
             },[],3,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];
 
         } else {
