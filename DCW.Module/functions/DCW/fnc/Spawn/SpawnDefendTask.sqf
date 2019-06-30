@@ -79,7 +79,7 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 	{
 		[HQ, "Good job ! The compound is safe now."] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
-	} foreach [] call DCW_fnc_allPlayers;    
+	} foreach ([] call DCW_fnc_allPlayers);    
 
 	[_compound,"supporting"] call DCW_fnc_setCompoundState;
 	[_compound, 30, 10] call DCW_fnc_setCompoundSupport;         
@@ -88,7 +88,7 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 	{
 		[HQ, "The compound wasn't defended..."] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"FAILED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
-	} foreach [] call DCW_fnc_allPlayers;       
+	} foreach ([] call DCW_fnc_allPlayers);       
 
 	[_compound,"bastion"] call DCW_fnc_setCompoundState;
 	[_compound,-35, 10] call DCW_fnc_setCompoundSupport;

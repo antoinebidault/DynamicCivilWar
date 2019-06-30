@@ -5,7 +5,7 @@
  * License : GNU (GPL)
  * Create a complete map cluster
  */
-params["_markerWhiteList"]
+params["_markerWhiteList"];
 
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];

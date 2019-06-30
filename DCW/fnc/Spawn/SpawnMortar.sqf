@@ -45,7 +45,7 @@ for "_j" from 1 to _nb do {
     //Déclenchement du bombardement
     [_pos,_radius,_mortar] spawn {
         params["_pos","_radius","_mortar"];
-        waitUntil{sleep 15; { alive _x && !captive _x && getPosATL _x distance _pos < _radius } count [] call DCW_fnc_allPlayers > 0 };
+        waitUntil{sleep 15; { alive _x && !captive _x && getPosATL _x distance _pos < _radius } count ([] call DCW_fnc_allPlayers) > 0 };
         [_mortar,(leader GROUP_PLAYERS),_pos,_radius] call DCW_fnc_mortarbombing;
     };
                     

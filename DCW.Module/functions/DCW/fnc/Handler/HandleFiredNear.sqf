@@ -15,7 +15,7 @@ _this select 0 addEventHandler["FiredNear",
 	_gunner = _this select 7;	
 	
 	// Check the civ is not too far
-	if ( { _civ distance _x > 30 && _civ distance _x < 400 } count [] call DCW_fnc_allPlayers == count [] call DCW_fnc_allPlayers && (_civ getVariable["DCW_Suspect", true] || (random 100) < PERCENTAGE_INSURGENTS))then{
+	if ( { _civ distance _x > 30 && _civ distance _x < 400 } count ([] call DCW_fnc_allPlayers) == count ([] call DCW_fnc_allPlayers) && (_civ getVariable["DCW_Suspect", true] || (random 100) < PERCENTAGE_INSURGENTS))then{
 		
 		//Remove the eventHandler to prevent spamming
 		_civ removeAllEventHandlers "FiredNear";

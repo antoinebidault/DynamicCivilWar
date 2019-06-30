@@ -16,7 +16,7 @@ while {true} do {
 
 		// Pick up a random position around a random player
 		
-		_pos = [position ([] call DCW_fnc_allPlayers call BIS_fnc_selectRandom), _minRange, 350, 4, 0, 2, 0] call BIS_fnc_findSafePos;
+		_pos = [position (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom), _minRange, 350, 4, 0, 2, 0] call BIS_fnc_findSafePos;
 
 		_numberOfmen = round(random 2);
 		_numberOfSheep = 4 + floor(random 4	);
@@ -75,7 +75,7 @@ while {true} do {
 	{
 		// Delete all sheeps when all players are away !
 		_cheepLeader = leader _x;
-		if( isNull _x || ({_cheepLeader distance _x > 400 } count [] call DCW_fnc_allPlayers) == count [] call DCW_fnc_allPlayers)then {
+		if( isNull _x || ({_cheepLeader distance _x > 400 } count ([] call DCW_fnc_allPlayers)) == count ([] call DCW_fnc_allPlayers))then {
 			SHEEP_POOL = SHEEP_POOL - [_x];
 			{
 				_x call DCW_fnc_deleteMarker;

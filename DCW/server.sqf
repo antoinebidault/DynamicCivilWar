@@ -478,14 +478,14 @@ private ["_mkr","_cacheResult","_ieds"];
 				_mkr setMarkerPos (getPos _x);
 			};
 			sleep .2;
-		} foreach [] call DCW_fnc_allPlayers;
+		} foreach ([] call DCW_fnc_allPlayers);
 		PLAYER_MARKER_LIST = _tmp;
 		sleep 1;
 	};
 };
 
 // Wait until this var is on
-waitUntil {count [] call DCW_fnc_allPlayers > 0};
+waitUntil {count ([] call DCW_fnc_allPlayers) > 0};
 
 // Initial timer for the hunters
 _timerChaser = time - 360;
@@ -663,7 +663,7 @@ while { true } do {
 			["",0] remoteExec ["DCW_fnc_ShowIndicator",_player,false];
 		};
 
-	} foreach [] call DCW_fnc_allPlayers;
+	} foreach ([] call DCW_fnc_allPlayers);
 
 
 	// foreach UNITS_SPAWNED_CLOSE
@@ -720,7 +720,7 @@ while { true } do {
 					};
 				};
 			};
-		} foreach [] call DCW_fnc_allPlayers;
+		} foreach ([] call DCW_fnc_allPlayers);
 
 		// Regulate the spawn distance
 		/*
@@ -732,7 +732,7 @@ while { true } do {
 
 		// Garbage collection
 		if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{
-			if ({_unit distance _x > SPAWN_DISTANCE + 230} count [] call DCW_fnc_allPlayers == count [] call DCW_fnc_allPlayers)then {
+			if ({_unit distance _x > SPAWN_DISTANCE + 200} count ([] call DCW_fnc_allPlayers) == count ([] call DCW_fnc_allPlayers))then {
 				UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
 					// If it's a vehicle
 				if (vehicle _unit != _unit) then {

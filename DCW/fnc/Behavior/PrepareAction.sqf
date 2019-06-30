@@ -318,7 +318,7 @@ DCW_fnc_addActionDidYouSee = {
 
 DCW_fnc_addActionFeeling = {
     //Try to gather intel
-     _this addaction [format["<t color='#FF0000'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction ([] call DCW_fnc_allPlayers select 0)] >> "displayName"),worldName] ,{
+     _this addaction [format["<t color='#FF0000'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (([] call DCW_fnc_allPlayers) select 0)] >> "displayName"),worldName] ,{
         params["_unit","_talker","_action"];
             if (!(_this call DCW_fnc_startTalking)) exitWith {};
             [_unit,1] remoteExec ["DCW_fnc_updateRep",2];

@@ -65,7 +65,7 @@ DCW_fnc_refreshMarkerStats = compile preprocessFileLineNumbers "DCW\fnc\System\r
 DCW_fnc_teleport = compile preprocessFileLineNumbers  "DCW\fnc\System\teleport.sqf";
 DCW_fnc_AddAction = compile preprocessFileLineNumbers "DCW\fnc\system\AddAction.sqf";
 DCW_fnc_RemoveAction = compile preprocessFileLineNumbers "DCW\fnc\system\RemoveAction.sqf";
-DCW_fnc_allPlayers = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\allPlayers.sqf";
+DCW_fnc_allPlayers = compileFinal preprocessFileLineNumbers  "DCW\fnc\system\allPlayers.sqf";
 
 //SPAWN
 DCW_fnc_respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
@@ -131,6 +131,7 @@ DCW_fnc_shout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\Shout.
 DCW_fnc_badBuyLoadout = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\BadBuyLoadout.sqf";
 DCW_fnc_camp =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\Camp.sqf";
 DCW_fnc_actionCamp =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\ActionCamp.sqf";
+DCW_fnc_surrender =  compileFinal preprocessFileLineNumbers "DCW\fnc\Behavior\Surrender.sqf";
 
 //HANDLERS
 DCW_fnc_handleFiredNear = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleFiredNear.sqf";
@@ -204,7 +205,7 @@ if (ACE_ENABLED) then {
 };
 
 // Wait until everything is ready
-waitUntil {count [] call DCW_fnc_allPlayers > 0 && time > 0 };
+waitUntil {count ([] call DCW_fnc_allPlayers) > 0 && time > 0 };
 
 RESISTANCE setFriend [EAST, 0];
 RESISTANCE setFriend [WEST, 0];

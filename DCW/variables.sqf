@@ -8,7 +8,7 @@
 
  if (didJIP) exitWith {};
 
-waitUntil {count [] call DCW_fnc_allPlayers > 0};
+waitUntil {count ([] call DCW_fnc_allPlayers) > 0};
 
 // True if the mission is set up and started up.
 DCW_STARTED = false;
@@ -18,10 +18,10 @@ publicVariable "DCW_STARTED";
 DCW_LOADOUT = false;
 publicVariable "DCW_LOADOUT";
 
-GROUP_PLAYERS = group ([] call DCW_fnc_allPlayers select 0); 
+GROUP_PLAYERS = group (([] call DCW_fnc_allPlayers) select 0); 
 publicVariable "GROUP_PLAYERS";
 
-SIDE_FRIENDLY = side([] call DCW_fnc_allPlayers select 0); //Side player
+SIDE_FRIENDLY = side(([] call DCW_fnc_allPlayers) select 0); //Side player
 publicVariable "SIDE_FRIENDLY";
 
 // True when triggered

@@ -2,7 +2,7 @@
 //Global configuration
 //GLOBAL
 SHOW_SECTOR = true; //Make every sector colored on the map
-SIDE_FRIENDLY = side([] call DCW_fnc_allPlayers select 0); //Side player
+SIDE_FRIENDLY = side(([] call DCW_fnc_allPlayers) select 0); //Side player
 RESPAWN_ENABLED =  true; 
 CIVIL_REPUTATION = 50;
 

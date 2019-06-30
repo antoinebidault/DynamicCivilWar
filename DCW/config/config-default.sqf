@@ -3,7 +3,7 @@
 //SPAWNING CONFIG
 SIZE_BLOCK = 400; // Size of blocks
 MAX_CLUSTER_SIZE = 200;
-SPAWN_DISTANCE = 750; //Distance uniuts are spawned
+SPAWN_DISTANCE = 550; //Distance units in compounds spawned
 MIN_SPAWN_DISTANCE =  350; //Units can't spawn before this distance
 
 
