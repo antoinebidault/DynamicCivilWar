@@ -93,13 +93,14 @@ DCW_fnc_HandleRespawnSingleplayer =
 	
 	if (!isMultiplayer) then {
 		{ 
-			
-			if(!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
+			if (!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
 				_x call DCW_fnc_resetState;
 				_x setPos ([_respawnPos, 0 ,10, 1, 0, 20, 0] call BIS_fnc_findSafePos);
 			}; 
-		}foreach units GROUP_PLAYERS;
+		} foreach units GROUP_PLAYERS;
 	};
+	_unit setPos _respawnPos;
+
 	_unit call DCW_fnc_resetState;
 
 	sleep 1;

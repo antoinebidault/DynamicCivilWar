@@ -10,7 +10,7 @@ _taskId = format["DCW_defend_%1",str (_compound select 0)];
 	[_taskId, _x, ["Enemy attack incoming, set up the defenses","Defend civilian","Defend civilian"],_compound select 1,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, false];
 } foreach units GROUP_PLAYERS;     
 
-_unitsInCompound = _compounds select 5;
+_unitsInCompound = _compound select 5;
 {
 	if (side _x == SIDE_CIV) then {
 		[_x] joinSilent (createGroup SIDE_FRIENDLY);

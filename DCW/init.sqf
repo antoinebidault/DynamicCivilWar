@@ -145,6 +145,7 @@ DCW_fnc_afford = compile preprocessFileLineNumbers  "DCW\fnc\supportui\Afford.sq
 DCW_fnc_supportui = compile preprocessFileLineNumbers  "DCW\fnc\supportui\SupportUI.sqf";
 DCW_fnc_displayscore = compile preprocessFileLineNumbers  "DCW\fnc\supportui\DisplayScore.sqf";
 DCW_fnc_getCrateItems = compile preprocessFileLineNumbers  "DCW\fnc\supportui\GetCrateItems.sqf";
+DCW_fnc_triggerSupport = compile preprocessFileLineNumbers  "DCW\fnc\supportui\TriggerSupport.sqf";
 
 // MEDEVAC
 DCW_fnc_spawnHelo = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHelo.sqf";
@@ -220,6 +221,6 @@ CIVILIAN setFriend [RESISTANCE, 1];
 call (compileFinal preprocessFileLineNumbers "DCW\variables.sqf"); 
 
 
-[] execVM "headlessClient.sqf";
+[] execVM "DCW\headlessClient.sqf";
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";

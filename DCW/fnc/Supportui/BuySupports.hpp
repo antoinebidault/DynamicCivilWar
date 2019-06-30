@@ -37,7 +37,7 @@ class ICE_DIALOG
           y = 0.5 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Artillery"",300] ExecVM ""DCW\fnc\supportui\choose.sqf""";
+          action = "_nil=[""Artillery"",300] spawn DCW_fnc_triggerSupport";
         };
 
         class ICE_BUTTONCAS: RscButton
@@ -48,7 +48,7 @@ class ICE_DIALOG
           y = 0.45 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""CAS_Heli"",400] ExecVM ""DCW\fnc\supportui\choose.sqf""";
+          action = "_nil=[""CAS_Heli"",400] spawn DCW_fnc_triggerSupport";
         };
          class ICE_BUTTONAMMO: RscButton
          {
@@ -58,7 +58,7 @@ class ICE_DIALOG
           y = 0.4 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Drop"",100] ExecVM ""DCW\fnc\supportui\choose.sqf""";
+          action = "_nil=[""Drop"",100] spawn DCW_fnc_triggerSupport";
         };
          class ICE_BUTTONTRANSPORT: RscButton
          {
@@ -68,7 +68,7 @@ class ICE_DIALOG
           y = 0.35 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Transport"",150]ExecVM ""DCW\fnc\supportui\choose.sqf""";
+          action = "_nil=[""Transport"",150] spawn DCW_fnc_triggerSupport";
         };
        
          class ICE_BUTTONUAV: RscButton
@@ -79,7 +79,7 @@ class ICE_DIALOG
           y = 0.55 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""UAV"",1000]ExecVM ""DCW\fnc\supportui\choose.sqf""";
+          action = "_nil=[""UAV"",1000] spawn DCW_fnc_triggerSupport";
         };
 
 
@@ -91,7 +91,7 @@ class ICE_DIALOG
           y = 0.6 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""vehicle"",150] ExecVM ""DCW\fnc\supportui\choose.sqf""";
+          action = "_nil=[""vehicle"",150] spawn DCW_fnc_triggerSupport";
         };
 
         class ICE_BUTTONNO: RscButton
