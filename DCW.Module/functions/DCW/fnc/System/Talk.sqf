@@ -6,6 +6,7 @@
  * License : GNU (GPL)
  * Show chat
  */
+ if (isNull player) exitWith{};
 _talker = _this select 0;
 _say = _this select 1;
 _sound = _this select 2;

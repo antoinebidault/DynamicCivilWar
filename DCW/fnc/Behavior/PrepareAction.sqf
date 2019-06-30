@@ -19,10 +19,13 @@ DCW_fnc_addActionJoinAsAdvisor = {
         _unit playActionNow "GestureHi";
        
         sleep .3;
+
         [_talker,"Hi buddy, I would need a military advisor, are you in ?!",false] call DCW_fnc_Talk;
         [_unit,"I'm in ! Let's go",false] call DCW_fnc_Talk;
         _unit removeAction _action;
+
         sleep .3;
+        
         _unit setVariable["DCW_advisor", true, true];
         _unit stop false;
         [_unit] join GROUP_PLAYERS;

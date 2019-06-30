@@ -128,7 +128,7 @@ if (CAR_DESTROYED == _nbVeh) exitWith {
 sleep 100;
 
 //Unspawn unit
-waitUntil {sleep 12; CAR_DESTROYED == _nbVeh || {_x distance (leader _grp) > 700} count allPlayers == count allPlayers};
+waitUntil {sleep 12; CAR_DESTROYED == _nbVeh || {_x distance (leader _grp) > 700} count [] call DCW_fnc_allPlayers == count [] call DCW_fnc_allPlayers};
 {_units = _units - [_x]; _x call DCW_fnc_deleteMarker; deleteVehicle _x; } forEach _units;
 
 [HQ,"You missed the _units ! Out !",true] remoteExec ["DCW_fnc_talk"];

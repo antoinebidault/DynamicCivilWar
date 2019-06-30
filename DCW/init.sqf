@@ -65,7 +65,7 @@ DCW_fnc_refreshMarkerStats = compile preprocessFileLineNumbers "DCW\fnc\System\r
 DCW_fnc_teleport = compile preprocessFileLineNumbers  "DCW\fnc\System\teleport.sqf";
 DCW_fnc_AddAction = compile preprocessFileLineNumbers "DCW\fnc\system\AddAction.sqf";
 DCW_fnc_RemoveAction = compile preprocessFileLineNumbers "DCW\fnc\system\RemoveAction.sqf";
-DCW_fnc_allPlayers = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\[] call DCW_fnc_allPlayers.sqf";
+DCW_fnc_allPlayers = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\allPlayers.sqf";
 
 //SPAWN
 DCW_fnc_respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";

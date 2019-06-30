@@ -5,6 +5,7 @@
  * License : GNU (GPL)
  * Create a complete map cluster
  */
+params["_markerWhiteList"]
 
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
@@ -12,7 +13,6 @@ private _worldNbBlocks = floor(_worldSize/SIZE_BLOCK);
 private _isCloseToAnotherCompound = false;
 private _isMilitary = false;
 private _clusters = [];
-private _markerWhiteList = _this select 0;
 
 DCW_fnc_isMilitary = {
 	params["_buildings"];

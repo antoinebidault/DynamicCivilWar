@@ -270,7 +270,7 @@ _supportScore = 0;
 
 	// If in white list exit loop
 	{ 
-		if(_pos inArea _x)exitWith{_return = true;};
+		if(_pos inArea _x) exitWith {_return = true;};
 	} foreach MARKER_WHITE_LIST;
 
 	if (isNil{_return})then{_return = false;};
@@ -414,15 +414,16 @@ _supportScore = 0;
 
 		STAT_COMPOUND_TOTAL = STAT_COMPOUND_TOTAL + 1;
 
-		if (DEBUG) then {
-			/*_marker = createMarker [format["%1-debug", _m], _pos];
+		
+			/*if (DEBUG) then {
+				_marker = createMarker [format["%1-debug", _m], _pos];
 			_marker setMarkerShape "ICON";
 			_marker setMarkerType "mil_dot";
 			_marker setMarkerAlpha 0.3;
 			_marker setMarkerColor "ColorBlack";
-			_icon setMarkerText  format["support:%1|%2", _supportScore,_nameLocation];*/
+			_icon setMarkerText  format["support:%1|%2", _supportScore,_nameLocation];
 			//_marker setMarkerText  format["civ:%1/en:%2/Car:%3/bld:%4/ca:%5/mr:%6",_nbCivilian,_nbEnemies,_nbCars,_nbBuildings,_nbCaches,_nbMortars];
-		};
+			};*/
 
 		_peopleToSpawn = [_nbCivilian,_nbSnipers,_nbEnemies,_nbCars,_nbIeds,_nbCaches,_nbHostages,_nbMortars,_nbOutpost,_nbFriendlies];
 
@@ -477,14 +478,14 @@ private ["_mkr","_cacheResult","_ieds"];
 				_mkr setMarkerPos (getPos _x);
 			};
 			sleep .2;
-		} foreach allPlayers;
+		} foreach [] call DCW_fnc_allPlayers;
 		PLAYER_MARKER_LIST = _tmp;
 		sleep 1;
 	};
 };
 
 // Wait until this var is on
-waitUntil {count allPlayers > 0};
+waitUntil {count [] call DCW_fnc_allPlayers > 0};
 
 // Initial timer for the hunters
 _timerChaser = time - 360;
@@ -662,7 +663,7 @@ while { true } do {
 			["",0] remoteExec ["DCW_fnc_ShowIndicator",_player,false];
 		};
 
-	} foreach allPlayers;
+	} foreach [] call DCW_fnc_allPlayers;
 
 
 	// foreach UNITS_SPAWNED_CLOSE
@@ -719,7 +720,7 @@ while { true } do {
 					};
 				};
 			};
-		} foreach allPlayers;
+		} foreach [] call DCW_fnc_allPlayers;
 
 		// Regulate the spawn distance
 		/*
@@ -731,7 +732,7 @@ while { true } do {
 
 		// Garbage collection
 		if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{
-			if ({_unit distance _x > SPAWN_DISTANCE + 230} count allPlayers == count allPlayers)then {
+			if ({_unit distance _x > SPAWN_DISTANCE + 230} count [] call DCW_fnc_allPlayers == count [] call DCW_fnc_allPlayers)then {
 				UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
 					// If it's a vehicle
 				if (vehicle _unit != _unit) then {

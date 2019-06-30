@@ -19,10 +19,13 @@ DCW_fnc_addActionJoinAsAdvisor = {
         _unit playActionNow "GestureHi";
        
         sleep .3;
+
         [_talker,"Hi buddy, I would need a military advisor, are you in ?!",false] call DCW_fnc_Talk;
         [_unit,"I'm in ! Let's go",false] call DCW_fnc_Talk;
         _unit removeAction _action;
+
         sleep .3;
+        
         _unit setVariable["DCW_advisor", true, true];
         _unit stop false;
         [_unit] join GROUP_PLAYERS;
@@ -315,7 +318,7 @@ DCW_fnc_addActionDidYouSee = {
 
 DCW_fnc_addActionFeeling = {
     //Try to gather intel
-     _this addaction [format["<t color='#FF0000'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (allPlayers select 0)] >> "displayName"),worldName] ,{
+     _this addaction [format["<t color='#FF0000'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction ([] call DCW_fnc_allPlayers select 0)] >> "displayName"),worldName] ,{
         params["_unit","_talker","_action"];
             if (!(_this call DCW_fnc_startTalking)) exitWith {};
             [_unit,1] remoteExec ["DCW_fnc_updateRep",2];

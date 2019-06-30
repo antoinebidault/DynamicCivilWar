@@ -41,7 +41,7 @@ _marker setMarkerText "Presumed position of the commander!";
 
 {
 	["maintask", _x, [ "Go to the presumed commander position. You can use drones to find him easily. He will probably try to flee if you're attacking is corpsemen. If you can't find him, interrogate a leutnant or a compound chief.","Find the commander","Find the commander"], _pos, "ASSIGNED", 1, true, true,""] remoteExec ["BIS_fnc_setTask" ,_x , true];
-} foreach allPlayers;
+} foreach [] call DCW_fnc_allPlayers;
 
 if (!isMultiplayer) then {
 	saveGame;

@@ -5,11 +5,11 @@
  * License : GNU (GPL)
  */
 
-if (isNull player) exitWith{false;};
+if (isNull player) exitWith{};
+if (!hasInterface) exitWith{};
 
 titleCut ["", "BLACK FADED", 9999];
 disableUserInput false;
-
 
 // Client side 
 TALK_QUEUE = [];
@@ -105,7 +105,7 @@ if (ENABLE_DIALOG && !didJIP) then {
 };
 
 
-if (!DEBUG ) then {
+if (!DEBUG && !didJIP) then {
 	[] call DCW_fnc_intro;
 };
 
@@ -132,10 +132,14 @@ enableRadio true;
 // init user respawn loop
 [player] spawn DCW_fnc_respawn; //Respawn loop
 
+// Initial score display
+[] call DCW_fnc_displayscore;
+
 //Loop to check mines
 iedBlasts=["Bo_Mk82","Rocket_03_HE_F","M_Mo_82mm_AT_LG","Bo_GBU12_LGB","Bo_GBU12_LGB_MI10","HelicopterExploSmall"];
 iedJunks=["Land_Garbage_square3_F","Land_Garbage_square5_F","Land_Garbage_line_F"];
 
+// Trigger the blasting effect
 iedAct={	
 	_iedObj=_this;
 	if(mineActive _iedObj)then{
@@ -228,12 +232,7 @@ addMissionEventHandler
 	}
 ];
 
-
-
-
 sleep 30;
 
 if (!isMultiplayer) then{saveGame;};
-// Initial score display
-[] call DCW_fnc_displayscore;
 

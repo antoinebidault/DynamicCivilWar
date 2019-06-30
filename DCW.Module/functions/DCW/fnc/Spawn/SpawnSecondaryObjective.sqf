@@ -110,7 +110,7 @@ DCW_fnc_spawnOfficer = {
                 [_player, "medicStop"] remoteExec ["playActionNow"];
                 {
                     [format["DCW_secondary_%1", name _unit],"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,true];
-                } foreach allPlayers;
+                } foreach [] call DCW_fnc_allPlayers;
                 OFFICERS = OFFICERS - [_unit];
                 _unit setVariable["DCW_interrogated",true];
                 _unit removeAllMPEventHandlers "MPKilled";
@@ -179,7 +179,7 @@ while {sleep 20; count OFFICERS  > 0 } do {
         
         // HQ message
         [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",_officerName,round(((getPos _loc) distance2D (_x))/100)/100,text _loc], true] remoteExec ["DCW_fnc_talk",_x,false];
-    } foreach allPlayers;
+    } foreach [] call DCW_fnc_allPlayers;
 
     _marker setMarkerAlpha 1;
     _marker setMarkerPos (getPos _officer);

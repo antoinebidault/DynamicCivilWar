@@ -24,7 +24,7 @@ while{true}do {
 
 		if (_firstTrigger) then {_minRange = 150; _firstTrigger = false;}else{_minRange = 500;};
 
-		_pos = [position (allPlayers call BIS_fnc_selectRandom), _minRange, 550, 1, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
+		_pos = [position ([] call DCW_fnc_allPlayers call BIS_fnc_selectRandom), _minRange, 550, 1, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
 		if (_pos isEqualTo [] || _pos isEqualTo [2048,2048,2048]) then{
 			sleep 3;
 		} else {
