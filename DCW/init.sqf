@@ -30,7 +30,6 @@ addMissionEventHandler ["Loaded",{
 enableDynamicSimulationSystem true;
 "Group" setDynamicSimulationDistance 600;
 
-
 // CONFIG
 DCW_fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
 DCW_fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
