@@ -9,8 +9,8 @@ TANKS  = [];
 
 if (NUMBER_TANKS == 0)exitWith{TANKS};
 
-_worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
-_worldCenter = [_worldSize/2,_worldSize/2,0];
+_worldSize = (getMarkerSize GAME_ZONE) select 0;
+_worldCenter = getMarkerPos GAME_ZONE;
 private _tempMarkers = MARKER_WHITE_LIST;
 while {count TANKS < NUMBER_TANKS} do{
     

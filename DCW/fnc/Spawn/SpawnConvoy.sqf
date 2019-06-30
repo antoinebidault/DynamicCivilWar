@@ -16,8 +16,8 @@ _nbVeh = 3;
 _nbTrucks = _nbVeh - 1;
 _roadRadius = 40;
 
-_worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
-_worldCenter = [_worldSize/2,_worldSize/2,0];
+ _worldSize = (getMarkerSize GAME_ZONE) select 0;
+_worldCenter = getMarkerPos GAME_ZONE;
 
 _initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_findSafePos;
 if (_initPos isEqualTo []) exitWith{ hint "unable to spawn the _units"; };

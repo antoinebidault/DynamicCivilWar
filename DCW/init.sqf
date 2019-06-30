@@ -139,7 +139,7 @@ DCW_fnc_handlekill = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\Ha
 DCW_fnc_handleAttacked = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleAttacked.sqf";
 
 // Support UI
-DCW_fnc_supportuiInit = compile preprocessFileLineNumbers  "DCW\fnc\supportui\init.sqf";
+DCW_fnc_addSupportUi = compile preprocessFileLineNumbers  "DCW\fnc\supportui\addSupportUi.sqf";
 DCW_fnc_updatescore = compile preprocessFileLineNumbers  "DCW\fnc\supportui\UpdateScore.sqf";
 DCW_fnc_afford = compile preprocessFileLineNumbers  "DCW\fnc\supportui\Afford.sqf";
 DCW_fnc_supportui = compile preprocessFileLineNumbers  "DCW\fnc\supportui\SupportUI.sqf";

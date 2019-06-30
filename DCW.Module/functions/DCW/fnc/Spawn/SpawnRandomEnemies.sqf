@@ -13,8 +13,6 @@ private _minRange = 300;
 private _side = SIDE_ENEMY;
 private _unit = objNull;
 private _firstTrigger = true;
-private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
-private _worldCenter = [_worldSize/2,_worldSize/2,0];
 
 while{true}do {
 	if ({ _x getVariable["DCW_type",""] == "patrol" } count UNITS_SPAWNED_CLOSE < MAX_RANDOM_PATROL)then{

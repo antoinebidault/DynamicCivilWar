@@ -39,7 +39,7 @@ DCW_fnc_rendersideselect = {
 
 
 DCW_fnc_replaceAllCutsceneSoldiers = {
-	params["_units"];
+	params["_units","_cars"];
 	// REPLACE LOADOUT OF ALL CUTSCENE SOLDIERS
 	{  
 		if (str _x find "DCW_cutscene_soldier" == 0  ) then {
@@ -47,6 +47,18 @@ DCW_fnc_replaceAllCutsceneSoldiers = {
 			[_x] joinSilent createGroup ((2111 call DCW_fnc_getValue) call BIS_fnc_sideType);
 		}; 
 	} foreach allUnits; 
+
+    // REPLACE LOADOUT OF ALL CUTSCENE SOLDIERS
+	{  
+		if (str _x find "DCW_cutscene_car" == 0  ) then {
+			_name = str _x ;
+			hideObject _x;
+			sleep .1;
+			_vehicle = (_cars call BIS_fnc_selectRandom) createVehicle (getPos _x) ;
+			deleteVehicle _x;
+			_vehicle setVehicleVarName _name;
+		}; 
+	} foreach allMissionObjects "Car"; 
 
 };
 
@@ -176,7 +188,7 @@ DCW_fnc_ChooseLocation = {
 
 	//move the marker to the click position
 	player onMapSingleClick {
-		if (surfaceIsWater _pos) then {
+		if (surfaceIsWater _pos || !(_pos inArea "GAME_ZONE")) then {
 			hint "Please, select a position on the ground";
 		}else{
 			"marker_base" setMarkerPos _pos;
@@ -230,13 +242,12 @@ DCW_fnc_SaveAndCloseConfigDialog = {
 
 		titleCut ["Preparing units...", "BLACK FADED", 999];
 
+		// Execute mission setup on server
 		[] remoteExec ["DCW_fnc_missionsetup", 2];
 		
 		CONFIG_CAMERA cameraeffect ["terminate", "back"];
 		camDestroy CONFIG_CAMERA;
 		//deleteVehicle UNIT_SHOWCASE;
-		DCW_STARTED = true;
-		publicVariable "DCW_STARTED";
 
 	};
 };  
@@ -325,6 +336,7 @@ DCW_fnc_SwitchFaction = {
 
 	//Weather
 	_unitClasses = [_factionName,["Man"],[]] call DCW_fnc_FactionGetUnits;
+	_carClasses = [_factionName,["Car"],[]] call DCW_fnc_FactionGetUnits;
 
 	// If nothing found, take the default units
 	if (count _unitClasses == 0) then {
@@ -351,7 +363,7 @@ DCW_fnc_SwitchFaction = {
 	deleteGroup _grp;
 
 	[] call DCW_fnc_DisplayChopper;
-	[_unitClasses] call DCW_fnc_replaceAllCutsceneSoldiers;
+	[_unitClasses,_carClasses] call DCW_fnc_replaceAllCutsceneSoldiers;
  
 	titleCut ["", "BLACK IN", 2];
 

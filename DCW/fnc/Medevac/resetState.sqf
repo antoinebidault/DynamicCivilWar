@@ -32,7 +32,7 @@ if (isPlayer _this && (leader GROUP_PLAYERS) == _this) then {
 	_this remoteExec ["removeAllActions"];
 	sleep .3;
 	_this call DCW_fnc_ActionCamp;
-	_this call DCW_fnc_supportuiInit;
+	_this call DCW_fnc_addSupportUi;
 };
 
 if (isPlayer _this && DEBUG) then {

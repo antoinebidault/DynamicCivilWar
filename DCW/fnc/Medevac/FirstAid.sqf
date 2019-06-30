@@ -104,7 +104,7 @@ if (alive _healer && alive _injuredperson && _injuredperson getVariable["DCW_uni
 		_injuredperson remoteExec ["removeAllActions"];
 		sleep .3;
 		_injuredperson call DCW_fnc_ActionCamp;
-		_injuredperson call DCW_fnc_supportuiInit;
+		_injuredperson call DCW_fnc_addSupportUi;
 	};
 
 	resetCamShake;

@@ -9,8 +9,8 @@ CRASHSITES  = [];
 
 if (NUMBER_CRASHSITES == 0)exitWith{CRASHSITES};
 
-_worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
-_worldCenter = [_worldSize/2,_worldSize/2,0];
+ _worldSize = (getMarkerSize GAME_ZONE) select 0;
+_worldCenter = getMarkerPos GAME_ZONE;
 private _tempMarkers = MARKER_WHITE_LIST;
 
 while {count CRASHSITES < NUMBER_CRASHSITES} do{

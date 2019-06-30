@@ -6,7 +6,7 @@ var clean = require('gulp-clean');
 var rimraf = require('gulp-rimraf');
 var log = require('fancy-log');
 
-var directories = ['DCW.Malden', 'DCW.Lythium', 'DCW.Chongo','DCW.Module/functions'];  
+var directories = ['DCW.Malden', 'DCW.Lythium', 'DCW.Takistan', 'DCW.Chongo','DCW.Module/functions'];  
 
 // Perform a default watch to the root folder
 gulp.task('default', function () {

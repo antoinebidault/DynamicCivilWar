@@ -58,26 +58,48 @@ publicVariable "MARKER_WHITE_LIST";
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 _worldCenter = [_worldSize/2,_worldSize/2,0];
 _gameZoneSize = [_worldSize/2,_worldSize/2];
-
-
-GAME_ZONE = createMarker ["gamezone", _worldCenter];
-GAME_ZONE setMarkerShape "RECTANGLE";
-GAME_ZONE setMarkerAlpha 0.2;
-GAME_ZONE setMarkerColor "ColorGreen";
-GAME_ZONE setMarkerSize [_worldSize/2,_worldSize/2];
-
-{  if (_x find "game_zone" == 0  ) then { GAME_ZONE = _x; _gameZoneSize = getMarkerSize _x; }; }foreach allMapMarkers; 
+_gameZoneX = 0;
+_gameZoneY = 0;
+if (getMarkerColor "GAME_ZONE" == "") then {
+	GAME_ZONE = createMarker ["GAME_ZONE", _worldCenter];
+	GAME_ZONE setMarkerShape "RECTANGLE";
+	GAME_ZONE setMarkerAlpha 0.2;
+	GAME_ZONE setMarkerColor "ColorGreen";
+	GAME_ZONE setMarkerSize [_worldSize/2,_worldSize/2];
+}else {
+	GAME_ZONE = "GAME_ZONE";
+	_gameZoneSize = getMarkerSize GAME_ZONE;
+	_gameZonePosition = getMarkerPos GAME_ZONE;
+	_gameZoneX = (_gameZonePosition select 0) - (_gameZoneSize select 0);
+	_gameZoneY = (_gameZonePosition select 1) - (_gameZoneSize select 1);
+};
+publicVariable "GAME_ZONE";
 
 
 // Create a marker all around the terrain if it's a ground
+/*
 {
-	_i = _x select 0;
-	_j = _x select 1;
-
-	private _mp = createMarker [format["edge-map-%1-%2",str _i, str _j],[ (_i  * (_gameZoneSize select 0))   ,(_j * (_gameZoneSize select 1)) ,0] ];
+	private _i = _x select 0;
+	private _j = _x select 1;
+	private _position = [(_i * (_gameZoneSize select 0)), (_j * (_gameZoneSize select 1)), 0];
+	private _mp = createMarker [format["edge-map-%1-%2",str _i, str _j], _position];
 	_mp setMarkerShape "RECTANGLE";
 	_mp setMarkerAlpha 0.1;
 	_mp setMarkerColor "ColorRed";
+	_mp setMarkerSize _gameZoneSize;
+	MARKER_WHITE_LIST pushBack _mp;
+} forEach [[-1,-1],[-1,1],[-1,3],[3,-1],[3,1],[3,3],[1,3],[1,-1]];
+publicVariable "MARKER_WHITE_LIST";
+*/
+
+{
+	private _i = _x select 0;
+	private _j = _x select 1;
+	private _position = [_gameZoneX + (_i * (_gameZoneSize select 0)),_gameZoneY + (_j * (_gameZoneSize select 1)), 0];
+	private _mp = createMarker [format["edge-map-%1-%2",str _i, str _j], _position];
+	_mp setMarkerShape "RECTANGLE";
+	_mp setMarkerAlpha 0.3;
+	_mp setMarkerColor "ColorBlack";
 	_mp setMarkerSize _gameZoneSize;
 	MARKER_WHITE_LIST pushBack _mp;
 } forEach [[-1,-1],[-1,1],[-1,3],[3,-1],[3,1],[3,3],[1,3],[1,-1]];
@@ -434,7 +456,7 @@ _supportScore = 0;
 
 
 [] call DCW_fnc_camp;
-
+[] execVM "DCW\fnc\supportui\init.sqf"; // Support ui init
 [] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
 [] execVM "DCW\fnc\spawn\SpawnRandomEnemies.sqf"; //Enemy patrols
 [] execVM "DCW\fnc\spawn\SpawnRandomCar.sqf"; //Civil & enemy cars

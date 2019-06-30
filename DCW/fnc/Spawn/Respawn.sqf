@@ -22,7 +22,7 @@ if ((leader GROUP_PLAYERS) == _player) then {
 	_player remoteExec ["removeAllActions"];
 	sleep .3;
 	_player call DCW_fnc_ActionCamp;
-	_player call DCW_fnc_supportuiInit;
+	_player call DCW_fnc_addSupportUi;
 };
 
 DCW_fnc_HandleRespawnBase = {

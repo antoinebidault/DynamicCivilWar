@@ -5,7 +5,7 @@
  * License : GNU (GPL)
  * Create a complete map cluster
  */
-params["_markerWhiteList"];
+params["_gameArea"];
 
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
@@ -70,7 +70,7 @@ _markerFriendly = [];
     _res = [_pos,true] call DCW_fnc_getRadiusLocation;
     _radius = _res select 0;
 	
-	if (_radius > 0 && !(surfaceIsWater _pos))then {
+	if (_radius > 0 && !(surfaceIsWater _pos) && _pos inArea _gameArea)then {
 		_clusters pushback [_pos,_radius,_res select 1,true,if (text _x == "") then {"Unknown location"} else {text _x},_res select 2, _res select 3,str random 10000];
 	};
 } forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Airport","CityCenter"], 25000]; 
@@ -79,7 +79,7 @@ _markerFriendly = [];
 for "_xc" from 0 to _worldNbBlocks do {
 	for "_yc" from 0 to _worldNbBlocks do {
 		_markerPos = [(_xc*SIZE_BLOCK),(_yc*SIZE_BLOCK),0];
-		if (_markerPos inArea _markerWhiteList) then {
+		if (_markerPos inArea _gameArea) then {
 			_buildings = [_markerPos, (SIZE_BLOCK)] call DCW_fnc_findBuildings;
 			_nbBuildings = count _buildings;
 			if (_nbBuildings > 0)then{

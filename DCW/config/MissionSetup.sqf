@@ -71,3 +71,7 @@ SUPPORT_CAR_PARADROP_CLASS = [FACTION_PLAYER,["Car"],"slingload"] call DCW_fnc_F
 
 // EMpty the array for memory saving purposes...
 CONFIG_VEHICLES = []; 
+
+// When Everything is done => Let's start the mission !
+DCW_STARTED = true;
+publicVariable "DCW_STARTED";

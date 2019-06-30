@@ -17,7 +17,7 @@ SUPPORT_CAS_HELI_CLASS = ["B_Heli_Attack_01_dynamicLoadout_F","B_Heli_Light_01_d
 SUPPORT_MEDEVAC_CREW_CLASS = "rhsusf_socom_marsoc_sarc";
 SUPPORT_DRONE_CLASS = "B_UAV_02_dynamicLoadout_F";
 SUPPORT_HEAVY_TRANSPORT_CLASS = ["B_Heli_Transport_03_F"];
-SUPPORT_CAR_PARADROP_CLASS = "B_LSV_01_armed_F";
+SUPPORT_CAR_PARADROP_CLASS = ["B_LSV_01_armed_F"];
 
 //FRIENDLIES
 FRIENDLY_LIST_UNITS = ["B_Soldier_SL_F","B_soldier_AR_F","B_Soldier_GL_F","B_soldier_M_F","B_soldier_AT_F","B_soldier_AAT_F","B_Soldier_A_F","B_medic_F","B_Soldier_F","B_soldier_LAT_F","B_Soldier_TL_F"];

@@ -9,8 +9,8 @@ if (!isServer) exitWith{false};
 
 _nbTrucks = 2;
 _roadRadius = 40;
-_worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
-_worldCenter = [_worldSize/2,_worldSize/2,0];
+ _worldSize = (getMarkerSize GAME_ZONE) select 0;
+_worldCenter = getMarkerPos GAME_ZONE;
 private _compos = [compo_commander1, compo_commander2];
 private _situation = "+trees +forest*10 -meadow";
 private _commanderPos = [];
