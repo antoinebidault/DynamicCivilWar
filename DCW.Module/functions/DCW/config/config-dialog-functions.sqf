@@ -53,8 +53,16 @@ DCW_fnc_replaceAllCutsceneSoldiers = {
 		if (str _x find "DCW_cutscene_car" == 0  ) then {
 			_name = str _x ;
 			hideObject _x;
-			sleep .1;
+			_pos = getPos _x;
+			_objects =[_x,"ModuleRespawnVehicle_F"] call BIS_fnc_allSynchronizedObjects;
+			waitUntil {isHidden _x};
 			_vehicle = (_cars call BIS_fnc_selectRandom) createVehicle (getPos _x) ;
+			_vehicle setDir (getDir _x);
+			_vehicle setPos _pos;
+			if (count _objects > 0 ) then {
+				_respawnModule = _objects select 0;
+				_respawnModule synchronizeObjectsAdd [_vehicle];
+			};
 			deleteVehicle _x;
 			_vehicle setVehicleVarName _name;
 		}; 

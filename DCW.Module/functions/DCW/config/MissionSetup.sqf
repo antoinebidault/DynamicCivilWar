@@ -1,8 +1,13 @@
+if (!isServer) exitWith {};
+
+diag_log "[MissionSetup] Starting";
+diag_log format["[MissionSetup] nbVehicles %1",str count CONFIG_VEHICLES];
 
 _units = units GROUP_PLAYERS;
 GROUP_PLAYERS = createGroup SIDE_FRIENDLY;
 _units joinSilent GROUP_PLAYERS;
 publicVariable "GROUP_PLAYERS";
+
 
 FRIENDLY_LIST_UNITS = [FRIENDLY_LIST_UNITS,[FACTION_PLAYER,["Man"],[]] call DCW_fnc_factiongetunits] call DCW_fnc_fillSupportParam;
 _choppers = [FRIENDLY_CHOPPER_CLASS,[FACTION_PLAYER,["Helicopter"],[]] call DCW_fnc_factiongetunits] call DCW_fnc_fillSupportParam;
@@ -71,7 +76,12 @@ SUPPORT_CAR_PARADROP_CLASS = [FACTION_PLAYER,["Car"],"slingload"] call DCW_fnc_F
 
 // EMpty the array for memory saving purposes...
 CONFIG_VEHICLES = []; 
+publicVariable "CONFIG_VEHICLES";
 
 // When Everything is done => Let's start the mission !
 DCW_STARTED = true;
 publicVariable "DCW_STARTED";
+
+diag_log "[MissionSetup] Done, DCW_STARTED = true";
+
+true;

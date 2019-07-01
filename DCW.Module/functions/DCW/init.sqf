@@ -18,6 +18,7 @@ addMissionEventHandler ["Loaded",{
 		hint "mission loaded";
 		sleep 4;
 		[] call DCW_fnc_displayscore;
+		//[] spawn DCW_fnc_SpawnLoop;
     };
 }];
 
@@ -92,6 +93,7 @@ DCW_fnc_SpawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnOb
 DCW_fnc_spawnhumanitaryoutpost = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitaryoutpost.sqf";
 DCW_fnc_spawnhumanitar = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitar.sqf";
 DCW_fnc_spawnSnipers =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnSnipers.sqf";
+DCW_fnc_spawnLoop =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnLoop.sqf";
 
 //PATROL
 DCW_fnc_enemyCompoundPatrol= compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\CompoundPatrol.sqf";
@@ -186,7 +188,7 @@ compo_startup =  call (compileFinal preprocessFileLineNumbers "DCW\composition\s
 compos_turrets=  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\turrets.sqf");
 compos_objects =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\objects.sqf");
 compos_medical =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\medical.sqf");
-
+ 
 
 // Default configuration is called here
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-default.sqf"); 
@@ -221,6 +223,7 @@ CIVILIAN setFriend [RESISTANCE, 1];
 call (compileFinal preprocessFileLineNumbers "DCW\variables.sqf"); 
 
 
-[] execVM "DCW\headlessClient.sqf";
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";
+[] execVM "DCW\headlessClient.sqf";
+

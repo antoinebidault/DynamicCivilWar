@@ -1,4 +1,4 @@
-DEBUG = true;
+DEBUG = false;
 AI_SKILLS = .9;
 RESPAWN_ENABLED = true;
 MEDEVAC_ENABLED = true; // Reviving
@@ -11,6 +11,9 @@ ENABLE_DIALOG = true;
 POPULATION_INTENSITY = 1;
 PERCENTAGE_OF_ENEMY_COMPOUND = 4;
 NUMBER_OFFICERS = 3;
+
+// List of vehicle config, everybody needs this part
+CONFIG_VEHICLES = [] call DCW_fnc_GetConfigVehicles;
 
 RESTRICTED_AMMOBOX = true;
 publicVariable "RESTRICTED_AMMOBOX";

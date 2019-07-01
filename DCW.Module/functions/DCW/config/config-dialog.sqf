@@ -1,8 +1,7 @@
 disableSerialization;
 
 
-// List of vehicle config
-CONFIG_VEHICLES = [] call DCW_fnc_GetConfigVehicles;
+
 
 titleCut ["", "BLACK FADED", 999];
 

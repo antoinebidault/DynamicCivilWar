@@ -2,3 +2,5 @@
 node_modules/
 .vscode/
 DCW.*/DCW/
+Build/
+~DCW.*/

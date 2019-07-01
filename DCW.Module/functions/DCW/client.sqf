@@ -190,9 +190,13 @@ addMissionEventHandler
 	{	
 		params ["_isOpened","_isForced"];
 		if (_isOpened) then {
-			[] spawn {
+			// Fetch markers from server silently
+			_markers = [ missionNamespace, "MARKERS", []] call BIS_fnc_getServerVariable;
+			[_markers] spawn {
+				params ["_markers"];
 				CurrentMarker = "";
 				["DCW-markerhover", "onEachFrame", {
+					params ["_markers"];
 					_map = findDisplay 12 displayCtrl 51; 
 					_mapMarker = (ctrlMapMouseOver _map);
 					hintsilent "";
@@ -201,7 +205,7 @@ addMissionEventHandler
 						_map ctrlMapCursor ["Track","HC_overFriendly"];
 						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString && CurrentMarker != _mapMarker select 1) then {
 							CurrentMarker = _mapMarker select 1;
-							_marker = [_mapMarker select 1] call DCW_fnc_getMarkerById;
+							_marker = [_markers,_mapMarker select 1] call DCW_fnc_getMarkerById;
 							_compound = _marker select 0;
 							_people = (_compound select 6);
 							_population = (_people select 0) + (_people select 1) + (_people select 2) + (_people select 5) + (_people select 8); 
@@ -225,7 +229,7 @@ addMissionEventHandler
 					if (!visibleMap) then {
 						["DCW-markerhover", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 					};
-				}] call BIS_fnc_addStackedEventHandler;
+				},[_markers]] call BIS_fnc_addStackedEventHandler;
 			};
 		};
 	

@@ -3,7 +3,7 @@ params["_marker","_state"];
 if (!isServer) exitWith { hint "setCompoundState executed on client"};
 
 _markerID = _marker select 0;
-_markerData = [_markerID] call DCW_fnc_getMarkerById;
+_markerData = [MARKERS,_markerID] call DCW_fnc_getMarkerById;
 _marker = _markerData select 0;
 _markerIndex = _markerData select 1;
 
@@ -121,5 +121,6 @@ waitUntil {!IN_MARKERS_LOOP};
 MARKERS set [_markerIndex,_marker];
 
 [] call DCW_fnc_refreshMarkerStats;
+[] remoteExec ["DCW_fnc_DisplayScore"];
 
 _marker;

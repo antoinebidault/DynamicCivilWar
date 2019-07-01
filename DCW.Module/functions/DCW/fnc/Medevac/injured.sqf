@@ -1,7 +1,7 @@
 params["_unit"];
 
 if (vehicle _unit != _unit) then {
-	_unit leaveVehicle (vehicle _unit);
+	doGetOut _unit;
 };
 
 _unit setUnconscious true; 

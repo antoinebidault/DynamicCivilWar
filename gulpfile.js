@@ -54,6 +54,26 @@ gulp.task('comments', function() {
 const pbo = require('gulp-armapbo');
 
 gulp.task('pack', () => {
+    return gulp.src('DCW.Malden/**/*')
+        .pipe(pbo.pack({
+            fileName: 'DCW.Malden.pbo',
+            extensions: [{
+                name: 'Bidass',
+                value: 'AntoineBidault'
+            }, {
+                name: 'DCW',
+                value: 'DynamicCivilWar'
+            }],
+            compress: [
+               // '**/*.sqf',
+               'config.cpp'
+            ]
+        }))
+        .pipe(gulp.dest('Build/@DCW/addons'));
+});
+
+
+gulp.task('mission', () => {
     return gulp.src('DCW.Module/**/*')
         .pipe(pbo.pack({
             fileName: 'DCW_Module.pbo',
@@ -66,8 +86,8 @@ gulp.task('pack', () => {
             }],
             compress: [
                // '**/*.sqf',
-                'config.cpp'
+              //  'config.cpp'
             ]
         }))
-        .pipe(gulp.dest('@DCW/addons'));
+        .pipe(gulp.dest('Build/MPMissions'));
 });

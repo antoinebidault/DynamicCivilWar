@@ -1,4 +1,4 @@
-params["_markerId"];
+params["_markers""_markerId"];
 
 // If not the server fetch from server the markers
 if (!isServer) then {MARKERS = [ missionNamespace, "MARKERS", []] call BIS_fnc_getServerVariable;};
