@@ -66,7 +66,7 @@ private _logicGroupSupportProvider = createGroup _center;
 	_supportProvider setVariable["BIS_fnc_initModules_disableAutoActivation", false];
 
 	[SUPPORT_REQUESTER, _x select 0, 0] call BIS_fnc_limitSupport;
-	[player, SUPPORT_REQUESTER, _supportProvider] call BIS_fnc_addSupportLink;
+	[(leader GROUP_PLAYERS), SUPPORT_REQUESTER, _supportProvider] call BIS_fnc_addSupportLink;
 
 }forEach [
 	["Artillery",SUPPORT_ARTILLERY_CLASS],

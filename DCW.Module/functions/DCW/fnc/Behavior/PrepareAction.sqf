@@ -223,14 +223,14 @@ DCW_fnc_addActionHalt = {
             false; 
         };
         
-        _unit removeAction _action;
-        _unit call DCW_fnc_addActionDidYouSee;
-        _unit call DCW_fnc_addActionFeeling;
-        _unit call DCW_fnc_addActionGetIntel;
-        _unit call DCW_fnc_addActionRally;
-        _unit call DCW_fnc_addActionSupportUs;
+        [_unit,_action] remoteExec ["removeAction"];
+        _unit remoteExec ["DCW_fnc_addActionDidYouSee"];
+        _unit remoteExec ["DCW_fnc_addActionFeeling"];
+        _unit remoteExec ["DCW_fnc_addActionGetIntel"];
+        _unit remoteExec ["DCW_fnc_addActionRally"];
+        _unit remoteExec ["DCW_fnc_addActionSupportUs"];
         if ( _unit getVariable["DCW_Chief",objNull] != objNull && alive (_unit getVariable["DCW_Chief",objNull])) then {
-            [_unit,_unit getVariable["DCW_Chief",objNull]]  call DCW_fnc_addActionFindChief;
+            [_unit,_unit getVariable["DCW_Chief",objNull]] remoteExec ["DCW_fnc_addActionFindChief"];
         };
 
         sleep 1;
@@ -247,9 +247,8 @@ DCW_fnc_addActionHalt = {
         _unit stop false;
         _unit enableAI "MOVE";
 
-        RemoveAllActions _unit;
-
-        [_unit] call DCW_fnc_addCivilianAction;
+        _unit remoteExec ["RemoveAllActions"];
+        [_unit] remoteExec ["DCW_fnc_addCivilianAction"];
 
     },nil,12,false,true,"","true",6,false,""];
 };
@@ -490,6 +489,8 @@ DCW_fnc_addActionRally = {
             [_unit,"Ok, I'm in !",false] call DCW_fnc_Talk;
             [_unit,SIDE_FRIENDLY] call DCW_fnc_BadBuyLoadout;
             RemoveAllActions _unit;
+            _unit setVariable["DCW_recruit",true,true];
+            _unit remoteExec ["DCW_fnc_addActionLeaveGroup"];
             [_unit,3] remoteExec ["DCW_fnc_updateRep",2];
             [_unit] joinSilent grpNull;
             [_unit] join GROUP_PLAYERS;
@@ -535,13 +536,13 @@ DCW_fnc_addActionFindChief = {
 
             _marker = "localchief";
             if(getMarkerColor "localchief" == "") then {
-                _marker = createMarker ["localchief", getPosWorld _chief];
+                _marker = createMarkerLocal ["localchief", getPosWorld _chief];
             };
-            _marker setMarkerShape "ICON";
-            _marker setMarkerType "mil_dot";
-            _marker setMarkerColor "ColorGreen";
-            _marker setMarkerText "Local chief";
-            _marker setMarkerPos (getPosWorld _chief);
+            _marker setMarkerShapeLocal "ICON";
+            _marker setMarkerTypeLocal "mil_dot";
+            _marker setMarkerColorLocal "ColorGreen";
+            _marker setMarkerTextLocal "Local chief";
+            _marker setMarkerPosLocal (getPosWorld _chief);
 
             [_unit,format["I marked you the exact position where I last saw %1", name _chief],false] call DCW_fnc_Talk;
         }else{
@@ -551,6 +552,27 @@ DCW_fnc_addActionFindChief = {
     },[_chief],7,false,true,"","true",3,false,""];
 };
 
+
+DCW_fnc_addActionLeaveGroup = {
+     _this addaction ["<t color='#FF0000'>Go away !</t>",{
+        params["_unit","_talker"];
+        if (!(_this call DCW_fnc_startTalking)) exitWith {};
+        [_unit,4] remoteExec ["DCW_fnc_updateRep",2];
+        _unit remoteExec ["removeAllActions",0];
+        _talker playActionNow "gestureGo";
+        [_talker,format["%1, You are now free to go ! Thanks for your help",name _unit],false] call ["DCW_fnc_Talk",0];
+        [_unit,["Well, good bye buddy !","Bye my friend !","Ok, See you in hell.."] call BIS_fnc_selectRandom,false] remoteExec ["DCW_fnc_Talk",0];
+        _newGrp = createGroup SIDE_FRIENDLY;
+        [_unit] join _newGrp;
+        _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+        _unit enableAI "MOVE";
+        _unit stop false;
+        _unit forceWalk false;
+        _unit forceSpeed 10;
+        _unit move _pos;
+        _this call DCW_fnc_endTalking;
+    },nil,8,false,true,"","true",3,false,""];
+};
 
 DCW_fnc_addActionLeave = {
      _this addaction ["<t color='#FF0000'>Go away !</t>",{
@@ -827,7 +849,7 @@ DCW_fnc_ActionTorture =  {
 DCW_fnc_startTalking = {
     params["_unit","_talker","_action"];
      if (_unit getVariable["DCW_talking",false]) exitWith {
-         hint "You can't do multiple action at the same time..."; 
+         hint "Can't do multiple action at the same time..."; 
         _this spawn {
             sleep 10;
             _this call DCW_fnc_endTalking;
@@ -846,6 +868,6 @@ DCW_fnc_startTalking = {
 
 DCW_fnc_endTalking = {
     params["_unit","_talker","_action"];
-    _unit setVariable["DCW_talking",false];
+    _unit setVariable["DCW_talking",false,true];
     true;
 };

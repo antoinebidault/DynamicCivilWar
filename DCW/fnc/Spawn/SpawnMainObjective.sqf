@@ -80,6 +80,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
     if (group _killer == GROUP_PLAYERS)then{
         [_killer,{
             [_this,format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _this],true] call DCW_fnc_talk;
+            hint "mission successful ! Good job soldier !";
             sleep 60;
             activateKey "key1";
             "EveryoneWon" call BIS_fnc_endMissionServer;

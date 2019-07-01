@@ -54,9 +54,9 @@ gulp.task('comments', function() {
 const pbo = require('gulp-armapbo');
 
 gulp.task('pack', () => {
-    return gulp.src('DCW.Malden/**/*')
+    return gulp.src('DCW.Module/**/*')
         .pipe(pbo.pack({
-            fileName: 'DCW.Malden.pbo',
+            fileName: 'DCW_Module.pbo',
             extensions: [{
                 name: 'Bidass',
                 value: 'AntoineBidault'
@@ -74,9 +74,9 @@ gulp.task('pack', () => {
 
 
 gulp.task('mission', () => {
-    return gulp.src('DCW.Module/**/*')
+    return gulp.src('DCW.Malden/**/*')
         .pipe(pbo.pack({
-            fileName: 'DCW_Module.pbo',
+            fileName: 'DCW.Malden.pbo',
             extensions: [{
                 name: 'Bidass',
                 value: 'AntoineBidault'
