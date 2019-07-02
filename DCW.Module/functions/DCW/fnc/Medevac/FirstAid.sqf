@@ -94,12 +94,16 @@ detach _healer;
 detach _injuredperson;
 
 if (alive _healer && alive _injuredperson && _injuredperson getVariable["DCW_unit_injured",false]) then {
+	
+	if (rating _injuredperson < 0) then {
+		_injuredperson addRating ((-(rating _injuredperson)) + 1000);
+	};
 	_injuredperson setDamage 0;
 	_injuredperson setCaptive false;
 	_injuredperson setUnconscious false;
 	_injuredperson setVariable["DCW_unit_injured",false,true];
 	deleteMarker (_injuredperson getVariable ["DCW_marker_injured",  ""]);
-	
+
 	if (isPlayer _injuredperson && (leader GROUP_PLAYERS) == _injuredperson) then {
 		_injuredperson remoteExec ["removeAllActions"];
 		sleep .3;

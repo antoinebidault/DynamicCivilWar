@@ -1,4 +1,8 @@
 // Reset all the unit's specific states
+// Corrected player rating
+if (rating _this < 0) then {
+	_this addRating ((-(rating _this)) + 1000);
+};
 
 detach _this;
 _this setDamage 0;
@@ -23,10 +27,7 @@ if (ACE_ENABLED) then {
 //Default trait
 _this setUnitTrait ["explosiveSpecialist",true];
 
-// Corrected player rating
-if (rating _this < 0) then {
-	_this addRating ((-(rating _this)) + 1000);
-};
+
 
 if (isPlayer _this && (leader GROUP_PLAYERS) == _this) then {
 	_this remoteExec ["removeAllActions"];

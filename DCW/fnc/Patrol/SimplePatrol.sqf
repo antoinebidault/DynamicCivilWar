@@ -8,7 +8,7 @@
 //Inspired by SPUn / LostVar
 private ["_unit","_radius","_newPos","_bPoss","_dir","_curPos"];
 
-_unit = _this select 0;
+_unit = leader (_this select 0);
 _radius = _this select 1;
 _anims = ["STAND","STAND_IA","SIT_LOW","WATCH","WATCH1","WATCH2"];
 _startPos = getPosASL _unit;

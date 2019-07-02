@@ -107,6 +107,7 @@ DCW_fnc_civilianPatrol = compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol
 DCW_fnc_gotomeeting =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Patrol\gotomeeting.sqf";
 DCW_fnc_chopperpatrol = compile preprocessFileLineNumbers  "DCW\fnc\Patrol\ChopperPatrol.sqf";
 DCW_fnc_humanitarPatrol = compile preprocessFileLineNumbers  "DCW\fnc\Patrol\HumanitarPatrol.sqf";
+DCW_fnc_patrolDistributeToHC = compile preprocessFileLineNumbers  "DCW\fnc\Patrol\patrolDistributeToHC.sqf";
 
 //OBJECTIVES
 DCW_fnc_getIntel = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\GetIntel.sqf";

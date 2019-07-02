@@ -7,8 +7,9 @@
 
 
 private ["_flrObj"];
-_leader = _this select 0;
+_grp = _this select 0;
 _unitChased = _this select 1;
+_leader= leader _grp;
 _lastKnownPosition = position _leader;
 
 _marker = createMarker [format["sold%1",random 13100], _lastKnownPosition];
@@ -23,7 +24,7 @@ if (!DEBUG) then {
 
 
 while { alive _leader && alive _unitChased }do{
-    
+    _leader= leader _grp;
     if (_leader knowsAbout _unitChased >= .5) then {
         if (time > LAST_FLARE_TIME + 120)then{
             _flrObj = "F_40mm_white" createvehicle ((_unitChased) modelToWorld [50-round(random 25),50-round(random 25),200]); 

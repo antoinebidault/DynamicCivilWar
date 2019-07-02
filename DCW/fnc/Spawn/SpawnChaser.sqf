@@ -24,6 +24,7 @@ private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100,
 [HQ, format["Be careful, our drone has watched %1 of them moving straight to your position, and there are other reinforcements incoming !",_nbUnit], true] remoteExec["DCW_fnc_talk", GROUP_PLAYERS, false];
 
  //Trigger chase
- [leader _grp, _unitChased] spawn DCW_fnc_chase;
+ // [leader _grp, _unitChased] spawn DCW_fnc_chase;
+[_grp,"DCW_fnc_simplePatrol", [leader _grp, _unitChased]] call DCW_fnc_chase;
 
  _units;

@@ -33,6 +33,7 @@ while {true} do {
 			for "_j" from 1 to _numberOfmen  do {
 			
 				_unit = [_goatgroup,_pos] call DCW_fnc_SpawnCivil;
+			    _goatgroup call DCW_fnc_sendToHC;
 			
 				if(_j==1)then{
 					_unit setBehaviour "SAFE";
@@ -61,7 +62,6 @@ while {true} do {
 			_goat = createAgent [_type, _pos, [], 0, "NONE"];
 			_goat addMPEventHandler ["MPKilled", {
 				_men = position(_this select 0) nearObjects ["Man", 40];
-
 				if ({alive _x && side _x == SIDE_CIV}count _men > 0 && group(_this select 1) == GROUP_PLAYERS) then{
 					[_men select 0,-3] remoteExec ["DCW_fnc_UpdateRep",2];
                 	[_man select 0,"Damn ! Don't touch my sheep !", false] spawn DCW_fnc_talk;

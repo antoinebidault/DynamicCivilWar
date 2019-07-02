@@ -60,8 +60,11 @@ if (isPlayer _unit && _unit == player) then {
 	[_unit,_idAction] remoteExec ["BIS_fnc_holdActionRemove"];
 	_unit call DCW_fnc_removeActionHeal;
 	// The soldier has been revived successfully
-	if (isMultiplayer) then {_unit setDamage 1;};
-	if ( !(_unit getVariable["DCW_unit_injured",true]) ) exitWith { };
+	if ( !(_unit getVariable["DCW_unit_injured",false]) ) exitWith { };
+
+	// If in multiplayer => kill him
+	if (isMultiplayer) then { _unit setDamage 1; };
+	
 	_unit setVariable["DCW_unit_injured",false,true];
 
 } else {

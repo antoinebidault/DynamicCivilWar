@@ -20,7 +20,7 @@ private _marker = _unit getVariable["marker",""];
 
 if (_side == SIDE_ENEMY) then {
   _unit stop true;
-  _unit playActionNow  "TakeFlag";
+  [_unit, "TakeFlag"] remoteExec ["playActionNow"];
   sleep 1;
 };
 
@@ -71,7 +71,7 @@ if (_side == SIDE_ENEMY)then{
   _marker setMarkerColor "ColorRed";
   _unit setVariable["DCW_Type","enemy"];
   sleep 4;
-  _unit playActionNow  "MountOptic";
+  [_unit, "MountOptic"] remoteExec ["playActionNow"];
   sleep 3;
   _unit SetBehaviour "COMBAT";
 }else{

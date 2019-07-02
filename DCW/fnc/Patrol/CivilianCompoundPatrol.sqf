@@ -8,13 +8,14 @@
  */
 
 
-private _unit = _this select 0;
+private _grp = _this select 0;
 private _radius = _this select 1;
 private _meetPoint = _this select 2;
 private _buildings = _this select 3;
+private _unit = leader _grp;
 
 // If no building exit loop and do a basic patrol
-if (count _buildings == 0) exitWith {[_unit,_radius] call DCW_fnc_simplePatrol;};
+if (count _buildings == 0) exitWith {[_grp,_radius] call DCW_fnc_simplePatrol;};
 
 //private _buildings = [getPos _unit,_radius] call DCW_fnc_findBuildings;
 //if(isNil("_buildings"))exitWith{};
@@ -112,6 +113,8 @@ while { alive _unit && !(_unit getVariable ["civ_insurgent",false]) }do{
             if (_unit getVariable ["civ_insurgent",false] || !alive _unit)then{breakTo "main";};
         };
     };
+    
+    _unit = leader _grp;
 };
 
 // Go out if you detected enemy;

@@ -35,7 +35,7 @@ _radius = ((getMarkerSize _marker) select 0);
         _enemy setDir random 360;
 
         //Add torch to soldiers
-        [_enemy,10] spawn DCW_fnc_simplepatrol;
+        [_grp,10] spawn DCW_fnc_simplepatrol;
 
         _soldiers pushback _enemy;
         _newObjs pushback _enemy;

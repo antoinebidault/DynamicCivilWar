@@ -78,7 +78,7 @@ for "_xc" from 1 to _nb  do {
       _units pushBack _unit;
 
       //Si c'est une patrouille
-      [leader _grp,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_EnemyCompoundPatrol;
+      [_grp,"DCW_fnc_EnemyCompoundPatrol", [_grp,_radius,_meetingPointPosition,_buildings]] call DCW_fnc_patrolDistributeToHC;
       
     };
 };

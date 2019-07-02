@@ -16,13 +16,13 @@ DCW_fnc_addActionJoinAsAdvisor = {
       
         _unit stop true;
         _talker playActionNow "GestureFreeze";
-        _unit playActionNow "GestureHi";
-       
+        [_unit, "GestureHi"] remoteExec ["playActionNow"];
+
         sleep .3;
 
         [_talker,"Hi buddy, I would need a military advisor, are you in ?!",false] call DCW_fnc_Talk;
         [_unit,"I'm in ! Let's go",false] call DCW_fnc_Talk;
-        _unit removeAction _action;
+        [_unit,_action] remoteExec ["removeAction"];
 
         sleep .3;
         
@@ -211,15 +211,17 @@ DCW_fnc_addActionHalt = {
         _talker remoteExec ["GestureFreeze"];
         
         _unit stop true;
+        [_unit,"MOVE"] remoteExec ["disableAI"];
 
         [_talker,"Hello sir !",false] call DCW_fnc_Talk;
         
         if (!weaponLowered _talker) exitWith { 
-            [_unit,"I don't talk to somebody pointing his gun on me ! Go away !",false] call DCW_fnc_Talk;
-            _unit playActionNow "gestureNo";
+            [_unit,"I don't talk to somebody pointing his gun on me ! Go away !",false] remoteExec ["DCW_fnc_Talk",_talker];
+            [_unit, "gestureNo"] remoteExec ["playActionNow",2];
             [_talker,"I'm sorry, sir !",false] call DCW_fnc_Talk;
             [_unit,-2] remoteExec ["DCW_fnc_updateRep",2];
             _unit stop false;
+            [_unit,"MOVE"] remoteExec ["enableAI"];
             _this call DCW_fnc_endtalking;
             false; 
         };
@@ -235,10 +237,9 @@ DCW_fnc_addActionHalt = {
         };
 
         sleep 1;
-        _unit playActionNow "GestureHi";
-        [_unit,format["Hi ! My name is %1.", name _unit],false] spawn DCW_fnc_Talk;
+        [_unit, "GestureHi"] remoteExec ["playActionNow"];
+        [_unit,format["Hi ! My name is %1.", name _unit],false] remoteExec ["DCW_fnc_Talk",_talker];
         
-        _unit disableAI "MOVE";
         sleep 0.5;
 
         _this call DCW_fnc_endtalking;
@@ -246,7 +247,7 @@ DCW_fnc_addActionHalt = {
         waitUntil { _talker distance _unit > 13; sleep 4; };
             
         _unit stop false;
-        _unit enableAI "MOVE";
+        [_unit,"MOVE"] remoteExec ["enableAI"];
 
         _unit remoteExec ["RemoveAllActions"];
         [_unit] remoteExec ["DCW_fnc_addCivilianAction"];
@@ -489,7 +490,7 @@ DCW_fnc_addActionRally = {
             _unit enableAI "ALL";
             [_unit,"Ok, I'm in !",false] call DCW_fnc_Talk;
             [_unit,SIDE_FRIENDLY] call DCW_fnc_BadBuyLoadout;
-            RemoveAllActions _unit;
+            _unit remoteExec ["RemoveAllActions"];
             _unit setVariable["DCW_recruit",true,true];
             _unit remoteExec ["DCW_fnc_addActionLeaveGroup"];
             [_unit,3] remoteExec ["DCW_fnc_updateRep",2];
@@ -555,7 +556,7 @@ DCW_fnc_addActionFindChief = {
 
 
 DCW_fnc_addActionLeaveGroup = {
-     _this addaction ["<t color='#FF0000'>Go away !</t>",{
+     _this addaction ["<t color='#FF0000'>Order him to leave</t>",{
         params["_unit","_talker"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         [_unit,4] remoteExec ["DCW_fnc_updateRep",2];

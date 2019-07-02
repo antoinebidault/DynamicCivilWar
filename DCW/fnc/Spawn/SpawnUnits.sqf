@@ -51,7 +51,8 @@ for "_xc" from 1 to _nbenemies  do {
       _units pushBack _enemy;
     };
 
-    [leader _grp,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_EnemyCompoundPatrol;
+   // [_grp,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_EnemyCompoundPatrol;
+    [_grp,"DCW_fnc_EnemyCompoundPatrol",[_grp,_radius,_meetingPointPosition,_buildings]] call DCW_fnc_patrolDistributeToHC;
 };
 
 //Civilians
@@ -112,7 +113,8 @@ for "_xc" from 1 to _population do {
                 _civ setPos ([_posSelected,1, 45, 2, 0, 10, 0] call BIS_fnc_findSafePos);
               };
             };
-            [_civ,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_CivilianCompoundPatrol;
+           // [_grp,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_CivilianCompoundPatrol;
+            [_grp,"DCW_fnc_CivilianCompoundPatrol",[_grp,_radius,_meetingPointPosition,_buildings]] call DCW_fnc_patrolDistributeToHC;
 
             // If "supporting"
             if (_compoundState == "supporting") then {

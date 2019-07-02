@@ -6,8 +6,9 @@
  */
 
 private ["_timer","_rndMarker","_rndPos","_radius","_newPos"];
-params ["_unit"];
+params ["_grp"];
 
+_unit = leader _grp;
 _unit setSpeedMode "LIMITED";
 _unit forceWalk  true;
 

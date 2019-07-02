@@ -72,7 +72,8 @@ for "_xc" from 1 to _nb  do {
       _units pushBack _unit;
 
       //Si c'est une patrouille
-      [_unit,_radius,_meetingPointPosition,_buildings,_pos] spawn DCW_fnc_HumanitarPatrol;
+       // spawn DCW_fnc_HumanitarPatrol;
+			[_grp,"DCW_fnc_HumanitarPatrol", [_grp,_radius,_meetingPointPosition,_buildings,_pos]] call DCW_fnc_patrolDistributeToHC;
 };
 
 _units;

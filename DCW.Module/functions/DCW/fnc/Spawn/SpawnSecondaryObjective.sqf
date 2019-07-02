@@ -29,6 +29,7 @@ DCW_fnc_spawnOfficer = {
     _grp = createGroup SIDE_ENEMY;
     _officer = _grp createUnit [ENEMY_COMMANDER_CLASS, _initPos,[],AI_SKILLS,"NONE"];
     [_officer] joinSilent _grp;
+    // _grp call DCW_fnc_sendToHC;
 
     removeAllWeapons _officer;
     _officer setBehaviour "SAFE";

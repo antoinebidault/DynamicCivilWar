@@ -14,6 +14,8 @@ _friendlieness =  [_this, 5, 100-PERCENTAGE_SUSPECT, [0]] call BIS_fnc_param;
 
 _unit = _group createUnit [_unitName, _pos,[],AI_SKILLS,"NONE"];
 [_unit] joinsilent _group;
+// _group call DCW_fnc_sendToHC;
+
 removeAllWeapons _unit;
 //_unit setBehaviour "CARELESS";
 /*_unit allowFleeing 0;

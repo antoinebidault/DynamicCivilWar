@@ -16,7 +16,6 @@ if (daytime > 8 && daytime < 20) then {
 };
 
 sleep 1;
-
 titleCut ["", "BLACK IN",10];
 
 playMusic "seal";
@@ -76,6 +75,7 @@ _cam camSetPos _dest;
 _cam camcommit 10;
 
 sleep 10;
+"SmokeShellYellow" createVehicle  _dest; 
 
 //[_cam,_chopper, [-14,22,-15],7] call DCW_fnc_camfollow;
 

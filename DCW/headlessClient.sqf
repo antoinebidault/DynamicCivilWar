@@ -1,9 +1,53 @@
-/////////////////////////////////////////////////////////////
-//  71st Special Operations Group Default description.ext  //
-//  Created by the 71st SOG Development Team               //
-//  Visit us on the web http://71stsog.com                 //  
-//  Teamspeak 3:  ts3.71stsog.com                          //
-/////////////////////////////////////////////////////////////
+DCW_fnc_sendToHC = {
+	_grp = _this;
+	if (!isDedicated) exitWith {2};
+  if (count HCs == 0) ExitWith{2};
+  _sortedHCs = [HCs, [], {(_x call DCW_fnc_countUnitInHC)}, "ASCEND"] call BIS_fnc_sortBy;
+  _hc = (_sortedHCs select 0);
+	_grp setGroupOwner (owner _hc);
+  diag_log format["[HC] group %1 transmitted to %2", str _grp,str _hc];
+  (owner _hc);
+};
+
+DCW_fnc_countUnitInHC = {
+  ({groupOwner _x == owner _this} count allGroups);
+};
+
+
+// Create the HCS
+HCs = [];
+
+if (!isDedicated) exitWith{};
+
+// Refresh the HC state
+while {true} do {
+  for "_i" from 1 to 4 do{ 
+    if !(isNil format["HC%1",str _i]) then {
+      _hc = (missionNamespace getVariable format["HC%1",str _i]);
+      if (HCs find _hc == -1) then {
+        HCs pushBackUnique _hc;
+        diag_log format["[HC] Connected : %1",str _hc];
+      };
+    };
+  };
+  publicVariableServer "HCs";
+
+  // Check the current HCs
+  if (count HCs > 0) then {
+    for "_i" from 0 to (count HCs - 1) do{ 
+      _hc = HCS select _i;
+      if (isNull _hc) then {
+        diag_log "[HC] Disconnected";
+        HCs = HCs - [_hc];
+        publicVariableServer "HCs";
+      } else {
+        diag_log format ["[HC] %1 AI groups currently on %2", _x call DCW_fnc_countUnitInHC, str _hc]; 
+      };
+    } foreach HCs;
+  };
+
+  sleep 30;
+};
 
 /*
  * passToHCs.sqf
@@ -18,6 +62,7 @@
  * 
  * Thanks to the 71st !
  */
+/*
 if (!isDedicated) exitWith {};
 if (!isServer) exitWith {};
 
@@ -200,34 +245,4 @@ while {true} do {
     diag_log format ["passToHCs: Cleaned up %1 dead bodies/destroyed vehicles", _numDeleted];
   };
 };
-
-/*
-	Group: Distribution Functions
-
-if (!isDedicated) exitWith {};
-
-HCs = [];
-for "_i" from 1 to 4 do{ 
-	if !(isNil "HC_%1") then {
-		HCs pushBack format["HC_%1",_i];
-	};
-};
-publicVariableServer "HCs"
-
-DCW_fnc_distribute = {
-	params["_unit"];
-	if (!isDedicated) exitWith {};
-	
-	_unit setGroupOwner (_sortHCs select 0);
-};
-
-
-["HCS_sendToHC", "onEachFrame", {
-    if ((isPlayer)||(_x in units group _HC)) exitWith {};
-    if (isNull _HC) ExitWith{};
-	_sortHCs = [HCs, [], {count units group _x}, "ASCEND"] call BIS_fnc_sortBy;
-
-    { _x setGroupOwner _HC;	//adding all units that aren't player or aren't already under HC to HC
-    }forEach allUnits;
-
-}] call BIS_fnc_addStackedEventHandler;
+*/

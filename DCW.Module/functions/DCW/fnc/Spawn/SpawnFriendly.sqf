@@ -12,6 +12,7 @@ private _excludedFromSpawnedUnit = _this select 2;
 private _unitName = ALLIED_LIST_UNITS call BIS_fnc_selectRandom;
 private _unit = _group createUnit [_unitName, _pos,[],AI_SKILLS,"NONE"];
 [_unit] joinsilent _group;
+// _group call DCW_fnc_sendToHC;
 
 if (DEBUG)then{
     [_unit,"ColorGreen"] call DCW_fnc_addmarker;

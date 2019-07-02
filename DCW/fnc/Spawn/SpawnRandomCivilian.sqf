@@ -29,7 +29,11 @@ while{true}do {
 				_unit setBehaviour "SAFE";
 				sleep .4;
 			};
-			[leader _group] spawn DCW_fnc_civilianPatrol;
+			
+			// Send group to HC
+			[_group,"DCW_fnc_civilianPatrol", [_group]] call DCW_fnc_patrolDistributeToHC;
+
+			//[_group] spawn DCW_fnc_civilianPatrol;
 		};
 	};	
 

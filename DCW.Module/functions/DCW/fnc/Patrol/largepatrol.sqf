@@ -6,8 +6,9 @@
  */
 
 private ["_timer","_rndMarker","_rndPos","_radius","_newPos"];
-params ["_unit","_marker"];
+params ["_grp","_marker"];
 
+_unit = leader _grp;
 _unit addWeapon "Binocular";
 
 
@@ -20,6 +21,7 @@ if(isNull(_unit findNearestEnemy _unit))then{
 };
 
 while { alive _unit }do{
+    _unit = leader _grp;
     _rndMarker = ([position _unit, true, "any"] call DCW_fnc_findNearestMarker) select 0;
     _rndPos = getMarkerPos _rndMarker;
     _radius = (getMarkerSize _rndMarker) select 0;

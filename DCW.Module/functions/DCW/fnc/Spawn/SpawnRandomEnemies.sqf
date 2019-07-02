@@ -57,7 +57,9 @@ while{true}do {
 				_unit setBehaviour "SAFE";
 				sleep .4;
 			};
-			[leader _grp, 120] spawn DCW_fnc_simplePatrol;
+			//[_grp, 120] spawn DCW_fnc_simplePatrol;
+			// Send group to HC
+			[_grp,"DCW_fnc_simplePatrol", [_grp, 120]] call DCW_fnc_patrolDistributeToHC;
 		};
 	};	
 	

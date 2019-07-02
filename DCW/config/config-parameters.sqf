@@ -1,4 +1,4 @@
-DEBUG = true;
+DEBUG = false;
 AI_SKILLS = .9;
 RESPAWN_ENABLED = true;
 MEDEVAC_ENABLED = true; // Reviving
