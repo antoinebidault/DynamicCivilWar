@@ -30,6 +30,7 @@ DCW_fnc_addActionJoinAsAdvisor = {
         _unit stop false;
         [_unit] join GROUP_PLAYERS;
         _this call DCW_fnc_endTalking;
+        _unit remoteExec ["DCW_fnc_addActionLeaveGroup"];
 
     },nil,1,true,true,"","true",3,false,""];
 };

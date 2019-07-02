@@ -251,7 +251,7 @@ DCW_fnc_SaveAndCloseConfigDialog = {
 		titleCut ["Preparing units...", "BLACK FADED", 999];
 
 		// Execute mission setup on server
-		[] remoteExec ["DCW_fnc_missionsetup", 2];
+		[] remoteExec ["DCW_fnc_missionSetup", 2];
 		
 		CONFIG_CAMERA cameraeffect ["terminate", "back"];
 		camDestroy CONFIG_CAMERA;

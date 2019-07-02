@@ -49,7 +49,7 @@ class LOADOUT_DIALOG
           w = 27.1515 * GUI_GRID_W;
           h = 1.29462 * GUI_GRID_H;
         };
-        class ICE_BUTTON_1000: RscButton
+        class DCW_BUTTON_1000: RscButton
         {
           idc = 1000;
           action = "[] call DCW_fnc_SaveAndCloseConfigDialog";
@@ -59,7 +59,7 @@ class LOADOUT_DIALOG
           w = 26 * GUI_GRID_W;
           h = 1.5 * GUI_GRID_H;
         };
-        class ICE_BUTTON_1001: RscButton
+        class DCW_BUTTON_1001: RscButton
         {
           idc = 1001;
           action = "[""prev""] call DCW_fnc_switchUnit;";
@@ -69,7 +69,7 @@ class LOADOUT_DIALOG
           w = 9 * GUI_GRID_W;
           h = 2 * GUI_GRID_H;
         };
-        class ICE_BUTTON_1003: RscButton
+        class DCW_BUTTON_1003: RscButton
         {
           idc = 1002;
           action = "[] call DCW_fnc_editloadout;";
@@ -80,7 +80,7 @@ class LOADOUT_DIALOG
           w = 16 * GUI_GRID_W;
           h = 2 * GUI_GRID_H;
         };
-        class ICE_BUTTON_1002: RscButton
+        class DCW_BUTTON_1002: RscButton
         {
           idc = 1003;
           action = "[""next""] call DCW_fnc_switchUnit;";

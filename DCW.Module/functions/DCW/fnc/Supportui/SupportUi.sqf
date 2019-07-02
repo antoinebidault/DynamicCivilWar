@@ -9,7 +9,7 @@ private _unit = _this;
 private _points = DCW_SCORE;
 
 private["_ok","_ctrlList"];
-_ok = createDialog "ICE_DIALOG";
+_ok = createDialog "DCW_DIALOG";
 disableSerialization;
 /*
 _ctrlList = findDisplay 5000 displayCtrl 12345; 

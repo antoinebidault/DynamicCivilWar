@@ -29,7 +29,7 @@ publicVariable "TRANSPORTPARADROP_MENU";
 
 
 {
-	[SUPPORT_REQUESTER, _x, 0] call BIS_fnc_limitSupport;
+	[SUPPORT_REQUESTER, _x, 0] remoteExec ["BIS_fnc_limitSupport"];
 } forEach [
 	"Artillery",
 	"CAS_Heli",
@@ -39,7 +39,9 @@ publicVariable "TRANSPORTPARADROP_MENU";
 	"Transport"
 ];
 
-SUPPORT_REQUESTER setVariable[ "BIS_fnc_initModules_disableAutoActivation", false ];
+SUPPORT_REQUESTER setVariable[ "BIS_fnc_initModules_disableAutoActivation", false, true ];
+publicVariable "SUPPORT_REQUESTER";
+
 
 
 private _logicGroupSupportProvider = createGroup _center;
@@ -65,8 +67,8 @@ private _logicGroupSupportProvider = createGroup _center;
 	//ENABLE ACTIVATION
 	_supportProvider setVariable["BIS_fnc_initModules_disableAutoActivation", false];
 
-	[SUPPORT_REQUESTER, _x select 0, 0] call BIS_fnc_limitSupport;
-	[(leader GROUP_PLAYERS), SUPPORT_REQUESTER, _supportProvider] call BIS_fnc_addSupportLink;
+	[SUPPORT_REQUESTER, _x select 0, 0] remoteExec ["BIS_fnc_limitSupport"];
+	[(leader GROUP_PLAYERS), SUPPORT_REQUESTER, _supportProvider] remoteExec ["BIS_fnc_addSupportLink"] ;
 
 }forEach [
 	["Artillery",SUPPORT_ARTILLERY_CLASS],

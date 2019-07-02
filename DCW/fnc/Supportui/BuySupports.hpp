@@ -2,7 +2,7 @@
 
 
 
-class ICE_DIALOG
+class DCW_DIALOG
 {
     idd = 5000;
     movingenable = false;
@@ -11,7 +11,7 @@ class ICE_DIALOG
     class Controls
     {
 
-         class ICE_BOX: IGUIBack
+         class DCW_BOX: IGUIBack
          {
           idc = -1;
           text = "";
@@ -20,7 +20,7 @@ class ICE_DIALOG
           w = 0.236905 * safezoneW;
           h = 0.5 * safezoneH;
          };
-         class ICE_FRAME: RscFrame
+         class DCW_FRAME: RscFrame
          {
           idc = -1;
           text = "";
@@ -29,7 +29,8 @@ class ICE_DIALOG
           w = 0.236905 * safezoneW;
           h = 0.5 * safezoneH;
          };
-         class ICE_BUTTONARTILLERY: RscButton
+
+         class DCW_BUTTONARTILLERY: RscButton
          {
           idc = -1;
           text = "ARTILLERY (-300 points)";
@@ -37,10 +38,10 @@ class ICE_DIALOG
           y = 0.5 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Artillery"",300] spawn DCW_fnc_triggerSupport";
+          action = "_nil=[""Artillery"",300] remoteExec [""DCW_fnc_triggerSupport"",2]";
         };
 
-        class ICE_BUTTONCAS: RscButton
+        class DCW_BUTTONCAS: RscButton
          {
           idc = -1;
           text = "CAS Helicopter (-400 points)";
@@ -48,9 +49,9 @@ class ICE_DIALOG
           y = 0.45 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""CAS_Heli"",400] spawn DCW_fnc_triggerSupport";
+          action = "_nil=[""CAS_Heli"",400] remoteExec [""DCW_fnc_triggerSupport"",2]";
         };
-         class ICE_BUTTONAMMO: RscButton
+         class DCW_BUTTONAMMO: RscButton
          {
           idc = -1;
           text = "AMMO (-100 points)";
@@ -58,9 +59,9 @@ class ICE_DIALOG
           y = 0.4 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Drop"",100] spawn DCW_fnc_triggerSupport";
+          action = "_nil=[""Drop"",100] remoteExec [""DCW_fnc_triggerSupport"",2]";
         };
-         class ICE_BUTTONTRANSPORT: RscButton
+         class DCW_BUTTONTRANSPORT: RscButton
          {
           idc = -1;
           text = "TRANSPORT (-150 points)";
@@ -68,10 +69,10 @@ class ICE_DIALOG
           y = 0.35 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""Transport"",150] spawn DCW_fnc_triggerSupport";
+          action = "_nil=[""Transport"",150] remoteExec [""DCW_fnc_triggerSupport"",2]";
         };
        
-         class ICE_BUTTONUAV: RscButton
+         class DCW_BUTTONUAV: RscButton
          {
           idc = -1;
           text = "UAV MQ-9 (-1000 points)";
@@ -79,11 +80,11 @@ class ICE_DIALOG
           y = 0.55 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""UAV"",1000] spawn DCW_fnc_triggerSupport";
+          action = "_nil=[""UAV"",1000] remoteExec [""DCW_fnc_triggerSupport"",2]";
         };
 
 
-           class ICE_BUTTONVEHICLE: RscButton
+           class DCW_BUTTONVEHICLE: RscButton
          {
           idc = -1;
           text = "vehicle paradrop (-150 points)";
@@ -91,10 +92,10 @@ class ICE_DIALOG
           y = 0.6 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "_nil=[""vehicle"",150] spawn DCW_fnc_triggerSupport";
+          action = "_nil=[""vehicle"",150] remoteExec [""DCW_fnc_triggerSupport"",2]";
         };
 
-        class ICE_BUTTONNO: RscButton
+        class DCW_BUTTONNO: RscButton
         {
           idc = -1;
           text = "Back";
@@ -105,7 +106,7 @@ class ICE_DIALOG
           action = "closeDialog 0;";
         };
 
-        class ICE_TEXT: RscStructuredText
+        class DCW_TEXT: RscStructuredText
         {
          idc = 12345;
          text = "";

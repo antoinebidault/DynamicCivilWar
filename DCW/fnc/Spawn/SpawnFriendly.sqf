@@ -17,7 +17,7 @@ if (DEBUG)then{
     [_unit,"ColorGreen"] call DCW_fnc_addmarker;
 };
 
-_unit call DCW_fnc_addActionJoinAsAdvisor;
+_unit remoteExec ["DCW_fnc_addActionJoinAsAdvisor"];
 
 // Remove all action on death
 _unit addMPEventHandler ["MPKilled",
