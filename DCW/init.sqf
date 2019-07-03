@@ -11,39 +11,23 @@ if (!isNull player) then {
 	enableSentences false;
 	enableRadio false;
 }; 
- 
-// Reload hud
-addMissionEventHandler ["Loaded",{ 
-    [] spawn {
-		hint "mission loaded";
-		sleep 4;
-		[] call DCW_fnc_displayscore;
-		//[] spawn DCW_fnc_SpawnLoop;
-    };
-}];
-
-// Need some adjustements
-{ 
-	[_x,"MOVE"] remoteExec ["disableAI", 2];
-	[_x,"FSM"] remoteExec ["disableAI", 2];
- } foreach allUnits; 
 
 enableDynamicSimulationSystem true;
 "Group" setDynamicSimulationDistance 600;
 
 // CONFIG
-DCW_fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
-DCW_fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
-DCW_fnc_FactionList = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionList.sqf";
-DCW_fnc_FactionGetSupportUnits =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetSupportUnits.sqf";
-DCW_fnc_GetConfigVehicles =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\GetConfigVehicles.sqf";
+DCW_fnc_factionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
+DCW_fnc_factionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
+DCW_fnc_factionList = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionList.sqf";
+DCW_fnc_factionGetSupportUnits =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetSupportUnits.sqf";
+DCW_fnc_getConfigVehicles =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\GetConfigVehicles.sqf";
 call(compileFinal preprocessFileLineNumbers  "DCW\config\config-dialog-functions.sqf");
-DCW_fnc_Dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
-DCW_fnc_MissionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
+DCW_fnc_dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
+DCW_fnc_missionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
 
 // INTRO 
-DCW_fnc_CamFollow = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CamFollow.sqf";
-DCW_fnc_CompoundsecuredCutScene = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CompoundsecuredCutScene.sqf";
+DCW_fnc_camFollow = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CamFollow.sqf";
+DCW_fnc_compoundsecuredCutScene = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CompoundsecuredCutScene.sqf";
 
 // SYSTEM
 DCW_fnc_getClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClusters.sqf";
@@ -63,9 +47,10 @@ DCW_fnc_surrenderSystem = compile preprocessFileLineNumbers  "DCW\fnc\System\Sur
 DCW_fnc_getMarkerById = compile preprocessFileLineNumbers "DCW\fnc\System\getMarkerById.sqf";
 DCW_fnc_refreshMarkerStats = compile preprocessFileLineNumbers "DCW\fnc\System\refreshMarkerStats.sqf";
 DCW_fnc_teleport = compile preprocessFileLineNumbers  "DCW\fnc\System\teleport.sqf";
-DCW_fnc_AddAction = compile preprocessFileLineNumbers "DCW\fnc\system\AddAction.sqf";
-DCW_fnc_RemoveAction = compile preprocessFileLineNumbers "DCW\fnc\system\RemoveAction.sqf";
-DCW_fnc_allPlayers = compileFinal preprocessFileLineNumbers  "DCW\fnc\system\allPlayers.sqf";
+DCW_fnc_addAction = compile preprocessFileLineNumbers "DCW\fnc\system\AddAction.sqf";
+DCW_fnc_removeAction = compile preprocessFileLineNumbers "DCW\fnc\system\RemoveAction.sqf";
+DCW_fnc_allPlayers = compileFinal preprocessFileLineNumbers  "DCW\fnc\system\AllPlayers.sqf";
+DCW_fnc_fillClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\system\FillClusters.sqf";
 
 //SPAWN
 DCW_fnc_respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";
@@ -89,7 +74,7 @@ DCW_fnc_spawnCrashSite = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\
 DCW_fnc_spawnDefendTask = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnDefendTask.sqf";
 DCW_fnc_spawnIED = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnIED.sqf";
 DCW_fnc_spawncrate = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnCrate.sqf";
-DCW_fnc_SpawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnObjects.sqf";
+DCW_fnc_spawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnObjects.sqf";
 DCW_fnc_spawnhumanitaryoutpost = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitaryoutpost.sqf";
 DCW_fnc_spawnhumanitar = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitar.sqf";
 DCW_fnc_spawnSnipers =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnSnipers.sqf";
@@ -113,12 +98,12 @@ DCW_fnc_patrolDistributeToHC = compile preprocessFileLineNumbers  "DCW\fnc\Patro
 DCW_fnc_getIntel = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\GetIntel.sqf";
 DCW_fnc_cache = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\cache.sqf";
 DCW_fnc_hostage = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\hostage.sqf";
-DCW_fnc_Success = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Success.sqf";
+DCW_fnc_success = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Success.sqf";
 DCW_fnc_failed = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Failed.sqf";
 DCW_fnc_createtask =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\createtask.sqf";
 DCW_fnc_foundCommander =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\foundCommander.sqf";
 DCW_fnc_mainObjectiveIntel =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\MainObjectiveIntel.sqf";
-DCW_fnc_CompoundSecured =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\CompoundSecured.sqf";
+DCW_fnc_compoundSecured =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\CompoundSecured.sqf";
 
 //CUSTOM BEHAVIOR
 DCW_fnc_mortarBombing = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\MortarBombing.sqf";
@@ -152,13 +137,13 @@ DCW_fnc_triggerSupport = compile preprocessFileLineNumbers  "DCW\fnc\supportui\T
 
 // MEDEVAC
 DCW_fnc_spawnHelo = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHelo.sqf";
-DCW_fnc_SpawnHeloCrew = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloCrew.sqf";
-DCW_fnc_SpawnHeloReplacement = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloReplacement.sqf";
-DCW_fnc_HandleDamage = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleDamage.sqf";
-DCW_fnc_HandleKilled = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleKilled.sqf";
-DCW_fnc_Heal = compile preprocessFileLineNumbers "DCW\fnc\medevac\heal.sqf";
-DCW_fnc_Carry = compile preprocessFileLineNumbers "DCW\fnc\medevac\carry.sqf";
-DCW_fnc_ChopperPath = compile preprocessFileLineNumbers "DCW\fnc\medevac\chopperpath.sqf";
+DCW_fnc_spawnHeloCrew = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloCrew.sqf";
+DCW_fnc_spawnHeloReplacement = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloReplacement.sqf";
+DCW_fnc_handleDamage = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleDamage.sqf";
+DCW_fnc_handleKilled = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleKilled.sqf";
+DCW_fnc_heal = compile preprocessFileLineNumbers "DCW\fnc\medevac\heal.sqf";
+DCW_fnc_carry = compile preprocessFileLineNumbers "DCW\fnc\medevac\carry.sqf";
+DCW_fnc_chopperPath = compile preprocessFileLineNumbers "DCW\fnc\medevac\chopperpath.sqf";
 DCW_fnc_calculateTimeToHeal = compile preprocessFileLineNumbers "DCW\fnc\medevac\calculateTimeToHeal.sqf";
 DCW_fnc_spawnHealEquipement = compile preprocessFileLineNumbers "DCW\fnc\medevac\spawnHealEquipement.sqf";
 DCW_fnc_spawnObject = compile preprocessFileLineNumbers "DCW\fnc\medevac\spawnObject.sqf";

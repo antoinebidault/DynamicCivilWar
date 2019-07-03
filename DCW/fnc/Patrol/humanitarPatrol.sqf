@@ -25,7 +25,7 @@ sleep 10 + floor(random 30);
 if (!isNull _foundInjuredUnit) then {
     [_grp, _foundInjuredUnit,true] spawn DCW_fnc_firstaid;
 } else {
-    [_grp,_radius,_meetPoint,_buildings] spawn DCW_fnc_CivilianCompoundPatrol;
+    [_grp,_radius,_meetPoint,_buildings] spawn DCW_fnc_civilianCompoundPatrol;
 };
 
 false;

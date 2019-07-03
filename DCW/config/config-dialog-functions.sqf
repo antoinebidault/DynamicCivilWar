@@ -175,7 +175,7 @@ DCW_fnc_save = {
 };
 
 //Saving and close method;
-DCW_fnc_SaveAndGoToLoadoutDialog = {
+DCW_fnc_saveAndGoToLoadoutDialog = {
 
 	_result = [] call DCW_fnc_save;
 	if (_result) then {
@@ -187,7 +187,7 @@ DCW_fnc_SaveAndGoToLoadoutDialog = {
    
 };
 
-DCW_fnc_ChooseLocation = {
+DCW_fnc_chooseLocation = {
 	_ctrlMap = ((findDisplay 5001) displayCtrl 122);
 	_ctrlMap ctrlShow  true;
 	ctrlSetFocus _ctrlMap;
@@ -228,7 +228,7 @@ DCW_fnc_openLoadoutDialog = {
 	[] call DCW_fnc_displayUnitName;
 };
 
-DCW_fnc_SaveAndCloseConfigDialog = {
+DCW_fnc_saveAndCloseConfigDialog = {
 
 	//kill camera
 	closeDialog 0;
@@ -262,11 +262,11 @@ DCW_fnc_SaveAndCloseConfigDialog = {
 
 CHOPPER_DEMO = objNull;
 CHOPPER_DEMO_POS = (player modelToWorld[0,-21,0]);
-DCW_fnc_DisplayChopper = {
+DCW_fnc_displayChopper = {
 	0 fadeSound 0;
 	if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO; deleteVehicle CHOPPER_DEMO;};
 	sleep 1;
-	_choppers = [lbData [2103, (2103 call DCW_fnc_getValue)], ["Helicopter"], "Transport"] call DCW_fnc_FactionGetSupportUnits;
+	_choppers = [lbData [2103, (2103 call DCW_fnc_getValue)], ["Helicopter"], "Transport"] call DCW_fnc_factionGetSupportUnits;
 	if (count _choppers > 0) then {
 		SUPPORT_MEDEVAC_CHOPPER_CLASS = _choppers;
 		SUPPORT_TRANSPORT_CHOPPER_CLASS = _choppers;
@@ -279,7 +279,7 @@ DCW_fnc_DisplayChopper = {
 	};
 };
 
-DCW_fnc_SwitchUnit = {
+DCW_fnc_switchUnit = {
 	params["_dir"];
 
 	_len = count (units GROUP_PLAYERS);
@@ -327,7 +327,7 @@ DCW_fnc_editLoadout = {
 };
 
 //Saving and close method;
-DCW_fnc_SwitchFaction = {
+DCW_fnc_switchFaction = {
 	params["_ctrl","_val"];
 	
 	_factionName =  lbData [_ctrl,_val];
@@ -343,8 +343,8 @@ DCW_fnc_SwitchFaction = {
 	titleCut ["", "BLACK OUT", .3];
 
 	//Weather
-	_unitClasses = [_factionName,["Man"],[]] call DCW_fnc_FactionGetUnits;
-	_carClasses = [_factionName,["Car"],[]] call DCW_fnc_FactionGetUnits;
+	_unitClasses = [_factionName,["Man"],[]] call DCW_fnc_factionGetUnits;
+	_carClasses = [_factionName,["Car"],[]] call DCW_fnc_factionGetUnits;
 
 	// If nothing found, take the default units
 	if (count _unitClasses == 0) then {
@@ -370,7 +370,7 @@ DCW_fnc_SwitchFaction = {
 
 	deleteGroup _grp;
 
-	[] call DCW_fnc_DisplayChopper;
+	[] call DCW_fnc_displayChopper;
 	[_unitClasses,_carClasses] call DCW_fnc_replaceAllCutsceneSoldiers;
  
 	titleCut ["", "BLACK IN", 2];
@@ -490,12 +490,12 @@ DCW_fnc_openConfigDialog = {
 	[SIDE_ENEMY,2108] call DCW_fnc_renderfactionselect ;
 
 	_factionSelect = [SIDE_FRIENDLY,2103] call DCW_fnc_renderfactionselect ;
-	_factionSelect ctrlAddEventHandler ["LBSelChanged","[ctrlIDC(_this select 0),_this select 1] spawn DCW_fnc_SwitchFaction"];
+	_factionSelect ctrlAddEventHandler ["LBSelChanged","[ctrlIDC(_this select 0),_this select 1] spawn DCW_fnc_switchFaction"];
 
 	_factionSelectFr = [SIDE_FRIENDLY,2113] call DCW_fnc_renderfactionselect;
 	_factionSelectFr lbSetCurSel 1; // Select FIA by default
 
 	[SIDE_CIV,2110] call DCW_fnc_renderfactionselect ;
 
-	[] call DCW_fnc_DisplayChopper;
+	[] call DCW_fnc_displayChopper;
 };

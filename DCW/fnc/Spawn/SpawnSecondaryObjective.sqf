@@ -122,7 +122,7 @@ DCW_fnc_spawnOfficer = {
                     _unit setDamage 1;
                 };
                 
-                _unit call DCW_fnc_MainObjectiveIntel;
+                _unit call DCW_fnc_mainObjectiveIntel;
             },{
             [(_this select 1), "medicStop"] remoteExec ["playActionNow"];
             },[],3,nil,true,false] remoteExec ["BIS_fnc_holdActionAdd"];

@@ -29,8 +29,8 @@ _groupReplacement = createGroup _side;
 	_x setskill ["general", 1];
 	_x setskill ["reloadSpeed", 1];
 	_x removeAllEventHandlers "HandleDamage";
-	_soldier addEventHandler ["HandleDamage",{_this call DCW_fnc_HandleDamage;}];
-	_soldier addMPEventHandler ["MPKilled",{_this call DCW_fnc_HandleKilled;}];
+	_soldier addEventHandler ["HandleDamage",{_this call DCW_fnc_handleDamage;}];
+	_soldier addMPEventHandler ["MPKilled",{_this call DCW_fnc_handleKilled;}];
 	
 	addSwitchableUnit _soldier;
 	_soldier moveInCargo _transportHelo; 

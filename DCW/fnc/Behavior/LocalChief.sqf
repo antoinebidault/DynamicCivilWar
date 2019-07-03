@@ -40,7 +40,7 @@ _unit addHeadgear "H_Beret_blk";
         _unit call DCW_fnc_actionCorrupt;
     } else {
         _unit removeAction _action;
-        _unit call DCW_fnc_MainObjectiveIntel;
+        _unit call DCW_fnc_mainObjectiveIntel;
     };
 
 },nil,1.5,false,true,"","true",20,false,""]] remoteExec ["addAction"];
@@ -153,7 +153,7 @@ _unit addHeadgear "H_Beret_blk";
 
         {
             if ( _x isKindOf "Man" && side _x == SIDE_CIV && _x != _unit) then {
-                [_x, SIDE_FRIENDLY] call DCW_fnc_BadGuyLoadout;
+                [_x, SIDE_FRIENDLY] call DCW_fnc_badGuyLoadout;
             };
         }
         foreach (_curr select 5);

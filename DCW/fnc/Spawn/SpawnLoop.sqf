@@ -3,7 +3,7 @@
 waitUntil {count ([] call DCW_fnc_allPlayers) > 0 && vehicle (leader GROUP_PLAYERS) == (leader GROUP_PLAYERS)};
 
 // Display the score to each player
-[] remoteExec ["DCW_fnc_DisplayScore"];
+[] remoteExec ["DCW_fnc_displayScore"];
 
 // Initial timer for the hunters
 _timerChaser = time - 360;
@@ -62,7 +62,7 @@ while { true } do {
 					if (_triggered && _playerPos distance _pos < _radius ) then {
 						_currentMarker = _x;
 						_playerInMarker = true;
-						[format["<t color='#cd8700'>%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["DCW_fnc_ShowIndicator",_player,false];
+						[format["<t color='#cd8700'>%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["DCW_fnc_showIndicator",_player,false];
 				
 						if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "supporting")  ) then {
 							[_currentCompound,_player] spawn {
@@ -79,27 +79,27 @@ while { true } do {
 						if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
 
 							//Véhicles spawn
-							_units = _units + ([_pos,_radius,(_peopleToSpawn select 3),_compoundState] call DCW_fnc_SpawnCars);
+							_units = _units + ([_pos,_radius,(_peopleToSpawn select 3),_compoundState] call DCW_fnc_spawnCars);
 							
 							//Units
-							_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition,_buildings,_compoundState,_supportScore] call DCW_fnc_SpawnUnits);
+							_units = _units + ([_pos,_radius,_success,_peopleToSpawn,_meetingPointPosition,_buildings,_compoundState,_supportScore] call DCW_fnc_spawnUnits);
 							
 							//Meeting points
-							_units = _units + ([_meetingPointPosition] call DCW_fnc_SpawnMeetingPoint);
+							_units = _units + ([_meetingPointPosition] call DCW_fnc_spawnMeetingPoint);
 							
 							//Spawn random composition
 							_units = _units + ([_pos,_buildings,_success,_compoundState] call DCW_fnc_spawnobjects);
 
 							if (_compoundState == "secured")  then {	
 								//Units
-								_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition,_buildings] call DCW_fnc_SpawnFriendlyOutpost);
+								_units = _units + ([_pos,_radius,_peopleToSpawn select 9,_meetingPointPosition,_buildings] call DCW_fnc_spawnFriendlyOutpost);
 							} else {
 								_notSpawnedArray set [9,_peopleToSpawn select 9] ;
 							};
 
 							if (_compoundState == "humanitary") then {
 								//Units
-								_units = _units + ([_pos,_radius,_peopleToSpawn select 0,_meetingPointPosition,_buildings] call DCW_fnc_SpawnHumanitaryOutpost);
+								_units = _units + ([_pos,_radius,_peopleToSpawn select 0,_meetingPointPosition,_buildings] call DCW_fnc_spawnHumanitaryOutpost);
 							};
 
 							if (_compoundState != "secured" && _compoundState != "humanitary") then {
@@ -117,7 +117,7 @@ while { true } do {
 								//Hostages
 								_units = _units + ([_pos,_radius,(_peopleToSpawn select 6),_buildings] call DCW_fnc_hostage);
 								//Mortars
-								_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call DCW_fnc_SpawnMortar);
+								_units = _units + ([_pos,_radius,(_peopleToSpawn select 7)] call DCW_fnc_spawnMortar);
 							} else {
 								_notSpawnedArray set [2,_peopleToSpawn select 2] ;
 								_notSpawnedArray set [5,_peopleToSpawn select 5] ;
@@ -127,7 +127,7 @@ while { true } do {
 
 							if (_compoundState == "bastion" ) then {
 								//Outposts
-								_units = _units + ([_marker,(_peopleToSpawn select 8)] call DCW_fnc_SpawnOutpost);
+								_units = _units + ([_marker,(_peopleToSpawn select 8)] call DCW_fnc_spawnOutpost);
 							} else {
 								_notSpawnedArray set [8,_peopleToSpawn select 8] ;
 							};
@@ -142,7 +142,7 @@ while { true } do {
 					}else{
 						//Gestion du cache
 						if(_playerPos distance _pos > (SPAWN_DISTANCE + 150) && _triggered) then {
-							_cacheResult = [_units,_notSpawnedArray] call DCW_fnc_CachePut;
+							_cacheResult = [_units,_notSpawnedArray] call DCW_fnc_cachePut;
 							_peopleToSpawn = _cacheResult select 0;
 							_units = _units - [_cacheResult select 1];
 							_triggered = false;
@@ -179,7 +179,7 @@ while { true } do {
 
 			if (!_playerInMarker) then {
 				_currentMarker = [];
-				["",0] remoteExec ["DCW_fnc_ShowIndicator",_player,false];
+				["",0] remoteExec ["DCW_fnc_showIndicator",_player,false];
 			};
 
 		} foreach ([] call DCW_fnc_allPlayers);
@@ -208,9 +208,9 @@ while { true } do {
 						CHASER_VIEWED = true;
 						sleep (15 + random 5);
 						CHASER_VIEWED = false;
-						[] remoteExec ["DCW_fnc_DisplayScore",_player, false];
+						[] remoteExec ["DCW_fnc_displayScore",_player, false];
 						// || _unit knowsAbout player > 2
-						if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,_player] call DCW_fnc_GetVisibility > 20) ) then {
+						if ( alive _unit && !CHASER_TRIGGERED &&  ([_unit,_player] call DCW_fnc_getVisibility > 20) ) then {
 							if (DEBUG) then  {
 								hint "Alarm !";
 							};
@@ -221,10 +221,10 @@ while { true } do {
 							//Chasers
 							if (CHASER_TRIGGERED && time > (_timerChaser + 20))then{
 								_timerChaser = time - 1;
-								UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE + ([_player] call DCW_fnc_SpawnChaser);
+								UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE + ([_player] call DCW_fnc_spawnChaser);
 							};
 							
-							[] remoteExec ["DCW_fnc_DisplayScore",_player, false];
+							[] remoteExec ["DCW_fnc_displayScore",_player, false];
 							[_player] spawn {
 								params["_player"];
 								sleep 250;
@@ -234,7 +234,7 @@ while { true } do {
 								sleep 200;
 								CHASER_TRIGGERED = false;
 								publicVariable "CHASER_TRIGGERED";
-								[] remoteExec ["DCW_fnc_DisplayScore",_player, false];
+								[] remoteExec ["DCW_fnc_displayScore",_player, false];
 							};
 						};
 					};

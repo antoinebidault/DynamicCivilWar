@@ -11,39 +11,23 @@ if (!isNull player) then {
 	enableSentences false;
 	enableRadio false;
 }; 
- 
-// Reload hud
-addMissionEventHandler ["Loaded",{ 
-    [] spawn {
-		hint "mission loaded";
-		sleep 4;
-		[] call DCW_fnc_displayscore;
-		//[] spawn DCW_fnc_SpawnLoop;
-    };
-}];
-
-// Need some adjustements
-{ 
-	[_x,"MOVE"] remoteExec ["disableAI", 2];
-	[_x,"FSM"] remoteExec ["disableAI", 2];
- } foreach allUnits; 
 
 enableDynamicSimulationSystem true;
 "Group" setDynamicSimulationDistance 600;
 
 // CONFIG
-DCW_fnc_FactionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
-DCW_fnc_FactionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
-DCW_fnc_FactionList = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionList.sqf";
-DCW_fnc_FactionGetSupportUnits =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetSupportUnits.sqf";
-DCW_fnc_GetConfigVehicles =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\GetConfigVehicles.sqf";
+DCW_fnc_factionClasses = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionClasses.sqf";
+DCW_fnc_factionGetUnits = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetUnits.sqf";
+DCW_fnc_factionList = compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionList.sqf";
+DCW_fnc_factionGetSupportUnits =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\FactionGetSupportUnits.sqf";
+DCW_fnc_getConfigVehicles =  compileFinal preprocessFileLineNumbers "DCW\fnc\System\GetConfigVehicles.sqf";
 call(compileFinal preprocessFileLineNumbers  "DCW\config\config-dialog-functions.sqf");
-DCW_fnc_Dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
-DCW_fnc_MissionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
+DCW_fnc_dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
+DCW_fnc_missionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
 
 // INTRO 
-DCW_fnc_CamFollow = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CamFollow.sqf";
-DCW_fnc_CompoundsecuredCutScene = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CompoundsecuredCutScene.sqf";
+DCW_fnc_camFollow = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CamFollow.sqf";
+DCW_fnc_compoundsecuredCutScene = compileFinal preprocessFileLineNumbers  "DCW\fnc\cutscene\CompoundsecuredCutScene.sqf";
 
 // SYSTEM
 DCW_fnc_getClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\GetClusters.sqf";
@@ -63,9 +47,10 @@ DCW_fnc_surrenderSystem = compile preprocessFileLineNumbers  "DCW\fnc\System\Sur
 DCW_fnc_getMarkerById = compile preprocessFileLineNumbers "DCW\fnc\System\getMarkerById.sqf";
 DCW_fnc_refreshMarkerStats = compile preprocessFileLineNumbers "DCW\fnc\System\refreshMarkerStats.sqf";
 DCW_fnc_teleport = compile preprocessFileLineNumbers  "DCW\fnc\System\teleport.sqf";
-DCW_fnc_AddAction = compile preprocessFileLineNumbers "DCW\fnc\system\AddAction.sqf";
-DCW_fnc_RemoveAction = compile preprocessFileLineNumbers "DCW\fnc\system\RemoveAction.sqf";
-DCW_fnc_allPlayers = compileFinal preprocessFileLineNumbers  "DCW\fnc\system\allPlayers.sqf";
+DCW_fnc_addAction = compile preprocessFileLineNumbers "DCW\fnc\system\AddAction.sqf";
+DCW_fnc_removeAction = compile preprocessFileLineNumbers "DCW\fnc\system\RemoveAction.sqf";
+DCW_fnc_allPlayers = compileFinal preprocessFileLineNumbers  "DCW\fnc\system\AllPlayers.sqf";
+DCW_fnc_fillClusters = compileFinal preprocessFileLineNumbers  "DCW\fnc\system\FillClusters.sqf";
 
 //SPAWN
 DCW_fnc_respawn= compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\Respawn.sqf";

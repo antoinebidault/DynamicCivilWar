@@ -52,7 +52,7 @@ class LOADOUT_DIALOG
         class DCW_BUTTON_1000: RscButton
         {
           idc = 1000;
-          action = "[] call DCW_fnc_SaveAndCloseConfigDialog";
+          action = "[] call DCW_fnc_saveAndCloseConfigDialog";
           text = "Start mission"; //--- ToDo: Localize;
           x = 7 * GUI_GRID_W + GUI_GRID_X;
           y = 23.5 * GUI_GRID_H + GUI_GRID_Y;

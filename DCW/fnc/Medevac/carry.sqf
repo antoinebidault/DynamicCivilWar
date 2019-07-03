@@ -39,7 +39,7 @@ while {_injured getVariable ["DCW_unit_dragged", false]} do {
 		uiSleep 2;
 		[_injured,"AinjPpneMrunSnonWnonDb_still"] remoteExec ["switchMove"] ;
 
-		[_injured,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
+		[_injured,"DCW_fnc_carry"] call DCW_fnc_removeAction; 
 		_injured call DCW_fnc_removeActionHeal;
 		_dropActionId = _unit addAction ["drop", DCW_fnc_dropAction,_injured, 0, false, true];
 
@@ -66,6 +66,6 @@ while {_injured getVariable ["DCW_unit_dragged", false]} do {
 _unit removeAction _dropActionId;
 if (alive _injured) then {
 	_injured call DCW_fnc_addActionHeal;
-	[_injured,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
+	[_injured,"DCW_fnc_carry"] call DCW_fnc_addAction; 
 };
 

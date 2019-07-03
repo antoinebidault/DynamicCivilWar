@@ -9,8 +9,8 @@ _anims = ["Acts_millerCamp_A","Acts_ShieldFromSun_loop","Acts_millerCamp_C","Act
 UNIT_SHOWCASE = player; 
 {
 	if (!isPlayer _x) then {
-		[_x,"MOVE"] remoteExec ["disableAI", 2] ;
-		[_x,"FSM"] remoteExec ["disableAI", 2] ;
+		[_x,"MOVE"] remoteExec ["disableAI"] ;
+		[_x,"FSM"] remoteExec ["disableAI"] ;
 	};
 	_anim = _anims select 0;
 	_anims = _anims - [_anim];

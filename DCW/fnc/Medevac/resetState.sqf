@@ -11,8 +11,8 @@ _this stop false;
 _this setCaptive false;
 _this setUnconscious false;
 [_this,""] remoteExec["switchMove"];
-_this call DCW_fnc_RemoveActionHeal;
-[_this,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
+_this call DCW_fnc_removeActionHeal;
+[_this,"DCW_fnc_carry"] call DCW_fnc_removeAction; 
 _this setVariable["DCW_fnc_carry",-1,true];
 _this setVariable["DCW_fnc_addActionHeal",-1,true];
 _this setVariable["DCW_this_injured",false,true];
@@ -32,7 +32,7 @@ _this setUnitTrait ["explosiveSpecialist",true];
 if (isPlayer _this && (leader GROUP_PLAYERS) == _this) then {
 	_this remoteExec ["removeAllActions"];
 	sleep .3;
-	_this call DCW_fnc_ActionCamp;
+	_this call DCW_fnc_actionCamp;
 	_this call DCW_fnc_addSupportUi;
 };
 

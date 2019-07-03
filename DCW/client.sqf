@@ -67,7 +67,8 @@ if (ENABLE_DIALOG && !didJIP) then {
 		CONFIG_CAMERA camSetTarget _targetPos; 
 		CONFIG_CAMERA camSetPos _targetPos;
 		CONFIG_CAMERA camCommit 500;
-	} else { // He is the team leader => he administrates the mission
+	} else { 
+		// He is the team leader => he administrates the mission
 		[] call DCW_fnc_dialog;
 	};
 
@@ -77,22 +78,21 @@ if (ENABLE_DIALOG && !didJIP) then {
 	};
 
 	waitUntil {DCW_STARTED};
-	
-	player switchMove "";
-
-	{
-		if (!isPlayer _x) then {
-			[_x,"MOVE"] remoteExec ["enableAI", 2] ;
-			[_x,"FSM"] remoteExec ["enableAI", 2] ;
-			[_x,""] remoteExec ["switchMove", 0];
-		};
-	}
-	foreach units group player;
 
 	// Close the dialog 
 	if ((leader GROUP_PLAYERS) != player) then{
 		CONFIG_CAMERA cameraeffect ["terminate", "back"];
 		camDestroy CONFIG_CAMERA;
+	} else {
+		{
+			if (!isPlayer _x) then {
+				[_x,"MOVE"] remoteExec ["enableAI"] ;
+				[_x,"FSM"] remoteExec ["enableAI"] ;
+			};
+			[_x,""] remoteExec ["switchMove"];
+			
+		}
+		foreach units group player;
 	};
 
 	DCW_STARTED = true;

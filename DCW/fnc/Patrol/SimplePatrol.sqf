@@ -8,7 +8,8 @@
 //Inspired by SPUn / LostVar
 private ["_unit","_radius","_newPos","_bPoss","_dir","_curPos"];
 
-_unit = leader (_this select 0);
+_grp = (_this select 0);
+_unit = leader _grp;
 _radius = _this select 1;
 _anims = ["STAND","STAND_IA","SIT_LOW","WATCH","WATCH1","WATCH2"];
 _startPos = getPosASL _unit;
@@ -35,7 +36,7 @@ while { alive _unit }do{
     _timer = time;
 
     waitUntil {sleep 1;!isNull(_unit findNearestEnemy _unit) || unitReady _unit || _unit distance _newPos < 2 || _unit getVariable["follow_player",false] || time > _timer + 150};
-    if(!isNull(_unit findNearestEnemy _unit))exitWith {[_unit,(_unit findNearestEnemy _unit)] call DCW_fnc_Chase};
+    if(!isNull(_unit findNearestEnemy _unit))exitWith {[_grp,(_unit findNearestEnemy _unit)] call DCW_fnc_chase};
 
     if (side _unit == SIDE_ENEMY) then{
         _unit stop true;
