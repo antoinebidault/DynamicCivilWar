@@ -1,6 +1,7 @@
 ﻿*.ogg
 node_modules/
 .vscode/
-DCW.*/DCW/
+DCW.*/DCW
+DCW.*/functions/DCW
 Build/
 ~DCW.*/
