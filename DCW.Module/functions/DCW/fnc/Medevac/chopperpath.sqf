@@ -10,7 +10,7 @@ _landPos =_this select 1;
 TRANSPORTHELO = _this select 2; 
 _groupToHelp = _this select 3;
 
-// interventionGroup = [TRANSPORTHELO,side _groupToHelp] call DCW_fnc_SpawnHeloCrew;
+// interventionGroup = [TRANSPORTHELO,side _groupToHelp] call DCW_fnc_spawnHeloCrew;
 
 HASLANDED = false;
 
@@ -92,7 +92,7 @@ if (!HASLANDED) exitWith { MEDEVAC_State = "aborted"; };
 
 // Update the dead soldiers
 private _soldiersDead = units _groupToHelp select {_x getVariable["unit_KIA",false] };
-replacementGroup = [TRANSPORTHELO,side _groupToHelp,_soldiersDead] call DCW_fnc_SpawnHeloReplacement;
+replacementGroup = [TRANSPORTHELO,side _groupToHelp,_soldiersDead] call DCW_fnc_spawnHeloReplacement;
 
 sleep 1;
 

@@ -69,7 +69,7 @@ ENEMY_COMMANDER addEventHandler ["FiredNear",{
             _commander call DCW_fnc_deleteMarker;
             deleteVehicle _commander;
             [_gunner ,"He has definitely left the area... Mission compromised. Maybe we would catch him later..." ,true ] remoteExec ["DCW_fnc_talk"];
-            [] spawn DCW_fnc_SpawnMainObjective;
+            [] spawn DCW_fnc_spawnMainObjective;
         };
     };
 }];
@@ -88,7 +88,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
     }else{
         //Start over
         hint "restart...";
-        [] spawn DCW_fnc_SpawnMainObjective;
+        [] spawn DCW_fnc_spawnMainObjective;
     };
 }];
 

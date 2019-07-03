@@ -13,7 +13,7 @@ PERCENTAGE_OF_ENEMY_COMPOUND = 4;
 NUMBER_OFFICERS = 3;
 
 // List of vehicle config, everybody needs this part
-CONFIG_VEHICLES = [] call DCW_fnc_GetConfigVehicles;
+CONFIG_VEHICLES = [] call DCW_fnc_getConfigVehicles;
 
 RESTRICTED_AMMOBOX = true;
 publicVariable "RESTRICTED_AMMOBOX";

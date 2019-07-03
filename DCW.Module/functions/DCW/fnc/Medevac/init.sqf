@@ -30,8 +30,8 @@ private _soldiersDead = [];
 		_x setskill ["general", 1];
 		_x setskill ["reloadSpeed", 1];
 		_x removeAllEventHandlers "HandleDamage";
-		_x addEventHandler ["HandleDamage",{_this call DCW_fnc_HandleDamage;}];
-		_x addMPEventHandler ["MPKilled",{_this call DCW_fnc_HandleKilled;}];
+		_x addEventHandler ["HandleDamage",{_this call DCW_fnc_handleDamage;}];
+		_x addMPEventHandler ["MPKilled",{_this call DCW_fnc_handleKilled;}];
 	};
 }foreach (units _group);
 
@@ -107,7 +107,7 @@ while {true} do {
 			_posChopper = position _transportHelo;
 
 			// Startup the chopper path
-			[group _transportHelo,getMarkerPos "medevac_marker",_transportHelo,_group] spawn DCW_fnc_ChopperPath;
+			[group _transportHelo,getMarkerPos "medevac_marker",_transportHelo,_group] spawn DCW_fnc_chopperPath;
 		};
 	};
 

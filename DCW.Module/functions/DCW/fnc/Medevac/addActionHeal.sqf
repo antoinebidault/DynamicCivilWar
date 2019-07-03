@@ -6,7 +6,7 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 			if (!alive _injured) exitWith {};
 			_injured setVariable["DCW_healer", _healer, true];
 			[_healer, "medicStart"] remoteExec ["playActionNow"];
-			[_injured,"DCW_fnc_carry"] spawn DCW_fnc_RemoveAction; 
+			[_injured,"DCW_fnc_carry"] spawn DCW_fnc_removeAction; 
 			[_injured,"Aaaargh...", false] spawn DCW_fnc_talk;
 			[_injured,["Sorry man... I just fucked up...","Shit ! It's a fucking mess...","I am in pain...","Don't forget the letter..."] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
 			[_healer,["Don't give up mate !","Stay with us !","Stay alive !","We won't abandon you !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
@@ -34,7 +34,7 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 			_injured setDamage 0;
 			_injured setCaptive false;
 			_injured setHit ["legs", 0]; 
-			[_injured,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
+			[_injured,"DCW_fnc_carry"] call DCW_fnc_removeAction; 
 			_injured call DCW_fnc_removeActionHeal;
 			deleteMarker (_injured getVariable ["DCW_marker_injured",  ""]);
 			
@@ -50,7 +50,7 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 			_healer setVariable["DCW_healer", objNull];
 			[_healer, "medicStop"] remoteExec ["playActionNow"];
 			if (lifeState _injured == "INCAPACITATED") then {
-				[_injured, "DCW_fnc_carry"] call DCW_fnc_AddAction; 
+				[_injured, "DCW_fnc_carry"] call DCW_fnc_addAction; 
 			};
 			detach _injured;
 			false;

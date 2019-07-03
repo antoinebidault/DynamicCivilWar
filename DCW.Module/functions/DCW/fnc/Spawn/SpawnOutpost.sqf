@@ -47,7 +47,7 @@ _radius = ((getMarkerSize _marker) select 0);
     },{},{
     _objBase = (_this select 0);
     _newObjs = (_this  select 3) select 0;
-    [_objBase, _this select 1]  remoteExec ["DCW_fnc_GetIntel",2];
+    [_objBase, _this select 1]  remoteExec ["DCW_fnc_getIntel",2];
 
     {
         if (alive _x )then{

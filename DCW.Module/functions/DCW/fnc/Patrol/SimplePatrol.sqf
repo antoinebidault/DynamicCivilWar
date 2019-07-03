@@ -36,7 +36,7 @@ while { alive _unit }do{
     _timer = time;
 
     waitUntil {sleep 1;!isNull(_unit findNearestEnemy _unit) || unitReady _unit || _unit distance _newPos < 2 || _unit getVariable["follow_player",false] || time > _timer + 150};
-    if(!isNull(_unit findNearestEnemy _unit))exitWith {[_grp,(_unit findNearestEnemy _unit)] call DCW_fnc_Chase};
+    if(!isNull(_unit findNearestEnemy _unit))exitWith {[_grp,(_unit findNearestEnemy _unit)] call DCW_fnc_chase};
 
     if (side _unit == SIDE_ENEMY) then{
         _unit stop true;

@@ -8,7 +8,7 @@
 private _unit = _this;
 
 if(!alive ENEMY_COMMANDER)exitWith {false};
-if(count COMMANDER_LAST_POS == 0) exitWith {[_unit,"But I think you already know it...",false] remoteExec ["DCW_fnc_Talk"];false;};
+if(count COMMANDER_LAST_POS == 0) exitWith {[_unit,"But I think you already know it...",false] remoteExec ["DCW_fnc_talk"];false;};
 
 private _initPos = COMMANDER_LAST_POS call BIS_fnc_selectRandom;
 COMMANDER_LAST_POS = COMMANDER_LAST_POS - [_initPos];
@@ -46,13 +46,13 @@ _taskId = "maintask";
 
 [[_unit,_taskid,_pos],{
   params ["_unit","_taskid","_pos"];
-  [_unit,"I marked you on the map where I think he is.",true] call DCW_fnc_Talk;
+  [_unit,"I marked you on the map where I think he is.",true] call DCW_fnc_talk;
   {
     [_taskId, _x, [ "Investigate the sector where the enemy\n commander is possibly located","Investigate the sector","Investigate the sector"], _pos, "ASSIGNED", 1, true, true,""] remoteExec ["BIS_fnc_setTask" ,_x , true];
   } foreach ([] call DCW_fnc_allPlayers);
-  [(leader GROUP_PLAYERS),"Thank you, we'll investigate this place.",true] call DCW_fnc_Talk;
-  [(leader GROUP_PLAYERS),"HQ, we've caught informations about the possible enemy commander last position.",false] call DCW_fnc_Talk;
-  [HQ,"Copy ! We'll send you extra credits in order to accomplish your task. Good luck ! Out.",false] call DCW_fnc_Talk;
+  [(leader GROUP_PLAYERS),"Thank you, we'll investigate this place.",true] call DCW_fnc_talk;
+  [(leader GROUP_PLAYERS),"HQ, we've caught informations about the possible enemy commander last position.",false] call DCW_fnc_talk;
+  [HQ,"Copy ! We'll send you extra credits in order to accomplish your task. Good luck ! Out.",false] call DCW_fnc_talk;
  
 }] remoteExec["spawn", GROUP_PLAYERS, false];
 

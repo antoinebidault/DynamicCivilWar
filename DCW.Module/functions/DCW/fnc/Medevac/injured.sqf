@@ -13,7 +13,7 @@ sleep 6;
 
 // Stabilize action
 _unit call DCW_fnc_addActionHeal;
-[_unit,"DCW_fnc_carry"] call DCW_fnc_AddAction; 
+[_unit,"DCW_fnc_carry"] call DCW_fnc_addAction; 
 
 _deathsound = format ["A3\sounds_f\characters\human-sfx\P0%1\Hit_Max_%2.wss", selectRandom [4,5,6,7,8,9], selectRandom [1,2,3,4,5]];
 playSound3D [_deathsound, _unit, false, getPosASL _unit, 1.5, 1, 150];	
@@ -56,7 +56,7 @@ if (isPlayer _unit && _unit == player) then {
 	};
 
 	hintSilent "";
-	[_unit,"DCW_fnc_carry"] call DCW_fnc_RemoveAction; 
+	[_unit,"DCW_fnc_carry"] call DCW_fnc_removeAction; 
 	[_unit,_idAction] remoteExec ["BIS_fnc_holdActionRemove"];
 	_unit call DCW_fnc_removeActionHeal;
 	// The soldier has been revived successfully

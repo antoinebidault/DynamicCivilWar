@@ -40,8 +40,8 @@ _unit setVariable["DCW_Type","civ"];
 _unit setDir random 360;
 
 if (_handleFireEvent)then{
-    [_unit] spawn DCW_fnc_HandleFiredNear;
-    [_unit] remoteexec ["DCW_fnc_AddCivilianAction",0];
+    [_unit] spawn DCW_fnc_handleFiredNear;
+    [_unit] remoteexec ["DCW_fnc_addCivilianAction",0];
 };
 
 UNITS_SPAWNED_CLOSE pushBack _unit;

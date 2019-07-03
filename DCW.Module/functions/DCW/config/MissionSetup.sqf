@@ -52,13 +52,13 @@ if (count _mortars > 0) then {
 	ENEMY_MORTAR_CLASS = _mortars select 0;
 };
 
-SUPPORT_ARTILLERY_CLASS = [SUPPORT_ARTILLERY_CLASS,[FACTION_PLAYER, ["StaticWeapon"], "Artillery"] call DCW_fnc_FactionGetSupportUnits] call DCW_fnc_fillSupportParam;
+SUPPORT_ARTILLERY_CLASS = [SUPPORT_ARTILLERY_CLASS,[FACTION_PLAYER, ["StaticWeapon"], "Artillery"] call DCW_fnc_factionGetSupportUnits] call DCW_fnc_fillSupportParam;
 SUPPORT_TRANSPORT_CHOPPER_CLASS = FRIENDLY_CHOPPER_CLASS;
-SUPPORT_DROP_AIRCRAFT_CLASS = [SUPPORT_DROP_AIRCRAFT_CLASS,[FACTION_PLAYER, ["Air"], "Drop"] call DCW_fnc_FactionGetSupportUnits] call DCW_fnc_fillSupportParam;
+SUPPORT_DROP_AIRCRAFT_CLASS = [SUPPORT_DROP_AIRCRAFT_CLASS,[FACTION_PLAYER, ["Air"], "Drop"] call DCW_fnc_factionGetSupportUnits] call DCW_fnc_fillSupportParam;
 SUPPORT_MEDEVAC_CHOPPER_CLASS = FRIENDLY_CHOPPER_CLASS;
-SUPPORT_BOMBING_AIRCRAFT_CLASS = [SUPPORT_BOMBING_AIRCRAFT_CLASS,[FACTION_PLAYER, ["Plane"], "CAS_Bombing"] call DCW_fnc_FactionGetSupportUnits] call DCW_fnc_fillSupportParam;
-SUPPORT_CAS_HELI_CLASS = [SUPPORT_CAS_HELI_CLASS,[FACTION_PLAYER, ["Helicopter"], "CAS_Heli"] call DCW_fnc_FactionGetSupportUnits] call DCW_fnc_fillSupportParam;
-_choppers = [SUPPORT_HEAVY_TRANSPORT_CLASS,[FACTION_PLAYER, ["Helicopter"], "Drop"] call DCW_fnc_FactionGetSupportUnits] call DCW_fnc_fillSupportParam;
+SUPPORT_BOMBING_AIRCRAFT_CLASS = [SUPPORT_BOMBING_AIRCRAFT_CLASS,[FACTION_PLAYER, ["Plane"], "CAS_Bombing"] call DCW_fnc_factionGetSupportUnits] call DCW_fnc_fillSupportParam;
+SUPPORT_CAS_HELI_CLASS = [SUPPORT_CAS_HELI_CLASS,[FACTION_PLAYER, ["Helicopter"], "CAS_Heli"] call DCW_fnc_factionGetSupportUnits] call DCW_fnc_fillSupportParam;
+_choppers = [SUPPORT_HEAVY_TRANSPORT_CLASS,[FACTION_PLAYER, ["Helicopter"], "Drop"] call DCW_fnc_factionGetSupportUnits] call DCW_fnc_fillSupportParam;
 _tmpChoppers = [];
 {
  if (getNumber(configfile >> "CfgVehicles" >> _x >> "slingLoadMaxCargoMass") >= 11500) then {
@@ -71,7 +71,7 @@ if (count _tmpChoppers > 0) then {
 
 SUPPORT_DRONE_CLASS = if (SIDE_FRIENDLY == WEST) then {"B_UAV_02_dynamicLoadout_F"} else {"O_UAV_02_dynamicLoadout_F"};
 SUPPORT_MEDEVAC_CREW_CLASS = ALLIED_LIST_UNITS call BIS_fnc_selectrandom;
-SUPPORT_CAR_PARADROP_CLASS = [FACTION_PLAYER,["Car"],"slingload"] call DCW_fnc_FactionGetSupportUnits ;
+SUPPORT_CAR_PARADROP_CLASS = [FACTION_PLAYER,["Car"],"slingload"] call DCW_fnc_factionGetSupportUnits ;
 
 
 // EMpty the array for memory saving purposes...

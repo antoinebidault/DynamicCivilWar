@@ -21,7 +21,7 @@ sleep 3;
 
 _assistant doMove [((position _target) select 0) + (1 + random 3) ,((position _target) select 1) + random 3 ,((position _target) select 2)];
 
-[_leader,_target] spawn DCW_fnc_Heal;
+[_leader,_target] spawn DCW_fnc_heal;
 
 waitUntil { sleep 3; isNil '_assistant' || !alive _assistant || !alive _target || _target getVariable["unit_stabilized",false] };
 if (isNil '_assistant' || !alive _assistant || !alive _target) exitWith { MEDEVAC_State = "aborted"; };

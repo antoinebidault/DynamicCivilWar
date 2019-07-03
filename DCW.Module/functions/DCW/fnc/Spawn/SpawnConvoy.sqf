@@ -86,7 +86,7 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
 }else{
  hint "Error ! Not enough road to spawn objective... Restarting...";
  sleep 10;
- [30] call DCW_fnc_Spawn_units;
+ [30] call DCW_fnc_spawn_units;
 };
 
 deleteMarker "_units-start-marker";

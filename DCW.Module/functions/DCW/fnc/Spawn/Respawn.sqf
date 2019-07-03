@@ -21,11 +21,11 @@ REMAINING_RESPAWN = NUMBER_RESPAWN;
 if ((leader GROUP_PLAYERS) == _player) then {
 	_player remoteExec ["removeAllActions"];
 	sleep .3;
-	_player call DCW_fnc_ActionCamp;
+	_player call DCW_fnc_actionCamp;
 	_player call DCW_fnc_addSupportUi;
 };
 
-DCW_fnc_HandleRespawnBase = {
+DCW_fnc_handleRespawnBase = {
 	params["_unit"];
 	// Remove units around the player
 	{ if (_unit distance _x < 120 && side _x == SIDE_ENEMY) then {_x setDamage 1;} } foreach allUnits;
@@ -48,7 +48,7 @@ DCW_fnc_HandleRespawnBase = {
 
 //Respawn handling
 // Singleplayer
-DCW_fnc_HandleRespawnSingleplayer =
+DCW_fnc_handleRespawnSingleplayer =
 {
 	params["_unit"];
 
@@ -112,7 +112,7 @@ DCW_fnc_HandleRespawnSingleplayer =
 	}; 
 
     resetCamShake;
-	[_unit] call DCW_fnc_HandleRespawnBase;
+	[_unit] call DCW_fnc_handleRespawnBase;
 	
 	_unit setUnconscious false;
 	_unit setDamage 0;
@@ -167,7 +167,7 @@ if (RESPAWN_ENABLED) then{
 
 		[SIDE_FRIENDLY, getMarkerPos "marker_base","Base"] call BIS_fnc_addRespawnPosition;
 		
-		[_player] call DCW_fnc_HandleRespawnBase;
+		[_player] call DCW_fnc_handleRespawnBase;
 
 	    _player addMPEventHandler ["MPRespawn", {
 			params ["_unit", "_corpse"];
@@ -178,7 +178,7 @@ if (RESPAWN_ENABLED) then{
 				REMAINING_RESPAWN = [_unit,nil,true] call BIS_fnc_respawnTickets;
 				if (REMAINING_RESPAWN == -1)exitWith{  endMission "LOSER";  };
 			};
-			[_unit] spawn DCW_fnc_HandleRespawnBase;
+			[_unit] spawn DCW_fnc_handleRespawnBase;
 		}];
 
 		_player addMPEventHandler ["MPKilled",{
@@ -231,7 +231,7 @@ if (RESPAWN_ENABLED) then{
 		enableTeamSwitch false;
 
 		// In Singleplayer
-		[_player] call DCW_fnc_HandleRespawnBase;
+		[_player] call DCW_fnc_handleRespawnBase;
 
 		// Prevent ACE to do bullshit
 		_player removeAllEventHandlers "HandleDamage";
@@ -255,7 +255,7 @@ if (RESPAWN_ENABLED) then{
 				_damage = .9;
 				_unit setDamage .9;
 					// Injured soldiers
-				[_unit] spawn DCW_fnc_HandleRespawnSinglePlayer;
+				[_unit] spawn DCW_fnc_handleRespawnSinglePlayer;
 			} else {
 				if (lifeState _unit == "INCAPACITATED")then{
 					_damage = .9;

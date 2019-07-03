@@ -18,7 +18,7 @@ if (DEBUG)then{
     [_unit,"ColorRed"] call DCW_fnc_addmarker;
 };
 
-[_unit] call DCW_fnc_AddTorch;
+[_unit] call DCW_fnc_addTorch;
 [_unit] call DCW_fnc_handlekill;
 [_unit] call DCW_fnc_handleAttacked;
 

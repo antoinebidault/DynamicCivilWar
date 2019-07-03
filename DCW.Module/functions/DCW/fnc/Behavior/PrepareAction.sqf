@@ -20,8 +20,8 @@ DCW_fnc_addActionJoinAsAdvisor = {
 
         sleep .3;
 
-        [_talker,"Hi buddy, I would need a military advisor, are you in ?!",false] call DCW_fnc_Talk;
-        [_unit,"I'm in ! Let's go",false] call DCW_fnc_Talk;
+        [_talker,"Hi buddy, I would need a military advisor, are you in ?!",false] call DCW_fnc_talk;
+        [_unit,"I'm in ! Let's go",false] call DCW_fnc_talk;
         [_unit,_action] remoteExec ["removeAction"];
 
         sleep .3;
@@ -154,7 +154,7 @@ DCW_fnc_addActionLiberate =  {
         _talker  = (_this select 1);
         _action  = (_this select 2);
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
-        [_talker,"Go away now ! asshole !",false] call DCW_fnc_Talk;
+        [_talker,"Go away now ! asshole !",false] call DCW_fnc_talk;
         if(side _unit != SIDE_CIV) then {
 		    [_unit] joinSilent createGroup SIDE_CIV;
         };
@@ -213,12 +213,12 @@ DCW_fnc_addActionHalt = {
         _unit stop true;
         [_unit,"MOVE"] remoteExec ["disableAI"];
 
-        [_talker,"Hello sir !",false] call DCW_fnc_Talk;
+        [_talker,"Hello sir !",false] call DCW_fnc_talk;
         
         if (!weaponLowered _talker) exitWith { 
-            [_unit,"I don't talk to somebody pointing his gun on me ! Go away !",false] remoteExec ["DCW_fnc_Talk",_talker];
+            [_unit,"I don't talk to somebody pointing his gun on me ! Go away !",false] remoteExec ["DCW_fnc_talk",_talker];
             [_unit, "gestureNo"] remoteExec ["playActionNow",2];
-            [_talker,"I'm sorry, sir !",false] call DCW_fnc_Talk;
+            [_talker,"I'm sorry, sir !",false] call DCW_fnc_talk;
             [_unit,-2] remoteExec ["DCW_fnc_updateRep",2];
             _unit stop false;
             [_unit,"MOVE"] remoteExec ["enableAI"];
@@ -238,7 +238,7 @@ DCW_fnc_addActionHalt = {
 
         sleep 1;
         [_unit, "GestureHi"] remoteExec ["playActionNow"];
-        [_unit,format["Hi ! My name is %1.", name _unit],false] remoteExec ["DCW_fnc_Talk",_talker];
+        [_unit,format["Hi ! My name is %1.", name _unit],false] remoteExec ["DCW_fnc_talk",_talker];
         
         sleep 0.5;
 
@@ -265,23 +265,23 @@ DCW_fnc_addActionDidYouSee = {
 
         /*if (_unit getVariable["DCW_Friendliness",50] < 40) exitWith {
             [_unit,-2] remoteExec ["DCW_fnc_updateRep",2];
-            [_unit,"Don't talk to me !",false] call DCW_fnc_Talk;
+            [_unit,"Don't talk to me !",false] call DCW_fnc_talk;
             false;
         };*/
         
-        [_talker,"Did you see anything recently ?", false] call DCW_fnc_Talk;
+        [_talker,"Did you see anything recently ?", false] call DCW_fnc_talk;
         private _data = _unit targetsQuery [objNull,SIDE_ENEMY, "", [], 0];
         sleep 1;
         _data = _data select {side group (_x select 1) == SIDE_ENEMY};
 
         if (count _data == 0) exitWith {
-            [_unit, "I saw nothing...",false] call DCW_fnc_Talk;
+            [_unit, "I saw nothing...",false] call DCW_fnc_talk;
             _this call DCW_fnc_endtalking;
         };
 
         if (count _data > 3) then { _data = [_data select 0] + [_data select 1] + [_data select 2];};
         
-        [_unit,format["I saw %1 enemies...",count _data],false] call DCW_fnc_Talk;
+        [_unit,format["I saw %1 enemies...",count _data],false] call DCW_fnc_talk;
         _markers = [];
         {
             _enemy = _x select 1;
@@ -293,7 +293,7 @@ DCW_fnc_addActionDidYouSee = {
                 _num = floor (_ang / 22.5);
                 _compass = _points select _num;
                 _type = getText (configFile >> "cfgVehicles" >> typeOf vehicle _enemy >> "displayName");
-                [_unit, format["I saw a %1 %2 %3km away, %4minutes ago ", _type,_compass,_nbMeters,ceil((_x select 5)/60)],false] call DCW_fnc_Talk;
+                [_unit, format["I saw a %1 %2 %3km away, %4minutes ago ", _type,_compass,_nbMeters,ceil((_x select 5)/60)],false] call DCW_fnc_talk;
                 _marker = createMarkerLocal [format["enemyviewed-%1", random 50], position _enemy];
                 _marker setMarkerShapeLocal "ICON";
                 _marker setMarkerTypeLocal "mil_dot";
@@ -304,9 +304,9 @@ DCW_fnc_addActionDidYouSee = {
             };
         } forEach _data;
 
-        [_unit,"I marked their positions on your map. Help us please !",false] call DCW_fnc_Talk;
+        [_unit,"I marked their positions on your map. Help us please !",false] call DCW_fnc_talk;
         [_unit,1] remoteExec ["DCW_fnc_updateRep",2];
-        [_talker,"Thanks a lot !",false] call DCW_fnc_Talk;
+        [_talker,"Thanks a lot !",false] call DCW_fnc_talk;
         _this call DCW_fnc_endtalking;
         sleep 240;
         { deleteMarker _x; }foreach _markers;
@@ -362,7 +362,7 @@ DCW_fnc_addActionFeeling = {
                 };
             };
 
-            [_unit,_message,false] call DCW_fnc_Talk;
+            [_unit,_message,false] call DCW_fnc_talk;
             _this call DCW_fnc_endtalking;
             
             sleep 120;
@@ -387,7 +387,7 @@ DCW_fnc_addActionGetIntel = {
             if (side _unit == SIDE_CIV) then {
                 [_unit,-3] remoteExec ["DCW_fnc_updateRep",2];
             };  
-           [_unit,"Don't talk to me !",false] call DCW_fnc_Talk;
+           [_unit,"Don't talk to me !",false] call DCW_fnc_talk;
            false;
         };*/
 
@@ -420,9 +420,9 @@ DCW_fnc_addActionGetIntel = {
             skipTime .25;
         };
         if (_isSuspect)then{
-           [_unit,["Not your business !","I must leave...","Leave me alone please...","I'm a dead man if I talk to you..."] call BIS_fnc_selectRandom,false] call DCW_fnc_Talk;
+           [_unit,["Not your business !","I must leave...","Leave me alone please...","I'm a dead man if I talk to you..."] call BIS_fnc_selectRandom,false] call DCW_fnc_talk;
         }else{
-           [_unit,_talker] remoteExec ["DCW_fnc_GetIntel",2];
+           [_unit,_talker] remoteExec ["DCW_fnc_getIntel",2];
            [_unit,3] remoteExec ["DCW_fnc_updateRep",2];
         };
 
@@ -488,8 +488,8 @@ DCW_fnc_addActionRally = {
        if(random 100 < PERCENTAGE_FRIENDLY_INSURGENTS && !_isSuspect) then {
             _unit stop false;
             _unit enableAI "ALL";
-            [_unit,"Ok, I'm in !",false] call DCW_fnc_Talk;
-            [_unit,SIDE_FRIENDLY] call DCW_fnc_BadBuyLoadout;
+            [_unit,"Ok, I'm in !",false] call DCW_fnc_talk;
+            [_unit,SIDE_FRIENDLY] call DCW_fnc_badBuyLoadout;
             _unit remoteExec ["RemoveAllActions"];
             _unit setVariable["DCW_recruit",true,true];
             _unit remoteExec ["DCW_fnc_addActionLeaveGroup"];
@@ -498,9 +498,9 @@ DCW_fnc_addActionRally = {
             [_unit] join GROUP_PLAYERS;
         }else{
             if (_isSuspect)then{
-                [_unit,"No thanks",false] call DCW_fnc_Talk;
+                [_unit,"No thanks",false] call DCW_fnc_talk;
             }else{
-                [_unit,"Sorry, but I have a family ! No way I get back to war...", false] call DCW_fnc_Talk;
+                [_unit,"Sorry, but I have a family ! No way I get back to war...", false] call DCW_fnc_talk;
             };
 
             [_unit,-1 ] remoteExec ["DCW_fnc_updateRep",2];
@@ -517,10 +517,10 @@ DCW_fnc_addActionSupportUs = {
 
         if (!([GROUP_PLAYERS,20] call DCW_fnc_afford)) exitWith {_this call DCW_fnc_endTalking;[_unit,"You need more money !",false] call DCW_fnc_talk;false;};
         
-        [_talker,"What are looking for ? We can provide you food, medicine, water...", false] call DCW_fnc_Talk;
+        [_talker,"What are looking for ? We can provide you food, medicine, water...", false] call DCW_fnc_talk;
         [_unit,1] remoteExec ["DCW_fnc_updateRep",(2 + floor random 2)];
-        [_unit,"Thanks for your precious help !",false] call DCW_fnc_Talk;;
-        [_unit,"You're welcome !",false] call DCW_fnc_Talk;
+        [_unit,"Thanks for your precious help !",false] call DCW_fnc_talk;;
+        [_unit,"You're welcome !",false] call DCW_fnc_talk;
         _this call DCW_fnc_endTalking;
     },nil,1,false,true,"","true",2.5,false,""];
 
@@ -546,9 +546,9 @@ DCW_fnc_addActionFindChief = {
             _marker setMarkerTextLocal "Local chief";
             _marker setMarkerPosLocal (getPosWorld _chief);
 
-            [_unit,format["I marked you the exact position where I last saw %1", name _chief],false] call DCW_fnc_Talk;
+            [_unit,format["I marked you the exact position where I last saw %1", name _chief],false] call DCW_fnc_talk;
         }else{
-            [_unit,"Our chief is no more... Fucking war !",false] call DCW_fnc_Talk;
+            [_unit,"Our chief is no more... Fucking war !",false] call DCW_fnc_talk;
         };
         _this call DCW_fnc_endTalking;
     },[_chief],7,false,true,"","true",3,false,""];
@@ -562,8 +562,8 @@ DCW_fnc_addActionLeaveGroup = {
         [_unit,4] remoteExec ["DCW_fnc_updateRep",2];
         _unit remoteExec ["removeAllActions",0];
         _talker playActionNow "gestureGo";
-        [_talker,format["%1, You are now free to go ! Thanks for your help",name _unit],false] call ["DCW_fnc_Talk",0];
-        [_unit,["Well, good bye buddy !","Bye my friend !","Ok, See you in hell.."] call BIS_fnc_selectRandom,false] remoteExec ["DCW_fnc_Talk",0];
+        [_talker,format["%1, You are now free to go ! Thanks for your help",name _unit],false] call ["DCW_fnc_talk",0];
+        [_unit,["Well, good bye buddy !","Bye my friend !","Ok, See you in hell.."] call BIS_fnc_selectRandom,false] remoteExec ["DCW_fnc_talk",0];
         _newGrp = createGroup SIDE_FRIENDLY;
         [_unit] join _newGrp;
         _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
@@ -583,7 +583,7 @@ DCW_fnc_addActionLeave = {
         [_unit,-3] remoteExec ["DCW_fnc_updateRep",2];
         _unit remoteExec ["removeAllActions",0];
         _talker playActionNow "gestureGo";
-        [_talker,"Sorry sir, you must leave now, go away !",false] remoteExec ["DCW_fnc_Talk",0];
+        [_talker,"Sorry sir, you must leave now, go away !",false] remoteExec ["DCW_fnc_talk",0];
         _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         _unit enableAI "MOVE";
         _unit stop false;
@@ -595,7 +595,7 @@ DCW_fnc_addActionLeave = {
 };
 
 
-DCW_fnc_ActionRest =  {
+DCW_fnc_actionRest =  {
     _this addAction ["<t color='#00FF00'>Rest (3 hours)</t>", {
         params["_tent","_unit","_action"];
         if((_unit findNearestEnemy _unit) distance _unit < 100)exitWith {[_unit,"Impossible untill there is enemies around",false] call DCW_fnc_talk;};
@@ -625,7 +625,7 @@ DCW_fnc_ActionRest =  {
         };
 
         sleep 3;
-        [_unit,"Ok, let's go back to work !",false] call DCW_fnc_Talk;
+        [_unit,"Ok, let's go back to work !",false] call DCW_fnc_talk;
         _unit action ["sitdown",_unit];
 
         _cam cameraeffect ["terminate", "back"];
@@ -650,7 +650,7 @@ DCW_fnc_ActionRest =  {
             _unit enableFatigue true;
             sleep 300;
             if (isNull _tent) exitWith {};
-            _tent call DCW_fnc_ActionRest;
+            _tent call DCW_fnc_actionRest;
         };
         
     },nil,1,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];
@@ -659,7 +659,7 @@ DCW_fnc_ActionRest =  {
 
 
 
-DCW_fnc_ActionCorrupt =  {
+DCW_fnc_actionCorrupt =  {
     _this addAction ["<t color='#000000'>Corrupt him (30min/-100pts)</t>",{
           params["_unit","_talker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
@@ -699,7 +699,7 @@ DCW_fnc_ActionCorrupt =  {
             };
 		    [_unit,20] remoteExec ["DCW_fnc_updateRep",2];
             [_unit,"I accept the deal...", false] spawn DCW_fnc_talk; 
-            _unit call DCW_fnc_MainObjectiveIntel;
+            _unit call DCW_fnc_mainObjectiveIntel;
         } else {
             [_unit,"You're wasting your time !", false] spawn DCW_fnc_talk; 
             [_unit,-10] remoteExec ["DCW_fnc_updateRep",2];
@@ -712,7 +712,7 @@ DCW_fnc_ActionCorrupt =  {
 };
 
 /*
-DCW_fnc_AddActionHeal = {
+DCW_fnc_addActionHeal = {
     // Stabilize
 [ _this,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
         params["_injured","_healer","_actionId"];
@@ -752,7 +752,7 @@ DCW_fnc_AddActionHeal = {
     },[],15,nil,true,true] remoteExec ["BIS_fnc_holdActionAdd"];
 };*/
 
-DCW_fnc_ActionTorture =  {
+DCW_fnc_actionTorture =  {
     _this addAction ["<t color='#000000'>Torture him (2 hours/Bad reputation)</t>",{
         params["_unit","_talker","_action"];
         //Populate with friendlies
@@ -836,7 +836,7 @@ DCW_fnc_ActionTorture =  {
             _unit removeAction _action;
             [_unit,"I know something ! But stop it ! Please !", false] spawn DCW_fnc_talk; 
 		    [_unit,10] remoteExec ["DCW_fnc_updateRep",2];
-            _unit call DCW_fnc_MainObjectiveIntel;
+            _unit call DCW_fnc_mainObjectiveIntel;
         } else {
             [_unit,"Argh... I've told you, I have no idea where he is... Leave me alone ! Please !", false] spawn DCW_fnc_talk; 
             [_unit,-10] remoteExec ["DCW_fnc_updateRep",2];

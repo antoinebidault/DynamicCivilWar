@@ -66,7 +66,7 @@ if (_state == "secured" ) then{
 	_pos = _marker select 1;
 	_radius = _marker select 4;
 	_meetingPointPosition = _marker select 7;
-	_units = _units +  ([_pos,_radius,_populations select 9,_meetingPointPosition, _marker select 11] call DCW_fnc_SpawnFriendlyOutpost);
+	_units = _units +  ([_pos,_radius,_populations select 9,_meetingPointPosition, _marker select 11] call DCW_fnc_spawnFriendlyOutpost);
 	_marker  set [5,_units];
 
 	// White list this marker
@@ -121,6 +121,6 @@ waitUntil {!IN_MARKERS_LOOP};
 MARKERS set [_markerIndex,_marker];
 
 [] call DCW_fnc_refreshMarkerStats;
-[] remoteExec ["DCW_fnc_DisplayScore"];
+[] remoteExec ["DCW_fnc_displayScore"];
 
 _marker;

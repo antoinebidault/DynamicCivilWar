@@ -129,7 +129,7 @@ publicVariable "MARKER_WHITE_LIST";
 CIVILIAN_KILLED = { 
 	params["_unit","_killer"]; 
 	hint format ["%1 %2 was killed by %3",name (_unit),side _unit,name (_killer)];
-	[_unit,-4] remoteExec ["DCW_fnc_UpdateRep",2];
+	[_unit,-4] remoteExec ["DCW_fnc_updateRep",2];
 	[GROUP_PLAYERS,-50,false,_killer] call DCW_fnc_updateScore;
 };
 
@@ -293,14 +293,14 @@ publicVariable "MARKER_WHITE_LIST";
 
 
 // Consuming work => getAllClusters
-_clusters = [GAME_ZONE] call DCW_fnc_GetClusters;
-MARKERS = [_clusters] call DCW_fnc_FillClusters;
+_clusters = [GAME_ZONE] call DCW_fnc_getClusters;
+MARKERS = [_clusters] call DCW_fnc_fillClusters;
 
 [] call DCW_fnc_camp;
 [] execVM "DCW\fnc\supportui\init.sqf"; // Support ui init
-[] spawn DCW_fnc_SpawnCrashSite; //Chopper spawn
-[] spawn DCW_fnc_SpawnSecondaryObjective; // Secondary objectives
-[] spawn DCW_fnc_SpawnMainObjective; // Main objective
+[] spawn DCW_fnc_spawnCrashSite; //Chopper spawn
+[] spawn DCW_fnc_spawnSecondaryObjective; // Secondary objectives
+[] spawn DCW_fnc_spawnMainObjective; // Main objective
 [] call DCW_fnc_refreshMarkerStats; // Refresh marker stats
 
 [] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
@@ -347,4 +347,4 @@ private ["_mkr","_cacheResult","_ieds"];
 	};
 };
 
-[] call DCW_fnc_SpawnLoop;
+[] call DCW_fnc_spawnLoop;

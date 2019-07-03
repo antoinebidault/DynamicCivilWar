@@ -17,7 +17,7 @@ private _units = [];
 
 //List positions;
 private _posResult = [];
-private _posResult = [_pos,_radius] call DCW_fnc_SpawnPosition;
+private _posResult = [_pos,_radius] call DCW_fnc_spawnPosition;
 private _posSelects = _posResult select 0;
 private _enterable = _posResult select 1;
 private _cancel = true;
@@ -78,7 +78,7 @@ for "_xc" from 1 to _nb  do {
       _units pushBack _unit;
 
       //Si c'est une patrouille
-      [_grp,"DCW_fnc_EnemyCompoundPatrol", [_grp,_radius,_meetingPointPosition,_buildings]] call DCW_fnc_patrolDistributeToHC;
+      [_grp,"DCW_fnc_enemyCompoundPatrol", [_grp,_radius,_meetingPointPosition,_buildings]] call DCW_fnc_patrolDistributeToHC;
       
     };
 };
