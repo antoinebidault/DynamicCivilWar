@@ -1,5 +1,7 @@
 params ["_clusters"];
 
+diag_log "[FillClusters] Start process";
+
 _markers = [];
 _popbase = 0;
 _nbFriendlies = 0;

@@ -7,6 +7,8 @@
  */
 params["_gameArea"];
 
+diag_log "[GetClusters] Start process";
+
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
 private _worldNbBlocks = floor(_worldSize/SIZE_BLOCK);
@@ -133,5 +135,6 @@ _sortedClustersReverse = [_clusters, [], { if(_x select 3) then { 0 } else { _x 
 _sortedClusters = [];
 _sortedClustersReverse = [];
 
+diag_log "[GetClusters] End of process";
 
 _clusters;

@@ -11,7 +11,7 @@ params ["_group","_price"];
 
 _score = DCW_SCORE;
 _score = (_score - _price);
-if (_score < 0) then{
+if (_score < 0) then{ 
 	hint "Can't afford this";
 	false;
 }else{

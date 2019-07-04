@@ -4,6 +4,7 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 	_actionId = [_this,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
 			params["_injured","_healer"];
 			if (!alive _injured) exitWith {};
+			_healer setVariable["DCW_heal_injured", _injured, true];
 			_injured setVariable["DCW_healer", _healer, true];
 			[_healer, "medicStart"] remoteExec ["playActionNow"];
 			[_injured,"DCW_fnc_carry"] spawn DCW_fnc_removeAction; 
@@ -27,6 +28,7 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 		},{
 			params["_injured","_healer","_action"];
 			_healer setVariable["DCW_healer", objNull,true];
+			_healer setVariable["DCW_heal_injured", objNull, true];
 			_injured setVariable ["DCW_unit_injured", false, true];
 			[_healer, "medicStop"] remoteExec ["playActionNow"];
 			detach _injured;
@@ -47,7 +49,8 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 			true;
 		},{
 			params["_injured","_healer"];
-			_healer setVariable["DCW_healer", objNull];
+			_healer setVariable["DCW_healer", objNull, true];
+			_healer setVariable["DCW_heal_injured", objNull, true];
 			[_healer, "medicStop"] remoteExec ["playActionNow"];
 			if (lifeState _injured == "INCAPACITATED") then {
 				[_injured, "DCW_fnc_carry"] call DCW_fnc_addAction; 

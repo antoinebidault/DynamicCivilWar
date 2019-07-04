@@ -17,7 +17,6 @@ if (!RESPAWN_ENABLED)then {
 RESPAWN_CHOICE = "";
 REMAINING_RESPAWN = NUMBER_RESPAWN;
 
-
 if ((leader GROUP_PLAYERS) == _player) then {
 	_player remoteExec ["removeAllActions"];
 	sleep .3;

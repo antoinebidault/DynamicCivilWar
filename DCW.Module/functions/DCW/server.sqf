@@ -14,8 +14,6 @@ if (!isMultiplayer)then{
 	{ if (_foreachIndex > 3) then { deleteVehicle _x; } } forEach units GROUP_PLAYERS;
 };
 
-{_x enableSimulationGlobal false;} foreach units GROUP_PLAYERS;
-
 addMissionEventHandler ["HandleDisconnect", {
 	params ["_unit", "_id", "_uid", "_name"];
 	//_unit = _this select 0;
@@ -94,23 +92,7 @@ if (getMarkerColor "GAME_ZONE" == "") then {
 };
 publicVariable "GAME_ZONE";
 
-
-// Create a marker all around the terrain if it's a ground
-/*
-{
-	private _i = _x select 0;
-	private _j = _x select 1;
-	private _position = [(_i * (_gameZoneSize select 0)), (_j * (_gameZoneSize select 1)), 0];
-	private _mp = createMarker [format["edge-map-%1-%2",str _i, str _j], _position];
-	_mp setMarkerShape "RECTANGLE";
-	_mp setMarkerAlpha 0.1;
-	_mp setMarkerColor "ColorRed";
-	_mp setMarkerSize _gameZoneSize;
-	MARKER_WHITE_LIST pushBack _mp;
-} forEach [[-1,-1],[-1,1],[-1,3],[3,-1],[3,1],[3,3],[1,3],[1,-1]];
-publicVariable "MARKER_WHITE_LIST";
-*/
-
+// Black list all the sector around the main marker
 {
 	private _i = _x select 0;
 	private _j = _x select 1;
@@ -161,6 +143,11 @@ ENEMY_SEARCHED = {
 	[GROUP_PLAYERS, 2 + ceil (random 10),false,_player] call DCW_fnc_updateScore;
 };
 
+// Consuming work => getAllClusters executed in background
+CLUSTERS = [];
+[] spawn {
+	CLUSTERS = [GAME_ZONE] call DCW_fnc_getClusters;
+};
 
 WAITUNTIL {DCW_STARTED;};
 
@@ -170,19 +157,6 @@ publicVariable "MARKER_WHITE_LIST";
 
 // This spawn is very important... Because it breaks the singleplayer savegames
 [] spawn {
-	// Foreach units add itemGPS 
-	{
-		_x addWeapon "itemGPS";
-		_x addItem "MineDetector";
-		if (ACE_ENABLED) then {
-			_x addItem "ACE_DefusalKit";
-			_x addItem "ACE_EarPlugs";
-		} else {
-			_x addItem "ToolKit";
-		};
-
-		_x setPos START_POSITION;
-	}foreach units GROUP_PLAYERS;
 
 	// TIME
 	setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
@@ -291,10 +265,10 @@ publicVariable "MARKER_WHITE_LIST";
 	};
 };
 
+// Wait the process executed async is markAsFinished
+waitUntil {count CLUSTERS > 0};
 
-// Consuming work => getAllClusters
-_clusters = [GAME_ZONE] call DCW_fnc_getClusters;
-MARKERS = [_clusters] call DCW_fnc_fillClusters;
+MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
 
 [] call DCW_fnc_camp;
 [] execVM "DCW\fnc\supportui\init.sqf"; // Support ui init

@@ -9,7 +9,6 @@ if (isNull player) exitWith{};
 if (!hasInterface) exitWith{};
 
 titleCut ["", "BLACK FADED", 9999];
-disableUserInput false;
 
 // Client side 
 TALK_QUEUE = [];
@@ -32,6 +31,20 @@ player createDiaryRecord ["Diary",["Main objective : kill the commander",
 In this singleplayer scenario, you have one major objective : assassinate the enemy general. We kow that it would considerably change the situation in this region which is ravaged by war. At this point, we have no intel on his exact location. He is probably hidden in mountains or forests, wandering from place to place very often far from the conflicts areas. Firstly, you must get intel about his approximate position.<br/><img image='images\target.jpg' width='302' height='190'/><br/><br/>"]];
 
  _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
+
+player addWeapon "itemGPS";
+player addItem "MineDetector";
+if (ACE_ENABLED) then {
+	player addItem "ACE_DefusalKit";
+	player addItem "ACE_EarPlugs";
+} else {
+	player addItem "ToolKit";
+};
+
+// If unit JIP
+if (didJIP) then {
+	 player setPos START_POSITION;
+};
 
 // If is admin
 if (ENABLE_DIALOG && !didJIP) then {
@@ -90,7 +103,9 @@ if (ENABLE_DIALOG && !didJIP) then {
 				[_x,"FSM"] remoteExec ["enableAI"] ;
 			};
 			[_x,""] remoteExec ["switchMove"];
-			
+			if (DEBUG) then {
+				_x setPos START_POSITION;
+			};
 		}
 		foreach units group player;
 	};
@@ -104,12 +119,9 @@ if (ENABLE_DIALOG && !didJIP) then {
 	publicVariableServer "DCW_STARTED";
 };
 
-
 if (!DEBUG && !didJIP) then {
 	[] call DCW_fnc_intro;
 };
-
-
 
 uisleep .3;
 titleCut ["", "BLACK FADED", 9999];
@@ -191,9 +203,9 @@ addMissionEventHandler
 		params ["_isOpened","_isForced"];
 		if (_isOpened) then {
 			// Fetch markers from server silently
-			_markers = [ missionNamespace, "MARKERS", []] call BIS_fnc_getServerVariable;
-			[_markers] spawn {
+			[] spawn {
 				params ["_markers"];
+				_markers = [ missionNamespace, "MARKERS", []] call BIS_fnc_getServerVariable;
 				CurrentMarker = "";
 				["DCW-markerhover", "onEachFrame", {
 					params ["_markers"];

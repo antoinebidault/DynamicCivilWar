@@ -14,7 +14,6 @@ _this setUnconscious false;
 _this call DCW_fnc_removeActionHeal;
 [_this,"DCW_fnc_carry"] call DCW_fnc_removeAction; 
 _this setVariable["DCW_fnc_carry",-1,true];
-_this setVariable["DCW_fnc_addActionHeal",-1,true];
 _this setVariable["DCW_this_injured",false,true];
 _this setVariable["DCW_this_dragged",false,true];
 _this setVariable["DCW_healer",objNull,true];

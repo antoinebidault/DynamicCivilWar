@@ -113,7 +113,7 @@ if (alive _healer && alive _injuredperson && _injuredperson getVariable["DCW_uni
 
 	resetCamShake;
 } else {
-	if (damage _injuredperson >= .9 && lifeState _injuredperson =="INCAPACITATED") then {
+	if (damage _injuredperson >= .9 && lifeState _injuredperson == "INCAPACITATED") then {
 		[_injuredperson,"DCW_fnc_carry"] call DCW_fnc_addAction; 
 		_injuredperson call DCW_fnc_addActionHeal;
 	};

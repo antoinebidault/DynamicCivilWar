@@ -7,7 +7,6 @@
  */ 
 if (!isNull player) then {
 	titleCut ["", "BLACK FADED",9999];
-	disableUserInput true; 
 	enableSentences false;
 	enableRadio false;
 }; 
@@ -74,7 +73,7 @@ DCW_fnc_spawnCrashSite = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\
 DCW_fnc_spawnDefendTask = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnDefendTask.sqf";
 DCW_fnc_spawnIED = compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnIED.sqf";
 DCW_fnc_spawncrate = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnCrate.sqf";
-DCW_fnc_spawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnObjects.sqf";
+DCW_fnc_SpawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnObjects.sqf";
 DCW_fnc_spawnhumanitaryoutpost = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitaryoutpost.sqf";
 DCW_fnc_spawnhumanitar = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitar.sqf";
 DCW_fnc_spawnSnipers =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnSnipers.sqf";
@@ -98,12 +97,12 @@ DCW_fnc_patrolDistributeToHC = compile preprocessFileLineNumbers  "DCW\fnc\Patro
 DCW_fnc_getIntel = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\GetIntel.sqf";
 DCW_fnc_cache = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\cache.sqf";
 DCW_fnc_hostage = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\hostage.sqf";
-DCW_fnc_success = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Success.sqf";
+DCW_fnc_Success = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Success.sqf";
 DCW_fnc_failed = compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\Failed.sqf";
 DCW_fnc_createtask =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\createtask.sqf";
 DCW_fnc_foundCommander =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\foundCommander.sqf";
 DCW_fnc_mainObjectiveIntel =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\MainObjectiveIntel.sqf";
-DCW_fnc_compoundSecured =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\CompoundSecured.sqf";
+DCW_fnc_CompoundSecured =  compileFinal preprocessFileLineNumbers  "DCW\fnc\objective\CompoundSecured.sqf";
 
 //CUSTOM BEHAVIOR
 DCW_fnc_mortarBombing = compileFinal preprocessFileLineNumbers  "DCW\fnc\Behavior\MortarBombing.sqf";
@@ -137,13 +136,13 @@ DCW_fnc_triggerSupport = compile preprocessFileLineNumbers  "DCW\fnc\supportui\T
 
 // MEDEVAC
 DCW_fnc_spawnHelo = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHelo.sqf";
-DCW_fnc_spawnHeloCrew = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloCrew.sqf";
-DCW_fnc_spawnHeloReplacement = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloReplacement.sqf";
-DCW_fnc_handleDamage = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleDamage.sqf";
-DCW_fnc_handleKilled = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleKilled.sqf";
-DCW_fnc_heal = compile preprocessFileLineNumbers "DCW\fnc\medevac\heal.sqf";
-DCW_fnc_carry = compile preprocessFileLineNumbers "DCW\fnc\medevac\carry.sqf";
-DCW_fnc_chopperPath = compile preprocessFileLineNumbers "DCW\fnc\medevac\chopperpath.sqf";
+DCW_fnc_SpawnHeloCrew = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloCrew.sqf";
+DCW_fnc_SpawnHeloReplacement = compile preprocessFileLineNumbers  "DCW\fnc\medevac\SpawnHeloReplacement.sqf";
+DCW_fnc_HandleDamage = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleDamage.sqf";
+DCW_fnc_HandleKilled = compile preprocessFileLineNumbers  "DCW\fnc\medevac\HandleKilled.sqf";
+DCW_fnc_Heal = compile preprocessFileLineNumbers "DCW\fnc\medevac\heal.sqf";
+DCW_fnc_Carry = compile preprocessFileLineNumbers "DCW\fnc\medevac\carry.sqf";
+DCW_fnc_ChopperPath = compile preprocessFileLineNumbers "DCW\fnc\medevac\chopperpath.sqf";
 DCW_fnc_calculateTimeToHeal = compile preprocessFileLineNumbers "DCW\fnc\medevac\calculateTimeToHeal.sqf";
 DCW_fnc_spawnHealEquipement = compile preprocessFileLineNumbers "DCW\fnc\medevac\spawnHealEquipement.sqf";
 DCW_fnc_spawnObject = compile preprocessFileLineNumbers "DCW\fnc\medevac\spawnObject.sqf";

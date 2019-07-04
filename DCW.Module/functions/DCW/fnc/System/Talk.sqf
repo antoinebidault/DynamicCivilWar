@@ -87,7 +87,7 @@ _talker setVariable["DCW_speak",true];
 _talker setRandomLip true;
 
 _currentTime = time;
-waitUntil { time >= _currentTime + ((count(_say)/13) max 1.6) || (SPACEBAR_HIT && isNull(player getVariable["DCW_healer",objNull])); };
+waitUntil { time >= _currentTime + ((count(_say)/13) max 1.6) || (SPACEBAR_HIT && isNull(player getVariable["DCW_heal_injured",objNull])); };
 SPACEBAR_HIT = false;
 _display displayRemoveEventHandler ["KeyDown",_ehId];
 _talker setRandomLip false;

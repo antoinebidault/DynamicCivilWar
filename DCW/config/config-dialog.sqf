@@ -14,7 +14,8 @@ UNIT_SHOWCASE = player;
 	};
 	_anim = _anims select 0;
 	_anims = _anims - [_anim];
-    [_x,_anim] remoteExec ["switchMove", 0];
+    [_x,_anim] remoteExec ["switchMove"];
+	//_x setPosATL (player modelToWorld[(_foreachIndex+1),0,0]);
 	_x setDir (direction player);
 }
 foreach units group player;

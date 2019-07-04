@@ -10,17 +10,14 @@
 _box = _this;
 clearmagazinecargo _box; 
 clearweaponcargo _box;
-["AmmoboxInit",[_box,true]] call BIS_fnc_arsenal;
 if (RESTRICTED_AMMOBOX) then {
-	[_box,[true],true] call BIS_fnc_removeVirtualItemCargo;
-	[_box,[true],true] call BIS_fnc_removeVirtualWeaponCargo;
-	[_box,[true],true] call BIS_fnc_removeVirtualBackpackCargo;
-	[_box,[true],true] call BIS_fnc_removeVirtualMagazineCargo;
-
 	_items = [] call DCW_fnc_getCrateItems;
-	[_box, _items, true] call BIS_fnc_addVirtualItemCargo;
-	[_box, _items, true] call BIS_fnc_addVirtualWeaponCargo; 
-	[_box, _items, true] call BIS_fnc_addVirtualMagazineCargo; 
-	[_box, _items, true] call BIS_fnc_addVirtualBackpackCargo;
-
+	[_box, _items select 0, false, false] call BIS_fnc_addVirtualWeaponCargo;
+	[_box,  _items select 1, false, false] call BIS_fnc_addVirtualMagazineCargo; 
+	[_box,  _items select 2, false, false] call BIS_fnc_addVirtualItemCargo;
+	[_box,  _items select 3, false, false] call BIS_fnc_addVirtualBackpackCargo;
+	[_box,  _items select 4, false] call BIS_fnc_removeVirtualMagazineCargo;
+	["AmmoboxInit",[_box,false]] call BIS_fnc_arsenal;
+} else {
+	["AmmoboxInit",[_box,true]] call BIS_fnc_arsenal;
 };

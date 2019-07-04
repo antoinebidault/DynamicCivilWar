@@ -7,13 +7,6 @@
  */
 _group = _this select 0;
 
-REVIVETIME_INSECONDS = 10;
-_transportHelo = objNull;
-_posChopper = objNull;
-_supportHeli = 1000;
-
-private _soldiersDead = [];
-
 // Replacement team event handling
 {	
 	if (!isPlayer(_x))then{
@@ -29,8 +22,8 @@ private _soldiersDead = [];
 		_x setskill ["courage", 1];
 		_x setskill ["general", 1];
 		_x setskill ["reloadSpeed", 1];
-		_x removeAllEventHandlers "HandleDamage";
-		_x addEventHandler ["HandleDamage",{_this call DCW_fnc_handleDamage;}];
+		_x remoteExec ["removeAllEventHandlers", owner _x];
+		[_x, ["HandleDamage",{_this call DCW_fnc_handleDamage;}]] remoteExec ["addEventHandler", owner _x];
 		_x addMPEventHandler ["MPKilled",{_this call DCW_fnc_handleKilled;}];
 	};
 }foreach (units _group);
@@ -38,6 +31,14 @@ private _soldiersDead = [];
 
 
 /*
+
+REVIVETIME_INSECONDS = 10;
+_transportHelo = objNull;
+_posChopper = objNull;
+_supportHeli = 1000;
+
+private _soldiersDead = [];
+
 MEDEVAC_State = "standby"; // standby/menu/map/inbound/aborted
 MEDEVAC_MENU_LASTID = 0;
 MEDEVAC_marker = "";

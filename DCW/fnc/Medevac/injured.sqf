@@ -41,7 +41,10 @@ if (isPlayer _unit && _unit == player) then {
 		}foreach units GROUP_PLAYERS; 
 
 		// Check the status
-		if (_dist == 999999 || isNull _foundCloseUnit) exitWith { DCW_ai_current_medic = objNull; };
+		if (_dist == 999999 || isNull _foundCloseUnit) exitWith { 
+			DCW_ai_current_medic = objNull; 
+			hintSilent "All medics are KIA";
+		};
 		
 		if (!isNull _foundCloseUnit && isNull DCW_ai_current_medic) then {
 			_unit setVariable ["DCW_healer", objNull, true];
