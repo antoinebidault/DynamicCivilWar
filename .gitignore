@@ -1,7 +1,7 @@
 ﻿*.ogg
 node_modules/
 .vscode/
-DCW.Module/functions/DCW
+DCW.Module/functions/
 DCW.*/DCW
 Build/
 ~DCW.*/
