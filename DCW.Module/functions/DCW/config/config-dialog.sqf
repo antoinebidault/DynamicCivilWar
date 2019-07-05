@@ -1,7 +1,15 @@
+/*
+	Author: 
+		Bidass
+
+	Description:
+		Display the scenario configuration dialog
+		This requires the config-dialog-functions to work properly.
+
+*/
+
+
 disableSerialization;
-
-
-
 
 titleCut ["", "BLACK FADED", 999];
 

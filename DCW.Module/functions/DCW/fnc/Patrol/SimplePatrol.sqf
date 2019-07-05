@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    TODO
+
+  Parameters:
+    0: OBJECT - TODO
+
+  Returns:
+    BOOL - true 
+*/
 
 //Inspired by SPUn / LostVar
 private ["_unit","_radius","_newPos","_bPoss","_dir","_curPos"];

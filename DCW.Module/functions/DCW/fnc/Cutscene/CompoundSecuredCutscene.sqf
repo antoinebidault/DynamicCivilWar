@@ -1,3 +1,16 @@
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Little cutscene triggered when player secures an outpost
+
+  Parameters:
+    0: ARRAY - an array of units spawned in the compound. 
+			   There must be a flag inside with FRIENDLY_FLAG
+
+*/
+
 params["_units"];
 
 //Execute a little animation

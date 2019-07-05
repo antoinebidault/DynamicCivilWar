@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Make a unit shout (Using vanilla sound)
+
+  Parameters:
+    0: OBJECT - unit who is shouting
+
+  Returns:
+    BOOL - true 
+*/
 
 params ["_unit"]; 
 

@@ -1,7 +1,7 @@
 
 //Global configuration
 //GLOBAL
-DEBUG = false; //Make all units visible on the map
+DEBUG = true; //Make all units visible on the map
 SHOW_SECTOR = true; //Make every sector colored on the map
 SIDE_FRIENDLY = side player; //Side player
 NUMBER_RESPAWN = 3;

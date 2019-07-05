@@ -1,11 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Compound chief bases action action
- */
+/*
+  Author: 
+    Bidass
 
+  Description:
+    Add all the actions affected to the compound chief.
+
+  Parameters:
+    0: OBJECT - unit
+
+  Returns:
+    OBJECT - unit 
+*/
 params["_unit","_radius"];
 
 _unit remoteExec ["RemoveAllActions",0];
@@ -165,4 +170,5 @@ _unit addHeadgear "H_Beret_blk";
 
 
 
+_unit;
 

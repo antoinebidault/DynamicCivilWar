@@ -1,3 +1,16 @@
+/*
+	Author: 
+		Bidass
+
+	Description:
+		This process is executed when the group leader press the "start mission button"
+		All the class list are set up from the main CONFIG_VEHICLES array that is an all vehicle className cache.
+		When the process is finished, the DCW_STARTED is set to true => The mission is allowed to start
+
+*/
+
+
+
 if (!isServer) exitWith {};
 
 diag_log "[MissionSetup] Starting";

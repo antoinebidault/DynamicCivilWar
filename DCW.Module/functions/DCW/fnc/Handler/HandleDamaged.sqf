@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Handle damage to civilian
+
+  Parameters:
+    0: OBJECT - civilian unit
+
+  Returns:
+    BOOL - true 
+*/
 
 
 _this addEventHandler["HandleDamage",{
@@ -39,7 +46,7 @@ _this addEventHandler["HandleDamage",{
 			_unit setVariable ["marker", _marker];
 		};
 
-		_unit remoteExec ["DCW_fnc_addActionHeal"];
+		_unit call DCW_fnc_addActionHeal;
 		
 	}else{
 		if (_unit getVariable["DCW_unit_injured",false])then{_damage = .9;};

@@ -1,10 +1,11 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Global scope variable
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Global scope variables declarations
+*/
+ 
 
  if (didJIP) exitWith {};
 

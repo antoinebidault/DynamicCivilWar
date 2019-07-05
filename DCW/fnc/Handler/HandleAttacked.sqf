@@ -1,9 +1,18 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    FiredNear handler attached to enemy unit
+	It will make the unit surrender when over pressured
+	(Wounded, low morale, less distance from gunner, whole team decimated...)
+
+  Parameters:
+    0: OBJECT - unit
+
+  Returns:
+    BOOL - true 
+*/
  params["_unit"];
 _unit addEventHandler["FiredNear",
 	{
@@ -16,3 +25,5 @@ _unit addEventHandler["FiredNear",
 		};
 	}
 ];
+
+true;

@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Trigger a random animation for civilian walking on the map
+
+  Parameters:
+    0: OBJECT - unit
+
+  Returns:
+    BOOL - true 
+*/
 
  params["_unit"];
  if (!isNull player) then {

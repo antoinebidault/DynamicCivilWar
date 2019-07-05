@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Triggered when an enemy soldier is killed
+
+  Parameters:
+    0: OBJECT - enemy soldier
+
+  Returns:
+    BOOL - true 
+*/
 
  params["_unit"];
  

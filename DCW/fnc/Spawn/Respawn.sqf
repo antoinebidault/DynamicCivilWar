@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    TODO
+
+  Parameters:
+    0: OBJECT - TODO
+
+  Returns:
+    BOOL - true 
+*/
 
 params ["_player"];
 
@@ -12,7 +19,7 @@ if (!RESPAWN_ENABLED)then {
 	REMAINING_RESPAWN = 0;
 };
  
-[] spawn DCW_fnc_surrenderSystem;
+[_player] spawn DCW_fnc_surrenderSystem;
 
 RESPAWN_CHOICE = "";
 REMAINING_RESPAWN = NUMBER_RESPAWN;

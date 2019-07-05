@@ -1,12 +1,24 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+ /*
+	Author: 
+		Bidass
+
+	Description:
+		Add the base civilian action.
+		"Say hello"
+		"Leave"
+		"Capture him"
+
+	Parameters:
+		0: OBJECT - unit (Must be a civilian)
+
+	Returns:
+		BOOL - true 
+*/
 
 params ["_unit"];
 
 _unit call DCW_fnc_addActionHalt;
 _unit call DCW_fnc_addActionLeave;
 _unit call DCW_fnc_addActionHandcuff;
+
+true;

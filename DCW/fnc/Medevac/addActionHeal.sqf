@@ -58,5 +58,5 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 			detach _injured;
 			false;
 		},[],12,nil,true,false] call BIS_fnc_holdActionAdd;
-	_this setVariable["DCW_fnc_addActionHeal",_actionId , true];
-}] remoteExec ["call",0];
+	_this setVariable["DCW_fnc_addActionHeal", _actionId];
+}] remoteExec ["call", GROUP_PLAYERS];

@@ -1,11 +1,10 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Base server executed code
- */
+ /*
+  Author: 
+    Bidass
 
+  Description:
+    Base server executed code
+*/
 
 if (!isServer) exitWith{};
 

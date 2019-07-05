@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    TODO
+
+  Parameters:
+    0: OBJECT - TODO
+
+  Returns:
+    BOOL - true 
+*/
 
 //Adapted from Zonekiller's Array Builder -- Moser 07/18/2014
 //http://forums.bistudio.com/showthread.php?109423-Zonekiller-s-Array-Builder

@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    TODO
+
+  Parameters:
+    0: OBJECT - TODO
+
+  Returns:
+    BOOL - true 
+*/
 
 private _pos = _this select 0;
 private _radius = _this select 1;

@@ -1,11 +1,18 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Catch firednear event => Make up
- * Thanks to phronk : https://forums.bistudio.com/profile/785811-phronk/
- */
+ /*
+  Author: 
+    Bidass
+
+  Description:
+    Catch firednear event => Make civilian join the guerilla if attacked
+	CREDITS : Thanks to phronk : https://forums.bistudio.com/profile/785811-phronk/
+
+  Parameters:
+    0: OBJECT - civilian unit
+
+  Returns:
+    BOOL - true 
+*/
+
 
 
 _this select 0 addEventHandler["FiredNear",

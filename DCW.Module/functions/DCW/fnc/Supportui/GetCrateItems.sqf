@@ -116,10 +116,10 @@ _items = _items call _removex;
 
 _items =  _items + _linkeditems + _uniforms;
 
-  _gathereditems = _other_items + _allside_items;
-  _gatheredweapons = _other_weapons + _allside_weapons;
-  _gatheredmags = _other_mags + _allside_mags;
-  _gatheredpacks = _other_bags + _allside_packs;
+_gathereditems = _other_items + _allside_items;
+_gatheredweapons = _other_weapons + _allside_weapons;
+_gatheredmags = _other_mags + _allside_mags;
+_gatheredpacks = _other_bags + _allside_packs;
 
   {_items pushBackUnique _x} foreach _gathereditems;
   {_weapons pushBackUnique _x} foreach _gatheredweapons;

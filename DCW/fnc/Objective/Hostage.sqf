@@ -1,9 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    TODO
+
+  Parameters:
+    0: OBJECT - TODO
+
+  Returns:
+    BOOL - true 
+*/
 
 private ["_pos","_radius","_nb","_unit","_building","_buildings","_unitName","_posToSpawn","_posBuildings","_enemy","_hostage"];
 

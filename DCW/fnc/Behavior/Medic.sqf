@@ -1,11 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
 
+  Description:
+    Add all the actions affected to the compound's medic.
 
+  Parameters:
+    0: OBJECT - unit
+
+  Returns:
+    OBJECT - unit 
+*/
 _this remoteExec ["RemoveAllActions",0];
 
 _this setVariable["DCW_Medic",true];

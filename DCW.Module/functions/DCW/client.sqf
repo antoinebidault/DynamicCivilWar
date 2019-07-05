@@ -1,9 +1,10 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Client base script
+*/
 
 if (isNull player) exitWith{};
 if (!hasInterface) exitWith{};
@@ -205,10 +206,11 @@ addMissionEventHandler
 			// Fetch markers from server silently
 			[] spawn {
 				params ["_markers"];
+			 	_timer = time;
 				_markers = [ missionNamespace, "MARKERS", []] call BIS_fnc_getServerVariable;
 				CurrentMarker = "";
 				["DCW-markerhover", "onEachFrame", {
-					params ["_markers"];
+					params ["_markers","_timer"];
 					_map = findDisplay 12 displayCtrl 51; 
 					_mapMarker = (ctrlMapMouseOver _map);
 					hintsilent "";
@@ -238,10 +240,16 @@ addMissionEventHandler
 						CurrentMarker = "";
 					};
 
+					// Refresh each 4 secs
+					if (time == _timer + 4 ) then {
+						_markers = [missionNamespace, "MARKERS", []] call BIS_fnc_getServerVariable;
+						_timer = time;
+					};
+
 					if (!visibleMap) then {
 						["DCW-markerhover", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 					};
-				},[_markers]] call BIS_fnc_addStackedEventHandler;
+				},[_markers,_timer]] call BIS_fnc_addStackedEventHandler;
 			};
 		};
 	

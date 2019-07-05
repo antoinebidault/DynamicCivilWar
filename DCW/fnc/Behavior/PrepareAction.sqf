@@ -1,11 +1,11 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
 
+  Description:
+    Prepare functions for the civilian spawned on the map mostly
 
+*/
 
 DCW_fnc_addActionJoinAsAdvisor = {
       _this addaction ["<t color='#FF0000'>Recruit him as a military advisor (-30pts)</t>",{

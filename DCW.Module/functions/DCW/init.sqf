@@ -1,10 +1,12 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Main components preloading and initialization
- */ 
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Main components preloading and initialization
+*/
+
+
 if (!isNull player) then {
 	titleCut ["", "BLACK FADED",9999];
 	enableSentences false;
@@ -43,6 +45,7 @@ DCW_fnc_undercover = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Und
 DCW_fnc_setCompoundState =  compileFinal preprocessFileLineNumbers  "DCW\fnc\System\setCompoundState.sqf";
 DCW_fnc_setCompoundSupport =  compileFinal preprocessFileLineNumbers  "DCW\fnc\System\setCompoundSupport.sqf";
 DCW_fnc_surrenderSystem = compile preprocessFileLineNumbers  "DCW\fnc\System\SurrenderSystem.sqf";
+DCW_fnc_captured = compileFinal preprocessFileLineNumbers  "DCW\fnc\System\Captured.sqf";
 DCW_fnc_getMarkerById = compile preprocessFileLineNumbers "DCW\fnc\System\getMarkerById.sqf";
 DCW_fnc_refreshMarkerStats = compile preprocessFileLineNumbers "DCW\fnc\System\refreshMarkerStats.sqf";
 DCW_fnc_teleport = compile preprocessFileLineNumbers  "DCW\fnc\System\teleport.sqf";

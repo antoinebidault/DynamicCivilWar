@@ -1,10 +1,11 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
 
+  Description:
+    Obsolete conversation system
+
+*/
 
  private ["_file","_talkers","_array","_sentence","_talker","_spectator","_text"];
 

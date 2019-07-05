@@ -1,9 +1,20 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Triggered when a mortar spawn. The mortar will attack the unit passed in param.
+    To prevent game breaking, the mortar round impact is calculated to be not too close from the unit.
+
+  Parameters:
+    0: OBJECT - mortar
+    1: OBJECT - targeted unit
+    2: ARRAY - unit position [X,Y,Z]
+    3: RADUIS - Maximum of distance where the round will fall
+
+  Returns:
+    BOOL - true 
+*/
 
 private _mortar = _this select 0;
 private _targetedUnit = _this select 1;

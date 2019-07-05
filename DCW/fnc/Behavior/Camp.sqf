@@ -1,10 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Very simple
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Set the respawn camp
+
+  Parameters:
+    0: OBJECT - unit
+
+  Returns:
+    OBJECT - unit 
+*/
 params["_unit"];
 
 CAMP_OBJS = [];

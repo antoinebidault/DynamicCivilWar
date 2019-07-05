@@ -1,4 +1,15 @@
-DEBUG = true;
+/*
+	Author: 
+		Bidass
+
+	Description:
+		Base configuration constant definition
+		The multiplayer configuration binding is done here
+
+*/
+
+// If debug enabled, each units will be visible on the map with markers
+DEBUG = false;
 AI_SKILLS = .9;
 RESPAWN_ENABLED = true;
 MEDEVAC_ENABLED = true; // Reviving

@@ -1,3 +1,13 @@
+/*
+	Author: 
+		Bidass
+
+	Description:
+		Functions library for the config dialog
+
+*/
+
+
 
 DCW_fnc_getValue = {
 	private _ctrlId = _this;

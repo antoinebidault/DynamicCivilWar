@@ -1,3 +1,17 @@
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Make the enemy soldier surrender
+
+  Parameters:
+    0: OBJECT - TODO
+
+  Returns:
+    BOOL - true 
+*/
+
 params["_unit"];
 
 _unit removeAllEventHandlers "FiredNear";

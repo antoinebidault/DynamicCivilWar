@@ -1,9 +1,17 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Update the reputation score
+
+  Parameters:
+    0: OBJECT - unit
+	1: NUMBER - Score to add (Negative value are allowed)
+
+  Returns:
+    BOOL - true 
+*/
 
 params["_unit","_score"];
 

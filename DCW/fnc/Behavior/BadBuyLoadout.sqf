@@ -1,15 +1,18 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
-
 /*
-Transform a civil in an insurgent.
-BIDASS
-*/
+  Author: 
+    Bidass
 
+  Description:
+    Transform a civil in an insurgent with an AK, magazines...
+    The unit's gear is randomized
+
+  Parameters:
+    0: OBJECT - unit
+    0: OBJECT - unit's side
+
+  Returns:
+    OBJECT - unit 
+*/
 params ["_unit","_side"];
 
 [_unit] joinSilent grpNull;

@@ -1,3 +1,12 @@
+/*
+	Author: 
+		Bidass
+
+	Description:
+		Global setup of ACE configuration constants
+
+*/
+
 // ACE Medical
 ace_medical_ai_enabledFor = 0;
 ace_medical_level = 0;

@@ -1,3 +1,18 @@
+ /*
+	Author: 
+		Bidass
+
+	Description:
+		Add the set camping action to the player.
+
+	Parameters:
+		0: OBJECT - unit (player)
+
+	Returns:
+		BOOL - true 
+*/
+
+ 
  _this addAction ["<t color='#00FF00'>Set up camp (1 hour)</t>", {
         params["_unit","_asker","_action"];
 
@@ -75,4 +90,4 @@
         //Rest animations
         (CAMP_OBJS select 18) remoteExec ["DCW_fnc_actionrest",0, true];
 
-    },nil,1,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];
+},nil,1,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];

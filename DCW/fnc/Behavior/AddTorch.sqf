@@ -1,14 +1,17 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- */
-
 /*
-Add a torch to the unit and force the lights ON
-BIDASS
+	Author: 
+		Bidass
+
+	Description:
+		Add a torch to the unit and force the lights ON
+
+	Parameters:
+		0: OBJECT - unit
+
+	Returns:
+		BOOL - true 
 */
+
 params["_unit"];
 
 if (dayTime < 8 || dayTime > 20) then {
@@ -18,3 +21,5 @@ if (dayTime < 8 || dayTime > 20) then {
     _unit addPrimaryWeaponItem ENEMY_ATTACHEDLIGHT_CLASS;
     _unit enableGunLights "forceon";
 };
+
+_unit
