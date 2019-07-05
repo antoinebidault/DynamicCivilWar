@@ -3,10 +3,10 @@
     Bidass
 
   Description:
-    TODO
+    Make the task successful.
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - unit with the task
 
   Returns:
     BOOL - true 

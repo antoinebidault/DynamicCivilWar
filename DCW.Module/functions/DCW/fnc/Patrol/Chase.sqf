@@ -3,15 +3,15 @@
     Bidass
 
   Description:
-    TODO
+    Trigger chasing
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - Group of units chasing
+    1: OBJECT - Unit attacked
 
   Returns:
     BOOL - true 
 */
-
 
 private ["_flrObj"];
 _grp = _this select 0;
@@ -28,9 +28,7 @@ if (!DEBUG) then {
     _marker setMarkerAlpha 0;
 };
 
-
-
-while { alive _leader && alive _unitChased }do{
+while { alive _leader && lifeState _unitChased != 'INCAPACITATED' }do{
     _leader= leader _grp;
     if (_leader knowsAbout _unitChased >= .5) then {
         if (time > LAST_FLARE_TIME + 120)then{
@@ -61,3 +59,4 @@ while { alive _leader && alive _unitChased }do{
     sleep 30;
 };
 
+_leader;

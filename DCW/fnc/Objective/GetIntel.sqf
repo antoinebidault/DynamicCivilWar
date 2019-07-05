@@ -3,10 +3,12 @@
     Bidass
 
   Description:
-    TODO
+    Get a random item from units spawn in markers around the selected _unit.
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - Unit who is interrogated
+    1: OBJECT - Unit who is asking (The player)
+    2: NUMBER - Probability 
 
   Returns:
     BOOL - true 

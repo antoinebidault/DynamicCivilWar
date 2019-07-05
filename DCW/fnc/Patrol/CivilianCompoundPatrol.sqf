@@ -1,12 +1,20 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- *
- * Modified script of SPUn / LostVar
- */
+/*
+  Author: 
+    Bidass
 
+  Description:
+    Civilian patrol in compound. 
+    Modified script of SPUn / LostVar
+
+  Parameters:
+    0: OBJECT - Group of units
+    1: NUMBER - Range in meter
+    2: ARRAY - Meeting position => a random position where everybody comes
+    3: ARRAY - BUilding list
+
+  Returns:
+    BOOL - true 
+*/
 
 private _grp = _this select 0;
 private _radius = _this select 1;

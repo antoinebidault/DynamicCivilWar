@@ -1,13 +1,22 @@
     
+/*
+  Author: 
+    Bidass
 
+  Description:
+    AI behavior 
+	Make the selected unit to heal a wounded soldier.
+	 It is propagating variable through network to prevent some unwanted behaviors...
+	Credits to psycho & BonInf* 
 
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Credits to psycho & BonInf* 
- */
+  Parameters:
+    0: OBJECT - Healer
+	1: OBJECT - Injured unit
+	2: BOOL - True to make the animation persistent (It will never stop until one of the unit die...). Useful in humanitar camp
+
+  Returns:
+    BOOL - true 
+*/
 
 params["_healer","_injuredperson","_ambient"]; 
 

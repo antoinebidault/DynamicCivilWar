@@ -6,10 +6,17 @@
     TODO
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - Item containing the intel. It must have a DCW_type variable set up to work properly 
+    1: BOOL - True to show the task with a visible notification 
 
   Returns:
-    BOOL - true 
+    ARRAY - return an array of datas structured as following : 
+    [
+       0:NUMBER - taskId,
+       1:STRING - message,
+       2:STRING - message if success,
+       3:NUMBER - _bonus
+   ];
 */
 
 private _intel = _this select 0;

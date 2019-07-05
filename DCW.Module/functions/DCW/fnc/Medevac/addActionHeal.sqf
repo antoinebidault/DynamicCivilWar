@@ -1,3 +1,18 @@
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Add the heal action to unit
+
+  Parameters:
+    0: OBJECT - the unit
+
+  Returns:
+    BOOL - true 
+*/
+
+
 if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 
 [_this, {

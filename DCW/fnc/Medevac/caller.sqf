@@ -1,3 +1,21 @@
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Init the state of the chopper helo evacuation
+	NOTE : this is actually obsolete.
+
+  Parameters:
+    0: OBJECT - unit
+    1: OBJECT - dead soldiers
+
+  Returns:
+    BOOL - true 
+*/
+
+
+
 params["_unit","_soldiersDead"];
 
 if (MEDEVAC_State == "menu") then {

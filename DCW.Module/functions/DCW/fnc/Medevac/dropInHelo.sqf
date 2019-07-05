@@ -3,10 +3,10 @@
     Bidass
 
   Description:
-    TODO
+    
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - 
 
   Returns:
     BOOL - true 

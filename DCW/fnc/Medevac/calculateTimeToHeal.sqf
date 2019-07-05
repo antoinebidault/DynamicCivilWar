@@ -6,7 +6,8 @@
     TODO
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - unit
+    1: OBJECT - Injured unit
 
   Returns:
     BOOL - true 

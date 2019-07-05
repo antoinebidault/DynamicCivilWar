@@ -1,12 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- *
- * Modified script of SPUn / LostVar
- */
+/*
+  Author: 
+    Bidass
 
+  Description:
+    
+
+  Parameters:
+    0: OBJECT - Group of units
+
+  Returns:
+    BOOL - true 
+*/
 
 private _grp = _this select 0;
 private _radius = _this select 1;

@@ -3,13 +3,13 @@
     Bidass
 
   Description:
-    TODO
+    Function used to make a task fails
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - Unit with the task
 
   Returns:
-    BOOL - true 
+    OBJECT - unit with the task 
 */
 
 private _unitWithTask = _this;
@@ -28,3 +28,5 @@ if (_unitWithTask getVariable["DCW_IsIntelRevealed",false])then{
         [_task,true] call BIS_fnc_deleteTask;
     }] remoteExec ["spawn", GROUP_PLAYERS,false]; 
 };
+
+_unitWithTask;

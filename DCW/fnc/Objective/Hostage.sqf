@@ -3,13 +3,16 @@
     Bidass
 
   Description:
-    TODO
+    Spawn a hostage task with a civilian tied up and terrorists arround him
 
   Parameters:
-    0: OBJECT - TODO
+    0: ARRAY - position
+    1: NUMBER - Radius
+    2: NUMNER - Number of units
+    3: ARRAY - Building's list
 
   Returns:
-    BOOL - true 
+    ARRAY - unit's list spawned 
 */
 
 private ["_pos","_radius","_nb","_unit","_building","_buildings","_unitName","_posToSpawn","_posBuildings","_enemy","_hostage"];

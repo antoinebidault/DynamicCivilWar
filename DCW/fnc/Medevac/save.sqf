@@ -3,7 +3,7 @@
     Bidass
 
   Description:
-    TODO
+    Make a group of units save the others
 
   Parameters:
     0: OBJECT - TODO

@@ -3,13 +3,16 @@
     Bidass
 
   Description:
-    TODO
+    Set up a cache in the selected compound using a proper building position
 
   Parameters:
-    0: OBJECT - TODO
+    0: ARRAY - position
+    1: NUMBER - Radius in meters
+    2: NUMBER - Number of units to spawn
+    3: ARRAY - Building list
 
   Returns:
-    BOOL - true 
+    ARRAY - array of unit's spawned 
 */
 
 private ["_unit","_building","_buildings","_unitName","_posToSpawn","_posBuildings","_enemy"];

@@ -3,14 +3,15 @@
     Bidass
 
   Description:
-    TODO
+    Basic civilian patrol 
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - Group of units
 
   Returns:
     BOOL - true 
 */
+
 
 private ["_timer","_rndMarker","_rndPos","_radius","_newPos"];
 params ["_grp"];

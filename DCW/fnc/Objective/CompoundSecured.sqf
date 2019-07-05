@@ -1,11 +1,16 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * 
- * Add a marker to map
- */ 
+/*
+  Author: 
+    Bidass
+
+  Description:
+    triggered when a compound is secured
+
+  Parameters:
+    0: ARRAY - the compound's data array (In MARKERS global scope variable)
+
+*/
+
+
 params["_compound"];
 // Set the correct state
 

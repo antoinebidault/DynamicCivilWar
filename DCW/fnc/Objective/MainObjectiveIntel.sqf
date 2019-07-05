@@ -3,10 +3,10 @@
     Bidass
 
   Description:
-    TODO
+    Spawn main objective intel.
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - unit
 
   Returns:
     BOOL - true 
