@@ -11,10 +11,6 @@ params["_side"];
 
 _allowedmenclass = ["Man"]; 
 
-//--------------------------------
-
-//Some config functions
-	
 _CfgFactions = configFile >> "CfgFactionClasses";
 FACTIONS = [];
 for "_i" from 1 to ((count _CfgFactions) - 1) do 

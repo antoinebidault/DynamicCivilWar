@@ -1,3 +1,19 @@
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Fill up the cluster (An array of marker) with population pool data, states...etc...
+	This function must be executed on startup
+
+  Parameters:
+	1: ARRAY [] - Clusters
+
+  Returns:
+    BOOL - true 
+*/
+
+
 params ["_clusters"];
 
 diag_log "[FillClusters] Start process";

@@ -16,9 +16,9 @@ if (!isMultiplayer)then{
 addMissionEventHandler ["HandleDisconnect", {
 	params ["_unit", "_id", "_uid", "_name"];
 	//_unit = _this select 0;
-    //deleteVehicle _unit;
+    deleteVehicle _unit;
 	if (count ([] call DCW_fnc_allPlayers) == 0) then {
-	   //"EveryoneLost" call BIS_fnc_endMissionServer;
+	  // "EveryoneLost" call BIS_fnc_endMissionServer;
 	};
 	true;
 }];
@@ -111,19 +111,19 @@ CIVILIAN_KILLED = {
 	params["_unit","_killer"]; 
 	hint format ["%1 %2 was killed by %3",name (_unit),side _unit,name (_killer)];
 	[_unit,-4] remoteExec ["DCW_fnc_updateRep",2];
-	[GROUP_PLAYERS,-50,false,_killer] call DCW_fnc_updateScore;
+	[GROUP_PLAYERS,-50,false,_killer] remoteExec ["DCW_fnc_updateScore",2];
 };
 
 //On enemy killed => 2 points
 ENEMY_KILLED = {
 	params["_type","_unit"]; 
-	[GROUP_PLAYERS, 10,true] call DCW_fnc_updateScore;
+	[GROUP_PLAYERS, 10,true] remoteExec ["DCW_fnc_updateScore",2];
  };
 
 
 //If civilian is healed by player
 CIVIL_HEALED = { 
-	[GROUP_PLAYERS,30,false,(leader GROUP_PLAYERS)] call DCW_fnc_updateScore;
+	[GROUP_PLAYERS,30,false,(leader GROUP_PLAYERS)]  remoteExec ["DCW_fnc_updateScore",2];
  };
 
 //If civil is captured
@@ -133,13 +133,13 @@ CIVIL_HEALED = {
 
 // If player is killed
  PLAYER_KIA = { 
-	[GROUP_PLAYERS,-20,false,(leader GROUP_PLAYERS)] call DCW_fnc_updateScore;
+	[GROUP_PLAYERS,-20,false,(leader GROUP_PLAYERS)] remoteExec ["DCW_fnc_updateScore",2];
  };
 
 //On enemy search.
 ENEMY_SEARCHED = {
 	params["_unit","_player"];
-	[GROUP_PLAYERS, 2 + ceil (random 10),false,_player] call DCW_fnc_updateScore;
+	[GROUP_PLAYERS, 2 + ceil (random 10),false,_player] remoteExec ["DCW_fnc_updateScore",2];
 };
 
 // Consuming work => getAllClusters executed in background
@@ -217,7 +217,7 @@ publicVariable "MARKER_WHITE_LIST";
 	_officerPos = _spawnpos;
 	{
 		if (_x isKindOf "ReammoBox_F") then {
-			_x call DCW_fnc_spawncrate;
+			_x remoteExec ["DCW_fnc_spawncrate",0,true];
 		};
 	} foreach _compoObjs; 
 
@@ -253,13 +253,13 @@ publicVariable "MARKER_WHITE_LIST";
 	// Fill up all game crate
 	_ammobox = missionNamespace getVariable ["ammoBox",objNull];
 	if (!isNull _ammobox) then {
-		_ammobox call DCW_fnc_spawncrate;
+		_ammobox remoteExec ["DCW_fnc_spawncrate",0,true];
 	};
 
 	for "_i" from 1 to 10  do {
 		_ammobox = missionNamespace getVariable [format["ammoBox_%1",str _i],objNull];
 		if (!isNull _ammobox) then {
-			_ammobox call DCW_fnc_spawncrate;
+			_ammobox remoteExec ["DCW_fnc_spawncrate",0,true];
 		};
 	};
 };
@@ -269,19 +269,22 @@ waitUntil {count CLUSTERS > 0};
 
 MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
 
+
 [] call DCW_fnc_camp;
 [] execVM "DCW\fnc\supportui\init.sqf"; // Support ui init
-[] spawn DCW_fnc_spawnCrashSite; //Chopper spawn
-[] spawn DCW_fnc_spawnSecondaryObjective; // Secondary objectives
-[] spawn DCW_fnc_spawnMainObjective; // Main objective
-[] call DCW_fnc_refreshMarkerStats; // Refresh marker stats
 
-[] execVM "DCW\fnc\spawn\SpawnSheep.sqf"; //Sheep herds spawn
-[] execVM "DCW\fnc\spawn\SpawnRandomEnemies.sqf"; //Enemy patrols
-[] execVM "DCW\fnc\spawn\SpawnRandomCar.sqf"; //Civil & enemy cars
-[] execVM "DCW\fnc\spawn\SpawnRandomCivilian.sqf"; //Civilians walking around
-[] execVM "DCW\fnc\spawn\SpawnChopper.sqf"; //Chopper spawn
-[] execVM "DCW\fnc\spawn\SpawnTank.sqf"; //Tanks
+// Random spawning function decoupled from the compounds
+[] spawn DCW_fnc_spawnCrashSite; 
+[] spawn DCW_fnc_spawnSecondaryObjective; 
+[] spawn DCW_fnc_spawnMainObjective;
+[] call DCW_fnc_refreshMarkerStats; // Refresh marker stats
+[] spawn DCW_fnc_spawnSheep;
+[] spawn DCW_fnc_spawnRandomEnemies;
+[] spawn DCW_fnc_spawnRandomCar;
+[] spawn DCW_fnc_spawnRandomCivilian;
+[] spawn DCW_fnc_spawnChopper;
+[] spawn DCW_fnc_spawnTank;
+
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{

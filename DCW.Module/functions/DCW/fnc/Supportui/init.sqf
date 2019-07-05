@@ -64,7 +64,7 @@ private _logicGroupSupportProvider = createGroup _center;
 	}forEach [
 		["BIS_SUPP_crateInit",
 		'
-			_this call DCW_fnc_spawncrate;
+			_this remoteExec ["DCW_fnc_spawncrate",0,true];
 		'],
 		["BIS_SUPP_vehicles",_x select 1],		//types of vehicles to use
 		["BIS_SUPP_vehicleinit","_this setCaptive true; { _x setCaptive true; } foreach crew _this;"],	//init code for vehicle

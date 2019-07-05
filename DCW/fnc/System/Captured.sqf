@@ -3,7 +3,9 @@
     Bidass
 
   Description:
-    Trigger when unit is captured
+    Trigger when unit is captured.
+	A little cutscene is automatically triggered
+	The player is moved to a random bastion.
 
   Parameters:
     0: OBJECT - player
@@ -14,10 +16,11 @@
 
 
 params["_player"];
+
 COMPO_OBJS = [];
 
 _player action ["Surrender", _player]; 
-_player setVariable ["dcw_surrender_triggered", true, false]; 
+_player setVariable ["dcw_surrender_action", true, false]; 
 _player setCaptive true;
 _wasTheLeader = (leader GROUP_PLAYERS == _player);
 
@@ -219,9 +222,9 @@ if (_wasTheLeader) then{group _player selectLeader _player;};
 
 if (_wasKIA) then {
 	waitUntil {PLAYER_ALIVE};
-	[leader GROUP_PLAYERS,"Good to see you back home !",false] call DCW_fnc_talk;
+	[leader GROUP_PLAYERS, "Good to see you back home !",false] call DCW_fnc_talk;
 } else {
-	[leader GROUP_PLAYERS,"Welcome back mate, you seem to have some interresting news !",false] call DCW_fnc_talk;
+	[leader GROUP_PLAYERS, "Welcome back mate, you seem to have some interresting news ! What did you see during your captivity ?",false] call DCW_fnc_talk;
 	[_player] remoteExec ["DCW_fnc_mainobjectiveIntel"];
 };
 

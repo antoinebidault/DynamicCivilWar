@@ -58,7 +58,7 @@ _unit addHeadgear "H_Beret_blk";
     [[_unit,_asker,_action],{
         params["_unit","_asker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
-        [_asker,"Is it possible to set up our camp here ?", false] spawn DCW_fnc_talk;
+        [_asker,"Is it possible to set up our camp here ?", false] remoteExec ["DCW_fnc_talk",_asker];
         _curr = ([position _unit,false,"any"] call DCW_fnc_findNearestMarker);
         _success =_curr select 3;
         _radius =_curr select 4;

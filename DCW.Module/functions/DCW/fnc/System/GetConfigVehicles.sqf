@@ -11,9 +11,7 @@
   Returns:
     BOOL - true 
 */
-//--------------------------------
 
-//Some config functions
 _output = [];
 _CfgVehicles = configFile >> "CfgVehicles";
 _CfgVehicleClass = configFile >> "CfgVehicleClass";

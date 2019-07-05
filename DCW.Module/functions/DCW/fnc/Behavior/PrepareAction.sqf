@@ -65,7 +65,7 @@ DCW_fnc_addActionHandCuff =  {
             removeAllWeapons _unit; 
         };
 
-        _unit action ["Surrender", _unit]; 
+        [_unit, ["Surrender", _unit]] remoteExec ["action"]; 
         _unit disableai "ANIM"; 
         _unit disableAI "MOVE"; 
 
@@ -176,8 +176,7 @@ DCW_fnc_addActionLiberate =  {
         _unit forceWalk false;
         _unit forceSpeed 10;
         _unit move _pos;
-
-            
+        
     },nil,1,false,true,"","true",3,false,""];
 };
 

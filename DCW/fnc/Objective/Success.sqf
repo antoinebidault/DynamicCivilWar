@@ -47,7 +47,7 @@ _taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
 //Custom callback
 [_objWithTask,_objWithTask getVariable["DCW_Reputation",0]] remoteExec ["DCW_fnc_updateRep",2];
 if (_objWithTask getVariable["DCW_Bonus",0] > 0) then{
-    [GROUP_PLAYERS,_objWithTask getVariable["DCW_Bonus",0],false,leader GROUP_PLAYERS] call DCW_fnc_updateScore;
+    [GROUP_PLAYERS,_objWithTask getVariable["DCW_Bonus",0],false,leader GROUP_PLAYERS]  remoteExec ["DCW_fnc_updateScore",2];
 };
 
 //Delete the task after success.

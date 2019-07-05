@@ -33,6 +33,7 @@ if ((leader GROUP_PLAYERS) == _player) then {
 
 DCW_fnc_handleRespawnBase = {
 	params["_unit"];
+    resetCamShake;
 	// Remove units around the player
 	{ if (_unit distance _x < 120 && side _x == SIDE_ENEMY) then {_x setDamage 1;} } foreach allUnits;
 
@@ -49,7 +50,7 @@ DCW_fnc_handleRespawnBase = {
 
 	// Initial score display
 	[] call DCW_fnc_displayscore;
-
+	_unit call DCW_fnc_resetState;
 };
 
 //Respawn handling
@@ -107,7 +108,6 @@ DCW_fnc_handleRespawnSingleplayer =
 	};
 	_unit setPos _respawnPos;
 
-	_unit call DCW_fnc_resetState;
 
 	sleep 1;
 
@@ -117,11 +117,7 @@ DCW_fnc_handleRespawnSingleplayer =
 		publicVariable "CHASER_TRIGGERED";
 	}; 
 
-    resetCamShake;
 	[_unit] call DCW_fnc_handleRespawnBase;
-	
-	_unit setUnconscious false;
-	_unit setDamage 0;
 
 	if (ACE_ENABLED) then {
 		[objNull, _unit] call ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal;
@@ -182,7 +178,7 @@ if (RESPAWN_ENABLED) then{
 			_unit setVariable["marker", MARKER_PLAYER, true];
 			if (NUMBER_RESPAWN != -1) then {
 				REMAINING_RESPAWN = [_unit,nil,true] call BIS_fnc_respawnTickets;
-				if (REMAINING_RESPAWN == -1)exitWith{  endMission "LOSER";  };
+			
 			};
 			[_unit] spawn DCW_fnc_handleRespawnBase;
 		}];
@@ -192,6 +188,7 @@ if (RESPAWN_ENABLED) then{
 			[_unit, [missionNamespace, "inventory_var"]] call BIS_fnc_saveInventory;
 			[] remoteExec ["PLAYER_KIA",2];
 			// Delete the marker with a little delay
+			if (REMAINING_RESPAWN == 0)exitWith{  endMission "LOSER";  };
 			[_unit] spawn {
 				params["_unit"];
 				sleep 10;

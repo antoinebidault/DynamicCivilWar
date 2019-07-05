@@ -5,6 +5,8 @@ params["_pos","_dist","_type"];
 if (isNil '_type') then {_type = "vehicle";};
 _cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { _type };
 
+// Correct the destination position
+_pos = [_pos, 0, 75, 5, 0, 0, 1, 0] call BIS_fnc_findSafePos;
 
 // Spawn CH47
 _startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_findSafePos;

@@ -13,9 +13,6 @@
     BOOL - true 
 */
 
-
-
-
 [_this, {
 	params["_unit","_actionName"];
 	_actionID = _unit getVariable[_actionName, -1];

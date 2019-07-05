@@ -80,6 +80,12 @@ DCW_fnc_SpawnObjects = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnOb
 DCW_fnc_spawnhumanitaryoutpost = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitaryoutpost.sqf";
 DCW_fnc_spawnhumanitar = compile preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnhumanitar.sqf";
 DCW_fnc_spawnSnipers =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnSnipers.sqf";
+DCW_fnc_spawnSheep =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnSheep.sqf";
+DCW_fnc_spawnTank =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnTank.sqf";
+DCW_fnc_spawnRandomEnemies=  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnRandomEnemies.sqf";
+DCW_fnc_spawnRandomCar=  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnRandomCar.sqf";
+DCW_fnc_spawnRandomCivilian=  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnRandomCivilian.sqf";
+DCW_fnc_spawnChopper=  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\spawnChopper.sqf";
 DCW_fnc_spawnLoop =  compileFinal preprocessFileLineNumbers  "DCW\fnc\Spawn\SpawnLoop.sqf";
 
 //PATROL
@@ -129,6 +135,7 @@ DCW_fnc_handlekill = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\Ha
 DCW_fnc_handleAttacked = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handler\HandleAttacked.sqf";
 
 // Support UI
+DCW_fnc_supportInit = compile preprocessFileLineNumbers  "DCW\fnc\supportui\init.sqf";
 DCW_fnc_addSupportUi = compile preprocessFileLineNumbers  "DCW\fnc\supportui\addSupportUi.sqf";
 DCW_fnc_updatescore = compile preprocessFileLineNumbers  "DCW\fnc\supportui\UpdateScore.sqf";
 DCW_fnc_afford = compile preprocessFileLineNumbers  "DCW\fnc\supportui\Afford.sqf";
@@ -194,7 +201,7 @@ if (ACE_ENABLED) then {
     [] call (compileFinal preprocessFileLineNumbers "DCW\config\ace-config.sqf"); 
 };
 
-BIS_fnc_exportFunctionsToWiki
+
 
 // Wait until everything is ready
 waitUntil {count ([] call DCW_fnc_allPlayers) > 0 && time > 0 };

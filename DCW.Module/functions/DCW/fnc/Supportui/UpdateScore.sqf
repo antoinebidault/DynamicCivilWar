@@ -11,7 +11,7 @@
   Returns:
     BOOL - true 
 */
-if (isnull player) exitWith{ hint "executed on server..." };
+if (!isServer) exitWith{};
 
 params ["_group","_bonus","_silent", "_unit"];
 private _silent = if (isNil "_silent") then{ false } else { _silent };

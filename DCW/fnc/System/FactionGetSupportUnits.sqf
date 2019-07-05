@@ -6,17 +6,12 @@
     TODO
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - faction
+	1: ARRAY [STRING] - Allowed class
 
   Returns:
     BOOL - true 
 */
-
-//Adapted from Zonekiller's Array Builder -- Moser 07/18/2014
-//http://forums.bistudio.com/showthread.php?109423-Zonekiller-s-Array-Builder
-//Determines faction and classname of player, then convert them to strings (strings are easier to work with configs!)
-
-
 
 params["_faction","_allowedClass","_type"];
 

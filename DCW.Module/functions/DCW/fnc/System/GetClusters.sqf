@@ -1,10 +1,17 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Create a complete map cluster
- */
+ /*
+  Author: 
+    Bidass
+
+  Description:
+    Create a complete map cluster
+
+  Parameters:
+    0: STRING - Marker area
+
+  Returns:
+    BOOL - true 
+*/
+
 params["_gameArea"];
 
 diag_log "[GetClusters] Start process";

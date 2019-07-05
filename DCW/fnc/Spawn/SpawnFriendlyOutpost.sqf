@@ -60,7 +60,7 @@ _unit = FRIENDLY_FLAG createVehicle _flagPos;
 _units pushBack _unit;
 
 _ammoBox = "Box_Syndicate_Ammo_F" createVehicle (_unit modelToWorld [1,1,0]);
-_ammoBox call DCW_fnc_spawncrate;
+_ammoBox remoteExec ["DCW_fnc_spawncrate",0,true];
 _units pushBack _ammoBox;
 
 

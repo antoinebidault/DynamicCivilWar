@@ -3,20 +3,16 @@
     Bidass
 
   Description:
-    TODO
+    Put a compound with all associated units in cache
+    The precise number of units remained is kept in memory in an array
+    The main purpose is to keep the same effective as before with just a randomization on the spawnng positions.
 
   Parameters:
-    0: OBJECT - TODO
+    0: ARRAY - units in the compound
+    1: ARRAY - units not already spawned (Array with the pool of units storred)
 
   Returns:
     BOOL - true 
-*/
-
-/*
-Put a compound with all associated units in cache
-The precise number of units remained is kept in memory in an array
-The main purpose is to keep the same effective as before with just a randomization on the spawnng positions.
-BIDASS
 */
 
 private["_type","_units","_nbPeople","_nbSniper","_nbEnemies","_nbCars","_unitsToRemove","_nbFriendlies","_nbIeds"];

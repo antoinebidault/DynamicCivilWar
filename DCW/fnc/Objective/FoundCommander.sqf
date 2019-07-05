@@ -39,7 +39,7 @@ sleep 10;
 
 sleep 10;
 
-[_unit,format["There is some step foots over here ! I think he moved to this direction : %1deg",str (_dir)], true] remoteExec ["DCW_fnc_talk",GROUP_PLAYERS];
+[_unit,format["There is some footprints over here ! I think he moved to this direction : %1deg",str (_dir)], true] remoteExec ["DCW_fnc_talk",GROUP_PLAYERS];
 
 sleep 10;
 
@@ -53,7 +53,8 @@ if (getMarkerColor "dcw_commander_pos" != "") then {
 	deleteMarker "dcw_commander_pos";
 };
 
-_pos = _unit getRelPos [_distance, 180 - _dir];
+
+_pos = [getPos _unit,_distance,  _dir] call BIS_fnc_relPos;
 _marker = createMarker ["dcw_commander_pos", _pos]; 
 _marker setMarkerShape "ELLIPSE";
 _marker setMarkerSize [200,200];
