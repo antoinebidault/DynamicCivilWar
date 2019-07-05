@@ -3,13 +3,9 @@
     Bidass
 
   Description:
-    TODO
+    Display the score UI at the bottom of the screen.
+	Executed on player's computer
 
-  Parameters:
-    0: OBJECT - TODO
-
-  Returns:
-    BOOL - true 
 */
 
 if (isNull player) exitWith{false;};
@@ -20,16 +16,6 @@ private _colorChaser = "";
 private _labelChaser = "";
 private _statusUnd = "";
 private _colorUnd = "";
- 
-// Chasing status
-/*
-if (CHASER_TRIGGERED) then{
-	_colorChaser = "#e46b6b";
-	_labelChaser = "Calling reinforcements";
-} else {
-	_colorChaser = "#2f9581";
-	_labelChaser = "Safe";
-};*/
 
 // Undercover status
 if (player getVariable["DCW_undercover",false]) then{

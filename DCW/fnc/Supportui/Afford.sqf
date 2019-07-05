@@ -1,12 +1,17 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Buying function 
- * Can be executed locally
- */
+/*
+  Author: 
+    Bidass
 
+  Description:
+    Buying function
+
+  Parameters:
+    0: OBJECT - Group of players => The money is collected for the whole group
+	1: NUMBER - The price
+
+  Returns:
+    BOOL - true if the buying is successful.
+*/
 params ["_group","_price"];
 
 _score = DCW_SCORE;

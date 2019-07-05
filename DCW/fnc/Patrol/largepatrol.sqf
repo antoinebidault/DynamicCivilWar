@@ -3,7 +3,7 @@
     Bidass
 
   Description:
-    TODO
+    Large patrol for random enemy spawned
 
   Parameters:
     0: OBJECT - TODO

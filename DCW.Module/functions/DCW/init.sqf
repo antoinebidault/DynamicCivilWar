@@ -132,7 +132,7 @@ DCW_fnc_handleAttacked = compileFinal preprocessFileLineNumbers  "DCW\fnc\Handle
 DCW_fnc_addSupportUi = compile preprocessFileLineNumbers  "DCW\fnc\supportui\addSupportUi.sqf";
 DCW_fnc_updatescore = compile preprocessFileLineNumbers  "DCW\fnc\supportui\UpdateScore.sqf";
 DCW_fnc_afford = compile preprocessFileLineNumbers  "DCW\fnc\supportui\Afford.sqf";
-DCW_fnc_supportui = compile preprocessFileLineNumbers  "DCW\fnc\supportui\SupportUI.sqf";
+DCW_fnc_displaySupportUiDialog = compile preprocessFileLineNumbers  "DCW\fnc\supportui\displaySupportUiDialog.sqf";
 DCW_fnc_displayscore = compile preprocessFileLineNumbers  "DCW\fnc\supportui\DisplayScore.sqf";
 DCW_fnc_getCrateItems = compile preprocessFileLineNumbers  "DCW\fnc\supportui\GetCrateItems.sqf";
 DCW_fnc_triggerSupport = compile preprocessFileLineNumbers  "DCW\fnc\supportui\TriggerSupport.sqf";
@@ -193,6 +193,8 @@ if (isClass(configFile >> "CfgPatches" >> "ace_main")) then { ACE_ENABLED = true
 if (ACE_ENABLED) then {
     [] call (compileFinal preprocessFileLineNumbers "DCW\config\ace-config.sqf"); 
 };
+
+BIS_fnc_exportFunctionsToWiki
 
 // Wait until everything is ready
 waitUntil {count ([] call DCW_fnc_allPlayers) > 0 && time > 0 };

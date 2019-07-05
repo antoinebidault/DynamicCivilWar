@@ -60,10 +60,11 @@ Run a npm install
 ```
 npm install
 ```
-And then 
+And then for debugging
 ```
 npm start
 ```
+And for
 
 Credits
 ---

@@ -1,4 +1,17 @@
+/*
+  Author: 
+    Bidass
 
+  Description:
+    Spawn a chopper which carry a crate with slingloads to the designated position
+
+  Parameters:
+    0: OBJECT - The unit destination
+	1: NUMBER - The distance where the chopper will spawn
+
+  Returns:
+    OBJECT - return the chopper.
+*/
 params["_unit","_dist"];
 
 // Spawn CH47

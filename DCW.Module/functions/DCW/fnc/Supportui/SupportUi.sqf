@@ -3,7 +3,7 @@
     Bidass
 
   Description:
-    TODO
+    Display the dialog
 
   Parameters:
     0: OBJECT - TODO
