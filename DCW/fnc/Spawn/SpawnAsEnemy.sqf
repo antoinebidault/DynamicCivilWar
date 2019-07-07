@@ -46,7 +46,7 @@ if (count _houses > 0 ) then{
 	_posBuilding = ([_house] call BIS_fnc_buildingPositions) call bis_fnc_selectrandom;
 	if (_unit distance _posBuilding < 70) then{
 		_unit doMove _posBuilding ;
-		waitUntil {_unit distance _posBuilding < 2};
+		waitUntil { isNull _unit || _unit distance _posBuilding < 2};
 		[_unit,_side] remoteExec ["DCW_fnc_badBuyLoadout",owner _unit];
 	}else{
 		[_unit,_side] remoteExec ["DCW_fnc_badBuyLoadout",owner _unit];

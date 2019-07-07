@@ -168,7 +168,7 @@ publicVariable "MARKER_WHITE_LIST";
 	0 setGusts (WEATHER - .3);
 	0 setWaves WEATHER;
 	forceWeatherChange;
-
+	sleep 1;
 	// Chopper introduction
 	_dest = START_POSITION;
 	_spawnpos = [_dest, 1000, 2000, 0, 1, 20, 0] call BIS_fnc_findSafePos;
@@ -179,7 +179,9 @@ publicVariable "MARKER_WHITE_LIST";
 	createVehicleCrew (_chopper);
 	_pilot = driver _chopper;
 	if (!DEBUG) then {
-		{ _x moveInAny _chopper; } foreach units GROUP_PLAYERS;
+		{
+			_x moveInAny _chopper;
+		} foreach units GROUP_PLAYERS;
 	};
 	_chopper setCollisionLight true;
 	_chopper setPilotLight true;
@@ -187,9 +189,9 @@ publicVariable "MARKER_WHITE_LIST";
 	_chopper setCaptive true;
 	_pilot setSkill 1;
 	_chopper flyInHeight 70;
-	{_pilot disableAI _x} forEach ["TARGET", "AUTOTARGET", "AUTOCOMBAT"];
+	{ _pilot disableAI _x; } forEach ["TARGET", "AUTOTARGET", "AUTOCOMBAT"];
 	group _pilot setBehaviour "CARELESS";
-	(group (_pilot)) allowFleeing 0;
+	(group _pilot) allowFleeing 0;
 
 	_helipad_obj = "Land_HelipadEmpty_F" createVehicle _dest;
 
@@ -208,6 +210,24 @@ publicVariable "MARKER_WHITE_LIST";
 
 	CHOPPER_INTRO = _chopper;
 	publicVariable "CHOPPER_INTRO";
+
+	// Make the chopper throw some flare when arriving to destination
+	[CHOPPER_INTRO,_dest] spawn{
+		params["_chopper","_dest"];
+		sleep 30;
+		_chopper action ["useWeapon",_chopper,driver _chopper,1];
+		sleep 5;
+		_chopper action ["useWeapon",_chopper,driver _chopper,1];
+		sleep 3;
+		_chopper action ["useWeapon",_chopper,driver _chopper,1];
+		sleep 13;
+		_chopper action ["useWeapon",_chopper,driver _chopper,1];
+		sleep 5;
+		_chopper action ["useWeapon",_chopper,driver _chopper,1];
+		sleep 3;
+		"SmokeShellYellow" createVehicle  _dest; 
+		_chopper action ["useWeapon",_chopper,driver _chopper,1];
+	};
 
 	// Start spawning troops
 	_grp = createGroup SIDE_FRIENDLY;

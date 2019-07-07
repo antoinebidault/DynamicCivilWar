@@ -66,10 +66,15 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 			params["_injured","_healer"];
 			_healer setVariable["DCW_healer", objNull, true];
 			_healer setVariable["DCW_heal_injured", objNull, true];
-			[_healer, "medicStop"] remoteExec ["playActionNow"];
+
+			if (lifeState _healer != "INCAPACITATED") then {
+				[_healer, "medicStop"] remoteExec ["playActionNow"];
+			};
+
 			if (lifeState _injured == "INCAPACITATED") then {
 				[_injured, "DCW_fnc_carry"] call DCW_fnc_addAction; 
 			};
+			
 			detach _injured;
 			false;
 		},[],12,nil,true,false] call BIS_fnc_holdActionAdd;

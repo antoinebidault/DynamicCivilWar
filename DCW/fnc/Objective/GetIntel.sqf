@@ -11,7 +11,7 @@
     2: NUMBER - Probability 
 
   Returns:
-    BOOL - true 
+    ARRAY - [BOOL,OBJECT] 
 */
 
 private _unit = _this select 0;
@@ -32,21 +32,22 @@ private _potentialIntel = [];
 } forEach MARKERS;
 
 if (count _potentialIntel == 0 || random 100 < _probability ) exitWith { 
-    if (alive _unit) then {
-        [_unit, ["I have no idea...","I can't talk about this..."] call BIS_fnc_selectRandom,true] remoteExec ["DCW_fnc_talk",0]; 
-    };
+  if (alive _unit) then {
+      [_unit, ["I have no idea...","I can't talk about this..."] call BIS_fnc_selectRandom,true] remoteExec ["DCW_fnc_talk",owner _asker]; 
+  };
+  [false,"Nothing found"];
+} else {
+  _intel = _potentialIntel call BIS_fnc_selectRandom;
+  _task = [_intel,true] call DCW_fnc_createtask;
+  _taskId = _task select 0;
+  _message = _task select 1;
+  _intel setVariable["DCW_IsIntelRevealed",true];
+  _marker = createMarker [format["s%1",random 13100],getPos _intel];
+  _marker setMarkerShape "ICON";
+  _marker setMarkerColor "ColorRed";
+  _marker setMarkerType "hd_objective";
+  _intel setVariable["DCW_MarkerIntel",_marker];
+  [_asker, "HQ, I found some informations !",true] remoteExec ["DCW_fnc_talk",owner _asker];
+  [HQ, "Good job, keep up the good work !",true] remoteExec ["DCW_fnc_talk",owner _asker];
 };
-
-private _intel = _potentialIntel call BIS_fnc_selectRandom;
-_task = [_intel,true] call DCW_fnc_createtask;
-_taskId = _task select 0;
-_message = _task select 1;
-_intel setVariable["DCW_IsIntelRevealed",true];
-private _marker = createMarker [format["s%1",random 13100],getPos _intel];
-_marker setMarkerShape "ICON";
-_marker setMarkerColor "ColorBlack";
-_marker setMarkerType "hd_objective";
-_intel setVariable["DCW_MarkerIntel",_marker];
-[_asker, "HQ, I found some informations !",true] remoteExec ["DCW_fnc_talk"];
-[HQ, "Good job, keep up the good work !",true] remoteExec ["DCW_fnc_talk"];
 [true,_message];

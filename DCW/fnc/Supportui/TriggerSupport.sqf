@@ -36,8 +36,10 @@ if((DCW_SCORE - _price) >= 0)then {
 	}else{
 		if (_type=="vehicle") then {
 			[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
-			COMMENU_TRANSPORT_ID = [(_leader), "TransportParadrop"] remoteExec ["BIS_fnc_addCommMenuItem",_leader];
-			publicVariable "COMMENU_TRANSPORT_ID";
+			[_leader,{
+				COMMENU_TRANSPORT_ID = [_this, "TransportParadrop"] call BIS_fnc_addCommMenuItem;
+				publicVariable "COMMENU_TRANSPORT_ID";
+			}] remoteExec ["spawn",owner _leader];
 		} else {
 			[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
 			_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;

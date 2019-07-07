@@ -125,8 +125,6 @@ DCW_fnc_handleRespawnSingleplayer =
 
 	_unit setUnitLoadout _loadout;
 
-	[_unit, "Acts_welcomeOnHUB01_PlayerWalk_6"] remoteExec["switchMove"];
-
 	//Black screen with timer...
 	cutText ["","BLACK FADED", 999];
 	

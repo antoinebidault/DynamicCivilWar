@@ -40,11 +40,11 @@ _unit addHeadgear "H_Beret_blk";
     if( _curr select 17 != "hasintel") then{ 
         _sentence = ["I don't know where he is...","I have no idea...","I wouldn't collaborate... This is too dangerous for my family..."] call BIS_fnc_selectRandom;
         [_unit,_sentence, false] call DCW_fnc_talk; 
-        _unit removeAction _action; 
+        [_unit,_action] remoteExec ["removeAction"];
         _unit call DCW_fnc_actionTorture;
         _unit call DCW_fnc_actionCorrupt;
     } else {
-        _unit removeAction _action;
+        [_unit,_action] remoteExec ["removeAction"];
         _unit call DCW_fnc_mainObjectiveIntel;
     };
 
@@ -67,25 +67,25 @@ _unit addHeadgear "H_Beret_blk";
         if(_curr select 13 < 70) exitWith{[_unit,"Improve your reputation first (70 minimum)", false]  remoteExec ["DCW_fnc_talk",_asker]; _this call DCW_fnc_endTalking;  false;};
         if (!([GROUP_PLAYERS,_radius max 50] call DCW_fnc_afford)) exitWith {[_unit,"You need more money !", false]  remoteExec ["DCW_fnc_talk",_asker]; _this call DCW_fnc_endTalking; false;};
 
-        _unit RemoveAction _action;
+        // Remove action
+        [_unit,_action] remoteExec ["RemoveAction",owner _unit];
 
         //disableAi
-        _unit disableAI "MOVE";
+        [_unit,"MOVE"] remoteExec ["disableAI",owner _unit];
 
         //Talking with the fixed glitch
         _anim = format["Acts_CivilTalking_%1",ceil(random 2)];
         [_unit,_anim] remoteExec ["switchMove", 0];
-        _unit doWatch _asker;
-        _asker doWatch _unit;
 
         [_unit,"You're welcome here ! We need your help.", false] remoteExec ["DCW_fnc_talk",_asker];
         [HQ,"Okay, we're sending you some reinforcements", false] remoteExec ["DCW_fnc_talk",_asker];
         sleep 15;
         
-        [_curr] remoteExec ["DCW_fnc_compoundSecured",2]; 
+        [_curr] call DCW_fnc_compoundSecured; 
         
-        _unit switchMove "";
-        _unit enableAI "MOVE";
+        [_unit,""] remoteExec ["switchMove",owner _unit];
+        [_unit,"MOVE"] remoteExec ["enableAI",owner _unit];
+      
         _this call DCW_fnc_endTalking; 
 
     }] remoteExec["spawn",2];
@@ -103,7 +103,8 @@ _unit addHeadgear "H_Beret_blk";
         if(_curr select 12 == "bastion") exitWith{[_unit,"Secure our position first...", false] spawn DCW_fnc_talk; false;};
         if (!([GROUP_PLAYERS,50] call DCW_fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn DCW_fnc_talk;false;};
 
-        _unit RemoveAction _action;
+         
+        [_unit,_action] remoteExec ["RemoveAction",owner _unit];
         [_unit,"Thank you so much for your help !", false] remoteExec ["DCW_fnc_talk",_asker];
         _cratePos = [_curr select 1, 0, _curr select 4, 4, 0, 1, 0] call BIS_fnc_findSafePos;
         [_cratePos,2500,"crate"] execVM  "DCW\fnc\supportui\VehicleLift.sqf";

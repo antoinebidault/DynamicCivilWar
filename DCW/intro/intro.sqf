@@ -48,19 +48,7 @@ _cam camcommit 4;
 
 sleep 14;
 
-//[_cam,_chopper, [14,2,17], 7] call DCW_fnc_camfollow;
-
 _smoke = "SmokeShellYellow" createVehicle  _dest; 
-
-[_chopper] spawn{
-	params["_chopper"];
-	sleep 3;
-	_chopper action ["useWeapon",_chopper,driver _chopper,1];
-	sleep 5;
-	_chopper action ["useWeapon",_chopper,driver _chopper,1];
-	sleep 3;
-	_chopper action ["useWeapon",_chopper,driver _chopper,1];
-};
 
 [_cam,_chopper, [0,40,4], 7] call DCW_fnc_camfollow;
 
@@ -75,7 +63,6 @@ _cam camSetPos _dest;
 _cam camcommit 10;
 
 sleep 10;
-"SmokeShellYellow" createVehicle  _dest; 
 
 //[_cam,_chopper, [-14,22,-15],7] call DCW_fnc_camfollow;
 
@@ -83,22 +70,10 @@ titleCut ["", "BLACK OUT", 1];
 sleep 1;
 titleCut ["", "BLACK FADED", 9999];
 
-
 camDestroy _cam;
 showCinemaBorder false;
 _cam cameraeffect ["terminate", "back"];
-[_chopper] spawn{
-	params["_chopper"];
-	sleep 3;
-	_chopper action ["useWeapon",_chopper,driver _chopper,1];
-	sleep 5;
-	_chopper action ["useWeapon",_chopper,driver _chopper,1];
-	sleep 3;
-	_chopper action ["useWeapon",_chopper,driver _chopper,1];
-	sleep 40;
-	8 fadeSound 1;	
-};
-
+8 fadeSound 1;	
 ["",0,true] call bis_fnc_setppeffecttemplate;
 
 //[player, "All units deployed to the insertion point", 150, 250, 75, 1, [], 0, false] call BIS_fnc_establishingShot;

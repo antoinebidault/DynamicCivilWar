@@ -74,7 +74,7 @@ while { true } do {
 						};
 					};
 					// && _playerPos distance _pos >= _radius
-					if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < SPAWN_DISTANCE && !_isInFlyingVehicle) then{
+					if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < 600 && !_isInFlyingVehicle) then{
 						
 						if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
 
@@ -141,7 +141,7 @@ while { true } do {
 
 					}else{
 						//Gestion du cache
-						if(_playerPos distance _pos > (SPAWN_DISTANCE + 150) && _triggered) then {
+						if(_playerPos distance _pos > (600 + 150) && _triggered) then {
 							_cacheResult = [_units,_notSpawnedArray] call DCW_fnc_cachePut;
 							_peopleToSpawn = _cacheResult select 0;
 							_units = _units - [_cacheResult select 1];

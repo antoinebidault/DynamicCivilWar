@@ -11,7 +11,9 @@ _this enableAI "ALL";
 _this stop false;
 _this setCaptive false;
 _this setUnconscious false;
-[_this,""] remoteExec["switchMove"];
+if (vehicle _this == _this) then {
+	[_this,""] remoteExec["switchMove"];
+};
 _this call DCW_fnc_removeActionHeal;
 [_this,"DCW_fnc_carry"] call DCW_fnc_removeAction; 
 _this setVariable["DCW_fnc_carry",-1,true];
