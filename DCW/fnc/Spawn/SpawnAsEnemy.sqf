@@ -47,12 +47,12 @@ if (count _houses > 0 ) then{
 	if (_unit distance _posBuilding < 70) then{
 		_unit doMove _posBuilding ;
 		waitUntil {_unit distance _posBuilding < 2};
-		[_unit,_side] call DCW_fnc_badBuyLoadout;
+		[_unit,_side] remoteExec ["DCW_fnc_badBuyLoadout",owner _unit];
 	}else{
-		[_unit,_side] call DCW_fnc_badBuyLoadout;
+		[_unit,_side] remoteExec ["DCW_fnc_badBuyLoadout",owner _unit];
 	};
 }else{
-	[_unit,_side] call DCW_fnc_badBuyLoadout;
+	[_unit,_side] remoteExec ["DCW_fnc_badBuyLoadout",owner _unit];
 };
 
 //Move to a new position

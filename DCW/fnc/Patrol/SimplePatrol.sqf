@@ -3,16 +3,16 @@
     Bidass
 
   Description:
-    TODO
+    A very light patrol script
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - unit
+    1: NUMBER - max range o feach waypoint
 
   Returns:
     BOOL - true 
 */
 
-//Inspired by SPUn / LostVar
 private ["_unit","_radius","_newPos","_bPoss","_dir","_curPos"];
 
 _grp = (_this select 0);
@@ -59,3 +59,5 @@ while { alive _unit }do{
     };
     sleep 5;
 };
+
+true;

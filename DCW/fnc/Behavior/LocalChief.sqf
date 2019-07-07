@@ -63,9 +63,9 @@ _unit addHeadgear "H_Beret_blk";
         _success =_curr select 3;
         _radius =_curr select 4;
         
-        if(_curr select 12 == "bastion") exitWith{[_unit,"This camp is still occupied by enemy forces, clean up the compound to make this compound available.", false] spawn DCW_fnc_talk;_this call DCW_fnc_endTalking; false;};
-        if(_curr select 13 < 70) exitWith{[_unit,"Improve your reputation first (70 minimum)", false] spawn DCW_fnc_talk; _this call DCW_fnc_endTalking;  false;};
-        if (!([GROUP_PLAYERS,_radius max 50] call DCW_fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn DCW_fnc_talk; _this call DCW_fnc_endTalking; false;};
+        if(_curr select 12 == "bastion") exitWith{[_unit,"This camp is still occupied by enemy forces, clean up the compound to make this compound available.", false]  remoteExec ["DCW_fnc_talk",_asker];_this call DCW_fnc_endTalking; false;};
+        if(_curr select 13 < 70) exitWith{[_unit,"Improve your reputation first (70 minimum)", false]  remoteExec ["DCW_fnc_talk",_asker]; _this call DCW_fnc_endTalking;  false;};
+        if (!([GROUP_PLAYERS,_radius max 50] call DCW_fnc_afford)) exitWith {[_unit,"You need more money !", false]  remoteExec ["DCW_fnc_talk",_asker]; _this call DCW_fnc_endTalking; false;};
 
         _unit RemoveAction _action;
 
@@ -78,11 +78,11 @@ _unit addHeadgear "H_Beret_blk";
         _unit doWatch _asker;
         _asker doWatch _unit;
 
-        [_unit,"You're welcome here ! We need your help.", false] call DCW_fnc_talk;
-        [HQ,"Okay, we're sending you some reinforcements", false] call DCW_fnc_talk;
-        sleep 10;
+        [_unit,"You're welcome here ! We need your help.", false] remoteExec ["DCW_fnc_talk",_asker];
+        [HQ,"Okay, we're sending you some reinforcements", false] remoteExec ["DCW_fnc_talk",_asker];
+        sleep 15;
         
-        [_curr] call DCW_fnc_compoundSecured; 
+        [_curr] remoteExec ["DCW_fnc_compoundSecured",2]; 
         
         _unit switchMove "";
         _unit enableAI "MOVE";
@@ -96,7 +96,7 @@ _unit addHeadgear "H_Beret_blk";
     params["_unit","_asker","_action"];
     
     //Server execution
-    [[_unit,_asker,_action],{
+    [_this ,{
         params["_unit","_asker","_action"];
         _curr = ([position _unit,false,"any"] call DCW_fnc_findNearestMarker);
 
@@ -104,28 +104,26 @@ _unit addHeadgear "H_Beret_blk";
         if (!([GROUP_PLAYERS,50] call DCW_fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn DCW_fnc_talk;false;};
 
         _unit RemoveAction _action;
-        [_unit,"Thank you so much for your help !", false] spawn DCW_fnc_talk;
-        _cratePos = [_curr select 1, 0, _curr select 4, 4, 0, 20, 0] call BIS_fnc_findSafePos;
-        [_cratePos,1500,"crate"] execVM "DCW\fnc\supportui\VehicleLift.sqf";
+        [_unit,"Thank you so much for your help !", false] remoteExec ["DCW_fnc_talk",_asker];
+        _cratePos = [_curr select 1, 0, _curr select 4, 4, 0, 1, 0] call BIS_fnc_findSafePos;
+        [_cratePos,2500,"crate"] execVM  "DCW\fnc\supportui\VehicleLift.sqf";
         [_curr, 25, 0] call DCW_fnc_setCompoundSupport;
-        
     }] remoteExec["spawn",2];
 },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
 
 
 [_unit,[format["<t color='#cd8700'>Call in the humanitary assistance (%1 points, 12 hours)</t>",round (_radius * 1.5)],{
-    params["_unit","_asker","_action","_radius"];
-    
+  
     //Server execution
-    [[_unit,_asker,_action],{
-        params["_unit","_asker","_action"];
-        [_asker,"Do you need assistance ?", false] call DCW_fnc_talk;
+    [_this,{
+        params["_unit","_asker","_action","_radius"];
+        [_asker,"Do you need assistance ?", false] remoteExec ["DCW_fnc_talk",_asker];
         _curr = ([position _unit,false,"any"] call DCW_fnc_findNearestMarker);
 
         private _success =_curr select 3;
-        if(_curr select 12 != "massacred") exitWith{[_unit,"Our village does not need any help...", false] spawn DCW_fnc_talk; false;};
-        if(_curr select 13 < 70) exitWith{[_unit,"Improve your reputation first (70 minimum)", false] spawn DCW_fnc_talk; false;};
-        if (!([GROUP_PLAYERS,round (_radius * 1.5)] call DCW_fnc_afford)) exitWith {[_unit,"You need more money !", false] spawn DCW_fnc_talk;false;};
+        if(_curr select 12 != "massacred") exitWith{[_unit,"Our village does not need any help...", false] remoteExec ["DCW_fnc_talk",_asker]; false;};
+        if(_curr select 13 < 70) exitWith{[_unit,"Improve your reputation first (70 minimum)", false] remoteExec ["DCW_fnc_talk",_asker]; false;};
+        if (!([GROUP_PLAYERS,round (_radius * 1.5)] call DCW_fnc_afford)) exitWith {[_unit,"You need more money !", false] remoteExec ["DCW_fnc_talk",_asker];false;};
         
         [_curr, "humanitary"] call DCW_fnc_setCompoundState;
         [_curr, 50, 0] call DCW_fnc_setCompoundSupport;
@@ -135,16 +133,18 @@ _unit addHeadgear "H_Beret_blk";
 
 
 [_unit,["<t color='#cd8700'>Gives him a military advisor</t>",{
-    params["_unit","_asker","_action"];
-
+    
+    // Execution on the server only
+     [_this,{
+         params["_unit","_asker","_action"];
         _curr = ([position _unit,false,"any"] call DCW_fnc_findNearestMarker);
         _state = _curr select 12;
 
-        if (_state != "neutral") exitWith {[_unit,"This action requires a compound neutral state",false] call DCW_fnc_talk; false;};
-        if ({_x getVariable["DCW_advisor",false]} count (units GROUP_PLAYERS) == 0) exitWith {[_asker,"I need a military advisor first. I can recruit them in already secured camps.",false] call DCW_fnc_talk;false;};
-        [_asker,"We'll provide you an army advisor for helping you to defend against insurgents.", false] call DCW_fnc_talk;
-        [_unit,"Thanks for your help !", false] call DCW_fnc_talk;
-        _unit RemoveAction _action;
+        if (_state != "neutral") exitWith {[_unit,"This action requires a compound neutral state",false] remoteExec ["DCW_fnc_talk",_asker]; false;};
+        if ({_x getVariable["DCW_advisor",false]} count (units GROUP_PLAYERS) == 0) exitWith {[_asker,"I need a military advisor first. I can recruit them in already secured camps.",false] remoteExec ["DCW_fnc_talk",_asker];false;};
+        [_asker,"We'll provide you an army advisor for helping you to defend against insurgents.", false] remoteExec ["DCW_fnc_talk",_asker];
+        [_unit,"Thanks for your help !", false] remoteExec ["DCW_fnc_talk",_asker];
+        [_unit, _action] remoteExec ["removeAction",owner _unit];
         
         _advisor = objNull;
         {
@@ -158,13 +158,14 @@ _unit addHeadgear "H_Beret_blk";
 
         {
             if ( _x isKindOf "Man" && side _x == SIDE_CIV && _x != _unit) then {
-                [_x, SIDE_FRIENDLY] call DCW_fnc_badGuyLoadout;
+                [_x, SIDE_FRIENDLY] remoteExec ["DCW_fnc_badGuyLoadout", owner _x];
             };
         }
         foreach (_curr select 5);
 
         [_curr, "supporting"] call DCW_fnc_setCompoundState;
         [_curr, 30, 0] call DCW_fnc_setCompoundSupport;
+    }] remoteExec["spawn",2];
 
 },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];
 

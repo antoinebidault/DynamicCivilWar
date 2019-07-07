@@ -74,7 +74,7 @@ for "_j" from 1 to _nb do {
     },{},{
         _hostage = _this select 0;
         if (!alive(_hostage)) exitWith{hint "He is dead";};
-        _hostage remoteExec ["removeAllActions",0];
+        _hostage remoteExec ["removeAllActions"];
         _hostage stop false;
         //_hostage playMove "Acts_ExecutionVictim_Unbow";
         [_hostage,"Acts_AidlPsitMstpSsurWnonDnon_out"] remoteExec ["switchMove"] ;

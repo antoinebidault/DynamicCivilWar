@@ -1,3 +1,17 @@
+/*
+  Author: 
+    Bidass
+
+  Description:
+    Distribute the patrol to Headless client if in multiplayer.
+
+  Parameters:
+    0: OBJECT - GROUP 
+	1: STRING - Function to execute
+	2: ARRAY - Params
+*/
+
+
 params["_grp","_fnName","_params"];
 
 if (!isMultiplayer) then {

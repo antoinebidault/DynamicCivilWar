@@ -1,4 +1,4 @@
-disabledAI= 0;
+disabledAI= 1;
 enableDebugConsole[] = {"76561197974435552"};
 allowFunctionsLog = 1;
 author = "Bidass";

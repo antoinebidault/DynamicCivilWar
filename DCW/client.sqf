@@ -103,8 +103,8 @@ if (ENABLE_DIALOG && !didJIP) then {
 				[_x,"MOVE"] remoteExec ["enableAI"] ;
 				[_x,"FSM"] remoteExec ["enableAI"] ;
 			};
-			[_x,""] remoteExec ["switchMove"];
 			if (DEBUG) then {
+				[_x,""] remoteExec ["switchMove"];
 				_x setPos START_POSITION;
 			};
 		}

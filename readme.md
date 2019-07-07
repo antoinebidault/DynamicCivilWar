@@ -8,10 +8,10 @@ One objective : find & kill the enemy commander who is hidden somewhere in a ran
 Mission location
 ---
 
-Last version :
-https://steamcommunity.com/sharedfiles/filedetails/?id=1775053830
+Last version (Malden) :
+https://steamcommunity.com/sharedfiles/filedetails/?id=1792110746&searchtext=
 
-Initial version :
+Legacy version (Kunduz) :
 https://steamcommunity.com/sharedfiles/filedetails/?id=1687129563
 
 Base features

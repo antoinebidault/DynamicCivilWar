@@ -6,7 +6,14 @@ if (isNil '_type') then {_type = "vehicle";};
 _cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { _type };
 
 // Correct the destination position
-_pos = [_pos, 0, 75, 5, 0, 0, 1, 0] call BIS_fnc_findSafePos;
+_pos = [_pos, 0, 75, 4, 0, 1, 0] call BIS_fnc_findSafePos;
+
+//Custom variable
+MARKER_PARADROP_VEHICLE = createMarker [format["vehicle-drop-%1",str random 10],_pos];
+MARKER_PARADROP_VEHICLE setMarkerShape "ICON";
+MARKER_PARADROP_VEHICLE setMarkerColor "ColorBlack";
+MARKER_PARADROP_VEHICLE setMarkerText "Vehicle paradrop";
+MARKER_PARADROP_VEHICLE setMarkerType "mil_warning";
 
 // Spawn CH47
 _startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_findSafePos;
@@ -55,6 +62,6 @@ _waypoint setWaypointSpeed "LIMITED";
 _waypoint2 = (group (_pilot)) addWaypoint [[0,0,0], 1];
 _waypoint2 setWaypointType "MOVE";
 _waypoint2 setWaypointSpeed "FULL";
-_waypoint2 setWaypointStatements ["true", "{deleteVehicle _x} foreach crew this; deleteVehicle this;"];
+_waypoint2 setWaypointStatements ["true", "{deleteVehicle _x} foreach crew this; deleteVehicle this; deleteMarker MARKER_PARADROP_VEHICLE;"];
 
 _chopper;

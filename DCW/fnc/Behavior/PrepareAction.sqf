@@ -165,17 +165,18 @@ DCW_fnc_addActionLiberate =  {
         _this call DCW_fnc_endTalking;
         _unit SetBehaviour "AWARE";
         _unit setCaptive false;
-        _unit switchMove ""; 
-        _unit enableai "ANIM"; 
-        _unit enableai "MOVE"; 
+        [_unit,""] remoteExec ["switchMove",0]; 
+        [_unit,"ANIM"] remoteExec ["switchMove",owner _unit]; 
+        [_unit,"MOVE"] remoteExec ["switchMove",owner _unit]; 
         if (side _unit == SIDE_CIV) then {
             [_unit,2] remoteExec ["DCW_fnc_updateRep",2];
         };
         _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
-        _unit stop false;
-        _unit forceWalk false;
-        _unit forceSpeed 10;
-        _unit move _pos;
+        
+        [_unit,stop] remoteExec ["stop",owner _unit]; 
+        [_unit,10] remoteExec ["forceSpeed",owner _unit]; 
+        [_unit,false] remoteExec ["forceWalk",owner _unit]; 
+        [_unit,_pos] remoteExec ["move",owner _unit]; 
         
     },nil,1,false,true,"","true",3,false,""];
 };
@@ -488,7 +489,7 @@ DCW_fnc_addActionRally = {
             _unit stop false;
             _unit enableAI "ALL";
             [_unit,"Ok, I'm in !",false] call DCW_fnc_talk;
-            [_unit,SIDE_FRIENDLY] call DCW_fnc_badBuyLoadout;
+            [_unit,SIDE_FRIENDLY] remoteExec ["DCW_fnc_badBuyLoadout",owner _unit];
             _unit remoteExec ["RemoveAllActions"];
             _unit setVariable["DCW_recruit",true,true];
             _unit remoteExec ["DCW_fnc_addActionLeaveGroup"];
@@ -561,8 +562,8 @@ DCW_fnc_addActionLeaveGroup = {
         [_unit,4] remoteExec ["DCW_fnc_updateRep",2];
         _unit remoteExec ["removeAllActions",0];
         _talker playActionNow "gestureGo";
-        [_talker,format["%1, You are now free to go ! Thanks for your help",name _unit],false] call ["DCW_fnc_talk",0];
-        [_unit,["Well, good bye buddy !","Bye my friend !","Ok, See you in hell.."] call BIS_fnc_selectRandom,false] remoteExec ["DCW_fnc_talk",0];
+        [_talker,format["%1, You are now free to go ! Thanks for your help",name _unit],false] remoteExec ["DCW_fnc_talk",_talker];
+        [_unit,["Well, good bye buddy !","Bye my friend !","Ok, See you in hell.."] call BIS_fnc_selectRandom,false]  remoteExec ["DCW_fnc_talk",_talker];;
         _newGrp = createGroup SIDE_FRIENDLY;
         [_unit] join _newGrp;
         _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
@@ -582,7 +583,7 @@ DCW_fnc_addActionLeave = {
         [_unit,-3] remoteExec ["DCW_fnc_updateRep",2];
         _unit remoteExec ["removeAllActions",0];
         _talker playActionNow "gestureGo";
-        [_talker,"Sorry sir, you must leave now, go away !",false] remoteExec ["DCW_fnc_talk",0];
+        [_talker,"Sorry sir, you must leave now, go away !",false] remoteExec ["DCW_fnc_talk",_talker];
         _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         _unit enableAI "MOVE";
         _unit stop false;
@@ -624,7 +625,7 @@ DCW_fnc_actionRest =  {
         };
 
         sleep 3;
-        [_unit,"Ok, let's go back to work !",false] call DCW_fnc_talk;
+        [_unit,"Ok, let's go back to work !",false] remoteExec ["DCW_fnc_talk",_unit];
         _unit action ["sitdown",_unit];
 
         _cam cameraeffect ["terminate", "back"];

@@ -12,6 +12,7 @@ clearmagazinecargo _box;
 clearweaponcargo _box;
 if (RESTRICTED_AMMOBOX) then {
 	_items = [] call DCW_fnc_getCrateItems;
+	
 	[_box, _items select 0, false, false] call BIS_fnc_addVirtualWeaponCargo;
 	[_box,  _items select 1, false, false] call BIS_fnc_addVirtualMagazineCargo; 
 	[_box,  _items select 2, false, false] call BIS_fnc_addVirtualItemCargo;

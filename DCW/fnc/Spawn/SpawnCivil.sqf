@@ -24,10 +24,6 @@ _unit = _group createUnit [_unitName, _pos,[],AI_SKILLS,"NONE"];
 // _group call DCW_fnc_sendToHC;
 
 removeAllWeapons _unit;
-//_unit setBehaviour "CARELESS";
-/*_unit allowFleeing 0;
-_unit setBehaviour "SAFE";
-_unit setSpeedMode "LIMITED";*/
 
 //Si c'est un mauvais
 _unit setVariable["DCW_Chief",_chief, true];

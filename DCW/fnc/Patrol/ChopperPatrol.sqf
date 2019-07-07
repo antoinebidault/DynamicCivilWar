@@ -6,7 +6,7 @@
     Basic chopper patrol around the group position
 
   Parameters:
-    0: OBJECT - TODO
+    0: OBJECT - Chopper
 
   Returns:
     BOOL - true 

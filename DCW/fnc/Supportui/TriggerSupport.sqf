@@ -35,9 +35,9 @@ if((DCW_SCORE - _price) >= 0)then {
 		_leader connectTerminalToUAV _drone;
 	}else{
 		if (_type=="vehicle") then {
-			[HQ,"A car will be dropped at your position",true] remoteExec ["DCW_fnc_talk"];
+			[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
 			COMMENU_TRANSPORT_ID = [(_leader), "TransportParadrop"] remoteExec ["BIS_fnc_addCommMenuItem",_leader];
-			publicVariableServer "COMMENU_TRANSPORT_ID";
+			publicVariable "COMMENU_TRANSPORT_ID";
 		} else {
 			[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
 			_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;

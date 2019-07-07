@@ -230,7 +230,7 @@ publicVariable "MARKER_WHITE_LIST";
 		_unit allowDamage false;
 		
 		if (_j == 1) then {
-			_unit remoteExec ["DCW_fnc_addActionInstructor"];
+			_unit remoteExec ["DCW_fnc_addActionInstructor",0, true];
 			[_unit, "BRIEFING_POINT_LEFT", "MEDIUM"] remoteExec ["BIS_fnc_ambientAnim"];
 			_unit enableDynamicSimulation false;
 			_officerPos set [0,(_officerPos select 0) + 2];

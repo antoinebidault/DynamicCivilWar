@@ -3,7 +3,7 @@
     Bidass
 
   Description:
-    TODO
+    Make a unit go to the meeting point
 
   Parameters:
     0: OBJECT - TODO

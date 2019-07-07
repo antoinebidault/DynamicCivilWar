@@ -78,7 +78,7 @@ if (_state == "secured" ) then{
 
 	_spawnPos =  [_pos, 0, (30 max (.3*_radius)), 2, 0, 1, 0] call BIS_fnc_findSafePos;
 	_marker set [15, [SIDE_FRIENDLY, _spawnPos, _marker select 14] call BIS_fnc_addRespawnPosition];
-	[_units] spawn DCW_fnc_compoundsecuredCutScene;
+	[_units] remoteExec ["DCW_fnc_compoundsecuredCutScene", GROUP_PLAYERS];
 } else {
 	if (!((_marker select 15) isEqualTo [])) then {
 		(_marker select 15) remoteExec ["BIS_fnc_RemoveRespawnPosition",0]; 

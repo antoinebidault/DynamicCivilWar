@@ -4,6 +4,7 @@ if (rating _this < 0) then {
 	_this addRating ((-(rating _this)) + 1000);
 };
 
+_this remoteExec ["RemoveAllActions"];
 detach _this;
 _this setDamage 0;
 _this enableAI "ALL";

@@ -178,7 +178,6 @@ if (RESPAWN_ENABLED) then{
 			_unit setVariable["marker", MARKER_PLAYER, true];
 			if (NUMBER_RESPAWN != -1) then {
 				REMAINING_RESPAWN = [_unit,nil,true] call BIS_fnc_respawnTickets;
-			
 			};
 			[_unit] spawn DCW_fnc_handleRespawnBase;
 		}];

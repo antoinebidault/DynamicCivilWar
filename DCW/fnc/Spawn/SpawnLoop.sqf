@@ -264,7 +264,9 @@ while { true } do {
 		} foreach UNITS_SPAWNED_CLOSE;
 		
 	} catch {
-		diag_log format["Error in server.sqf loop :  %1",_exception];
+		diag_log format["[SpawnLoop] Error in server.sqf loop :  %1",_exception];
 	};
 	sleep REFRESH_TIME;
 };
+
+diag_log "[SpawnLoop] Exited spawn loop";
