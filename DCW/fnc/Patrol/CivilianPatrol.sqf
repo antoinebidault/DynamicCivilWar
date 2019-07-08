@@ -43,7 +43,7 @@ while { !(_unit getVariable ["civ_insurgent", false]) && lifeState _unit == "HEA
     {
         if (_x select 2)then{
             {
-                if (!(_x getVariable["DCW_IsIntelRevealed",false]) && _x getVariable["DCW_IsIntel",false] && _newPos distance _x < 500)then{
+                if (!(_x getVariable["DCW_IsIntelRevealed",false]) && _x getVariable["DCW_TaskNotCompleted",false] && _newPos distance _x < 500)then{
                     _potentialIntel pushBack _x;
                 };
             } foreach (_x select 5);

@@ -23,17 +23,18 @@ if (!isServer) exitWith{hint format["DCW_fnc_success executed on the client %1 ;
 if (_objWithTask getVariable["DCW_Type",""] == "") exitWith { false };
 
 //Task already successful
-if (!(_objWithTask getVariable["DCW_IsIntel",false])) exitWith {false};
+if (!(_objWithTask getVariable["DCW_TaskNotCompleted",true])) exitWith {false};
 
 _task = _objWithTask getVariable["DCW_Task",""];
 
 // Silently create a task if not exists
 if (_task == "") then {
-    [_objWithTask,false] call DCW_fnc_createTask;
-    _task = _objWithTask getVariable["DCW_Task",""];
+  _result = [_objWithTask,false] call DCW_fnc_createTask;
+  _task = _objWithTask getVariable["DCW_Task",""];
+  _taskName = _result select 4;
+} else {
+  _taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
 };
-
-_taskName = ((_task call BIS_fnc_taskDescription) select 1) select 0;
 
 // Spawn task successful on each client
 [[_task,_taskName,_objWIthTask],{
@@ -54,7 +55,7 @@ if (_objWithTask getVariable["DCW_Bonus",0] > 0) then{
 _objWithTask getVariable["DCW_MarkerIntel",""] setMarkerColor "ColorGreen";
 _objWithTask setVariable["DCW_Task","", true];
 _objWithTask setVariable["DCW_Type",""];
-_objWithTask setVariable["DCW_IsIntel",false];
-_objWithTask setVariable["DCW_IsIntelRevealed",false];
+_objWithTask setVariable["DCW_TaskNotCompleted",false, true];
+_objWithTask setVariable["DCW_IsIntelRevealed",false, true];
 
 true;

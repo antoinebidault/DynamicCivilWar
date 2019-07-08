@@ -281,7 +281,7 @@ DCW_fnc_addActionDidYouSee = {
 
         if (count _data > 3) then { _data = [_data select 0] + [_data select 1] + [_data select 2];};
         
-        [_unit,format["I saw %1 enemies...",count _data],false] remoteExec ["DCW_fnc_talk",_talker];
+        [_unit,format["I saw %1 enemies...",count _data],false] remoteExec ["DCW_fnc_talk", _talker];
         _markers = [];
         {
             _enemy = _x select 1;

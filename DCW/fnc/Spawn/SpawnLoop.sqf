@@ -231,7 +231,7 @@ while { true } do {
 								if (DEBUG) then  {
 									hint "Alarm off!";
 								};
-								sleep 200;
+								sleep 300 + random 250;
 								CHASER_TRIGGERED = false;
 								publicVariable "CHASER_TRIGGERED";
 								[] remoteExec ["DCW_fnc_displayScore",_player, false];

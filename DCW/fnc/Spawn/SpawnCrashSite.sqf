@@ -47,7 +47,7 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _chopper setVariable["marker",_marker];
 
     _chopper setVariable ["DCW_Type","wreck"];
-    _chopper setVariable ["DCW_IsIntel",true];
+    _chopper setVariable ["DCW_TaskNotCompleted",true];
     
     _taskData = [_chopper,false] call DCW_fnc_createtask;
     _chopper setVariable["DCW_Task",_taskData select 0];

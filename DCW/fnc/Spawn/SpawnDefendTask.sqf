@@ -71,7 +71,7 @@ for "_j" from 1 to _nbGroups do {
 
 
 _sectorToDefend = _compound select 0;
-waitUntil {sleep 3; ({_x inArea _sectorToDefend} count (units GROUP_PLAYERS) == 0 && {_x inArea _sectorToDefend} count _units >= 2) || ({ _x distance (_compound select 1) > SPAWN_DISTANCE } count (units GROUP_PLAYERS) == count (units GROUP_PLAYERS)) || ({alive _x && !(captive _x)} count _units <= 2) };
+waitUntil {sleep 3; ({_x inArea _sectorToDefend} count (units GROUP_PLAYERS) == 0 && {_x inArea _sectorToDefend} count _units >= 2) || ({ _x distance (_compound select 1) > SPAWN_DISTANCE } count (units GROUP_PLAYERS) == count (units GROUP_PLAYERS)) || ({alive _x && !(captive _x)} count _units < 2) };
 
 // If eliminated
 if ({(alive _x) && !(captive _x)} count _units <= 2) then{

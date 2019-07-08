@@ -12,7 +12,7 @@
     BOOL - true 
 */
 
-params["_unit"];
+params["_unit","_gunner"];
 
 _unit removeAllEventHandlers "FiredNear";
 _unit setCaptive true;
@@ -34,4 +34,6 @@ _unit call DCW_fnc_addActionLookInventory;
 _unit call DCW_fnc_addActionGetIntel;
 [_unit] call DCW_fnc_shout;
 
-[_gunner, ["This enemy is surrendering","He gives up !","Hands up !", "Your hands in the hair !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+if (!isNull _gunner) then {
+  [_gunner, ["This enemy is surrendering","He gives up !","Hands up !", "Your hands in the hair !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+};

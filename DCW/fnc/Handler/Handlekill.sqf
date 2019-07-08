@@ -44,7 +44,7 @@
                 [_unit,_killer] call ENEMY_KILLED;
             };
         };
-        _unit setVariable["DCW_IsIntel",false];
+        _unit setVariable["DCW_TaskNotCompleted",false];
         _unit setVariable["DCW_unit_injured",false, true];
         _unit call DCW_fnc_deleteMarker;
 

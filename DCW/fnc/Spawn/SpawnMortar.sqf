@@ -29,7 +29,7 @@ _posToSpawn = [_pos, 250 min (2*_radius) , (550 min 2.5*_radius), 3, 0, 2, 0, _t
 for "_j" from 1 to _nb do {
     _mortar = ENEMY_MORTAR_CLASS createVehicle _posToSpawn ; 
 
-    _mortar setVariable["DCW_IsIntel",true];
+    _mortar setVariable["DCW_TaskNotCompleted",true];
     _mortar setVariable["DCW_Type","mortar"];
 
     _mortar addMPEventHandler ["MPKilled",{ 

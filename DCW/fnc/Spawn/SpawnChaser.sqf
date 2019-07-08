@@ -32,6 +32,6 @@ private _posSelected = [position _unitChased, SPAWN_DISTANCE,SPAWN_DISTANCE+100,
 
  //Trigger chase
  // [leader _grp, _unitChased] spawn DCW_fnc_chase;
-[_grp,"DCW_fnc_simplePatrol", [ _grp, _unitChased]] call DCW_fnc_chase;
+[_grp,"DCW_fnc_chase", [ _grp, _unitChased]] call DCW_fnc_patrolDistributeToHC;
 
  _units;

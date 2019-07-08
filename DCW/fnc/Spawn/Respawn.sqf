@@ -49,8 +49,11 @@ DCW_fnc_handleRespawnBase = {
 	_unit setVariable["marker", _pm, true];
 
 	// Initial score display
-	[] call DCW_fnc_displayscore;
 	_unit call DCW_fnc_resetState;
+	
+	if (vehicle _unit == _unit) then {
+		[] call DCW_fnc_displayscore;
+	};
 };
 
 //Respawn handling
@@ -98,15 +101,6 @@ DCW_fnc_handleRespawnSingleplayer =
 	private _respawnPos = if (RESPAWN_CHOICE == "base") then {START_POSITION} else {CAMP_RESPAWN_POSITION};
 	RESPAWN_CHOICE = ""; // Reset
 	
-	if (!isMultiplayer) then {
-		{ 
-			if (!isPlayer _x && (leader GROUP_PLAYERS) == _unit) then{
-				_x call DCW_fnc_resetState;
-				_x setPos ([_respawnPos, 0 ,10, 1, 0, 20, 0] call BIS_fnc_findSafePos);
-			}; 
-		} foreach units GROUP_PLAYERS;
-	};
-	_unit setPos _respawnPos;
 
 
 	sleep 1;
@@ -137,6 +131,16 @@ DCW_fnc_handleRespawnSingleplayer =
 		skipTime 6 + random 12;
 	};
 	
+	
+	GROUP_PLAYERS selectLeader _unit;
+	{ 
+		if (!(isPlayer _x) && (leader GROUP_PLAYERS) == _unit) then{
+			_x call DCW_fnc_resetState;
+			_x setPos ([_respawnPos, 0 ,10, 1, 0, 20, 0] call BIS_fnc_findSafePos);
+		}; 
+	} foreach units GROUP_PLAYERS;
+	_unit setPos _respawnPos;
+
 	sleep 5;
 	[worldName, "Back to camp", format["%1 hours later...",_timeSkipped], format ["%1 live%2 left",REMAINING_RESPAWN,if (REMAINING_RESPAWN <= 1) then {""}else{"s"}]] call BIS_fnc_infoText;
 	cutText ["","BLACK IN", 4];
@@ -151,7 +155,6 @@ DCW_fnc_handleRespawnSingleplayer =
 	_unit setVariable["DCW_unit_injured",false,true] ;
 	_unit setCaptive false;
 	_unit allowDamage true;
-	GROUP_PLAYERS selectLeader _unit;
 };
 
 

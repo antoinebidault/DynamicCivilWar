@@ -53,7 +53,7 @@ while {_i > 0} do {
 	_iedJunk setPosATL(getPosATL _iedJunk select 2+1);
 	_iedJunk enableSimulationGlobal false;
 	_iedJunk setVariable ["DCW_Type","ied"];
-	_iedJunk setVariable ["DCW_IsIntel",true];
+	_iedJunk setVariable ["DCW_TaskNotCompleted",true];
 	_iedJunk allowDamage false;
 	[_iedJunk,"ColorBlue"] call DCW_fnc_addMarker;
 

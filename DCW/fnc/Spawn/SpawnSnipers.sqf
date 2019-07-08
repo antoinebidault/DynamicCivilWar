@@ -27,30 +27,29 @@ if (_nbSnipers > 0)then{
         [_unit] joinSilent _grp;
 
         [_unit,"ColorRed"] call DCW_fnc_addmarker;
-        [_unit] call DCW_fnc_handlekill;
 
         _unit setVariable["DCW_Type","sniper", true];
         UNITS_SPAWNED_CLOSE pushback _unit;
         
         _unit doWatch _pos;
-        if (_xc == 1)then{
-        _unit setVariable["DCW_IsIntel",true, true];
-        _unit setUnitPos "MIDDLE";
-        _unit addWeapon "Binocular";
-        _unit selectWeapon "Binocular";
 
-        //Handle success of the mission
-        _unit addMPEventHandler ["MPKilled",
-            { 
+        if (_xc == 1)then{
+          _unit setVariable["DCW_TaskNotCompleted",true, true];
+          _unit setUnitPos "MIDDLE";
+          _unit addWeapon "Binocular";
+          _unit selectWeapon "Binocular";
+
+          //Handle success of the mission
+          _unit addMPEventHandler ["MPKilled",
+          { 
             params["_unit","_killer"];
             if (group _killer == GROUP_PLAYERS) then{
                 _unit remoteExec ["DCW_fnc_success",2,false];
-                };
-            }
-        ];
+            };
+          }];
 
         }else{
-        _unit setUnitPos "DOWN";
+          _unit setUnitPos "DOWN";
         };
 
         _units pushBack _unit;

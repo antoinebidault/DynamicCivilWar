@@ -38,8 +38,8 @@ for "_j" from 1 to _nb do {
     _unit = createVehicle [_unitName,_posToSpawn,[],0,"CAN_COLLIDE"]; 
     _unit setDir (random 359);
     [_unit,"ColorBrown"] call DCW_fnc_addMarker;
-    _unit setVariable["DCW_Type","cache"];
-    _unit setVariable["DCW_IsIntel",true];
+    _unit setVariable["DCW_Type","cache", true];
+    _unit setVariable["DCW_TaskNotCompleted",true, true];
     
     _unit addMPEventHandler["MPKilled",{ 
         params["_cache","_killer"];

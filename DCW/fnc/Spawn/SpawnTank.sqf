@@ -49,7 +49,7 @@ while {count TANKS < NUMBER_TANKS} do{
     };
 
     _tank setVariable ["DCW_Type","tank"];
-    _tank setVariable ["DCW_IsIntel",true];
+    _tank setVariable ["DCW_TaskNotCompleted",true];
 
     _tank addMPEventHandler ["MPKilled",{
          params["_tank","_killer"];

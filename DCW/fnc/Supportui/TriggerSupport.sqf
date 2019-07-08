@@ -17,12 +17,13 @@ private["_type","_price"];
 
 _type  = _this select 0;
 _price = _this select 1;
+_leader = leader GROUP_PLAYERS;
 
 if((DCW_SCORE - _price) >= 0)then {
 	
 	//Fermeture plus MAJ score 
 	closeDialog 0;
-	_leader = leader GROUP_PLAYERS;
+	
 	[GROUP_PLAYERS,-_price] remoteExec ["DCW_fnc_updateScore",2];   
 	
 	if (_type=="UAV")then{
@@ -50,7 +51,7 @@ if((DCW_SCORE - _price) >= 0)then {
 	};
 
 }else{
-	(_leader) sideChat "You can't afford it, not enough points... Try it later.";
+	"You can't afford it, not enough points... Try it later." remoteExec["hint",owner _leader];
 };
 
 

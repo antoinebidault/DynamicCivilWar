@@ -43,7 +43,7 @@ if (_damage >= .9  && !(_unit getVariable["DCW_unit_injured",false])) then {
     _marker setMarkerType "mil_dot";
     _marker setMarkerColor "ColorOrange";
     _marker setMarkerText format["An injured comrade : %1", name _unit];
-	_unit setVariable ["DCW_marker_injured",  _marker];
+	_unit setVariable ["DCW_marker_injured",  _marker, true];
 	
 } else {
 	if (_unit getVariable["DCW_unit_injured",false])then{

@@ -61,7 +61,7 @@ _waypoint setWaypointBehaviour "CARELESS";
 //_Waypoint waypointAttachVehicle _cargo;
 _waypoint setWaypointSpeed "LIMITED";
 
-_waypoint2 = (group (_pilot)) addWaypoint [[0,0,0], 1];
+_waypoint2 = (group (_pilot)) addWaypoint [_startPos, 1];
 _waypoint2 setWaypointType "MOVE";
 _waypoint2 setWaypointSpeed "FULL";
 _waypoint2 setWaypointStatements ["true", "{deleteVehicle _x} foreach crew this; deleteVehicle this; deleteMarker MARKER_PARADROP_VEHICLE;"];

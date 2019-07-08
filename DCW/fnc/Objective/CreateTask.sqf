@@ -114,4 +114,4 @@ _intel setVariable["DCW_Bonus",_bonus, true];
 _intel setVariable["DCW_Reputation",_reputation, true];
 _intel setVariable["DCW_Task",_taskId, true];
 
-[_taskId,_message,_messageSuccess,_bonus];
+[_taskId,_message,_messageSuccess,_bonus,_title];

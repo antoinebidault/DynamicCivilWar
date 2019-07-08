@@ -22,7 +22,8 @@ private _unit = objNull;
 private _firstTrigger = true;
 
 while{true}do {
-	if ({ _x getVariable["DCW_type",""] == "patrol" } count UNITS_SPAWNED_CLOSE < MAX_RANDOM_PATROL)then{
+	_nbUnitSpawned = { _x getVariable["DCW_type",""] == "patrol" } count UNITS_SPAWNED_CLOSE;
+	if (_nbUnitSpawned < MAX_RANDOM_PATROL)then{
 		_nbFriendlies = { _x getVariable["DCW_type",""] == "patrol" && side _x == SIDE_FRIENDLY} count UNITS_SPAWNED_CLOSE;
 		//Get random pos
 		_side = SIDE_ENEMY;
@@ -46,15 +47,6 @@ while{true}do {
 				if (_side == SIDE_FRIENDLY) then{
 					_unit = [_grp,_pos,false] call DCW_fnc_spawnFriendly;
 					[_unit] remoteExec ["DCW_fnc_addActionGiveUsAHand"];
-					
-					/*	if (_j == 1) then {
-						_grpMarker = createMarker["mkr-"+str(floor random 10000), _pos];
-						_grpMarker setMarkerShape "ICON";
-						_grpMarker setMarkerColor "ColorGreen";
-						_grpMarker setMarkerType "o_motor_inf";
-						_unit call DCW_fnc_deleteMarker;
-						_unit setVariable["marker", _grpMarker];
-					};*/
 				} else {
 					_unit = [_grp,_pos,false] call DCW_fnc_spawnEnemy;
 				};
@@ -64,12 +56,14 @@ while{true}do {
 				_unit setBehaviour "SAFE";
 				sleep .4;
 			};
-			//[_grp, 120] spawn DCW_fnc_simplePatrol;
-			// Send group to HC
+
 			[_grp,"DCW_fnc_simplePatrol", [_grp, 120]] call DCW_fnc_patrolDistributeToHC;
 		};
 	};	
 	
-
-	sleep 220;
+	if (_nbUnitSpawned < 10) then{
+		sleep 20;
+	}else{
+		sleep 200;
+	};
 };

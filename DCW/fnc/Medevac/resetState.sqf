@@ -20,7 +20,7 @@ _this setVariable["DCW_fnc_carry",-1,true];
 _this setVariable["DCW_this_injured",false,true];
 _this setVariable["DCW_this_dragged",false,true];
 _this setVariable["DCW_healer",objNull,true];
-_this getVariable["DCW_marker_injured",""] setMarkerPos (getPos _this);
+deleteMarker (_this getVariable["DCW_marker_injured",""]);
 if (ACE_ENABLED) then {
 	[objNull, _this] remoteExec ["ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal"];
 };
