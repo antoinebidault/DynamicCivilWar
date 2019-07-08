@@ -173,7 +173,7 @@ DCW_fnc_addActionLiberate =  {
         };
         _pos = [getPos _unit, 1000, 1100, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         
-        [_unit,stop] remoteExec ["stop",owner _unit]; 
+        [_unit,false] remoteExec ["stop",owner _unit]; 
         [_unit,10] remoteExec ["forceSpeed",owner _unit]; 
         [_unit,false] remoteExec ["forceWalk",owner _unit]; 
         [_unit,_pos] remoteExec ["move",owner _unit]; 

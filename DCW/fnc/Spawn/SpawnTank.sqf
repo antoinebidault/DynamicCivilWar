@@ -26,7 +26,7 @@ while {count TANKS < NUMBER_TANKS} do{
     
     // Temp marker with previously spawned tank
     _tmpmarker = createMarker [format["tk-bl-%1",random 10000], _spawnPos];
-    _tmpmarker setMarkerSize [1000,1000];
+    _tmpmarker setMarkerSize [1500,1500];
     _tmpmarker setMarkerShape "ELLIPSE";
     _tmpmarker setMarkerAlpha 0;
     _tempMarkers = _tempMarkers + [_tmpmarker];
@@ -48,8 +48,8 @@ while {count TANKS < NUMBER_TANKS} do{
         _tank setVariable["marker",_marker];
     };
 
-    _tank setVariable ["DCW_Type","tank"];
-    _tank setVariable ["DCW_TaskNotCompleted",true];
+    _tank setVariable ["DCW_Type","tank",true];
+    _tank setVariable ["DCW_TaskNotCompleted",true,true];
 
     _tank addMPEventHandler ["MPKilled",{
          params["_tank","_killer"];

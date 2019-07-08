@@ -109,7 +109,7 @@ if (_state == "bastion") then {
 	} else{
 		if (_state == "humanitary") then {
 			_marker select 0 setMarkerBrush "BDiagonal";
-			_marker select 0 setMarkerColor "ColorGrey",
+			_marker select 0 setMarkerColor "ColorGrey";
 			if (DEBUG) then {HQ sideChat format["The humanitary will be deployed in %1",_marker select 14];};
 		};
 	};

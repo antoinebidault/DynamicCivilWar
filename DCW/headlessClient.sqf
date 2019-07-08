@@ -43,7 +43,7 @@ while {true} do {
       } else {
         diag_log format ["[HC] %1 AI groups currently on %2", _hc call DCW_fnc_countUnitInHC, str _hc]; 
       };
-    } foreach HCs;
+    };
   };
 
   sleep 30;

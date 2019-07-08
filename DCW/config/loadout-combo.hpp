@@ -37,7 +37,7 @@ class LOADOUT_DIALOG
           text = "DYNAMIC CIVIL WAR"; //--- ToDo: Localize;
           x = 3.5 * GUI_GRID_W + GUI_GRID_X;
           y = 0.5 * GUI_GRID_H + GUI_GRID_Y;
-          w = 29 * GUI_GRID_W;
+          w = 32 * GUI_GRID_W;
           h = 2 * GUI_GRID_H;
         };
         class RscText_4444: RscText

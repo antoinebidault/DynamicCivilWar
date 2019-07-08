@@ -82,7 +82,7 @@ sleep 5;
 
 {
  	_x removeEventHandler ["Fired", 0];
-} foreach (units _groupToHelp):
+} foreach (units _groupToHelp);
 
 deleteWaypoint [_grp, 0];
  private _pos = [getposatl MEDEVAC_SmokeShell, 2, 50, 7, 0, 20, 0] call BIS_fnc_findSafePos;

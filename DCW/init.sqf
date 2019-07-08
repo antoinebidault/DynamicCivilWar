@@ -167,6 +167,10 @@ DCW_fnc_removeActionHEal =  compileFinal preprocessFileLineNumbers "DCW\fnc\mede
 DCW_fnc_addActionHeal = compile preprocessFileLineNumbers "DCW\fnc\medevac\addActionHeal.sqf";
 DCW_fnc_resetState = compile preprocessFileLineNumbers "DCW\fnc\medevac\resetState.sqf";
  
+// Loadout
+DCW_fnc_loadoutSniper = compileFinal preprocessFileLineNumbers  "DCW\Loadout\Loadout-sniper.sqf";
+DCW_fnc_loadoutSpotter = compileFinal preprocessFileLineNumbers  "DCW\Loadout\Loadout-spotter.sqf";
+
 //composition
 compo_camp1 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp1.sqf");
 compo_camp2 =  call (compileFinal preprocessFileLineNumbers "DCW\composition\camp2.sqf");

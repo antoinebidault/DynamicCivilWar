@@ -69,7 +69,7 @@ while { true } do {
 								params["_compound"];
 								sleep 30;
 								[_compound] call DCW_fnc_spawnDefendTask;
-							};
+							}; 
 							_defendTaskState = "done";
 						};
 					};
