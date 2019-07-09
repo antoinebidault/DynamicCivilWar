@@ -6,7 +6,10 @@ var clean = require('gulp-clean');
 var rimraf = require('gulp-rimraf');
 var replace = require('gulp-replace');
 var log = require('fancy-log');
+cache = require('gulp-cached'),
+    remember = require('gulp-remember');
 var pjson = require('./package.json');
+
 var version = pjson.version;
 
 var directories = ['DCW.Malden', 'DCW.Lythium', 'DCW.Takistan', 'DCW.Chongo','DCW.Module/functions'];  
@@ -16,25 +19,29 @@ gulp.task('default', function () {
     var source = './DCW'
     gulp.start('copy');
     // Callback mode, useful if any plugin in the pipeline depends on the `end`/`flush` event
-    var task =  gulp.src(source+'/**/*', {base: source})
+    
+   
+     var task = gulp.src(source+'/**/*', {base: source})
         .pipe(watch(source, {base: source}))
         .on('change', function(){ log('File change'); })
-        .on('added', function(){ log('File added'); }) 
-        for (var i = 0; i < directories.length; i++) {  
-          task
-            .pipe(replace('{VERSION}', version))
-            .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
-            .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
-        }
+        .on('added', function(){ log('File added'); })
+        .pipe(remember('fileChange'))
+     for (var i = 0; i < directories.length; i++) {  
+        task
+        .pipe(cache('fileChange'))
+        .pipe(replace('{VERSION}', version))
+        .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
+        .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
+    }
 });
 
-gulp.task('copy', function () {
-    var task =   gulp.src('DCW/**/*');
-    for (var i = 0; i < directories.length; i++) {  
-        task
-          .pipe(replace('{VERSION}', version))
-          .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
-          .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
+gulp.task('copy',function() {
+    for (let i = 0; i < directories.length; i++) {  
+        console.log(directories[i].split('.')[1]);
+        gulp.src('DCW/**/*')
+        .pipe(replace('{VERSION}', version))
+        .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
+        .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
     } 
 });
 

@@ -12,7 +12,7 @@
 		0: OBJECT - unit
 
 	Returns:
-		BOOL - true 
+		BOOL - true  
 */
 
 params["_unit"];

@@ -19,12 +19,12 @@ _cam camSetPos (_chopper modelToWorld[3,50,2]);
 
 [] spawn {
 	sleep 3;
-	nul = ["Bidass presents",.3,.7,7] spawn BIS_fnc_dynamicText;
+	nul = ["Bidass presents",.3,.7,7] spawn BIS_fnc_dynamicText; 
 	sleep 13;
 	nul = ["An arma III scenario",.3,.2,7] spawn BIS_fnc_dynamicText;
 	sleep 16;
 	nul = ["Dynamic Civil War",-1,-1,4,1,0] spawn BIS_fnc_dynamicText;
-};
+}; 
 
 [_chopper, [30,2,17], 6] call DCW_fnc_camFollow;
 [_chopper, [0,45,4], 13] call DCW_fnc_camFollow;

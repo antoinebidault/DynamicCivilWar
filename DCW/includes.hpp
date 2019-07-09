@@ -3,21 +3,21 @@ class Header
 	gameType =  Coop;	// Game type
 	minPlayers =  1;	// minimum number of players the mission supports
 	maxPlayers = 10;	// maximum number of players the mission supports
-};
+};  
 
 disabledAI= 1;
-enableDebugConsole[] = {"76561197974435552"};
+enableDebugConsole[] = {"76561197974435552"}; 
 allowFunctionsLog = 1;
-author = "Bidass";
+author = "Bidass"; 
 briefing = 0;
-briefingName = "Dynamic Civil War {WORLD_NAME}";
+briefingName = "Dynamic Civil War {WORLD_NAME}"; 
 onLoadMission = "Your objective is to stop the insurgency propagation and locate the enemy commander. (DCW v{VERSION})";
-loadScreen = "images\loadscreen.paa"; 
+loadScreen = "images\loadscreen.paa";  
 overviewPicture = "images\loadscreen.paa"; 
 overviewText = "Your primary objective is to locate and kill the enemy commander. You'll have to prevent the insurgency to spread across the country. The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
 overviewTextLocked = "Your primary objective is to locate and kill the enemy commander. You'll have to prevent the insurgency to spread across the country.The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
 wreckManagerMode = 2;
-wreckRemovalMinTime = 12;
+wreckRemovalMinTime = 12; 
 wreckRemovalMaxTime = 13;
 wreckLimit = 15;
 respawnOnStart = -1;
@@ -70,4 +70,4 @@ class CfgMusic
 
 class RscTitles {
   #include "fnc\supportui\statusBar.hpp"
-};
+}; 
