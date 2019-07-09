@@ -19,7 +19,7 @@
 if (!isServer) exitWith{false};
 private _numberOfmen = 1;
 private _minRange = 300;
-private _firstTrigger = true;
+private _firstTrigger = true; 
 
 while{true}do {
 	if ({ _x getVariable["DCW_type",""] == "civpatrol" } count UNITS_SPAWNED_CLOSE  < MAX_RANDOM_CIVILIAN)then{
