@@ -1,6 +1,6 @@
 
 // Wait until the players > 0 and they disembark
-waitUntil {count ([] call DCW_fnc_allPlayers) > 0 && vehicle (leader GROUP_PLAYERS) == (leader GROUP_PLAYERS)};
+waitUntil {count ([] call DCW_fnc_allPlayers) > 0 && !IN_INTRO_CUTSCENE};
 
 // Display the score to each player
 [] remoteExec ["DCW_fnc_displayScore"];

@@ -54,9 +54,7 @@ DCW_fnc_handleRespawnBase = {
 	// Initial score display
 	_unit call DCW_fnc_resetState;
 	
-	if (vehicle _unit == _unit) then {
-		[] call DCW_fnc_displayscore;
-	};
+	[] call DCW_fnc_displayscore;
 };
 
 //Respawn handling

@@ -18,6 +18,7 @@ titleCut ["", "BLACK FADED", 9999];
 TALK_QUEUE = [];
 MESS_SHOWN = false;
 MESS_HEIGHT = 0;
+IN_INTRO_CUTSCENE = false;
 
 //Briefing
 player createDiaryRecord ["Diary",["Keep a good reputation",
@@ -124,7 +125,12 @@ if (ENABLE_DIALOG && !didJIP) then {
 };
 
 if (!DEBUG && !didJIP) then {
+	IN_INTRO_CUTSCENE = true;
 	[] call DCW_fnc_intro;
+	IN_INTRO_CUTSCENE = false;
+	if (leader GROUP_PLAYERS == player) then {
+		publicVariableServer "IN_INTRO_CUTSCENE";
+	};
 };
 
 uisleep .3;
