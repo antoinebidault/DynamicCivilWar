@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Set up a cache in the selected compound using a proper building position
 

@@ -3,6 +3,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     TODO
 

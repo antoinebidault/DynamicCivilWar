@@ -2,6 +2,9 @@
 	Author: 
 		Bidass
 
+  Version:
+    {VERSION}
+
 	Description:
 		Global setup of ACE configuration constants
 

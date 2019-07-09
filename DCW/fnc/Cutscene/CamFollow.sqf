@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Make the camera follow an object smoothly
 

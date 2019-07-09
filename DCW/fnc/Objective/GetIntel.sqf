@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Get a random item from units spawn in markers around the selected _unit.
 

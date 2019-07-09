@@ -1,6 +1,6 @@
 {
   "name": "dynamic.civil.war",
-  "version": "1.0.0",
+  "version": "0.8.3",
   "description": "A dynamic singleplayer scenario for Arma III",
   "main": "gulpfile.js",
   "dependencies": {},
@@ -10,6 +10,7 @@
     "gulp-armapbo": "^2.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-header-comment": "^0.6.1",
+    "gulp-replace": "^1.0.0",
     "gulp-rimraf": "^0.2.2",
     "gulp-watch": "^5.0.1",
     "moment": "^2.19.3"
@@ -22,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bidass/DynamicCivilWar.git"
+    "url": "git+https://github.com/Bidass/DynamicCivilWar.git"
   },
   "keywords": [
     "arma",
@@ -32,10 +33,10 @@
     "scripting",
     "game"
   ],
-  "author": "BIDASS",
+  "author": "Bidass",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bidass/DynamicCivilWar/issues"
+    "url": "https://github.com/Bidass/DynamicCivilWar/issues"
   },
-  "homepage": "https://github.com/bidass/DynamicCivilWar#readme"
+  "homepage": "https://github.com/Bidass/DynamicCivilWar#readme"
 }

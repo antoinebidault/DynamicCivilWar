@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     FiredNear handler attached to enemy unit
 	It will make the unit surrender when over pressured

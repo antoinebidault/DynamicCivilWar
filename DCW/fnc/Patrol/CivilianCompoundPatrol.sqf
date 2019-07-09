@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Civilian patrol in compound. 
     Modified script of SPUn / LostVar

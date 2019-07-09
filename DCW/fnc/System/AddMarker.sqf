@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     TODO
 
@@ -15,7 +18,10 @@
 /*
 Add a marker associated to a unit. 
 The marker name is stored in a variable.
-BIDASS
+Bidass
+
+  Version:
+    {VERSION}
 */
 
 params["_unit","_color"];

@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Display the score UI at the bottom of the screen.
 	Executed on player's computer

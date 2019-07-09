@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Catch firednear event => Make civilian join the guerilla if attacked
 	CREDITS : Thanks to phronk : https://forums.bistudio.com/profile/785811-phronk/

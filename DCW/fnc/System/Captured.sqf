@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Trigger when unit is captured.
 	A little cutscene is automatically triggered

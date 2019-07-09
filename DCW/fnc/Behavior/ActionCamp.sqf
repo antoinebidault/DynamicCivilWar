@@ -2,6 +2,9 @@
 	Author: 
 		Bidass
 
+  Version:
+    {VERSION}
+
 	Description:
 		Add the set camping action to the player.
 

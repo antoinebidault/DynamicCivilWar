@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Spawn a chopper which carry a crate with slingloads to the designated position
 

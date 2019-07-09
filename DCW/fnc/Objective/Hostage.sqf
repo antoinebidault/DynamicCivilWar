@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Spawn a hostage task with a civilian tied up and terrorists arround him
 

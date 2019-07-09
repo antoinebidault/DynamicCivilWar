@@ -1,7 +1,10 @@
 /**
  * DYNAMIC CIVIL WAR
  * Created: 2017-11-29
- * Author: BIDASS
+ * Author: Bidass
+
+  Version:
+    {VERSION}
  * License : GNU (GPL)
  * Detect if an element is in a rounded or rectangular marker
  */

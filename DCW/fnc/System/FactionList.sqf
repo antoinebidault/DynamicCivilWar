@@ -1,10 +1,19 @@
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2019-03-29
- * Author: BIDASS
- * License : GNU (GPL)
- * Return the list of factions
- */
+ /*
+  Author: 
+    Bidass
+
+  Version:
+    {VERSION}
+
+  Description:
+    Return the list of factions
+
+  Parameters:
+	1: ARRAY [] - Clusters
+
+  Returns:
+    BOOL - true 
+*/
 
 
 params["_side"];

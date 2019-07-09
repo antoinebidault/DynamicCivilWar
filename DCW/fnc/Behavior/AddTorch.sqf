@@ -2,6 +2,9 @@
 	Author: 
 		Bidass
 
+  Version:
+    {VERSION}
+
 	Description:
 		Add a torch to the unit and force the lights ON
 

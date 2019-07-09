@@ -4,7 +4,10 @@ const moment = require('moment');
 var watch = require('gulp-watch');
 var clean = require('gulp-clean');
 var rimraf = require('gulp-rimraf');
+var replace = require('gulp-replace');
 var log = require('fancy-log');
+var pjson = require('./package.json');
+var version = pjson.version;
 
 var directories = ['DCW.Malden', 'DCW.Lythium', 'DCW.Takistan', 'DCW.Chongo','DCW.Module/functions'];  
 
@@ -18,13 +21,19 @@ gulp.task('default', function () {
         .on('change', function(){ log('File change'); })
         .on('added', function(){ log('File added'); }) 
         for (var i = 0; i < directories.length; i++) {  
-          task.pipe(gulp.dest('./'+directories[i]+'/DCW'));  
+          task
+            .pipe(replace('{VERSION}', version))
+            .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
+            .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
         }
 });
 
 gulp.task('copy', function () {
+    var task =   gulp.src('DCW/**/*');
     for (var i = 0; i < directories.length; i++) {  
-        gulp.src('DCW/**/*')
+        task
+          .pipe(replace('{VERSION}', version))
+          .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
           .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
     } 
 });
@@ -35,20 +44,6 @@ gulp.task('clean', function () {
       gulp.src(directories[i]+'/DCW', {read: false})
         .pipe(rimraf());
     }
-});
-
-gulp.task('comments', function() {
-    gulp.src('**/*.sqf')
-    .pipe(headerComment(`
-        DYNAMIC CIVIL WAR
-        Created: <%= moment().format('YYYY-MM-DD') %>
-        Author: <%= pkg.author %>
-        License: GNU (GPL)
-    `))
-   .pipe(gulp.dest(function (file) {
-        return file.base;
-    }));
- // .pipe(gulp.dest('./dist/'))
 });
 
 const pbo = require('gulp-armapbo');

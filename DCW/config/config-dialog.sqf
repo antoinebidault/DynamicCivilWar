@@ -2,6 +2,9 @@
 	Author: 
 		Bidass
 
+  Version:
+    {VERSION}
+
 	Description:
 		Display the scenario configuration dialog
 		This requires the config-dialog-functions to work properly.

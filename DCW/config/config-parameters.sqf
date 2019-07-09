@@ -2,6 +2,9 @@
 	Author: 
 		Bidass
 
+  Version:
+    {VERSION}
+
 	Description:
 		Base configuration constant definition
 		The multiplayer configuration binding is done here

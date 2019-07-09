@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Remove a marker associated to a unit. 
     The marker name is stored in a variable.

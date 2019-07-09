@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
    Car patrol script
     Inspired by SPUn / LostVar

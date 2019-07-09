@@ -2,6 +2,9 @@
 	Author: 
 		Bidass
 
+  Version:
+    {VERSION}
+
 	Description:
 		This process is executed when the group leader press the "start mission button"
 		All the class list are set up from the main CONFIG_VEHICLES array that is an all vehicle className cache.

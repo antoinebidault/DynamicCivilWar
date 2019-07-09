@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Transform a civil in an insurgent with an AK, magazines...
     The unit's gear is randomized

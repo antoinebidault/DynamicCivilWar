@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Init the state of the chopper helo evacuation
 	NOTE : this is actually obsolete.

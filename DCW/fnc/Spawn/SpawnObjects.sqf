@@ -1,7 +1,10 @@
 /**
  * DYNAMIC CIVIL WAR
  * Created: 2019-11-29
- * Author: BIDASS
+ * Author: Bidass
+
+  Version:
+    {VERSION}
  * License : GNU (GPL)
  */
 private["_unit"];

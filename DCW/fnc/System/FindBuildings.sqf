@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Find enterable buildings in the specified range.
 	return array of enterable building objects which have min 3 positions inside

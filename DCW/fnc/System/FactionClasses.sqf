@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
   	Determines faction and classname of player, then convert them to strings (strings are easier to work with configs!)
     CREDITS : Adapted from Zonekiller's Array Builder -- Moser 07/18/2014

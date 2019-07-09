@@ -3,6 +3,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     AI behavior 
 	Make the selected unit to heal a wounded soldier.

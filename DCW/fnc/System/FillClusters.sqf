@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Fill up the cluster (An array of marker) with population pool data, states...etc...
 	This function must be executed on startup

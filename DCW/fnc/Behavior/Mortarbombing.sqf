@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Triggered when a mortar spawn. The mortar will attack the unit passed in param.
     To prevent game breaking, the mortar round impact is calculated to be not too close from the unit.

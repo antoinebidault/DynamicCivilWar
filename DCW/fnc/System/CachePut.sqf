@@ -2,6 +2,9 @@
   Author: 
     Bidass
 
+  Version:
+    {VERSION}
+
   Description:
     Put a compound with all associated units in cache
     The precise number of units remained is kept in memory in an array
