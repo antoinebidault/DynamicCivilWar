@@ -15,7 +15,7 @@
 
   Returns:
     OBJECT - unit 
-*/
+*/ 
 params ["_unit","_side"];
 
 [_unit] joinSilent grpNull;

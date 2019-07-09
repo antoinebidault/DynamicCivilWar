@@ -492,7 +492,7 @@ DCW_fnc_addActionRally = {
             [_unit,false] remoteExec["stop",owner _unit];
             [_unit,"ALL"] remoteExec["enableAI",owner _unit];
             [_unit,"Ok, I'm in !",false] remoteExec ["DCW_fnc_talk",_talker];
-            [_unit,SIDE_FRIENDLY] remoteExec ["DCW_fnc_badBuyLoadout",owner _unit];
+            [_unit,SIDE_FRIENDLY] remoteExec ["DCW_fnc_badGuyLoadOut",owner _unit];
             _unit remoteExec ["RemoveAllActions"];
             _unit setVariable["DCW_recruit",true,true];
             _unit remoteExec ["DCW_fnc_addActionLeaveGroup"];

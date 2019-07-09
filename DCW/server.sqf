@@ -294,7 +294,7 @@ MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
 
 
 [] call DCW_fnc_camp;
-[] execVM "DCW\fnc\supportui\init.sqf"; // Support ui init
+[] execVM "DCW\functions\supportui\init.sqf"; // Support ui init
 
 // Random spawning function decoupled from the compounds
 [] spawn DCW_fnc_spawnCrashSite; 
@@ -311,7 +311,7 @@ MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{
-	[GROUP_PLAYERS] execVM "DCW\fnc\medevac\init.sqf";
+	[GROUP_PLAYERS] execVM "DCW\functions\medevac\init.sqf";
 };
 
 private ["_mkr","_cacheResult","_ieds"];

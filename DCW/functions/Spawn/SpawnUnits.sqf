@@ -128,7 +128,7 @@ for "_xc" from 1 to _population do {
 
             // If "supporting"
             if (_compoundState == "supporting") then {
-              [_civ, SIDE_FRIENDLY] remoteExec ["DCW_fnc_badBuyLoadout",owner _unit];
+              [_civ, SIDE_FRIENDLY] remoteExec ["DCW_fnc_badGuyLoadOut",owner _unit];
               [_civ] remoteexec ["DCW_fnc_addCivilianAction",0];
             };
             

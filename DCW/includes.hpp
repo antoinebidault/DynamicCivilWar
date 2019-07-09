@@ -61,13 +61,14 @@ class CfgMusic
 
 
 #include "config\mission-parameters.hpp"
-#include "fnc\supportui\Defines.hpp"
-#include "fnc\supportui\buySupports.hpp"
-#include "fnc\supportui\notification.hpp"
+#include "functions\supportui\Defines.hpp"
+#include "functions\supportui\buySupports.hpp"
+#include "functions\supportui\notification.hpp"
 #include "config\respawn.hpp"
 #include "config\config-combo.hpp"
-#include "config\loadout-combo.hpp"
+#include "config\loadout-combo.hpp" 
+#include "functions\CfgFunctions.hpp"
 
 class RscTitles {
-  #include "fnc\supportui\statusBar.hpp"
-}; 
+  #include "functions\supportui\statusBar.hpp"
+};   

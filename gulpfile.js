@@ -25,10 +25,10 @@ gulp.task('default', function () {
         .pipe(watch(source, {base: source}))
         .on('change', function(){ log('File change'); })
         .on('added', function(){ log('File added'); })
-        .pipe(remember('fileChange'))
+      // .pipe(remember('fileChange'))
      for (var i = 0; i < directories.length; i++) {  
         task
-        .pipe(cache('fileChange'))
+      //  .pipe(cache('fileChange'))
         .pipe(replace('{VERSION}', version))
         .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
         .pipe(gulp.dest('./'+directories[i]+'/DCW'));  

@@ -16,6 +16,7 @@
   Returns:
     BOOL - true 
 */
+
  params["_unit"];
 _unit addEventHandler["FiredNear",
 	{
