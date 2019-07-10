@@ -1,6 +1,6 @@
 {
   "name": "dynamic.civil.war",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "description": "A dynamic singleplayer scenario for Arma III",
   "main": "gulpfile.js",
   "dependencies": {},
