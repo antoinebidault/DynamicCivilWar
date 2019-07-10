@@ -118,7 +118,7 @@ _supportScore = 0;
 					} else {
 						if (_forEachIndex <= 2/100*count _clusters) then {
 							_supportScore = 70 + (floor (random 25));
-							_compoundState = "supporting";
+							_compoundState = "resistance";
 							_m setMarkerColor "ColorGreen";
 							_m setMarkerBrush "FDiagonal";
 							_icon setMarkerColor "ColorGreen";

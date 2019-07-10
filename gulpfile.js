@@ -12,7 +12,7 @@ var pjson = require('./package.json');
 
 var version = pjson.version;
 
-var directories = ['DCW.Malden', 'DCW.Lythium', 'DCW.Takistan', 'DCW.Chongo','DCW.Module/functions'];  
+var directories = ['DCW.Malden','DCW.Tanoa', 'DCW.Lythium', 'DCW.Takistan', 'DCW.Chongo','DCW.Module/functions'];  
 
 // Perform a default watch to the root folder
 gulp.task('default', function () {
@@ -20,19 +20,16 @@ gulp.task('default', function () {
     gulp.start('copy');
     // Callback mode, useful if any plugin in the pipeline depends on the `end`/`flush` event
     
-   
-     var task = gulp.src(source+'/**/*', {base: source})
-        .pipe(watch(source, {base: source}))
-        .on('change', function(){ log('File change'); })
-        .on('added', function(){ log('File added'); })
-      // .pipe(remember('fileChange'))
      for (var i = 0; i < directories.length; i++) {  
-        task
-      //  .pipe(cache('fileChange'))
+        gulp.src(source+'/**/*', {base: source})
+        .pipe(watch(source, {base: source}))
+        .on('change', function(data){ log('File change - copying ' + data ); })
+        .on('added', function(data){ log('File added - copying '+ data ); })
         .pipe(replace('{VERSION}', version))
         .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
         .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
     }
+
 });
 
 gulp.task('copy',function() {

@@ -144,7 +144,7 @@ _unit addHeadgear "H_Beret_blk";
         _curr = ([position _unit,false,"any"] call DCW_fnc_findNearestMarker);
         _state = _curr select 12;
 
-        if (_state != "neutral") exitWith {[_unit,"This action requires a compound neutral state",false] remoteExec ["DCW_fnc_talk",_asker]; false;};
+        if (_state != "neutral" && _state != "supporting") exitWith {[_unit,"This action requires a compound in a neutral state.",false] remoteExec ["DCW_fnc_talk",_asker]; false;};
         if ({_x getVariable["DCW_advisor",false]} count (units GROUP_PLAYERS) == 0) exitWith {[_asker,"I need a military advisor first. I can recruit them in already secured camps.",false] remoteExec ["DCW_fnc_talk",_asker];false;};
         [_asker,"We'll provide you an army advisor for helping you to defend against insurgents.", false] remoteExec ["DCW_fnc_talk",_asker];
         [_unit,"Thanks for your help !", false] remoteExec ["DCW_fnc_talk",_asker];
@@ -167,8 +167,8 @@ _unit addHeadgear "H_Beret_blk";
         }
         foreach (_curr select 5);
 
-        [_curr, "supporting"] call DCW_fnc_setCompoundState;
-        [_curr, 30, 0] call DCW_fnc_setCompoundSupport;
+        [_curr, "resistance"] call DCW_fnc_setCompoundState;
+        [_curr, 25 + floor(random 10), 0] call DCW_fnc_setCompoundSupport; 
     }] remoteExec["spawn",2];
 
 },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];

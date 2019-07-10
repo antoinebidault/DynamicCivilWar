@@ -41,7 +41,7 @@ if (_state == "secured") then{
 						_icon setMarkerColor "ColorBlack";
 						_icon setMarkerType "loc_Cross";
 					} else {
-						if (_state == "supporting") then {
+						if (_state == "resistance") then {
 							_markerID setMarkerColor "ColorGreen";
 							_markerID setMarkerBrush "FDiagonal";
 							_icon setMarkerColor "ColorGreen";

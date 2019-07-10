@@ -64,7 +64,7 @@ while { true } do {
 						_playerInMarker = true;
 						[format["<t color='#cd8700'>%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["DCW_fnc_showIndicator",_player,false];
 				
-						if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "supporting")  ) then {
+						if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "resistance")  ) then {
 							[_currentCompound,_player] spawn {
 								params["_compound"];
 								sleep 30;

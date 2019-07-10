@@ -13,15 +13,15 @@ briefing = 0;
 briefingName = "Dynamic Civil War {WORLD_NAME}"; 
 onLoadMission = "Your objective is to stop the insurgency propagation and locate the enemy commander. (DCW v{VERSION})";
 loadScreen = "images\loadscreen.paa";  
-overviewPicture = "images\loadscreen.paa"; 
+overviewPicture = "images\loadscreen.paa";  
 overviewText = "Your primary objective is to locate and kill the enemy commander. You'll have to prevent the insurgency to spread across the country. The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
 overviewTextLocked = "Your primary objective is to locate and kill the enemy commander. You'll have to prevent the insurgency to spread across the country.The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
-wreckManagerMode = 2;
-wreckRemovalMinTime = 12; 
-wreckRemovalMaxTime = 13;
-wreckLimit = 15;
-respawnOnStart = -1;
-corpseManagerMode = 1;
+wreckManagerMode = 2; 
+wreckRemovalMinTime = 12;   
+wreckRemovalMaxTime = 13;  
+wreckLimit = 15;  
+respawnOnStart = -1;  
+corpseManagerMode = 1; 
 corpseLimit = 18; 
 ReviveMode = 0;                         //0: disabled, 1: enabled, 2: controlled by player attributes
 ReviveUnconsciousStateMode = 0;         //0: basic, 1: advanced, 2: realistic
@@ -33,9 +33,9 @@ ReviveMedicSpeedMultiplier = 2;         //speed multiplier for revive performed 
 ReviveForceRespawnDelay = 3;            //time needed to perform force respawn (in secs)
 ReviveBleedOutDelay = 120;              //unconscious state duration (in secs)
 keys[] = {"key1"};
-keysLimit = 1;
+keysLimit = 1; 
 taskManagement_propagate = 1;
-
+  
 //--------------------------------------------------------------
 //---------------------    MUSICS    ---------------------------
 //--------------------------------------------------------------
@@ -62,13 +62,13 @@ class CfgMusic
 
 #include "config\mission-parameters.hpp"
 #include "functions\supportui\Defines.hpp"
-#include "functions\supportui\buySupports.hpp"
-#include "functions\supportui\notification.hpp"
-#include "config\respawn.hpp"
-#include "config\config-combo.hpp"
-#include "config\loadout-combo.hpp" 
+#include "functions\supportui\buySupports.hpp" 
+#include "functions\supportui\notification.hpp" 
+#include "config\respawn.hpp"   
+#include "config\config-combo.hpp"  
+#include "config\loadout-combo.hpp"  
 #include "functions\CfgFunctions.hpp"
-
-class RscTitles {
-  #include "functions\supportui\statusBar.hpp"
-};   
+   
+class RscTitles {   
+  #include "functions\supportui\statusBar.hpp"  
+};        

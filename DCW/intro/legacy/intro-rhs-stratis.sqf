@@ -14,3 +14,4 @@ titleCut ["", "BLACK IN", 5];
 	sleep 14;
 	nul = ["Dynamic Civil War",-1,-1,5,1,0] spawn BIS_fnc_dynamicText;
 };
+ 

@@ -277,8 +277,9 @@ CHOPPER_DEMO = objNull;
 CHOPPER_DEMO_POS = (player modelToWorld[0,-21,0]);
 DCW_fnc_displayChopper = {
 	0 fadeSound 0;
+	sleep .3;
 	if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO; deleteVehicle CHOPPER_DEMO;};
-	sleep 1;
+	sleep .3;
 	_choppers = [lbData [2103, (2103 call DCW_fnc_getValue)], ["Helicopter"], "Transport"] call DCW_fnc_factionGetSupportUnits;
 	if (count _choppers > 0) then {
 		SUPPORT_MEDEVAC_CHOPPER_CLASS = _choppers;
@@ -288,6 +289,7 @@ DCW_fnc_displayChopper = {
 		CHOPPER_DEMO setPos [getPos(CHOPPER_DEMO) select 0, getPos(CHOPPER_DEMO) select 1,0];
 		CHOPPER_DEMO engineOn true;
 		CHOPPER_DEMO allowDamage false;
+		createVehicleCrew CHOPPER_DEMO;
 		(driver CHOPPER_DEMO) stop true;
 	};
 };

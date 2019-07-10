@@ -29,7 +29,7 @@ private _units = [];
 private _population = _people select 0; 
 private _nbenemies = _people select 2; 
 
-if (_compoundState == "neutral" || _compoundState == "humanitary" || _compoundState == "supporting" || _compoundState == "secured" || _compoundState == "massacred") then {
+if (_compoundState == "neutral" || _compoundState == "humanitary" || _compoundState == "resistance" || _compoundState == "secured" || _compoundState == "massacred") then {
   _population =  _population + _nbenemies ;
   _nbenemies = 0;
 };
@@ -84,7 +84,7 @@ for "_xc" from 1 to _population do {
 
     if (count _posSelected > 0) then {
       
-      if (_compoundState == "supporting") then {
+      if (_compoundState == "resistance") then {
         _grp = createGroup SIDE_FRIENDLY;
       }else{
         _grp = createGroup SIDE_CIV;
@@ -107,11 +107,11 @@ for "_xc" from 1 to _population do {
           _civ call DCW_fnc_medic;
           _units pushBack _civ;
         }else{
-          if (_xc == 3 && _compoundState == "supporting") then {
+          if (_xc == 3 && _compoundState == "resistance") then {
               _advisor = [_grp, _posSelected, false] call DCW_fnc_spawnfriendly;
               _units pushback _advisor;
           } else{
-            _civ = [_grp,_posSelected,_chief,if (_compoundState == "supporting") then {false}else{true},nil,_compoundScore] call DCW_fnc_spawnCivil;
+            _civ = [_grp,_posSelected,_chief,if (_compoundState == "resistance") then {false}else{true},nil,_compoundScore] call DCW_fnc_spawnCivil;
             if (_compoundState == "massacred" || _compoundState == "humanitary") then {
               
               _civ setDamage ([.9,.85,.5,.7,.3] call BIS_fnc_selectRandom);
@@ -126,8 +126,8 @@ for "_xc" from 1 to _population do {
            // [_grp,_radius,_meetingPointPosition,_buildings] spawn DCW_fnc_civilianCompoundPatrol;
             [_grp,"DCW_fnc_civilianCompoundPatrol",[_grp,_radius,_meetingPointPosition,_buildings]] call DCW_fnc_patrolDistributeToHC;
 
-            // If "supporting"
-            if (_compoundState == "supporting") then {
+            // If "resistance"
+            if (_compoundState == "resistance") then {
               [_civ, SIDE_FRIENDLY] remoteExec ["DCW_fnc_badGuyLoadOut",owner _unit];
               [_civ] remoteexec ["DCW_fnc_addCivilianAction",0];
             };

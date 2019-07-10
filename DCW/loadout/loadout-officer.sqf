@@ -14,7 +14,7 @@ removeBackpack _this;
 removeHeadgear _this;
 removeGoggles _this;
 
-comment "Add containers";
+comment "Add containers"; 
 _this forceAddUniform "U_BG_Guerilla2_3";
 _this addItemToUniform "FirstAidKit";
 _this addItemToUniform "10Rnd_9x21_Mag";

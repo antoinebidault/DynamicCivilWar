@@ -81,7 +81,7 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 		[_taskId,"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach ([] call DCW_fnc_allPlayers);    
 
-	[_compound,"supporting"] call DCW_fnc_setCompoundState;
+	[_compound,"resistance"] call DCW_fnc_setCompoundState;
 	[_compound, 30, 10] call DCW_fnc_setCompoundSupport;         
 
 } else {

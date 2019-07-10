@@ -89,6 +89,7 @@ class CfgFunctions
 			class spawnCrashSite {};
 			class spawnDefendTask {};
 			class spawnIED {};
+			class spawnFriendly {};
 			class spawncrate {};
 			class spawnhumanitaryoutpost {};
 			class SpawnObjects {};
@@ -100,6 +101,7 @@ class CfgFunctions
 			class spawnRandomCar {};
 			class spawnChopper {};
 			class spawnLoop {};
+			class SpawnTank {};
 		};
 
 		class Patrol
