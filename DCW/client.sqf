@@ -37,8 +37,25 @@ In this singleplayer scenario, you have one major objective : assassinate the en
 
  _loc =  nearestLocations [getPosWorld player, ["NameVillage","NameCity","NameCityCapital"],10000] select 0;
 
+player setskill 1;
+player setUnitAbility 1;
+player allowFleeing 0;
+player setskill ["aimingAccuracy", 1];
+player setskill ["aimingShake", 1];
+player setskill ["aimingSpeed", 1];
+player setskill ["spotDistance", 1];
+player setskill ["spotTime", 1];
+player setskill ["commanding", 1];
+player setskill ["courage", 1];
+player setskill ["general", 1];
+player setskill ["reloadSpeed", 1];
+player setUnitTrait ["engineer",true];
+player setUnitTrait ["medic",true];
+player setUnitTrait ["explosiveSpecialist",true];
+player setUnitTrait ["audibleCoef",.1];
 player addWeapon "itemGPS";
 player addItem "MineDetector";
+
 if (ACE_ENABLED) then {
 	player addItem "ACE_DefusalKit";
 	player addItem "ACE_EarPlugs";

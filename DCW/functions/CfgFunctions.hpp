@@ -153,11 +153,13 @@ class CfgFunctions
 			class DisplayScore {};
 			class GetCrateItems {};
 			class TriggerSupport {};
+			class vehicleLift {};
 		};
 
 		class Medical
 		{	
 			file = "DCW\functions\medical";
+			class medicalInit{};
 			class SpawnHelo {};
 			class SpawnHeloCrew {};
 			class SpawnHeloReplacement {};

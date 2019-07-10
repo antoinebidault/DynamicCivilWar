@@ -32,7 +32,7 @@ COMMENU_TRANSPORT_ID = 0;
 TRANSPORTPARADROP_MENU = [["Transport",false]];
 {
 	_displayName = getText(configFile >>  "CfgVehicles" >> _x >> "displayName");
-	TRANSPORTPARADROP_MENU pushBack [_displayName, [_foreachIndex + 2], "", -5, [["expression",format[ "[player,COMMENU_TRANSPORT_ID] spawn BIS_fnc_removeCommMenuItem; [getPos player,1500,""%1""] execVM ""DCW\functions\supportui\VehicleLift.sqf"";",_x]]], "1", "1", "\A3\ui_f\data\IGUI\Cfg\Cursors\iconcursorsupport_ca.paa"];
+	TRANSPORTPARADROP_MENU pushBack [_displayName, [_foreachIndex + 2], "", -5, [["expression",format[ "[player,COMMENU_TRANSPORT_ID] spawn BIS_fnc_removeCommMenuItem; [getPos player,1500,""%1""] spawn DCW_fnc_vehicleLift;",_x]]], "1", "1", "\A3\ui_f\data\IGUI\Cfg\Cursors\iconcursorsupport_ca.paa"];
 }
 foreach SUPPORT_CAR_PARADROP_CLASS;
 publicVariable "TRANSPORTPARADROP_MENU";

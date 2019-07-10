@@ -24,9 +24,7 @@ call(compileFinal preprocessFileLineNumbers  "DCW\config\config-dialog-functions
 DCW_fnc_dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dialog.sqf";
 DCW_fnc_missionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
 
-
-
-// 
+// Action preparation
 [] call DCW_fnc_PrepareAction; 
 
 // Loadout
@@ -61,30 +59,21 @@ DCW_fnc_intro = compileFinal preprocessFileLineNumbers "DCW\intro\intro.sqf";
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
 
 // ACE detection
-if (isClass(configFile >> "CfgPatches" >> "ace_main")) then { ACE_ENABLED = true; } else { ACE_ENABLED = false; };
+ACE_ENABLED = if (isClass(configFile >> "CfgPatches" >> "ace_main")) then { true; } else { false; };
 
 if (ACE_ENABLED) then {
     [] call (compileFinal preprocessFileLineNumbers "DCW\config\ace-config.sqf"); 
 };
 
-
-
 // Wait until everything is ready
 waitUntil {count ([] call DCW_fnc_allPlayers) > 0 && time > 0 };
 
-RESISTANCE setFriend [EAST, 0];
-RESISTANCE setFriend [WEST, 0];
-
-CIVILIAN setFriend [EAST, 1];
-CIVILIAN setFriend [WEST, 1];
-CIVILIAN setFriend [RESISTANCE, 1];
 
 //DCW_STARTED = true;
 //titleCut ["", "BLACK IN",1];
 
 // Public variables
 call (compileFinal preprocessFileLineNumbers "DCW\variables.sqf"); 
-
 
 [] execVM "DCW\server.sqf";
 [] execVM "DCW\client.sqf";

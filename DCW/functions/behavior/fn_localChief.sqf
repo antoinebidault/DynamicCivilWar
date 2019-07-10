@@ -110,7 +110,7 @@ _unit addHeadgear "H_Beret_blk";
         [_unit,_action] remoteExec ["RemoveAction",owner _unit];
         [_unit,"Thank you so much for your help !", false] remoteExec ["DCW_fnc_talk",_asker];
         _cratePos = [_curr select 1, 0, _curr select 4, 4, 0, 1, 0] call BIS_fnc_findSafePos;
-        [_cratePos,2500,"crate"] execVM  "DCW\functions\supportui\VehicleLift.sqf";
+        [_cratePos,2500,"crate"] spawn DCW_fnc_vehicleLift;
         [_curr, 25, 0] call DCW_fnc_setCompoundSupport;
     }] remoteExec["spawn",2];
 },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];

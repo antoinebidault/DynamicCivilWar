@@ -151,7 +151,16 @@ CLUSTERS = [];
 	CLUSTERS = [GAME_ZONE] call DCW_fnc_getClusters;
 };
 
-WAITUNTIL {DCW_STARTED;};
+// Set default side
+RESISTANCE setFriend [EAST, 0];
+RESISTANCE setFriend [WEST, 0];
+
+CIVILIAN setFriend [EAST, 1];
+CIVILIAN setFriend [WEST, 1];
+CIVILIAN setFriend [RESISTANCE, 1];
+
+// Wait untill everything is started
+WAITUNTIL { DCW_STARTED };
 
 // Add in whitelist the basemarker
 {  if (_x find "blacklist_" == 0 || _x find "marker_base" == 0 ) then { MARKER_WHITE_LIST pushback _x }; }foreach allMapMarkers; 
@@ -294,7 +303,7 @@ MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
 
 
 [] call DCW_fnc_camp;
-[] execVM "DCW\functions\supportui\init.sqf"; // Support ui init
+[] call DCW_fnc_supportInit; // Support ui init
 
 // Random spawning function decoupled from the compounds
 [] spawn DCW_fnc_spawnCrashSite; 
@@ -311,7 +320,7 @@ MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{
-	[GROUP_PLAYERS] execVM "DCW\functions\medevac\init.sqf";
+	[GROUP_PLAYERS] spawn DCW_fnc_medicalInit;
 };
 
 private ["_mkr","_cacheResult","_ieds"];
