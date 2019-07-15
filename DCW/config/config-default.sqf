@@ -1,7 +1,37 @@
+/*
+	Author: 
+		Bidass
 
+  Version:
+    {VERSION}
+
+	Description:
+		Base configuration constant definition
+		The multiplayer configuration binding is done here
+
+*/
+
+
+// If debug enabled, each units will be visible on the map with markers
+DEBUG = getMissionConfigValue ["DCW_debug",false];
+AI_SKILLS = getMissionConfigValue ["DCW_AI_skills",.9];
+RESPAWN_ENABLED = true;
+MEDEVAC_ENABLED = true; // Reviving
+SHOW_SECTOR = true;
+NUMBER_RESPAWN = 3;
+ENABLE_FILTER = true;
+TIME_OF_DAYS = 12;
+WEATHER = .2;
+ENABLE_DIALOG = true;
+POPULATION_INTENSITY = 1;
+PERCENTAGE_OF_ENEMY_COMPOUND = 4;
+NUMBER_OFFICERS = 3;
+
+// List of vehicle config, everybody needs this part
+CONFIG_VEHICLES = [] call DCW_fnc_getConfigVehicles;
 
 //SPAWNING CONFIG
-SIZE_BLOCK =  getMissionConfigValue ["DCW_size_block",400];; // Size of blocks
+SIZE_BLOCK =  getMissionConfigValue ["DCW_size_block",400]; // Size of blocks
 MAX_CLUSTER_SIZE =  getMissionConfigValue ["DCW_max_cluster_size",200];
 SPAWN_DISTANCE = getMissionConfigValue ["DCW_spawn_distance",800]; //Distance units in compounds spawned
 MIN_SPAWN_DISTANCE =  350; //Units can't spawn before this distance
@@ -66,3 +96,20 @@ ENEMY_COMMANDER_CLASS = "O_Soldier_SL_F"; //commander
 ENEMY_CONVOY_CAR_CLASS = "O_MRAP_02_hmg_F"; //commander
 ENEMY_CONVOY_TRUCK_CLASS = ["O_Truck_03_transport_F"]; //commander
 ENEMY_OFFICER_LIST_CARS = ["O_APC_Wheeled_02_rcws_v2_F"];  //car list used by officer
+
+RESTRICTED_AMMOBOX = true;
+publicVariable "RESTRICTED_AMMOBOX";
+
+if (count paramsArray > 0 && isMultiplayer && !DEBUG) then 
+{
+	// Shared parameter
+	AI_SKILLS = [0.1, 0.5, 1] select (paramsArray select 0);
+	DEBUG = if (paramsArray select 1 == 1) then {true}else{false};
+	RESPAWN_ENABLED = if (paramsArray select 2 == 1) then {true}else{false};
+	MEDEVAC_ENABLED = if (paramsArray select 3 == 1) then {true}else{false};
+
+	// Not shared => each client has his own value
+	NUMBER_RESPAWN = paramsArray select 4;
+};
+
+REMAINING_RESPAWN = NUMBER_RESPAWN;

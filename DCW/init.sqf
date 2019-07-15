@@ -55,12 +55,8 @@ compos_medical =  call (compileFinal preprocessFileLineNumbers "DCW\composition\
 // Mission introduction function
 DCW_fnc_intro = compileFinal preprocessFileLineNumbers "DCW\intro\intro.sqf";
 
-// Base config parameters 
-[] call (compileFinal preprocessFileLineNumbers "DCW\config\config-parameters.sqf"); 
-
 // ACE detection
 ACE_ENABLED = if (isClass(configFile >> "CfgPatches" >> "ace_main")) then { true; } else { false; };
-
 if (ACE_ENABLED) then {
     [] call (compileFinal preprocessFileLineNumbers "DCW\config\ace-config.sqf"); 
 };
