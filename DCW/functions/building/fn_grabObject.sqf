@@ -37,9 +37,16 @@ if (!(player getVariable ["DCW_buildItemGrabbed",false])) then {
 
 			_caller addAction [
 				"<t color='#00ffff'>Drop Object (Snap To Ground)</t>",
-				'[_this select 3, _this select 1, _this select 2] call DCW_fnc_placeObject;',
+				'[_this select 3, _this select 1, _this select 2,true] call DCW_fnc_placeObject;',
 				_object
 			];
+
+				_caller addAction [
+				"<t color='#00ffff'>Place object</t>",
+				'[_this select 3, _this select 1, _this select 2,false] call DCW_fnc_placeObject;',
+				_object
+			];
+
 
 			_caller setVariable ["DCW_buildItemGrabbed", true, true];
 			_object setVariable ["DCW_buildItemGrabbed", true, true];

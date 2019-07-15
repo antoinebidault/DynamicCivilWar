@@ -154,6 +154,7 @@ class CfgFunctions
 			class displaySupportUiDialog {};
 			class DisplayScore {};
 			class GetCrateItems {};
+			class BuildingKit {};
 			class TriggerSupport {};
 			class vehicleLift {};
 		};
@@ -193,6 +194,7 @@ class CfgFunctions
 			class affordObject {};
 			class grabObject {};
 			class placeObject {};
+			class sellObject {};
 			class addActionObject {};
 		};
 

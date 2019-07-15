@@ -19,6 +19,16 @@ class CfgCommunicationMenu
         enable = "1"; // Simple expression condition for enabling the item
        // removeAfterExpressionCall = 1; // 1 to remove the item after calling
     };
+
+    	class OutpostBuildingKit
+    {
+        text = "Outpost building kit"; // Text displayed in the menu and in a notification
+        expression = "[] spawn DCW_fnc_buildingKit"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\defend_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+       // removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };
 };
 
 

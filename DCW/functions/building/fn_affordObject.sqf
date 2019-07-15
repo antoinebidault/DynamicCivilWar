@@ -22,4 +22,5 @@ clearWeaponCargoGlobal _obj;
 clearMagazineCargoGlobal _obj;
 clearBackpackCargoGlobal _obj;
 
+_obj setVariable["DCW_price",_shopPrice];
 [_obj, player, [0,_VecRadius + 1.5,0.02], _shopDir] call DCW_fnc_grabObject;

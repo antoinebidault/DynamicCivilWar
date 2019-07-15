@@ -45,11 +45,19 @@ if((DCW_SCORE - _price) >= 0)then {
 				publicVariable "COMMENU_TRANSPORT_ID";
 			}] remoteExec ["spawn",owner _leader];
 		} else {
-			[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
-			_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;
-			[SUPPORT_REQUESTER, _type,_nb] remoteExec ["BIS_fnc_limitSupport"];
-			BIS_supp_refresh = TRUE; 
-			publicVariable "BIS_supp_refresh";
+			if (_type == "buildingKit") then {
+				[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
+				[_leader,{
+					COMMENU_OUTPOST_ID = [_this, "OutpostBuildingKit"] call BIS_fnc_addCommMenuItem;
+					publicVariable "COMMENU_OUTPOST_ID";
+				}] remoteExec ["spawn",owner _leader];
+			} else {
+				[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
+				_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;
+				[SUPPORT_REQUESTER, _type,_nb] remoteExec ["BIS_fnc_limitSupport"];
+				BIS_supp_refresh = TRUE; 
+				publicVariable "BIS_supp_refresh";
+			};
 		};
 	};
 

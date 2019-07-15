@@ -4,6 +4,8 @@ params["_pos","_dist","_type"];
 
 if (isNil '_type') then {_type = "vehicle";};
 _cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { _type };
+_cargoClass = if (_type == "ammo") then { "B_CargoNet_01_ammo_F" } else { _type };
+_cargoClass = if (_type == "buildingKit") then { "B_Slingload_01_Repair_F" } else { _type };
 
 // Correct the destination position
 _pos = [_pos, 0, 50, 7, 0, 1, 0] call BIS_fnc_findSafePos;
@@ -28,6 +30,14 @@ _chopper setposatl _spawnpos;
 createVehicleCrew (_chopper);
 _spawnpos set [2,300]; 
 _cargo =  _cargoClass createVehicle _spawnpos;
+if (_type == "ammo")  then {
+	_cargo call DCW_fnc_spawnCrate;
+} else {
+	if (_type == "buildingKit") then {
+		_cargo addAction ["<t color='#cd8700'>Buy objects</t>", { [] call DCW_fnc_buildingDialog; },nil,2.5,false,true,"","true",20,false,""]
+	};
+};
+
 _cargo setMass [((getMass _cargo) min 11400),0];
 sleep 1;
 _cargo setposatl _spawnpos;

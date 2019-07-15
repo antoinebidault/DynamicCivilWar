@@ -18,7 +18,7 @@ class DCW_DIALOG
           x = 0.390476 * safezoneW + safezoneX;
           y = 0.290476 * safezoneH + safezoneY;
           w = 0.236905 * safezoneW;
-          h = 0.5 * safezoneH;
+          h = 0.55 * safezoneH;
          };
          class DCW_FRAME: RscFrame
          {
@@ -27,7 +27,7 @@ class DCW_DIALOG
           x = 0.390476 * safezoneW + safezoneX;
           y = 0.290476 * safezoneH + safezoneY;
           w = 0.236905 * safezoneW;
-          h = 0.5 * safezoneH;
+          h = 0.55 * safezoneH;
          };
 
          class DCW_BUTTONARTILLERY: RscButton
@@ -95,12 +95,25 @@ class DCW_DIALOG
           action = "closeDialog 0;_nil=[""vehicle"",150] remoteExec [""DCW_fnc_triggerSupport"",2]";
         };
 
+        
+           class DCW_BUTTONOUTPOST: RscButton
+         {
+          idc = -1;
+          text = "Outpost building kit (-100 points)";
+          x = 0.4 * safezoneW + safezoneX;
+          y = 0.65 * safezoneH + safezoneY;
+          w = 0.22 * safezoneW;
+          h = 0.0404761 * safezoneH;
+          action = "closeDialog 0;_nil=[""buildingKit"",100] remoteExec [""DCW_fnc_triggerSupport"",2]";
+        };
+
+
         class DCW_BUTTONNO: RscButton
         {
           idc = -1;
           text = "Back";
           x = 0.4 * safezoneW + safezoneX;
-          y = 0.7 * safezoneH + safezoneY;
+          y = 0.75 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
           action = "closeDialog 0;";
