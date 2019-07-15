@@ -118,11 +118,11 @@ if (alive _healer && alive _injuredperson && _injuredperson getVariable["DCW_uni
 
 	if (isPlayer _injuredperson && (leader GROUP_PLAYERS) == _injuredperson) then {
 		_injuredperson remoteExec ["removeAllActions"];
-		sleep .3;
 		_injuredperson call DCW_fnc_actionCamp;
 		_injuredperson call DCW_fnc_addSupportUi;
 	};
-
+	
+	sleep 1;
 	resetCamShake;
 } else {
 	if (damage _injuredperson >= .9 && lifeState _injuredperson == "INCAPACITATED") then {

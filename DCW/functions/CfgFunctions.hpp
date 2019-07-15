@@ -184,5 +184,17 @@ class CfgFunctions
 			class addActionHeal {};
 			class resetState {};
 		};
+
+		
+		class Building
+		{	
+			file = "DCW\functions\building";
+			class buildingDialog {};
+			class affordObject {};
+			class grabObject {};
+			class placeObject {};
+			class addActionObject {};
+		};
+
 	};
 };

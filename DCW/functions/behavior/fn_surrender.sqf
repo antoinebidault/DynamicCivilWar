@@ -22,7 +22,7 @@ _unit setCaptive true;
 _unit action ["Surrender", _unit]; 
 removeHeadgear _unit;
 _weapon = currentWeapon _unit;     
-_dude removeWeapon (currentWeapon _unit);
+_unit removeWeapon (currentWeapon _unit);
 sleep .2;
 _weaponHolder = "WeaponHolderSimulated" createVehicle [0,0,0];
 _weaponHolder addWeaponCargoGlobal [_weapon,1];

@@ -64,6 +64,7 @@ class CfgMusic
 #include "functions\supportui\Defines.hpp"
 #include "functions\supportui\buySupports.hpp" 
 #include "functions\supportui\notification.hpp" 
+#include "functions\building\dialog.hpp"
 #include "config\respawn.hpp"   
 #include "config\config-combo.hpp"  
 #include "config\loadout-combo.hpp"  

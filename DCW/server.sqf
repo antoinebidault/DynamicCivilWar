@@ -30,6 +30,7 @@ addMissionEventHandler ["HandleDisconnect", {
 addMissionEventHandler ["Loaded",{ 
     [] spawn {
 		hint "mission loaded";
+		// player setPos START_POSITION;
 		sleep 4;
 		[] call DCW_fnc_displayscore;
     };

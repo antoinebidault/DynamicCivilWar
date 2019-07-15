@@ -102,8 +102,6 @@ DCW_fnc_handleRespawnSingleplayer =
 	private _respawnPos = if (RESPAWN_CHOICE == "base") then {START_POSITION} else {CAMP_RESPAWN_POSITION};
 	RESPAWN_CHOICE = ""; // Reset
 	
-
-
 	sleep 1;
 
 	//Disable chasing if not in multiplayer

@@ -125,6 +125,7 @@ DCW_fnc_spawnOfficer = {
                     _unit setDamage 1;
                 };
                 
+                [_unit,"I know something..."] remoteExec ["DCW_fnc_talk",_player];
                 _unit call DCW_fnc_mainObjectiveIntel;
             },{
             [(_this select 1), "medicStop"] remoteExec ["playActionNow"];

@@ -13,7 +13,7 @@
 
 
 // If debug enabled, each units will be visible on the map with markers
-DEBUG = getMissionConfigValue ["DCW_debug",false];
+DEBUG = getMissionConfigValue ["DCW_debug",true];
 AI_SKILLS = getMissionConfigValue ["DCW_AI_skills",.9];
 RESPAWN_ENABLED = true;
 MEDEVAC_ENABLED = true; // Reviving
@@ -96,6 +96,36 @@ ENEMY_COMMANDER_CLASS = "O_Soldier_SL_F"; //commander
 ENEMY_CONVOY_CAR_CLASS = "O_MRAP_02_hmg_F"; //commander
 ENEMY_CONVOY_TRUCK_CLASS = ["O_Truck_03_transport_F"]; //commander
 ENEMY_OFFICER_LIST_CARS = ["O_APC_Wheeled_02_rcws_v2_F"];  //car list used by officer
+
+BUILD_ITEMS = [
+    [1,   "Long Plank (8m)",      "Land_Plank_01_8m_F",                0,   4],
+    [2,   "Junk Barricade",       "Land_Barricade_01_4m_F",            0, 1.5],
+    [3,   "Small Ramp (1m)",      "Land_Obstacle_Ramp_F",            180, 1.5],
+    [5,   "Flat Triangle (1m)",   "Land_DomeDebris_01_hex_green_F",  180, 1.5],
+    [5,  "Short Sandbag Wall",   "Land_SandbagBarricade_01_half_F",   0, 1.5],
+    [5,  "Sandbag Barricade",    "Land_SandbagBarricade_01_hole_F",   0, 1.5],
+    [10,  "Concrete Shelter",     "Land_CncShelter_F",                 0,   1],
+    [20,  "Concrete Walkway",     "Land_GH_Platform_F",                0, 3.5],
+    [20,  "Tall Concrete Wall",   "Land_Mil_WallBig_4m_F",             0,   2],
+    [10,  "Portable Light",       "Land_PortableLight_double_F",     180,   1],
+    [10,  "Long Concrete Wall",   "Land_CncBarrierMedium4_F",          0,   3],
+    [20,  "Large Ramp",           "Land_VR_Slope_01_F",                0,   4],
+    [10,  "Bunker Block",         "Land_Bunker_01_blocks_3_F",         0,   2],
+    [10,  "H Barrier",            "Land_HBarrier_3_F",                 0,   2],
+    [10,  "Ladder",               "Land_PierLadder_F",                 0,   1],
+    [10,  "Storage box small",    "Box_NATO_Support_F",                0,   1],
+    [10,  "Stairs",               "Land_GH_Stairs_F",                180,   4],
+    [10, "Hallogen Lamp",        "Land_LampHalogen_F",               90,   1],
+    [10, "Double H Barrier",     "Land_HBarrierWall4_F",              0,   4],
+    [10, "Concrete Platform",    "BlockConcrete_F",                   0, 3.5],
+    [10, "Storage box large",    "Box_NATO_AmmoVeh_F",                0,   1],
+    [100, "Static HMG",           "B_HMG_01_high_F",                   0,   1],
+    [10, "Small Bunker",         "Land_BagBunker_Small_F",          180,   3],
+    [10, "Pillbox",              "Land_PillboxBunker_01_hex_F",      90, 2.5],
+    [10, "Guard Tower",          "Land_Cargo_Patrol_V3_F",            0, 3.5],
+    [10, "Modular Bunker",       "Land_Bunker_01_Small_F",          180, 3.5]
+];
+
 
 RESTRICTED_AMMOBOX = true;
 publicVariable "RESTRICTED_AMMOBOX";

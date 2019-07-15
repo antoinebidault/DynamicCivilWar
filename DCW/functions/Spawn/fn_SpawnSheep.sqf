@@ -90,7 +90,7 @@ while {true} do {
 		// Delete all sheeps when all players are away !
 		_cheepLeader = _x select 0;
 		_array = _x;
-		if( _x isEqualTo [] || ({ _cheepLeader distance _x > 400 } count ([] call DCW_fnc_allPlayers)) == count ([] call DCW_fnc_allPlayers))then {
+		if(_x isEqualTo [] || ({ _cheepLeader distance _x > 400 } count ([] call DCW_fnc_allPlayers)) == count ([] call DCW_fnc_allPlayers))then {
 			SHEEP_POOL = SHEEP_POOL - [_array];
 			{
 				if (!(_x getVariable ["DCW_recruit", false])) then {

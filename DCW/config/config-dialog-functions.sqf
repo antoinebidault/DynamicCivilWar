@@ -225,6 +225,8 @@ DCW_fnc_chooseLocation = {
 	_pos = [_pos, 0, 250, 17, 0, .4, 0] call BIS_fnc_findSafePos;
 	"marker_base" setMarkerPos _pos;
 	START_POSITION = getMarkerPos "marker_base";
+	START_POSITION set [2,0];
+	
 	publicVariableServer "START_POSITION";
 
 	player onMapSingleClick "";
