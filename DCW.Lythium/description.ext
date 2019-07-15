@@ -1,1 +1,3 @@
+DCW_ratio_population = .6;
+
 #include "DCW\includes.hpp"

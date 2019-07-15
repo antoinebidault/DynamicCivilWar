@@ -30,6 +30,7 @@ DCW_fnc_addActionJoinAsAdvisor = {
         sleep .3;
         
         _unit setVariable["DCW_advisor", true, true];
+        _unit setVariable["DCW_disable_cache", true, true];
         [_unit,false] remoteExec ["stop",owner _unit];
         [_unit] join GROUP_PLAYERS;
         _this call DCW_fnc_endTalking;
@@ -495,6 +496,7 @@ DCW_fnc_addActionRally = {
             [_unit,SIDE_FRIENDLY] remoteExec ["DCW_fnc_badGuyLoadOut",owner _unit];
             _unit remoteExec ["RemoveAllActions"];
             _unit setVariable["DCW_recruit",true,true];
+            _unit setVariable["DCW_disable_cache", true, true];
             _unit remoteExec ["DCW_fnc_addActionLeaveGroup"];
             [_unit,3] remoteExec ["DCW_fnc_updateRep",2];
             [_unit] joinSilent grpNull;
@@ -563,7 +565,7 @@ DCW_fnc_addActionLeaveGroup = {
         params["_unit","_talker"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         [_unit,4] remoteExec ["DCW_fnc_updateRep",2];
-        _unit remoteExec ["removeAllActions",0];
+        _unit remoteExec ["removeAllActions",0]; 
         [_talker,"gestureGo"] remoteExec ["playActionNow"];
         [_talker,format["%1, You are now free to go ! Thanks for your help",name _unit],false] remoteExec ["DCW_fnc_talk",_talker];
         [_unit,["Well, good bye buddy !","Bye my friend !","Ok, See you in hell.."] call BIS_fnc_selectRandom,false]  remoteExec ["DCW_fnc_talk",_talker];;
@@ -578,6 +580,7 @@ DCW_fnc_addActionLeaveGroup = {
             _this forceSpeed 10;
             _this move _pos;
             waitUntil { isNull _this || _this distance _pos < 10 };
+            _this setVariable["DCW_disable_cache", false, true];
             deleteVehicle _this;
         }] remoteExec ["spawn",owner _unit];
 

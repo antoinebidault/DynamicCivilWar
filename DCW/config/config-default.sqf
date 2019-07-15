@@ -1,9 +1,9 @@
 
 
 //SPAWNING CONFIG
-SIZE_BLOCK = 400; // Size of blocks
-MAX_CLUSTER_SIZE = 200;
-SPAWN_DISTANCE = 800; //Distance units in compounds spawned
+SIZE_BLOCK =  getMissionConfigValue ["DCW_size_block",400];; // Size of blocks
+MAX_CLUSTER_SIZE =  getMissionConfigValue ["DCW_max_cluster_size",200];
+SPAWN_DISTANCE = getMissionConfigValue ["DCW_spawn_distance",800]; //Distance units in compounds spawned
 MIN_SPAWN_DISTANCE =  350; //Units can't spawn before this distance
 
 
@@ -33,11 +33,11 @@ CIV_LIST_UNITS = ["C_man_p_beggar_F_euro","C_Man_casual_1_F_euro","C_man_p_fugit
 CIV_LIST_CARS = ["C_Truck_02_transport_F","C_Offroad_01_F","C_Offroad_02_unarmed_F","C_SUV_01_F"];
 HUMANITAR_LIST_CARS = ["C_IDAP_Offroad_02_unarmed_F","C_IDAP_Offroad_01_F","C_IDAP_Truck_02_F","C_IDAP_Truck_02_water_F","C_IDAP_Van_02_medevac_F"];
 HUMANITAR_LIST_UNITS = ["C_IDAP_Man_AidWorker_06_F","C_IDAP_Man_AidWorker_05_F","C_IDAP_Man_AidWorker_01_F","C_IDAP_Man_AidWorker_08_F","C_IDAP_Man_UAV_06_medical_F","C_IDAP_Man_EOD_01_F","C_IDAP_Man_AidWorker_03_F"];
-MAX_RANDOM_CIVILIAN = 4;
-MAX_SHEEP_HERD = 2; //Number of sheep herd
-RATIO_POPULATION =  1.3; //Number of unit per building. 0.4 default
-MAX_POPULATION = 25;
-RATIO_CARS =  .06; //Number of empty cars spawned in a city by buidling
+MAX_RANDOM_CIVILIAN =  getMissionConfigValue ["DCW_max_random_civilian",4];
+MAX_SHEEP_HERD =  getMissionConfigValue ["DCW_max_sheep_herd",2]; //Number of sheep herd
+RATIO_POPULATION =  getMissionConfigValue ["DCW_ratio_population",1.3]; //Number of unit per building. 0.4 default
+MAX_POPULATION = getMissionConfigValue ["DCW_max_population",25];
+RATIO_CARS =  getMissionConfigValue ["DCW_ratio_cars",.06]; //Number of empty cars spawned in a city by buidling
 PERCENTAGE_FRIENDLIES = 25; //Percentage friendly spawn in patrol
 PERCENTAGE_CIVILIAN = 30; //Percentage civilian in a block
 PERCENTAGE_ENEMIES = 70; //Percentage enemies in occupied compound
@@ -48,19 +48,19 @@ PERCENTAGE_SUSPECT = 38;
 //ENEMIES
 SIDE_ENEMY = EAST; //Enemy side 
 PATROL_SIZE = [1,3]; //Size of patrol => [minimum,random additionnals units]
-MAX_SPAWNED_UNITS = 60; //Max units to spawn
+MAX_SPAWNED_UNITS = getMissionConfigValue ["DCW_max_spawned_units",60] ; //Max units to spawn
 MAX_CHASERS = 8; //Max hunters who are looking for you !
-MAX_RANDOM_PATROL = 20; //Number of units patroling around the player at the same time
-MAX_RANDOM_CAR = 2; //Max car spawned.
-NUMBER_CHOPPERS = 0; // Number of choppers
-NUMBER_CRASHSITES = 2;
+MAX_RANDOM_PATROL = getMissionConfigValue ["DCW_max_random_patrol",20]; //Number of units patroling around the player at the same time
+MAX_RANDOM_CAR = getMissionConfigValue ["DCW_max_random_car",2]; //Max car spawned.
+NUMBER_CHOPPERS = getMissionConfigValue ["DCW_number_choppers",0]; // Number of choppers
+NUMBER_CRASHSITES = getMissionConfigValue ["DCW_number_crashsites",2];
+NUMBER_TANKS = getMissionConfigValue ["DCW_number_tanks",2]; //Number of tanks
 ENEMY_LIST_UNITS = ["O_Soldier_SL_F","O_Soldier_AR_F","O_Soldier_GL_F","O_soldier_M_F","O_Soldier_AT_F","O_Soldier_AAT_F","O_Soldier_A_F","O_medic_F"];
 ENEMY_SNIPER_UNITS = ["O_ghillie_ard_F"];
 ENEMY_LIST_CARS = ["O_MRAP_02_gmg_F","O_MRAP_02_hmg_F","O_LSV_02_armed_F","O_LSV_02_AT_F","O_Truck_03_ammo_F","O_Truck_03_transport_F","O_Truck_02_covered_F"];
 ENEMY_CHOPPERS = ["O_Heli_Attack_02_dynamicLoadout_F"];
 ENEMY_ATTACHEDLIGHT_CLASS = "acc_flashlight"; // "rhs_acc_2dpZenit"; 
 ENEMY_MORTAR_CLASS = "O_Mortar_01_F"; //Mortar class
-NUMBER_TANKS = 4; //Number of tanks
 ENEMY_LIST_TANKS = ["O_MBT_04_cannon_F","O_MBT_02_cannon_F"]; //Tanks
 ENEMY_COMMANDER_CLASS = "O_Soldier_SL_F"; //commander
 ENEMY_CONVOY_CAR_CLASS = "O_MRAP_02_hmg_F"; //commander

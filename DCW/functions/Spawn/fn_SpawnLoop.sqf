@@ -11,9 +11,10 @@ _tmpRep = 50;
 _currentMarker = [];
 
 while { true } do {
-	// foreach players
 	try 
 	{ 
+		_players = [] call DCW_fnc_allPlayers;
+		// foreach players
 		{
 			_player = _x; 
 
@@ -109,7 +110,7 @@ while { true } do {
 								_notSpawnedArray set [4,_peopleToSpawn select 4] ;
 							};
 							
-							if (_compoundState == "bastion" || (_compoundState == "neutral" && _supportScore < 45)) then {
+							if (_compoundState == "bastion" || (_compoundState == "neutral" && _supportScore < 60)) then {
 								//Snipers spawn
 								_units = _units + ([_pos,_radius,(_peopleToSpawn select 2)] call DCW_fnc_spawnsnipers);
 								//Cache
@@ -140,14 +141,13 @@ while { true } do {
 
 
 					}else{
-						//Gestion du cache
-						if(_playerPos distance _pos > (600 + 150) && _triggered) then {
+						// Cache put in case player is too far
+						if(_triggered && { _x distance _pos < (600 + 150) } count _players == 0 ) then {
 							_cacheResult = [_units,_notSpawnedArray] call DCW_fnc_cachePut;
 							_peopleToSpawn = _cacheResult select 0;
 							_units = _units - [_cacheResult select 1];
 							_triggered = false;
 						} else {
-
 							// Check if enemies remains in the area;
 							if (_triggered && !_success && _compoundState == "bastion") then {
 								if ([_playerPos, _marker] call DCW_fnc_isInMarker) then {
@@ -172,7 +172,7 @@ while { true } do {
 						};
 					}; 
 					MARKERS set [_forEachIndex,[_marker,_pos,_triggered,_success,_radius,_units,_peopleToSpawn,_meetingPointPosition,_points,_isLocation,_isMilitary,_buildings,_compoundState,_supportScore,_nameLocation,_respawnId,_defendTaskState,_primaryIntel,_notSpawnedArray]]; 
-				} foreach MARKERS select { (_x select 3) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
+				} foreach MARKERS select { (_x select 2) || ((_x select 4) <= (_xC + _o) && (_x select 4) >= (_xC - _o) && (_x select 5) <= (_yC + _o) && (_x select 5) >= (_yC - _o)) };
 				IN_MARKERS_LOOP = false;
 			};
 			sleep 1;
@@ -182,7 +182,7 @@ while { true } do {
 				["",0] remoteExec ["DCW_fnc_showIndicator",_player,false];
 			};
 
-		} foreach ([] call DCW_fnc_allPlayers);
+		} foreach _players;
 
 
 		// foreach UNITS_SPAWNED_CLOSE
@@ -239,19 +239,18 @@ while { true } do {
 						};
 					};
 				};
-			} foreach ([] call DCW_fnc_allPlayers);
-
-			// Regulate the spawn distance
-			/*
-			if (count UNITS_SPAWNED_CLOSE > MAX_SPAWNED_UNITS) then {
-				SPAWN_DISTANCE = 0.75 * INITIAL_SPAWN_DISTANCE max (SPAWN_DISTANCE - 10);
-			} else {
-				SPAWN_DISTANCE = INITIAL_SPAWN_DISTANCE min (SPAWN_DISTANCE + 10);
-			};*/
+			} foreach _players;
 
 			// Garbage collection
-			if (_unit getVariable["DCW_Type",""] == "patrol" || _unit getVariable["DCW_Type",""] == "chaser" || _unit getVariable["DCW_Type",""] == "civpatrol")then{
-				if ({_unit distance _x > SPAWN_DISTANCE + 200} count ([] call DCW_fnc_allPlayers) == count ([] call DCW_fnc_allPlayers))then {
+			if (!(_unit getVariable["DCW_disable_cache",false]) && 
+				(
+					_unit getVariable["DCW_Type",""] == "patrol" || 
+					_unit getVariable["DCW_Type",""] == "chaser" || 
+					_unit getVariable["DCW_Type",""] == "civpatrol"
+				)
+			)then{
+				
+				if ({_unit distance _x > SPAWN_DISTANCE + 200} count _players == count _players)then {
 					UNITS_SPAWNED_CLOSE = UNITS_SPAWNED_CLOSE - [_unit];
 						// If it's a vehicle
 					if (vehicle _unit != _unit) then {

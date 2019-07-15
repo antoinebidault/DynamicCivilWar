@@ -159,6 +159,7 @@ _unit addHeadgear "H_Beret_blk";
 
         [_advisor] joinSilent grpNull;
         [_advisor] joinSilent (group _unit);
+        _advisor setVariable["DCW_disable_cache", false, true];
 
         {
             if ( _x isKindOf "Man" && side _x == SIDE_CIV && _x != _unit) then {

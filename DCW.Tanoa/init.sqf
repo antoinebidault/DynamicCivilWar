@@ -8,5 +8,4 @@
  * https://github.com/bidass/DynamicCivilWar
  * You are free to edit or share it
  */
-
 nul = [] execVM "DCW\init.sqf"; //Init the insurgents
