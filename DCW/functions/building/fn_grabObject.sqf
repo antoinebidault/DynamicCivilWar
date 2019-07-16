@@ -17,7 +17,6 @@ _closestPlayerDist = 9999;
 if (!(player getVariable ["DCW_buildItemGrabbed",false])) then {
 
 	if (_closestPlayerDist > 4) then {
-			hint str _this;
 
 			if (isNil "_pos") then {
 				[_object, _caller] call BIS_fnc_attachToRelative ;
@@ -35,19 +34,13 @@ if (!(player getVariable ["DCW_buildItemGrabbed",false])) then {
 
 			[_object] remoteExec ["removeAllActions", 0];
 
-			_caller addAction [
-				"<t color='#00ffff'>Drop Object (Snap To Ground)</t>",
+			_actionID = _caller addAction [
+				"<t color='#FF0000'>Drop object</t>",
 				'[_this select 3, _this select 1, _this select 2,true] call DCW_fnc_placeObject;',
 				_object
 			];
 
-				_caller addAction [
-				"<t color='#00ffff'>Place object</t>",
-				'[_this select 3, _this select 1, _this select 2,false] call DCW_fnc_placeObject;',
-				_object
-			];
-
-
+			_caller setVariable["DCW_build_action",_actionID ,true];
 			_caller setVariable ["DCW_buildItemGrabbed", true, true];
 			_object setVariable ["DCW_buildItemGrabbed", true, true];
 

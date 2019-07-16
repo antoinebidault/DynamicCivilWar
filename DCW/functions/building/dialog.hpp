@@ -2,11 +2,10 @@
 class building_Dialog
 {
     idd = 9999;
-    movingEnabled = false;
+    movingEnabled = true;
 
     class controls
     {
-
         class building_rscPicture: RscPicture
         {
             idc = 1200;
@@ -14,7 +13,7 @@ class building_Dialog
             x = 0.3 * safezoneW + safezoneX;
             y = 0.25 * safezoneH + safezoneY;
             w = 0.4 * safezoneW;
-            h =  0.385 * safezoneH;
+            h =  0.55 * safezoneH;
         };
 
         class building_buildList: RscListbox
@@ -22,29 +21,31 @@ class building_Dialog
             idc = 1500;
             x = 0.31 * safezoneW + safezoneX;
             y = 0.27 * safezoneH + safezoneY;
-            w = 0.185 * safezoneW;
-            h = 0.3 * safezoneH;
+            w = 0.370 * safezoneW;
+            h = 0.43 * safezoneH;
+            rowHeight = .12;
         };
 		
-		class ObjectPicture: RscPicture
-        {
-            idc = 1502;
-		  	text="";
-            x = 0.1 * safezoneW + safezoneX;
-            y = 0.3 * safezoneH + safezoneY;
-            w = 0.2 * safezoneW;
-            h = 0.2 * safezoneH;
-        };
-		
-        class building_buildButton: RscButton
+        class building_okButton: RscButton
         {
             idc = 1600;
-            text = "Purchase Building";
+            text = "Buy object";
             x = 0.309 * safezoneW + safezoneX;
-            y = 0.58 * safezoneH + safezoneY;
-            w = 0.185 * safezoneW;
+            y = 0.70 * safezoneH + safezoneY;
+            w = 0.370 * safezoneW;
             h = 0.04 * safezoneH;
             action = "[] spawn DCW_fnc_affordObject";
+        };
+		
+        class building_cancelButton: RscButton
+        {
+            idc = 1601;
+            text = "Cancel";
+            x = 0.309 * safezoneW + safezoneX;
+            y = 0.75 * safezoneH + safezoneY;
+            w = 0.370 * safezoneW;
+            h = 0.04 * safezoneH;
+            action = "CloseDialog 0;";
         };
 
   };

@@ -37,6 +37,6 @@ _unit call DCW_fnc_addActionLookInventory;
 _unit call DCW_fnc_addActionGetIntel;
 [_unit] call DCW_fnc_shout;
 
-if (!isNull _gunner) then {
+if (!isNull _gunner && group _gunner == GROUP_PLAYERS) then {
   [_gunner, ["This enemy is surrendering","He gives up !","Hands up !", "Your hands in the hair !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
 };

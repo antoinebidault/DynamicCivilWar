@@ -16,7 +16,7 @@ if (_snapToGround) then {
 	[_object, _x] remoteExec ['enableCollisionWith', 0];
 } forEach playableUnits;
 
-[_caller] remoteExec ["removeAllActions", 0];
+[_caller,_caller getVariable["DCW_build_action",0]] remoteExec ["removeAction", 0];
 
 [_object] remoteExec ["DCW_fnc_addActionObject", 0];
 
@@ -24,3 +24,8 @@ _object setVehiclePosition [_object, [], 0, 'CAN_COLLIDE'];
 
 _caller setVariable ["DCW_buildItemGrabbed", false, true];
 _object setVariable ["DCW_buildItemGrabbed", false, true];
+
+
+if (!isNil (_object getVariable["DCW_initField",nil])) then {
+	_object spawn (_object getVariable["DCW_initField",nil]);
+};

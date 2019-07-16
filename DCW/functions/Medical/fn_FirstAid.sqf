@@ -24,6 +24,7 @@
 params["_healer","_injuredperson","_ambient"]; 
 
 private ["_injuredperson","_healer","_behaviour","_timenow","_relpos","_dir","_offset","_time","_damage","_isMedic","_healed","_animChangeEVH","_skill_factor"];
+if (isNull _healer) exitWith {false};
 _behaviour = behaviour _healer;
 if(!isNull (_injuredperson getVariable ["DCW_healer", objNull])) exitWith{false};
 _injuredperson setVariable ["DCW_healer", _healer, true];
@@ -75,8 +76,8 @@ _injuredperson setDir _dir;
 _time = time;
 
 // Pop a smoke
-if ([0,1] call BIS_fnc_selectRandom == 1 && !_ambient) then {
-	_smoke = "SmokeShell" createVehicle  (_injuredperson modelToWorld[.5 + random 2,.5 + random 1,0]); 
+if (!isNull(_healer findNearestEnemy _healer) && !_ambient) then {
+	_smoke = "SmokeShell" createVehicle  (_injuredperson modelToWorld[.5 + random 4,.5 + random 1,0]); 
 };
 
 [_injuredperson,"DCW_fnc_carry"] call DCW_fnc_removeAction;

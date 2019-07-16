@@ -213,18 +213,18 @@ while {_notWatched} do
 
 hintSilent "You've been watched by enemies. Go back to your troops as fast as possible";
 
-waitUntil { sleep .3; !(alive _player)  || { side _x == SIDE_FRIENDLY && (_player distance _x) < 10} count allUnits > 1 };
+waitUntil { sleep .3; (lifestate _player == "INCAPACITATED")  || { side _x == SIDE_FRIENDLY && (_player distance _x) < 10} count allUnits > 1 };
 
 _player setVariable ["dcw_surrender_action", false];
 
-_wasKIA = !PLAYER_ALIVE;
+_wasKIA = (lifestate _player == "INCAPACITATED");
 
 _player setUnitLoadout _loadout;
 [_player] joinSilent GROUP_PLAYERS;
 if (_wasTheLeader) then{group _player selectLeader _player;};
 
 if (_wasKIA) then {
-	waitUntil {PLAYER_ALIVE};
+	waitUntil {lifestate _player != "INCAPACITATED"};
 	[leader GROUP_PLAYERS, "Good to see you back home !",false] call DCW_fnc_talk;
 } else {
 	[leader GROUP_PLAYERS, "Welcome back mate, you seem to have some interresting news ! What did you see during your captivity ?",false] call DCW_fnc_talk;

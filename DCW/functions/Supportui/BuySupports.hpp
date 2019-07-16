@@ -99,12 +99,12 @@ class DCW_DIALOG
            class DCW_BUTTONOUTPOST: RscButton
          {
           idc = -1;
-          text = "Outpost building kit (-100 points)";
+          text = "Outpost building kit (-300 points)";
           x = 0.4 * safezoneW + safezoneX;
           y = 0.65 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
           h = 0.0404761 * safezoneH;
-          action = "closeDialog 0;_nil=[""buildingKit"",100] remoteExec [""DCW_fnc_triggerSupport"",2]";
+          action = "closeDialog 0;_nil=[""buildingKit"",300] remoteExec [""DCW_fnc_triggerSupport"",2]";
         };
 
 

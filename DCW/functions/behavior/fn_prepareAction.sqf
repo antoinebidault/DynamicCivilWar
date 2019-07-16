@@ -160,7 +160,7 @@ DCW_fnc_addActionLiberate =  {
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         [_talker,"Go away now ! asshole !",false] call DCW_fnc_talk;
         if(side _unit != SIDE_CIV) then {
-		    [_unit] joinSilent createGroup SIDE_CIV;
+		    [_unit] joinSilent (createGroup SIDE_CIV);
         };
         _unit remoteExec ["removeAllActions",0];
         [_talker,"PutDown"] remoteExec ["playActionNow"];
@@ -531,6 +531,24 @@ DCW_fnc_addActionSupportUs = {
 
 };
 
+DCW_fnc_addActionSitOnChair = {
+    _object = _this;
+   [_object,["Sit on chair",{ 
+        params["_object","_player","_action"]; 
+        [_object,_action] remoteExec ["removeAction",0];
+        _player attachTo [_object, [0,0.08,0.05]];
+        _player setDir ((getDir _object) - 180);
+        [_player,["HubSittingChairB_idle1","HubSittingChairB_idle2","HubSittingChairB_idle3","HubSittingChairB_move1"] call BIS_fnc_selectRandom] remoteExec ["switchMove"];
+      
+        _player addAction ["leave", {
+            params["_player","_executer","_action","_object"]; 
+            [_player,""] remoteExec ["switchMove"];
+            [_object,_action] remoteExec ["removeAction",0];
+            _object call DCW_fnc_addActionSitOnChair;
+         },_object];
+    },nil,1,false,true,"","true",20,false,""]] remoteExec ["addAction"];
+};
+
 
 DCW_fnc_addActionFindChief = {
     params["_unit","_chief"];
@@ -671,7 +689,7 @@ DCW_fnc_actionRest =  {
             _unit enableFatigue true;
             sleep 300;
             if (isNull _tent) exitWith {};
-            _tent call DCW_fnc_actionRest;
+            _tent remoteExec ["DCW_fnc_actionRest", 0, true];
         };
         
     },nil,1,false,true,"","if(vehicle(_this) == _this)then{true}else{false};",15,false,""];
