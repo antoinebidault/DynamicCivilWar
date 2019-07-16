@@ -55,12 +55,13 @@ if((DCW_SCORE - _price) >= 0)then {
 				[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
 				_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;
 				[SUPPORT_REQUESTER, _type,_nb] remoteExec ["BIS_fnc_limitSupport"];
-				BIS_supp_refresh = TRUE; 
-				publicVariable "BIS_supp_refresh";
+
 			};
 		};
 	};
-
+	sleep 1;
+	BIS_supp_refresh = TRUE; 
+	publicVariable "BIS_supp_refresh";
 }else{
 	"You can't afford it, not enough points... Try it later." remoteExec["hint",owner _leader];
 };
