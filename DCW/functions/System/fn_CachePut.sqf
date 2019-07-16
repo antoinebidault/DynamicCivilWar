@@ -38,7 +38,13 @@ _unitsToRemove = [];
 {
     _type = _x getVariable["DCW_Type",""];
     _cacheDisabled = _x getVariable["DCW_disable_cache",false];
-   
+    _elt = _x;
+
+    // Disable cache if unit is very close to a player
+    if ({ _elt distance _x < 200 } foreach ([] call DCW_fnc_allPlayers) > 0) then {
+        _cacheDisabled = true;
+    }; 
+    
     if (!_cacheDisabled) then {
         if (_type == "") then{
             _x call DCW_fnc_deleteMarker;

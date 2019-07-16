@@ -56,10 +56,10 @@ if((DCW_SCORE - _price) >= 0)then {
 				_nb = (SUPPORT_REQUESTER getVariable [format ["BIS_SUPP_limit_%1", _type], 0]) + 1;
 				[SUPPORT_REQUESTER, _type,_nb] remoteExec ["BIS_fnc_limitSupport"];
 
-			};
+			}; 
 		};
 	};
-	sleep 1;
+	sleep 1; 
 	BIS_supp_refresh = TRUE; 
 	publicVariable "BIS_supp_refresh";
 }else{
