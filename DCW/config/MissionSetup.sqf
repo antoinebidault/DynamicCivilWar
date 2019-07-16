@@ -37,6 +37,10 @@ if (count _tmpChoppers > 0) then {
 	FRIENDLY_CHOPPER_CLASS = _tmpChoppers;
 };
 
+
+// FRIENDLY_LIST_TURRETS = [FRIENDLY_LIST_TURRETS, [FACTION_PLAYER,["StaticMGWeapon","StaticMortar"],[]] call DCW_fnc_factiongetunits] call DCW_fnc_fillSupportParam;;
+
+
 ALLIED_LIST_UNITS = [ALLIED_LIST_UNITS,[FACTION_FRIENDLY,["Man"],[]] call DCW_fnc_factiongetunits] call DCW_fnc_fillSupportParam;
 ALLIED_LIST_CARS = [ALLIED_LIST_CARS,[FACTION_FRIENDLY,["Car"],[]] call DCW_fnc_factiongetunits] call DCW_fnc_fillSupportParam;
 

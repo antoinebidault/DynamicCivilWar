@@ -81,7 +81,7 @@ if (_state == "secured" ) then{
 	[_units] remoteExec ["DCW_fnc_compoundsecuredCutScene", GROUP_PLAYERS];
 } else {
 	if (!((_marker select 15) isEqualTo [])) then {
-		(_marker select 15) remoteExec ["BIS_fnc_RemoveRespawnPosition",0]; 
+		(_marker select 15) remoteExec ["BIS_fnc_RemoveRespawnPosition",0, true]; 
 	};
 };
 

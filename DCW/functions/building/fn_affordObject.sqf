@@ -16,11 +16,5 @@ closeDialog 0;
 
 sleep .1;
 
-// If it's a container, make sure it's empty
-clearItemCargoGlobal _obj;
-clearWeaponCargoGlobal _obj;
-clearMagazineCargoGlobal _obj;
-clearBackpackCargoGlobal _obj;
-
 _obj setVariable["DCW_price",_shopPrice];
-[_obj, player, [0,_VecRadius + 1.5,0.02], _shopDir] call DCW_fnc_grabObject;
+[_obj, player, [0,_VecRadius + 1.5,0.02], _shopDir] call DCW_fnc_grabObject; 

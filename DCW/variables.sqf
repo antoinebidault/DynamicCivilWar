@@ -14,6 +14,10 @@
 
 waitUntil {count ([] call DCW_fnc_allPlayers) > 0};
 
+// List of base names
+BASE_NAMES = ["alpha","bravo","charlie","delta","echo","foxtrot"];
+publicVariable "BASE_NAMES";
+
 // True if the mission is set up and started up.
 DCW_STARTED = false;
 publicVariable "DCW_STARTED";
