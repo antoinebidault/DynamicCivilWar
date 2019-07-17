@@ -25,7 +25,7 @@ removeHeadgear _this;
 _this stop true;
 
 //Heal action
-[_this, ["<t color='#FF0000'>Heal me and my team ! (45 points / 3 hours)</t>",{
+[_this, ["<t color='#cd8700'>Heal me and my team ! (45 points / 3 hours)</t>",{
     params["_medic","_unit","_action"];
     if ([GROUP_PLAYERS,45] call DCW_fnc_afford) exitWith {false};
 

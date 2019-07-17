@@ -27,7 +27,7 @@ if (MEDEVAC_State == "menu") then {
 };
 
 if (MEDEVAC_State == "inbound") then{
-	MEDEVAC_action = _unit addAction ["<t color='#000'>Abort medevac</t>", { 
+	MEDEVAC_action = _unit addAction ["<t color='#cd8700'>Abort medevac</t>", { 
 		params["_unit","_actionId"];
 		_unit removeAction MEDEVAC_action;
 		MEDEVAC_State = "aborted";

@@ -184,6 +184,7 @@ class CfgFunctions
 			class removeActionHeal {};
 			class addActionHeal {};
 			class resetState {};
+			class resetStateAI {};
 		};
 
 		
@@ -196,6 +197,9 @@ class CfgFunctions
 			class placeObject {};
 			class sellObject {};
 			class addActionObject {};
+			class recruitDialog {};
+			class getUnitCost {};
+			class affordRecruit {};
 		};
 
 	};

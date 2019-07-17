@@ -100,18 +100,19 @@ for "_xc" from 0 to _worldNbBlocks do {
 				private _res  = [_posCenteredOnBuilding] call DCW_fnc_getRadiusLocation;
 				private _radius = _res select 0;
 				
-				if (_nbBuildings > 0)then {
+				_nbHouses = _res select 1;
+				if (_nbHouses > 0)then {
 					_name = "Compound";
-					if (_nbBuildings < 2) then {
+					if (_nbHouses < 2) then {
 						_name = "Land house";
 					} else {
-						if (_nbBuildings < 6) then {
+						if (_nbHouses < 6) then {
 							_name = "Small compound";
 						} else{
-							if (_nbBuildings < 10) then {
+							if (_nbHouses < 10) then {
 								_name = "Large compound";
 							} else{
-								if (_nbBuildings < 30) then {
+								if (_nbHouses < 30) then {
 									_name = "Village";
 								} else{
 									_name = "Town";

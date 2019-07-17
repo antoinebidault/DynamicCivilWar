@@ -11,24 +11,8 @@
 _group = _this select 0;
 
 // Replacement team event handling
-{	
-	if (!isPlayer(_x))then{
-		_x setskill 1;
-		_x setUnitAbility 1;
-		_x allowFleeing 0;
-		_x setskill ["aimingAccuracy", 1];
-		_x setskill ["aimingShake", 1];
-		_x setskill ["aimingSpeed", 1];
-		_x setskill ["spotDistance", 1];
-		_x setskill ["spotTime", 1];
-		_x setskill ["commanding", 1];
-		_x setskill ["courage", 1];
-		_x setskill ["general", 1];
-		_x setskill ["reloadSpeed", 1];
-		_x remoteExec ["removeAllEventHandlers", owner _x];
-		[_x, ["HandleDamage",{_this call DCW_fnc_handleDamage;}]] remoteExec ["addEventHandler", owner _x];
-		_x addMPEventHandler ["MPKilled",{_this call DCW_fnc_handleKilled;}];
-	};
+{
+	_x call DCW_fnc_resetStateAI;
 }foreach (units _group);
 
 

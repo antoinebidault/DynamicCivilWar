@@ -24,6 +24,7 @@ _gunner = _this select 1;
 _radius = 100;
 _pos = position _unit;
 _unit setVariable ["civ_insurgent",true]; 
+_unit setVariable ["DCW_disable_patrol",true,true]; 
 
 if(isNil '_unit') exitWith {false};
 if(!alive _unit) exitWith {false};

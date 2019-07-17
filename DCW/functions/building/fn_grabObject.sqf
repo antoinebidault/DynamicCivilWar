@@ -35,7 +35,7 @@ if (!(player getVariable ["DCW_buildItemGrabbed",false])) then {
 			[_object] remoteExec ["removeAllActions", 0];
 
 			_actionID = _caller addAction [
-				"<t color='#FF0000'>Drop object</t>",
+				"<t color='#cd8700'>Drop object</t>",
 				'[_this select 3, _this select 1, _this select 2,true] call DCW_fnc_placeObject;',
 				_object
 			];

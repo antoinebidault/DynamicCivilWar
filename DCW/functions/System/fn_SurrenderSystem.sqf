@@ -34,7 +34,7 @@ while { true } do {
 		_timer = time;
 		if (_actionId == -1) then {
 			playMusic "axe";
-			_actionId = player addAction ["<t color='#000000'>Surrender</t>",{
+			_actionId = player addAction ["<t color='#cd8700'>Surrender</t>",{
 				params ["_target", "_caller", "_actionId", "_arguments"];
 				_caller removeAction _actionId;
 				[_caller] spawn DCW_fnc_captured;

@@ -89,7 +89,6 @@ for "_xc" from 1 to _population do {
       }else{
         _grp = createGroup SIDE_CIV;
       };
-
      
       if (_xc == 1 && _population >= 1 && count _buildings > 0) then {
         _civ = [_grp,_posSelected,_chief,false] call DCW_fnc_spawnCivil;

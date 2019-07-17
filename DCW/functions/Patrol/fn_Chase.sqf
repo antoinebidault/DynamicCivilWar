@@ -31,7 +31,7 @@ if (!DEBUG) then {
     _marker setMarkerAlpha 0;
 };
 
-while { !isNull _leader && alive _leader && !isNull _unitChased }do{
+while {!isNull _leader && alive _leader && !isNull _unitChased && !(_leader getVariable["DCW_disable_patrol",false])}do{
     _leader= leader _grp;
     if (_leader knowsAbout _unitChased >= .5) then {
         if (time > LAST_FLARE_TIME + 120)then{

@@ -56,6 +56,7 @@ for "_j" from 1 to _nb do {
     [_pos,_radius,_mortar] spawn {
         params["_pos","_radius","_mortar"];
         waitUntil{sleep 15; { alive _x && !captive _x && getPosATL _x distance _pos < _radius } count ([] call DCW_fnc_allPlayers) > 0 };
+        sleep 50 + random 50;
         [_mortar,(leader GROUP_PLAYERS),_pos,_radius] call DCW_fnc_mortarbombing;
     };
                     

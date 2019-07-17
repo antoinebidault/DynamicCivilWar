@@ -21,6 +21,7 @@ private ["_unit","_radius","_newPos","_bPoss","_dir","_curPos"];
 _grp = (_this select 0);
 _unit = leader _grp;
 _radius = _this select 1;
+_canChase =  [_this, 2, true] call BIS_fnc_param; // If the unit has the ability to chase enemies
 _anims = ["STAND","STAND_IA","SIT_LOW","WATCH","WATCH1","WATCH2"];
 _startPos = getPosASL _unit;
 
@@ -35,18 +36,18 @@ _startPos = getPosASL _unit;
 
 while { alive _unit }do{
 
-    if (_unit getVariable ["civ_insurgent",false] || _unit getVariable["follow_player",false])exitWith{false};
+    if ( _unit getVariable["DCW_disable_patrol",false])exitWith{false};
 
     _dir = random 360;
     _curPos = getPosASL _unit;
-    _newPos = [_startPos ,0,(_radius+ 10), 1, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_findSafePos;
+    _newPos = [_startPos ,0,(_radius+ 10), 1, 0, 20, 0, if (_canChase) then { MARKER_WHITE_LIST } else {[]},[]] call BIS_fnc_findSafePos;
     if (_newPos isEqualTo []) exitWith{};
     
     _unit move _newPos;
     _timer = time;
 
-    waitUntil {sleep 1;!isNull(_unit findNearestEnemy _unit) || unitReady _unit || _unit distance _newPos < 2 || _unit getVariable["follow_player",false] || time > _timer + 150};
-    if(!isNull(_unit findNearestEnemy _unit))exitWith {[_grp,(_unit findNearestEnemy _unit)] call DCW_fnc_chase};
+    waitUntil {sleep 1;!isNull(_unit findNearestEnemy _unit) || unitReady _unit || _unit distance _newPos < 2 || _unit getVariable["DCW_disable_patrol",false] || time > _timer + 150};
+    if(_canChase && !isNull(_unit findNearestEnemy _unit))exitWith {[_grp,(_unit findNearestEnemy _unit)] call DCW_fnc_chase};
 
     if (side _unit == SIDE_ENEMY) then{
         _unit stop true;

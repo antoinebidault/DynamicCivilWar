@@ -30,11 +30,27 @@ addMissionEventHandler ["HandleDisconnect", {
 addMissionEventHandler ["Loaded",{ 
     [] spawn {
 		hint "mission loaded";
+		// player call DCW_fnc_resetState;
 		// player setPos START_POSITION;
 		sleep 4;
 		[] call DCW_fnc_displayscore;
     };
 }];
+
+// Reload hud
+addMissionEventHandler ["PlayerConnected",{ 
+	params ["_id", "_uid", "_name", "_jip", "_owner", "_idstr"];
+	if (_jip) then {
+		HQ globalChat format["%1 joining in progress...",_name];
+		[] spawn {
+			player call DCW_fnc_resetState;
+			player setPos START_POSITION;
+			sleep 1;
+			[] call DCW_fnc_displayscore;
+		};
+	};
+}];
+
 
 
 // Server scope public variable

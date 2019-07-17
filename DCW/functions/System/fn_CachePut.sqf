@@ -41,7 +41,7 @@ _unitsToRemove = [];
     _elt = _x;
 
     // Disable cache if unit is very close to a player
-    if ({ _elt distance _x < 200 } foreach ([] call DCW_fnc_allPlayers) > 0) then {
+    if (_x isKindOf "LandVehicle" && { vehicle _x == _elt } count ([] call DCW_fnc_allPlayers) > 0) then {
         _cacheDisabled = true;
     }; 
     

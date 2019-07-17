@@ -10,8 +10,37 @@
 
 */
 
+
+DCW_fnc_addActionJoinAsTeamMember = {
+      _this addaction ["<t color='#cd8700'>Recruit him as a persistent team member (-500pts)</t>",{
+         params["_unit","_talker","_action"];
+         if (!(_this call DCW_fnc_startTalking)) exitWith {};
+         if (!([GROUP_PLAYERS,500] call DCW_fnc_afford)) exitWith {[_talker,"I need more points !",false] call DCW_fnc_talk;_this call DCW_fnc_endTalking;false;};
+      
+        [_unit,true] remoteExec ["stop",owner _unit];
+        _talker playActionNow "GestureFreeze";
+        [_unit, "GestureHi"] remoteExec ["playActionNow"];
+
+        sleep .3;
+
+        [_talker,"Hi buddy, I would need a new team member, are you in ?!",false] call DCW_fnc_talk;
+        [_unit,"I'm in ! Let's go",false] call DCW_fnc_talk;
+        [_unit,_action] remoteExec ["removeAction"];
+
+        sleep .3;
+        
+        _unit setVariable["DCW_disable_cache", true, true];
+        _unit setVariable["DCW_disable_patrol", true, true];
+        [_unit,false] remoteExec ["stop",owner _unit];
+        _unit call DCW_fnc_resetStateAI;
+        [_unit] join GROUP_PLAYERS;
+        _this call DCW_fnc_endTalking;
+
+    },nil,1,true,true,"","true",3,false,""];
+};
+
 DCW_fnc_addActionJoinAsAdvisor = {
-      _this addaction ["<t color='#FF0000'>Recruit him as a military advisor (-30pts)</t>",{
+      _this addaction ["<t color='#cd8700'>Recruit him as a military advisor (-30pts)</t>",{
          params["_unit","_talker","_action"];
          if (!(_this call DCW_fnc_startTalking)) exitWith {};
          if ({_x getVariable["DCW_advisor",false]}count (units GROUP_PLAYERS) >= 2) exitWith {[_talker,"You can't recruit more than two military advisors...",false] call DCW_fnc_talk;_this call DCW_fnc_endTalking;false;};
@@ -30,6 +59,7 @@ DCW_fnc_addActionJoinAsAdvisor = {
         sleep .3;
         
         _unit setVariable["DCW_advisor", true, true];
+        _unit setVariable["DCW_disable_patrol", true, true];
         _unit setVariable["DCW_disable_cache", true, true];
         [_unit,false] remoteExec ["stop",owner _unit];
         [_unit] join GROUP_PLAYERS;
@@ -41,7 +71,7 @@ DCW_fnc_addActionJoinAsAdvisor = {
 
 //Menote le mec;
 DCW_fnc_addActionHandCuff =  {
-    _this addaction ["<t color='#FF0000'>Capture him</t>",{
+    _this addaction ["<t color='#cd8700'>Capture him</t>",{
         _unit  = (_this select 0);
         _unit removeAllEventHandlers "FiredNear";
         _unit  setVariable["civ_affraid",false];
@@ -87,12 +117,12 @@ DCW_fnc_addActionHandCuff =  {
 DCW_fnc_addActionInstructor = {
     
     if (!isMultiplayer)then {
-        _this addaction ["<t color='#FF0000'>Savegame</t>",{
+        _this addaction ["<t color='#cd8700'>Savegame</t>",{
         saveGame;
         },nil,1.5,false,true,"","true",3,false,""];
     };
 
-     _this addaction ["<t color='#FF0000'>Briefing</t>",{
+     _this addaction ["<t color='#cd8700'>Briefing</t>",{
         params["_unit"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         [_unit, "Your main objective is to seek and neutralize an enemy commander hidden somewhere..."] call DCW_fnc_talk;
@@ -106,7 +136,7 @@ DCW_fnc_addActionInstructor = {
 };
 
 DCW_fnc_addActionGiveUsAHand =  {
-    _this select 0 addaction ["<t color='#FF0000'>Give us a hand (20 points/10 minutes)</t>",{
+    _this select 0 addaction ["<t color='#cd8700'>Give us a hand (20 points/10 minutes)</t>",{
         _unit  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
@@ -126,7 +156,8 @@ DCW_fnc_addActionGiveUsAHand =  {
 
                  {
                     [_x,_action] remoteExec ["removeAction",2];
-                    _x setVariable ["follow_player",false];
+                    _x setVariable ["DCW_follow_player",false];
+                    _x setVariable ["DCW_disable_patrol",false,true];
                     [_x] remoteExec ["DCW_fnc_addActionGiveUsAHand"];
                 } foreach units group _unit;
             }]] remoteExec ["addAction",2];
@@ -137,11 +168,12 @@ DCW_fnc_addActionGiveUsAHand =  {
         _group =  group _unit ;
         [_group,_talker] spawn {
             params["_group","_talker"];
-            (leader _group) setVariable["follow_player",true];
+            (leader _group) setVariable["DCW_follow_player",true];
+            (leader _group)  setVariable ["DCW_disable_patrol",true,true];
             _wp1 = _group addWaypoint [[0,0,0],0];
             _wp1 setWaypointType "MOVE";
             _wp1 setWaypointBehaviour "AWARE";
-            while {alive _talker && leader _group getVariable["follow_player", false]} do {
+            while {alive _talker && leader _group getVariable["DCW_follow_player", false]} do {
                 _wp1 setWaypointPosition [(_talker ModelToWorld [random 25,-20,0]), 0];
                 _group setCurrentWaypoint _wp1;
                 sleep 20;
@@ -153,7 +185,7 @@ DCW_fnc_addActionGiveUsAHand =  {
 };
 
 DCW_fnc_addActionLiberate =  {
-    _this addaction ["<t color='#FF0000'>Liberate him</t>",{
+    _this addaction ["<t color='#cd8700'>Liberate him</t>",{
         _unit  = (_this select 0);
         _talker  = (_this select 1);
         _action  = (_this select 2);
@@ -187,7 +219,7 @@ DCW_fnc_addActionLiberate =  {
 
 
 DCW_fnc_addActionLookInventory = {
-      _this addaction ["<t color='#FF0000'>Search in gear</t>",{
+      _this addaction ["<t color='#cd8700'>Search in gear</t>",{
         params["_unit","_human","_action"];
         _unit removeAction _action;
         if (_unit getVariable["DCW_Suspect",false])then{
@@ -207,8 +239,8 @@ DCW_fnc_addActionLookInventory = {
     },nil,5,false,true,"","true",3,false,""];
 };
 
-DCW_fnc_addActionHalt = {
-      _this addaction ["<t color='#FF0000'>Say hello</t>",{
+    DCW_fnc_addActionHalt = {
+        _this addaction ["<t color='#cd8700'>Say hello</t>",{
         params["_unit","_talker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         
@@ -261,7 +293,7 @@ DCW_fnc_addActionHalt = {
 
 DCW_fnc_addActionDidYouSee = {
     //Try to gather intel
-     _this addaction ["<t color='#FF0000'>Did you see anything recently ?</t>",{
+     _this addaction ["<t color='#cd8700'>Did you see anything recently ?</t>",{
     params["_unit","_talker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
 
@@ -323,7 +355,7 @@ DCW_fnc_addActionDidYouSee = {
 
 DCW_fnc_addActionFeeling = {
     //Try to gather intel
-     _this addaction [format["<t color='#FF0000'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (([] call DCW_fnc_allPlayers) select 0)] >> "displayName"),worldName] ,{
+     _this addaction [format["<t color='#cd8700'>What's your feeling about the %1's presence in %2</t>",getText(configfile >> "CfgFactionClasses" >> format["%1",faction (([] call DCW_fnc_allPlayers) select 0)] >> "displayName"),worldName] ,{
         params["_unit","_talker","_action"];
             if (!(_this call DCW_fnc_startTalking)) exitWith {};
             [_unit,1] remoteExec ["DCW_fnc_updateRep",2];
@@ -380,7 +412,7 @@ DCW_fnc_addActionFeeling = {
 
 DCW_fnc_addActionGetIntel = {
     //Try to gather intel
-    _this addaction ["<t color='#FF0000'>Gather intel (15 minutes)</t>",{
+    _this addaction ["<t color='#cd8700'>Gather intel (15 minutes)</t>",{
        params["_unit","_talker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
 
@@ -453,7 +485,7 @@ DCW_fnc_addActionGetIntel = {
 
 DCW_fnc_addActionRally = {
     //Try to make him a friendly
-    _this addaction["<t color='#FF0000'>Try to rally (30 minutes/5 points)</t>",{
+    _this addaction["<t color='#cd8700'>Try to rally (30 minutes/5 points)</t>",{
        params["_unit","_talker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         if (!([GROUP_PLAYERS,5] call DCW_fnc_afford)) exitWith {_this call DCW_fnc_endTalking;[_unit,"You need more money !",false] call DCW_fnc_talk;false;};
@@ -515,7 +547,7 @@ DCW_fnc_addActionRally = {
 
 DCW_fnc_addActionSupportUs = {
     //Try to gather intel
-     _this addaction ["<t color='#FF0000'>Give him help (2 hours/20points)</t>",{
+     _this addaction ["<t color='#cd8700'>Give him help (2 hours/20points)</t>",{
         params["_unit","_talker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         _unit removeAction _action;
@@ -530,6 +562,26 @@ DCW_fnc_addActionSupportUs = {
     },nil,1,false,true,"","true",2.5,false,""];
 
 };
+
+
+
+DCW_fnc_addActionRecruitGuard = {
+    _this addAction  ["<t color='#cd8700'>Recruit a guard 80 points</t>",{ 
+        params["_object","_player","_action"]; 
+        if (!([GROUP_PLAYERS,80] call DCW_fnc_afford)) exitWith {[_player,"You need more money !",false] remoteExec ["DCW_fnc_talk",_player];false;};
+        _radius = 60;
+        _grp = createGroup SIDE_FRIENDLY;
+        _pos = [getPos _object, 0,7,1,0,20] call BIS_fnc_findSafePos;
+        _unit = [_grp,_pos,true] call DCW_fnc_spawnFriendly;
+        _unit enableDynamicSimulation true;
+        _buildings = [getpos _unit, _radius] call DCW_fnc_findBuildings;
+        [_grp,"DCW_fnc_simplePatrol", [_grp,_radius,false]] call DCW_fnc_patrolDistributeToHC;
+        [_unit,format["private %1, at your command !", name _unit],false] remoteExec ["DCW_fnc_talk",_player];
+        [_player,"Welcome soldier !",false] remoteExec ["DCW_fnc_talk",_player];
+    },nil,1,false,true,"","true",20,false,""];
+};
+
+
 
 DCW_fnc_addActionSitOnChair = {
     _object = _this;
@@ -553,7 +605,7 @@ DCW_fnc_addActionSitOnChair = {
 DCW_fnc_addActionFindChief = {
     params["_unit","_chief"];
     //Try to gather intel
-   _unit addAction["<t color='#FF0000'>Where is your chief ?</t>",{
+   _unit addAction["<t color='#cd8700'>Where is your chief ?</t>",{
         params["_unit","_talker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         _chief = (_this select 3) select 0;
@@ -579,7 +631,7 @@ DCW_fnc_addActionFindChief = {
 
 
 DCW_fnc_addActionLeaveGroup = {
-     _this addaction ["<t color='#FF0000'>Order him to leave</t>",{
+     _this addaction ["<t color='#cd8700'>Order him to leave</t>",{
         params["_unit","_talker"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         [_unit,4] remoteExec ["DCW_fnc_updateRep",2];
@@ -607,7 +659,7 @@ DCW_fnc_addActionLeaveGroup = {
 };
 
 DCW_fnc_addActionLeave = {
-     _this addaction ["<t color='#FF0000'>Go away !</t>",{
+     _this addaction ["<t color='#cd8700'>Go away !</t>",{
         params["_unit","_talker"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         [_unit,-3] remoteExec ["DCW_fnc_updateRep",2];

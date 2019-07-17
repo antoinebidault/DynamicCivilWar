@@ -51,6 +51,7 @@ class RESPAWN_DIALOG
           h = 0.0404761 * safezoneH;
           action = "RESPAWN_CHOICE = ""base"";closeDialog 0;";
         };
+        
     };
 
 };

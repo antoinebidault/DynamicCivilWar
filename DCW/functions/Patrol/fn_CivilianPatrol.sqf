@@ -23,12 +23,12 @@ _unit = leader _grp;
 _unit setSpeedMode "LIMITED";
 _unit forceWalk  true;
 
-while { !(_unit getVariable ["civ_insurgent", false]) && lifeState _unit == "HEALTHY" && group _unit != GROUP_PLAYERS }do{
+while { !(_unit getVariable ["DCW_disable_patrol", false]) && lifeState _unit == "HEALTHY" && group _unit != GROUP_PLAYERS }do{
 
     _newPos = [getPos (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom), 1, 350, 3, 0, 20, 0] call BIS_fnc_findSafePos;
     group _unit move _newPos;
-    waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 || _unit getVariable ["civ_insurgent", false] || lifeState _unit != "HEALTHY" };
-    if (lifeState _unit != "HEALTHY" || _unit getVariable ["civ_insurgent", false]) exitWith {false};
+    waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 || _unit getVariable ["DCW_disable_patrol", false] || lifeState _unit != "HEALTHY" };
+    if (lifeState _unit != "HEALTHY" || _unit getVariable ["DCW_disable_patrol", false]) exitWith {false};
     [_unit] call DCW_fnc_randomAnimation;
    
     _rndMarker = ([position _unit, true, "any"] call DCW_fnc_findNearestMarker) select 0;
@@ -52,11 +52,12 @@ while { !(_unit getVariable ["civ_insurgent", false]) && lifeState _unit == "HEA
             } foreach (_x select 5);
         };
     } forEach MARKERS;
+    
     if (count _potentialIntel > 0 ) then {
         _newPos = [getPos (_potentialIntel call BIS_fnc_selectrandom), 1, 10, 1, 0, 20, 0] call BIS_fnc_findSafePos;
         group _unit move _newPos;
          waitUntil {sleep 5;unitReady _unit || _unit distance _newPos < 2 || lifeState _unit != "HEALTHY" };
-        if (lifeState _unit != "HEALTHY" || _unit getVariable ["civ_insurgent", false]) exitWith {false};
+        if (lifeState _unit != "HEALTHY" || _unit getVariable ["DCW_disable_patrol", false]) exitWith {false};
          [_unit] call DCW_fnc_randomAnimation;
     };
 

@@ -22,7 +22,7 @@ _driver = _this select 0;
 _radius = _this select 1;
 _centeredOnPlayer = if (count _this > 2) then {_this select 2;} else {true;};
 
-while { sleep 5; alive _driver }do{
+while { sleep 5; alive _driver } do {
     _dir = random 360;
     _curPos = if (_centeredOnPlayer) then { getPosASL (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom) ; }else{ getPosASL _driver; };
     _pos = [_curPos, 0, _radius, 2, 0, 20, 0] call BIS_fnc_findSafePos;

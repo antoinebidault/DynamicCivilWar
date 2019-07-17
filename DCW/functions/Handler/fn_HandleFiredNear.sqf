@@ -68,7 +68,7 @@ _this select 0 addEventHandler["FiredNear",
 		_civ removeAllEventHandlers "FiredNear";
 
 		//Action to make him calm down !
-		[_civ,["<t color='#FF0000'>Calm down !</t>",{
+		[_civ,["<t color='#cd8700'>Calm down !</t>",{
 			params["_unit","_asker","_action"];
 			_unit removeAction _action;
 				if (!weaponLowered _asker)then{

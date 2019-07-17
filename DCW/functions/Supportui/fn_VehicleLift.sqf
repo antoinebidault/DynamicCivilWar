@@ -34,7 +34,8 @@ if (_type == "ammo")  then {
 	_cargo call DCW_fnc_spawnCrate;
 } else {
 	if (_type == "buildingKit") then {
-		_cargo addAction ["<t color='#cd8700'>Buy objects</t>", { [] call DCW_fnc_buildingDialog; },nil,2.5,false,true,"","true",20,false,""]
+		[_cargo,["<t color='#cd8700'>Recruit a guard</t>", { [] call DCW_fnc_recruitDialog; },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction",0,true];
+		[_cargo,["<t color='#cd8700'>Buy objects</t>", { [] call DCW_fnc_buildingDialog; },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction",0,true];
 	};
 };
 
