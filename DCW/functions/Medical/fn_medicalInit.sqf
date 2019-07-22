@@ -12,7 +12,9 @@ _group = _this select 0;
 
 // Replacement team event handling
 {
-	_x call DCW_fnc_resetStateAI;
+	if (!isPlayer _x) then {
+		_x call DCW_fnc_resetStateAI;
+	};
 }foreach (units _group);
 
 

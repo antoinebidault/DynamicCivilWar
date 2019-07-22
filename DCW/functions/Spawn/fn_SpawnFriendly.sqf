@@ -6,7 +6,7 @@
     {VERSION}
 
   Description:
-    TODO
+    Spawn a friendly unit using the ALLIED_LIST_UNITS class list randomized
 
   Parameters:
     0: OBJECT - TODO

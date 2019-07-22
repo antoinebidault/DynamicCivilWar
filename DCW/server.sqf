@@ -186,6 +186,7 @@ publicVariable "MARKER_WHITE_LIST";
 // This spawn is very important... Because it breaks the singleplayer savegames
 [] spawn {
 
+
 	// TIME
 	setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
 
@@ -198,6 +199,21 @@ publicVariable "MARKER_WHITE_LIST";
 	0 setWaves WEATHER;
 	forceWeatherChange;
 	sleep 1;
+
+	// EnableAI
+	{
+		if (!isPlayer _x) then {
+			[_x,"MOVE"] remoteExec ["enableAI"] ;
+			[_x,"FSM"] remoteExec ["enableAI"] ;
+		};
+		if (DEBUG) then {
+			[_x,""] remoteExec ["switchMove"];
+			_x setPos START_POSITION;
+		};
+	}
+	foreach units GROUP_PLAYERS;
+
+
 	// Chopper introduction
 	_dest = START_POSITION;
 	_spawnpos = [_dest, 1000, 2000, 0, 1, 20, 0] call BIS_fnc_findSafePos;

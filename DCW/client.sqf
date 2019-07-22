@@ -94,17 +94,7 @@ if (ENABLE_DIALOG && !didJIP) then {
 		CONFIG_CAMERA cameraeffect ["terminate", "back"];
 		camDestroy CONFIG_CAMERA;
 	} else {
-		{
-			if (!isPlayer _x) then {
-				[_x,"MOVE"] remoteExec ["enableAI"] ;
-				[_x,"FSM"] remoteExec ["enableAI"] ;
-			};
-			if (DEBUG) then {
-				[_x,""] remoteExec ["switchMove"];
-				_x setPos START_POSITION;
-			};
-		}
-		foreach units group player;
+	
 	};
 
 	DCW_STARTED = true;

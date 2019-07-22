@@ -42,7 +42,7 @@ _this stop true;
         _x setDamage 0; 
         _x setFatigue 0; 
         if (ACE_ENABLED) then {
-        	[objNull, _x] call ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal;
+        	[objNull, _x] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
         };
     } foreach units (group (_unit));
 

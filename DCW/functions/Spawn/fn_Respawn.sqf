@@ -113,7 +113,7 @@ DCW_fnc_handleRespawnSingleplayer =
 	[_unit] call DCW_fnc_handleRespawnBase;
 
 	if (ACE_ENABLED) then {
-		[objNull, _unit] call ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal;
+		[objNull, _unit] call ace_medical_fnc_treatmentAdvanced_fullHealLocal;
 	};
 
 	_unit setUnitLoadout _loadout;

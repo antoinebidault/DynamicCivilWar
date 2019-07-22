@@ -24,7 +24,7 @@ deleteMarker (_this getVariable["DCW_marker_injured",""]);
 
 // Restore unit health
 if (ACE_ENABLED) then {
-	[objNull, _this] remoteExec ["ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal"];
+	[objNull, _this] remoteExec ["ace_medical_fnc_treatmentAdvanced_fullHealLocal"];
 };
 	
 _this setskill 1;

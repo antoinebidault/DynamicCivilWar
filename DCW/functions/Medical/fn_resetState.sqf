@@ -22,7 +22,7 @@ _this setVariable["DCW_this_dragged",false,true];
 _this setVariable["DCW_healer",objNull,true];
 deleteMarker (_this getVariable["DCW_marker_injured",""]);
 if (ACE_ENABLED) then {
-	[objNull, _this] remoteExec ["ace_medical_DCW_fnc_treatmentAdvanced_fullHealLocal"];
+	[objNull, _this] remoteExec ["ace_medical_fnc_treatmentAdvanced_fullHealLocal"];
 };
 
 // Add everything to the _this

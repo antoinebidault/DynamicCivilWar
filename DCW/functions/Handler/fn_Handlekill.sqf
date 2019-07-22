@@ -18,10 +18,10 @@
  params["_unit"];
  
  _unit addMPEventHandler ["MPKilled",
-    { 
+{ 
         params["_unit","_killer"];
         _unit remoteExec ["RemoveAllActions",0];
-        private _side = side group _unit;
+        _side = side(group(_unit));
         if (_side == SIDE_CIV && isPlayer _killer)then{ 
             [_unit,_killer] call CIVILIAN_KILLED;
             [_unit,-10] remoteExec ["DCW_fnc_updaterep",2];

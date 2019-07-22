@@ -6,7 +6,7 @@
     {VERSION}
 
   Description:
-    TODO
+    Spawn a basic mortar with a friendly unit watching with binocular
 
   Parameters:
     0: OBJECT - TODO
@@ -63,7 +63,6 @@ for "_j" from 1 to _nb do {
     for "_i" from 1 to _nbGuards do {
         _enemy = [_grp,_posToSpawn,false] call DCW_fnc_spawnEnemy;
         _enemy setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
-
         _units pushBack _enemy;
         if (_i == 1)then{
             _enemy disableAI "AUTOCOMBAT"; 
