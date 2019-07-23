@@ -36,7 +36,9 @@
       </Key>
     </Container>
   </Package>
-  <Package name="Config" />
+  <Package name="Config">
+    <Container name="config-dialog" />
+  </Package>
   <Package name="Medical" />
   <Package name="Behavior" />
   <Package name="Description">
