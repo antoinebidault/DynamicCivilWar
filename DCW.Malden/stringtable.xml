@@ -4,12 +4,10 @@
     <Container name="AddSupportUI">
       <Key ID="STR_DCW_support_getSupportActionLabel">
         <Original>Get support</Original>
-        <English>Get support</English>
         <French>Demander soutien</French>
-      </Key>
+      </Key> 
       <Key ID="STR_DCW_support_hint1">
         <Original>wait the mission has finished to load...</Original>
-        <English>wait the mission has finished to load...</English>
         <French>Attendez que la mission termine son chargement</French>
       </Key>
       <Key ID="STR_DCW_support_hint2">
@@ -35,6 +33,20 @@
         <Original>Impossible to setup a new base. You have too many base created</Original>
         <English>Impossible to setup a new base. You have too many base created</English>
         <French>Impossible de créer une base ici, car vous en avez trop.</French>
+      </Key>
+    </Container>
+  </Package>
+  <Package name="Config">
+    <Container name="config-dialog" />
+  </Package>
+  <Package name="Medical" />
+  <Package name="Behavior" />
+  <Package name="Description">
+    <Container name="Description">
+      <Key ID="STR_DCW_description_onLoadMission">
+        <Original>Your objective is to stop the insurgency propagation and locate the enemy commander.</Original>
+        <English>Your objective is to stop the insurgency propagation and locate the enemy commander.</English>
+        <French>Votre objectif est de stopper la propagation des insurgés dans la région, puis localiser et éliminer le commandant ennemi.</French>
       </Key>
     </Container>
   </Package>
