@@ -7,11 +7,11 @@ onMapSingleClick {
 
 	if ({_pos inArea _x } count MARKER_WHITE_LIST > 0) then {
 		openMap false;
-		[HQ,"Impossible to setup a base on a compound or a friendly base."] spawn DCW_fnc_talk;
+		[HQ,localize "STR_DCW_support_ImpossibleToDrop"] spawn DCW_fnc_talk;
 	} else {
 		if (count BASE_NAMES == 0) then {
 			openMap false;
-			[HQ,"Impossible to setup a new base. You have too many base created"] spawn DCW_fnc_talk;
+			[HQ,localize "STR_DCW_support_TooMany" ] spawn DCW_fnc_talk;
 		} else {
 			_name = BASE_NAMES select 0;
 			BASE_NAMES = BASE_NAMES - [_name];

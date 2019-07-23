@@ -1,3 +1,14 @@
+/*
+  Author: 
+    Bidass
+
+  Version:
+    {VERSION}
+
+  Description:
+    Afford a recruit
+
+*/
 
 if (isNull player) exitWith{};
 

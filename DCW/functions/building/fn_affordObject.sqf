@@ -1,3 +1,15 @@
+/*
+  Author: 
+    Bidass
+
+  Version:
+    {VERSION}
+
+  Description:
+    Triggered when buying an object with the dialog
+
+*/
+
 if (isNull player) exitWith{};
 
 _index = lbCurSel 1500;

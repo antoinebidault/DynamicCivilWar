@@ -1,3 +1,14 @@
+/*
+  Author: 
+    Bidass
+
+  Version:
+    {VERSION}
+
+  Description:
+    Base building dialog
+
+*/
 
 class building_Dialog
 {

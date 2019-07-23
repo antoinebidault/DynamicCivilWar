@@ -1,3 +1,15 @@
+/*
+  Author: 
+    Bidass
+
+  Version:
+    {VERSION}
+
+  Description:
+    Add action to object spawned
+
+*/
+
 params["_object"];
 
 _object addAction [

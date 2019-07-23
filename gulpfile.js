@@ -28,6 +28,14 @@ gulp.task('default', function () {
         .pipe(replace('{VERSION}', version))
         .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
         .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
+
+        gulp.src('./stringtable.xml')
+        .pipe(watch('./stringtable.xml'))
+        .on('change', function(data){ log('File change - stringtable.xml ' ); })
+        .on('added', function(data){ log('File added -  stringtable.xml '); })
+        .pipe(replace('{VERSION}', version))
+        .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
+        .pipe(gulp.dest('./'+directories[i]));  
     }
 
 });

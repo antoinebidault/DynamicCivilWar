@@ -10,8 +10,8 @@ enableDebugConsole[] = {"76561197974435552"};
 allowFunctionsLog = 1;
 author = "Bidass"; 
 briefing = 0;
-briefingName = "Dynamic Civil War {WORLD_NAME}"; 
-onLoadMission = "Your objective is to stop the insurgency propagation and locate the enemy commander. (DCW v{VERSION})";
+briefingName = "Dynamic Civil War {WORLD_NAME} v{VERSION}"""; 
+onLoadMission = $STR_DCW_description_onLoadMission;
 loadScreen = "images\loadscreen.paa";  
 overviewPicture = "images\loadscreen.paa";  
 overviewText = "Your primary objective is to locate and kill the enemy commander. You'll have to prevent the insurgency to spread across the country. The sector is full of insurgents and you'll have to make your way through all types of danger : IED, mortars, convoy, enemy patrol, disguised civilian... Keep the civilian on your side because they can become hostiles.";
@@ -67,8 +67,8 @@ class CfgMusic
 #include "functions\building\buildingDialog.hpp"
 #include "functions\building\recruitDialog.hpp"
 #include "config\respawn.hpp"   
-#include "config\config-combo.hpp"  
-#include "config\loadout-combo.hpp"  
+#include "config\config-dialog.hpp"  
+#include "config\loadout-dialog.hpp"  
 #include "functions\CfgFunctions.hpp"
    
 class RscTitles {   

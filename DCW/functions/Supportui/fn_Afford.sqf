@@ -20,7 +20,7 @@ params ["_group","_price"];
 _score = DCW_SCORE;
 _score = (_score - _price);
 if (_score < 0) then{ 
-	hint "Can't afford this";
+	hint localize "STR_DCW_support_hint3";
 	false;
 }else{
 	[_group,-_price] remoteExec ["DCW_fnc_updateScore",2];   
