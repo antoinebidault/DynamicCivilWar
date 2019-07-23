@@ -27,7 +27,7 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 			[_healer, "medicStart"] remoteExec ["playActionNow"];
 			[_injured,"DCW_fnc_carry"] spawn DCW_fnc_removeAction; 
 			[_injured,"Aaaargh...", false] spawn DCW_fnc_talk;
-			[_injured,["Sorry man... I just fucked up...","Shit ! It's a fucking mess...","I am in pain...","Don't forget the letter..."] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+			[_injured,["Sorry man... I just fucked up...","Shit ! It's a fucking mess...","I am in pain...","That hurts !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
 			[_healer,["Don't give up mate !","Stay with us !","Stay alive !","We won't abandon you !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
 			[_injured] spawn DCW_fnc_shout;
 			[_healer,_injured,20] spawn DCW_fnc_spawnHealEquipement;

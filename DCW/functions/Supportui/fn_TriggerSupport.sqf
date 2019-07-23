@@ -41,15 +41,19 @@ if((DCW_SCORE - _price) >= 0)then {
 		if (_type=="vehicle") then {
 			[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
 			[_leader,{
+				if (COMMENU_TRANSPORT_ID != 0) then { 
+					[_this, COMMENU_TRANSPORT_ID] call BIS_fnc_removeCommMenuItem; 
+				};
 				COMMENU_TRANSPORT_ID = [_this, "TransportParadrop"] call BIS_fnc_addCommMenuItem;
-				publicVariable "COMMENU_TRANSPORT_ID";
 			}] remoteExec ["spawn",owner _leader];
 		} else {
 			if (_type == "buildingKit") then {
 				[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];
 				[_leader,{
+					  if (COMMENU_OUTPOST_ID != 0) then { 
+						[_this, COMMENU_OUTPOST_ID] call BIS_fnc_removeCommMenuItem; 
+					  };
 					COMMENU_OUTPOST_ID = [_this, "OutpostBuildingKit"] call BIS_fnc_addCommMenuItem;
-					publicVariable "COMMENU_OUTPOST_ID";
 				}] remoteExec ["spawn",owner _leader];
 			} else {
 				[HQ,"Support provided",true] remoteExec ["DCW_fnc_talk"];

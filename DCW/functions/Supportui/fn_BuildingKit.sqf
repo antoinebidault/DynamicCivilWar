@@ -52,3 +52,4 @@ openMap false;
 [getMarkerPos Base_marker,2500, "buildingKit"] spawn DCW_fnc_vehicleLift;
 	
  [player,COMMENU_OUTPOST_ID] call BIS_fnc_removeCommMenuItem;
+ COMMENU_OUTPOST_ID = 0;

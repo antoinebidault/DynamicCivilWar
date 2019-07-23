@@ -186,7 +186,6 @@ publicVariable "MARKER_WHITE_LIST";
 // This spawn is very important... Because it breaks the singleplayer savegames
 [] spawn {
 
-
 	// TIME
 	setDate [2018, 6, 25, TIME_OF_DAYS, 0]; 
 

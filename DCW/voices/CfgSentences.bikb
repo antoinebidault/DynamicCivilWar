@@ -1,0 +1,16 @@
+class Sentences
+{
+	class DCW_1	{ text = "What do we do today?"; speech[] = { "DCW\voices\1.ogg" };	class Arguments {}; };
+	class DCW_2	{ text = "What do we do today?"; speech[] = { "DCW\voices\1.ogg" };	class Arguments {}; };
+	class DCW_3	{ text = "What do we do today?"; speech[] = { "DCW\voices\1.ogg" };	class Arguments {}; };
+	class DCW_4 { text = "What do we do today?"; speech[] = { "DCW\voices\1.ogg" };	class Arguments {}; };
+	class DCW_5	{ text = "What do we do today?"; speech[] = { "DCW\voices\1.ogg" };	class Arguments {}; };
+	class DCW_6	{ text = "What do we do today?"; speech[] = { "DCW\voices\1.ogg" };	class Arguments {}; };
+	class DCW_7	{ text = "What do we do today?"; speech[] = { "DCW\voices\1.ogg" };	class Arguments {}; };
+};
+
+// Needed parameters.
+class Arguments {};
+class Special {};
+startWithVocal[] = { hour };
+startWithConsonant[] = { europe, university };

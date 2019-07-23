@@ -27,16 +27,21 @@ private _pos = [getPos (leader GROUP_PLAYERS), 3000, (floor (random 360))] call 
 SUPPORT_REQUESTER = _logicGroup createUnit ["SupportRequester",_pos, [], 0, "FORM"]; 
 publicVariable "SUPPORT_REQUESTER";
 
-// Transport menu config
+// Variable
+COMMENU_OUTPOST_ID = 0;
+publicVariable "COMMENU_OUTPOST_ID";
 COMMENU_TRANSPORT_ID = 0;
+publicVariable "COMMENU_TRANSPORT_ID";
+
+
+// Transport menu config
 TRANSPORTPARADROP_MENU = [["Transport",false]];
 {
 	_displayName = getText(configFile >>  "CfgVehicles" >> _x >> "displayName");
-	TRANSPORTPARADROP_MENU pushBack [_displayName, [_foreachIndex + 2], "", -5, [["expression",format[ "[player,COMMENU_TRANSPORT_ID] spawn BIS_fnc_removeCommMenuItem; [getPos player,1500,""%1""] spawn DCW_fnc_vehicleLift;",_x]]], "1", "1", "\A3\ui_f\data\IGUI\Cfg\Cursors\iconcursorsupport_ca.paa"];
+	TRANSPORTPARADROP_MENU pushBack [_displayName, [_foreachIndex + 2], "", -5, [["expression",format[ "[player,COMMENU_TRANSPORT_ID] spawn BIS_fnc_removeCommMenuItem;COMMENU_TRANSPORT_ID = 0; [getPos player,1500,""%1""] spawn DCW_fnc_vehicleLift;",_x]]], "1", "1", "\A3\ui_f\data\IGUI\Cfg\Cursors\iconcursorsupport_ca.paa"];
 }
 foreach SUPPORT_CAR_PARADROP_CLASS;
 publicVariable "TRANSPORTPARADROP_MENU";
-
 
 {
 	[SUPPORT_REQUESTER, _x, 0] remoteExec ["BIS_fnc_limitSupport"];
