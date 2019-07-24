@@ -1,0 +1,10 @@
+class Sentences
+{
+	class whatDoWeDo	{ text = "What do we do today?"; speech[] = { "DCW\voices\1.ogg" };	class Arguments {}; };
+};
+
+// Needed parameters.
+class Arguments {};
+class Special {};
+startWithVocal[] = { hour };
+startWithConsonant[] = { europe, university };

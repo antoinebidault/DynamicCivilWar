@@ -7,7 +7,7 @@
 
 	Description:
 		Add the set camping action to the player.
-
+        
 	Parameters:
 		0: OBJECT - unit (player)
 
@@ -16,11 +16,12 @@
 */
 
  
- _this addAction ["<t color='#00FF00'>Set up camp (1 hour)</t>", {
+ _this addAction [format["<t color='#00FF00'>%1 (1 hour)</t>", localize "STR_DCW_actionCamp_setUpAction"], {
         params["_unit","_asker","_action"];
 
-        if((_unit findNearestEnemy _unit) distance _unit < 100) exitWith {hint "Impossible untill there is enemies around (100m radius)";};
-        if(([getPos _unit, 1, getDir _unit ] call BIS_fnc_relPos) isFlatEmpty  [2, -1, 0.3, 2, 0, false, _unit]  isEqualTo [] ) exitWith { hint "Impossible to build the camp here. Check there is not any object in front of you."; };
+        if((_unit findNearestEnemy _unit) distance _unit < 100) exitWith {hint localize "STR_DCW_actionCamp_error" ;};
+        if(([getPos _unit, 1, getDir _unit ] call BIS_fnc_relPos) isFlatEmpty  [2, -1, 0.3, 2, 0, false, _unit]  isEqualTo [] ) exitWith { 
+            hint localize "STR_DCW_actionCamp_error2" ; };
 
         {deleteVehicle _x;} foreach CAMP_OBJS;
         
@@ -53,7 +54,7 @@
         sleep 3;
         
         titleCut ["", "BLACK FADED", 9999];
-	    [parseText format ["<t font='PuristaBold' size='1.6'>1 hour later...</t><br/>%1", daytime call BIS_fnc_timeToString], true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
+	    [parseText format ["<t font='PuristaBold' size='1.6'>1 %1</t><br/>%2",localize "STR_DCW_actionCamp_hourLater", daytime call BIS_fnc_timeToString], true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
 
         if (!isMultiplayer) then {
             skipTime 1;
@@ -63,12 +64,12 @@
         titleCut ["", "BLACK IN", 3];
         sleep 3;
         disableUserInput false;
-        [_unit, "The camp is set up !"] remoteExec ["DCW_fnc_talk",0, false];
+        [_unit,localize "STR_DCW_voices_teamLeader_campSetUp"] remoteExec ["DCW_fnc_talk",0, false];
 
-        hint "If you want to pack up the camp, watch the map on the ground and use the action button : 'pack up the camp'. Get close to the tent to make your unit rest (and accelerate the time of the day in singleplayer only).";
+        hint localize "STR_DCW_actionCamp_hint";
          
         // Pack up camp
-        (CAMP_OBJS select 0) addAction ["<t color='#00FF00'>Pack up camp</t>", {
+        (CAMP_OBJS select 0) addAction [format["<t color='#00FF00'>%1</t>",localize "STR_DCW_actionCamp_packUpAction"], {
             params["_unit","_asker","_action"];
             _unit call DCW_fnc_actioncamp;
            CAMP_RESPAWN_POSITION = [];
@@ -82,11 +83,11 @@
             };
             {deleteVehicle _x;} foreach CAMP_OBJS;
             titleCut ["", "BLACK FADED", 9999];
-            [parseText format ["<t font='PuristaBold' size='1.6'>1 hour later...</t><br/>%1", daytime call BIS_fnc_timeToString], true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
+            [parseText format ["<t font='PuristaBold' size='1.6'>1 %1</t><br/>%2",localize "STR_DCW_actionCamp_hourLater", daytime call BIS_fnc_timeToString], true, nil, 12, 0.7, 0] spawn BIS_fnc_textTiles;
 
             sleep 3;
             titleCut ["", "BLACK IN", 3];
-            [_asker, "We've packed up the camp !"] remoteExec ["DCW_fnc_talk",0, false];
+            [_asker,localize "STR_DCW_voices_teamLeader_campPackedUp" ] remoteExec ["DCW_fnc_talk",0, false];
              sleep 3;
            disableUserInput false;
         },nil,4,true,true, ""];

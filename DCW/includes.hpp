@@ -10,7 +10,7 @@ enableDebugConsole[] = {"76561197974435552"};
 allowFunctionsLog = 1;
 author = "Bidass"; 
 briefing = 0;
-briefingName = "Dynamic Civil War {WORLD_NAME} v{VERSION}"""; 
+briefingName = "Dynamic Civil War {WORLD_NAME} {VERSION}"; 
 onLoadMission = $STR_DCW_description_onLoadMission;
 loadScreen = "images\loadscreen.paa";  
 overviewPicture = "images\loadscreen.paa";  
@@ -70,7 +70,9 @@ class CfgMusic
 #include "config\config-dialog.hpp"  
 #include "config\loadout-dialog.hpp"  
 #include "functions\CfgFunctions.hpp"
+#include "voices\CfgSentences.hpp"
    
 class RscTitles {   
   #include "functions\supportui\statusBar.hpp"  
 };        
+

@@ -5,7 +5,7 @@
       <Key ID="STR_DCW_support_getSupportActionLabel">
         <Original>Get support</Original>
         <French>Demander soutien</French>
-      </Key> 
+      </Key>
       <Key ID="STR_DCW_support_hint1">
         <Original>wait the mission has finished to load...</Original>
         <French>Attendez que la mission termine son chargement</French>
@@ -40,13 +40,324 @@
     <Container name="config-dialog" />
   </Package>
   <Package name="Medical" />
-  <Package name="Behavior" />
+  <Package name="Behavior">
+    <Container name="addActionFunctions">
+      <Key ID="STR_DCW_addActionFunctions_actionRecruitHimLabel">
+        <Original>Recruit him as a persistent team member</Original>
+        <English>Recruit him as a persistent team member</English>
+        <French>Recruter en tant que membre d'équipe persistent</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_morePoints">
+        <Original>I need more points !</Original>
+        <English>I need more points !</English>
+        <French>J'ai besoin de plus de points</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_actionRecruitMilitaryAdvLabel">
+        <Original>Recruit him as a military advisor</Original>
+        <English>Recruit him as a military advisor</English>
+        <French>Le recruter en tant que conseiller militaire</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_cantRecruitMoreAdvisors">
+        <Original>You can't recruit more than two military advisors...</Original>
+        <English>You can't recruit more than two military advisors...</English>
+        <French>Vous ne pouvez pas recruter plus de deux conseillers militaires...</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_captured">
+        <Original>Civilian captured</Original>
+        <English>Civilian captured</English>
+        <French>Civil capturé</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_saveGame">
+        <Original>Savegame</Original>
+        <English>Savegame</English>
+        <French>Sauvegarder la mission</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_briefing">
+        <Original>Mission's briefing</Original>
+        <English>Mission's briefing</English>
+        <French>Briefing de la mission</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_giveUs">
+        <Original>Ask them to cover you</Original>
+        <English>Ask them to cover you</English>
+        <French>Demander un soutien</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_liberateHim">
+        <Original>Liberate him</Original>
+        <English>Liberate him</English>
+        <French>Libérez-le</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_searchInGear">
+        <Original>Search in gear (Look for IEDs...)</Original>
+        <English>Search in gear (Look for IEDs...)</English>
+        <French>Le fouiller (Recherche IEDs...)</French>
+      </Key>
+      <Key ID="STR_DCW_addActionFunctions_sayHello">
+        <Original>Say hello</Original>
+        <English>Say hello</English>
+        <French>Saluer</French>
+      </Key>
+    </Container>
+    <Container name="actionCamp">
+      <Key ID="STR_DCW_actionCamp_packUpAction">
+        <Original>Pack up camp</Original>
+        <English>Pack up camp</English>
+        <French>Lever le camp</French>
+      </Key>
+      <Key ID="STR_DCW_actionCamp_setUpAction">
+        <Original>Set up camp</Original>
+        <English>Set up camp</English>
+        <French>Installer le camp</French>
+      </Key>
+      <Key ID="STR_DCW_actionCamp_error">
+        <Original>Impossible untill there is enemies around (100m radius)</Original>
+        <English>Impossible untill there is enemies around (100m radius)</English>
+        <French>Impossible tant qu'il y a des enemies autour (100m de rayon)</French>
+      </Key>
+      <Key ID="STR_DCW_actionCamp_error2">
+        <Original>Impossible to build the camp here. Check there is not any object in front of you.</Original>
+        <English>Impossible to build the camp here. Check there is not any object in front of you.</English>
+        <French>Impossible de construire le camp sur cet emplacement car il n'est pas assez plat ou il y a des objets bloquant la zone de construction.</French>
+      </Key>
+      <Key ID="STR_DCW_actionCamp_hourLater">
+        <Original>hour later...</Original>
+        <English>hour later...</English>
+        <French>heure plus tard...</French>
+      </Key>
+      <Key ID="STR_DCW_actionCamp_hint">
+        <Original> If you want to pack up the camp, watch the map on the ground and use the action button : 'pack up the camp'. Get close to the tent to make your unit rest (and accelerate the time of the day in singleplayer only).</Original>
+        <English> If you want to pack up the camp, watch the map on the ground and use the action button : 'pack up the camp'. Get close to the tent to make your unit rest (and accelerate the time of the day in singleplayer only).</English>
+        <French>Si vous souhaitez replier le camp, regardez la carte au sol et utilisez l'action "replier le camp". Approchez vous de la tente pour vous reposer quelques heures...</French>
+      </Key>
+    </Container>
+    <Container name="localChief" />
+    <Container name="spawnDefendTask">
+      <Key ID="STR_DCW_spawnDefendTask_taskDesc">
+        <Original>Enemy attack incoming, set up the defenses</Original>
+        <English>Enemy attack incoming, set up the defenses</English>
+        <French>Attaque enemie ! Défendez la ville et protégez les civils. Eliminez tous les ennemis pour accomplir la tâche</French>
+      </Key>
+      <Key ID="STR_DCW_spawnDefendTask_taskName">
+        <Original>Defend civilian</Original>
+        <English>Defend civilian</English>
+        <French>Défendre les civils</French>
+      </Key>
+    </Container>
+  </Package>
   <Package name="Description">
     <Container name="Description">
       <Key ID="STR_DCW_description_onLoadMission">
         <Original>Your objective is to stop the insurgency propagation and locate the enemy commander.</Original>
         <English>Your objective is to stop the insurgency propagation and locate the enemy commander.</English>
         <French>Votre objectif est de stopper la propagation des insurgés dans la région, puis localiser et éliminer le commandant ennemi.</French>
+      </Key>
+    </Container>
+  </Package>
+  <Package name="Voices">
+    <Container name="localChief">
+      <Key ID="STR_DCW_voices_localchief_tellUsAllYouKnow">
+        <Original>Tell us all you know about the insurgent commander !</Original>
+        <English>Tell us all you know about the insurgent commander !</English>
+        <French>Dis-nous ce que tu sais sur le commandant des insurgés !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_iDontKnow">
+        <Original>I don't know where he is...</Original>
+        <English>I don't know where he is...</English>
+        <French>Je ne sais pas où il se trouve</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_noIdea">
+        <Original>I have no idea...</Original>
+        <English>I have no idea...</English>
+        <French>Aucune idée…</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_iWouldntCollaborate">
+        <Original>I wouldn't collaborate... This is too dangerous for my family...</Original>
+        <English>I wouldn't collaborate... This is too dangerous for my family...</English>
+        <French>Je refuse de vous aider… Je mettrai en danger ma famille</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_securePositionFirst">
+        <Original>Secure our position first</Original>
+        <English>Secure our position first</English>
+        <French>Securisez notre prosition d'abord</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamLeader_isItPossibleToSetupBase">
+        <Original>Is it possible to set up our camp here ?</Original>
+        <English>Is it possible to set up our camp here ?</English>
+        <French>Est-ce possible d'établir une base avancée ici ?</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_thisCampIsStillOccupied">
+        <Original>This camp is still occupied by enemy forces, clean up the compound to make this compound available.</Original>
+        <English>This camp is still occupied by enemy forces, clean up the compound to make this compound available.</English>
+        <French>Ce camp est encore occupé par les insurgents. Vous devez libérer ce camp pour entamer les discussions</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_youNeedMoreMoney">
+        <Original>You need more money !</Original>
+        <English>You need more money !</English>
+        <French>Vous avez besoin de plus d'argent</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_yourHelpIsWelcome">
+        <Original>Your help is welcome here !</Original>
+        <English>Your help is welcome here !</English>
+        <French>Votre aide est la bienvenue ici !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_HQ_sendingTroops">
+        <Original>This is HQ, we're sending you troops to this compound !</Original>
+        <English>This is HQ, we're sending you troops to this compound !</English>
+        <French>Ici le QG, nous envoyons des troupes vers votre bloc.</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_thankYou">
+        <Original>Thank you so much for your help !</Original>
+        <English>Thank you so much for your help !</English>
+        <French>Merci infiniment pour votre aide !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_ourVillageDoesNotNeed">
+        <Original>Our village does not need your help...</Original>
+        <English>Our village does not need your help...</English>
+        <French>Notre village n'a pas besoin d'aide</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_youMustImprove">
+        <Original>You must improve your compound's reputation first</Original>
+        <English>You must improve your compound's reputation first</English>
+        <French>Vous devez améliorer votre réputation d'abord.</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamLeader_wellProvideYou">
+        <Original>We'll provide you a military advisor for helping you to defend against insurgents.</Original>
+        <English>We'll provide you a military advisor for helping you to defend against insurgents.</English>
+        <French>Nous pouvons vous fournir un spécialiste en technique militaire, il vous aidera à vous défendre contre les insurgés.</French>
+      </Key>
+      <Key ID="STR_DCW_voices_localchief_thankYou">
+        <Original>Thank you so much for your help !</Original>
+        <English>Thank you so much for your help !</English>
+        <French>Merci pour tout !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamLeader_aChopperIsComing">
+        <Original>A chopper is coming with medical and food supplies…</Original>
+        <English>A chopper is coming with medical and food supplies…</English>
+        <French>Un hélicoptère va arriver avec une caisse de nourriture et de médicaments.</French>
+      </Key>
+    </Container>
+    <Container name="addActionFunctions">
+      <Key ID="STR_DCW_voices_teamLeader_hiBuddy">
+        <Original>Hi buddy, I would need a new team member, are you in ?!</Original>
+        <English>Hi buddy, I would need a new team member, are you in ?!</English>
+        <French>Salut mec, j'aurais besoin d'un nouveau gaillard pour compléter mon équipe, tu es partant ?</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamMember_imIn">
+        <Original>I'm in ! Let's go</Original>
+        <English>I'm in ! Let's go</English>
+        <French>Je suis partant, c'est parti !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamLeader_hiBuddyMil">
+        <Original>Hi buddy, I would need a military advisor, are you in ?!</Original>
+        <English>Hi buddy, I would need a military advisor, are you in ?!</English>
+        <French>Salut mec, j'aurais besoin d'un conseiller militaire, es-tu partant ?</French>
+      </Key>
+      <Key ID="STR_DCW_voices_instructor_briefing1">
+        <Original>Your main objective is to seek and neutralize an enemy commander hidden somewhere...</Original>
+        <English>Your main objective is to seek and neutralize an enemy commander hidden somewhere...</English>
+        <French>Votre objectif principal est de trouver et neutraliser un commandant enemi caché quelque part sur la carte.</French>
+      </Key>
+      <Key ID="STR_DCW_voices_instructor_briefing2">
+        <Original>He will be always moving on the map, hiding in forestry area or compounds.</Original>
+        <English>He will be always moving on the map, hiding in forestry area or compounds.</English>
+        <French>Il sera toujours en train de se cacher quelque part sur la carte, changeant régulièrement de cachette. A vous de le débusquer !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_instructor_briefing3">
+        <Original>You have two way to get info about his location : interrogating civil chief in compound or interrogating one of his officers wandering on the map in trucks...</Original>
+        <English>You have two way to get info about his location : interrogating civil chief in compound or interrogating one of his officers wandering on the map in trucks...</English>
+        <French>Vous avez deux moyens de collecter de l'information sur notre homme : interroger les chefs dans les villages aux alentours ou attraper un de ses sous-officiers qui se promène sur la carte moins discètement dans des camions...</French>
+      </Key>
+      <Key ID="STR_DCW_voices_instructor_briefing4">
+        <Original>We've located a few of these officers spreading the insurgency accross the country. It's highly recommended to neutralize them</Original>
+        <English>We've located a few of these officers spreading the insurgency accross the country. It's highly recommended to neutralize them</English>
+        <Czech />
+        <French>Nos drones en ont déjà repéré un, les infos seront sur votre carte.</French>
+      </Key>
+      <Key ID="STR_DCW_voices_instructor_briefing5">
+        <Original>The key path is to make the population always supporting you. Giving people food, medicine and military training will make our investigations easier.</Original>
+        <English>The key path is to make the population always supporting you. Giving people food, medicine and military training will make our investigations easier.</English>
+        <French>La clé du succès sera de conserver le soutien des civils. Fournir de la nourriture, des médicaments et un entrainement militaire vous aidera considérablement dans la collecte de renseignement.</French>
+      </Key>
+      <Key ID="STR_DCW_voices_instructor_briefing6">
+        <Original>Alright guys ? Any question ? Dismiss !</Original>
+        <English>Alright guys ? Any question ? Dismiss !</English>
+        <French>Est-ce que tout est clair ? Des questions ? Rompez !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamMember_okWereFlanking">
+        <Original>Ok, we're taking your flank !</Original>
+        <English>Ok, we're taking your flank !</English>
+        <French>Ok, on prend votre flanc !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamMember_understood">
+        <Original>Understood sir !</Original>
+        <English>Understood sir !</English>
+        <French>Compris chef !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamLeader_goAway">
+        <Original>Go away now ! asshole !</Original>
+        <English>Go away now ! asshole !</English>
+        <French>Casse-toi ! Pauvre con !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamLeader_holyShit">
+        <Original>Holy shit ! This man is carrying material for IED purposes !</Original>
+        <English>Holy shit ! This man is carrying material for IED purposes !</English>
+        <French>Bordel ! Cet enfoiré a du matosse pour fabriquer des IEDs !</French>
+      </Key>
+    </Container>
+    <Container name="actionCamp">
+      <Key ID="STR_DCW_voices_teamLeader_campSetUp">
+        <Original>The camp is set up !</Original>
+        <English>The camp is set up !</English>
+        <French>Le campement est installé !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_teamLeader_campPackedUp">
+        <Original>We've packed up the camp !</Original>
+        <English>We've packed up the camp !</English>
+        <French>On a remballé les tentes et le matériel !</French>
+      </Key>
+    </Container>
+    <Container name="spawnDefendTask">
+      <Key ID="STR_DCW_voices_HQ_enemyGroups">
+        <Original>Be advised, %1 enemy groups moving to your localization. You must defend the civilian at any cost.</Original>
+        <English>Be advised, %1 enemy groups moving to your localization. You must defend the civilian at any cost.</English>
+        <French>Faites attention, %1 ou plusieurs groupes progressent vers votre position. Vous devez défendre les civils à tout prix !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_HQ_taskDefendSuccess">
+        <Original>Good job ! The compound is safe now.</Original>
+        <English>Good job ! The compound is safe now.</English>
+        <French>Bien joué ! Les civils sont à l'abris !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_HQ_taskDefendFailed">
+        <Original> The compound wasn't defended...</Original>
+        <English> The compound wasn't defended...</English>
+        <French>Les habitants n'ont pas été défendus... Echec de la mission.</French>
+      </Key>
+    </Container>
+    <Container name="spawnSecondaryObjectives">
+      <Key ID="STR_DCW_voices_teamLeader_targetDown">
+        <Original>The target is down ! Let's go talk to him !</Original>
+        <English>The target is down ! Let's go talk to him !</English>
+        <French>L'officier est à terre ! Allons lui dire quelques mots !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_HQ_secondaryBriefing">
+        <Original>We have some new intels on the enemy officer : %1, maybe he is located %2km from %3</Original>
+        <English>We have some new intels on the enemy officer : %1, maybe he is located %2km from %3</English>
+        <French>Le drone nous a donné des informations sur la position de l'officier ennemi, %1. Il est probablement à %2km de %3</French>
+      </Key>
+      <Key ID="STR_DCW_voices_officer_iKnowSomeThing">
+        <Original>I know something...</Original>
+        <English>I know something...</English>
+        <French>Je sais quelque chose...</French>
+      </Key>
+      <Key ID="STR_DCW_voices_HQ_goodJob">
+        <Original>Good job team, it seems you've stopped the propagation of the insurgency... The %1 officers have been neutralized.</Original>
+        <English>Good job team, it seems you've stopped the propagation of the insurgency... The %1 officers have been neutralized.</English>
+        <French>Beau boulot les gars ! On dirait que vous avez stoppé la propagation des insurgés dans la région. %1 officiers ont été liquidés. Du beau boulot !</French>
+      </Key>
+      <Key ID="STR_DCW_voices_HQ_nextStep">
+        <Original>Next step is to consolidate our position and catch the main commander of the movement %1...</Original>
+        <English>Next step is to consolidate our position and catch the main commander of the movement %1...</English>
+        <French>L'étape suivante sera de consolider notre position et de capturer le commandant ennemi.</French>
       </Key>
     </Container>
   </Package>

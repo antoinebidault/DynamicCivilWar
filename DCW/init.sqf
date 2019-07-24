@@ -25,7 +25,7 @@ DCW_fnc_dialog =  compileFinal preprocessFileLineNumbers "DCW\config\config-dial
 DCW_fnc_missionSetup =  compileFinal preprocessFileLineNumbers "DCW\config\MissionSetup.sqf";
 
 // Action preparation
-[] call DCW_fnc_PrepareAction; 
+[] call DCW_fnc_addActionFunctions; 
 
 // Loadout
 DCW_fnc_loadoutSniper = compileFinal preprocessFileLineNumbers  "DCW\Loadout\Loadout-sniper.sqf";

@@ -1,0 +1,24 @@
+class Sentences
+{
+	class localChief_tellUsAllYouKnow	{ text = $STR_DCW_voices_localChief_tellUsAllYouKnow; speech[] = { "\DCW\voices\localchief\localChief_tellUsAllYouKnow" };	class Arguments {}; };
+	class localChief_iDontKnow	{ text = $STR_DCW_voices_localChief_iDontKnow; speech[] = { "\DCW\voices\localchief\localChief_iDontKnow" };	class Arguments {}; };
+	class localChief_noIdea	{ text = $STR_DCW_voices_localChief_noIdea; speech[] = { "\DCW\voices\localchief\localChief_noIdea" };	class Arguments {}; };
+	class localChief_iWouldntCollaborate	{ text = $STR_DCW_voices_localChief_iWouldntCollaborate; speech[] = { "\DCW\voices\localchief\localChief_iWouldntCollaborate" };	class Arguments {}; };
+	class localChief_securePositionFirst	{ text = $STR_DCW_voices_localChief_securePositionFirst; speech[] = { "\DCW\voices\localchief\localChief_securePositionFirst" };	class Arguments {}; };
+	class teamLeader_isItPossibleToSetupBase	{ text = $STR_DCW_voices_teamLeader_isItPossibleToSetupBase; speech[] = { "\DCW\voices\localchief\teamLeader_isItPossibleToSetupBase" };	class Arguments {}; };
+	class localChief_thisCampIsStillOccupied	{ text = $STR_DCW_voices_localChief_thisCampIsStillOccupied; speech[] = { "\DCW\voices\localchief\localChief_thisCampIsStillOccupied" };	class Arguments {}; };
+	class localChief_youNeedMoreMoney	{ text = $STR_DCW_voices_localChief_youNeedMoreMoney; speech[] = { "\DCW\voices\localchief\localChief_youNeedMoreMoney" };	class Arguments {}; };
+	class localChief_yourHelpIsWelcome	{ text = $STR_DCW_voices_localChief_yourHelpIsWelcome; speech[] = { "\DCW\voices\localchief\localChief_yourHelpIsWelcome" };	class Arguments {}; };
+	class HQ_sendingTroops	{ text = $STR_DCW_voices_HQ_sendingTroops; speech[] = { "\DCW\voices\localchief\HQ_sendingTroops" };	class Arguments {}; };
+	class localChief_thankYou	{ text = $STR_DCW_voices_localChief_thankYou; speech[] = { "\DCW\voices\localchief\localChief_thankYou" };	class Arguments {}; };
+	class localChief_ourVillageDoesNotNeed	{ text = $STR_DCW_voices_localChief_ourVillageDoesNotNeed; speech[] = { "\DCW\voices\localchief\localChief_ourVillageDoesNotNeed" };	class Arguments {}; };
+	class localChief_youMustImprove	{ text = $STR_DCW_voices_localChief_youMustImprove; speech[] = { "\DCW\voices\localchief\localChief_youMustImprove" };	class Arguments {}; };
+	class teamLeader_wellProvideYou	{ text = $STR_DCW_voices_teamLeader_wellProvideYou; speech[] = { "\DCW\voices\localchief\teamLeader_wellProvideYou" };	class Arguments {}; };
+	class teamLeader_aChopperIsComing	{ text = $STR_DCW_voices_teamLeader_aChopperIsComing; speech[] = { "\DCW\voices\localchief\teamLeader_aChopperIsComing" };	class Arguments {}; };
+};
+
+// Needed parameters.
+class Arguments {};
+class Special {};
+startWithVocal[] = { hour };
+startWithConsonant[] = { europe, university };

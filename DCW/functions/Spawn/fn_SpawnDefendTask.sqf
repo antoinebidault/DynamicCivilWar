@@ -5,9 +5,9 @@ _nbGroups = 1 max ceil(random 2);
 
 _taskId = format["DCW_defend_%1",str (_compound select 0)];
 
-[HQ,format["Be advised, %1 enemy groups moving to your localization. You must defend the civilian at any cost.",_nbGroups]] remoteExec ["DCW_fnc_talk"];
+[HQ,format[localize "STR_DCW_voices_HQ_enemyGroups",_nbGroups]] remoteExec ["DCW_fnc_talk"];
 {
-	[_taskId, _x, ["Enemy attack incoming, set up the defenses","Defend civilian","Defend civilian"],_compound select 1,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, false];
+	[_taskId, _x, [localize "STR_DCW_spawnDefendTask_taskDesc",localize "STR_DCW_spawnDefendTask_taskName",localize "STR_DCW_spawnDefendTask_taskName"],_compound select 1,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, false];
 } foreach units GROUP_PLAYERS;     
 
 _unitsInCompound = _compound select 5;
@@ -77,7 +77,7 @@ waitUntil {sleep 3; ({_x inArea _sectorToDefend} count (units GROUP_PLAYERS) == 
 if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 
 	{
-		[HQ, "Good job ! The compound is safe now."] remoteExec ["DCW_fnc_talk",_x,false];
+		[HQ, localize "STR_DCW_voices_HQ_taskDefendSuccess"] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach ([] call DCW_fnc_allPlayers);    
 
@@ -86,7 +86,7 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 
 } else {
 	{
-		[HQ, "The compound wasn't defended..."] remoteExec ["DCW_fnc_talk",_x,false];
+		[HQ, localize "STR_DCW_voices_HQ_taskDefendSuccess"] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"FAILED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach ([] call DCW_fnc_allPlayers);       
 

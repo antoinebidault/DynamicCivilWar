@@ -90,7 +90,7 @@ DCW_fnc_spawnOfficer = {
                 moveOut _unit;
             };
 
-            [leader GROUP_PLAYERS,"The target is down ! Let's go talk to him !", true] remoteExec ["DCW_fnc_talk", GROUP_PLAYERS,false];
+            [leader GROUP_PLAYERS,localize "STR_DCW_voices_teamLeader_targetDown", true] remoteExec ["DCW_fnc_talk", GROUP_PLAYERS,false];
             [format["DCW_secondary_%1", name _unit],_x, ["Talk to the wounded officer","Interrogate the officer","Talk to the wounded officer"],getPos _unit,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",leader GROUP_PLAYERS, true];
         
             //Spasm and unconscious state
@@ -125,7 +125,7 @@ DCW_fnc_spawnOfficer = {
                     _unit setDamage 1;
                 };
                 
-                [_unit,"I know something..."] remoteExec ["DCW_fnc_talk",_player];
+                [_unit,localize "STR_DCW_voices_officer_iKnowSomeThing"] remoteExec ["DCW_fnc_talk",_player];
                 _unit call DCW_fnc_mainObjectiveIntel;
             },{
             [(_this select 1), "medicStop"] remoteExec ["playActionNow"];
@@ -183,7 +183,7 @@ while {sleep 20; count OFFICERS  > 0 } do {
         [format["DCW_secondary_%1", _officerName],_x, [format["Our drones give us some informations about an insurgent's officer location. Move to his location and try to gather informations about the commander. His name is %1",_officerName],"Interrogate the officer","Interrogate the officer"],_officerPos,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, true];
         
         // HQ message
-        [HQ,format["We have some new intels on the enemy officer : %1, maybe he is located %2km from %3",_officerName,round(((getPos _loc) distance2D (_x))/100)/100,text _loc], true] remoteExec ["DCW_fnc_talk",_x,false];
+        [HQ,format[localize "STR_DCW_voices_HQ_secondaryBriefing" ,_officerName,round(((getPos _loc) distance2D (_x))/100)/100,text _loc], true] remoteExec ["DCW_fnc_talk",_x,false];
     } foreach ([] call DCW_fnc_allPlayers);
 
     _marker setMarkerAlpha 1;
@@ -191,8 +191,9 @@ while {sleep 20; count OFFICERS  > 0 } do {
     sleep 600 + random 200;
 };
 
-[HQ,format["Good job team, it seems you stopped the propagation of the insurgency... The %1 officers have been neutralized.", NUMBER_OFFICERS], true] remoteExec ["DCW_fnc_talk"];
-[HQ,format["Next step is to consolidate our position and catch the main commander of the movement %1...", name ENEMY_COMMANDER], true] remoteExec ["DCW_fnc_talk"];
+
+[HQ,format[localize "STR_DCW_voices_HQ_goodJob", NUMBER_OFFICERS], true] remoteExec ["DCW_fnc_talk"];
+[HQ,format[localize "STR_DCW_voices_HQ_nextStep" , name ENEMY_COMMANDER], true] remoteExec ["DCW_fnc_talk"];
   
 [100] call DCW_fnc_spawnConvoy;
 false;

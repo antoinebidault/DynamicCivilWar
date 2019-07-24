@@ -20,7 +20,7 @@ class CfgFunctions
 			class localChief {};
 			class medic {};
 			class mortarbombing {};
-			class prepareAction {};
+			class addActionFunctions {};
 			class randomAnimation {};
 			class shout {};
 			class surrender {};
@@ -65,6 +65,9 @@ class CfgFunctions
 			class removeAction {};
 			class allPlayers {};
 			class fillClusters {};
+			class conversation {};
+			class showSubtitle {};
+			class hideSubtitle {};
 		};
 			
 		class Spawn

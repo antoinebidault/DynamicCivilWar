@@ -118,5 +118,7 @@ if (count TALK_QUEUE > 1) then {
 	MESS_SHOWN = false;
 };
 
+player createDiarySubject ["ConvLog", "Conversation Log"];
+player createDiaryRecord ["ConvLog", [name _talker, format["%1 %2", date,_say]]];
 
 ctrlDelete _ctrl;
