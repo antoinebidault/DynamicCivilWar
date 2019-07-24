@@ -112,7 +112,7 @@ while { true } do {
 							
 							if (_compoundState == "bastion" || (_compoundState == "neutral" && _supportScore < 60)) then {
 								//Snipers spawn
-								_units = _units + ([_pos,_radius,(_peopleToSpawn select 2)] call DCW_fnc_spawnsnipers);
+								_units = _units + ([_pos,_radius,(_peopleToSpawn select 1)] call DCW_fnc_spawnSnipers);
 								//Cache
 								_units = _units + ([_pos,_radius,(_peopleToSpawn select 5),_buildings] call DCW_fnc_cache);
 								//Hostages

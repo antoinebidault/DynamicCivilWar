@@ -44,7 +44,6 @@ sleep 1;
 _cargo setposatl _spawnpos;
 _success = _chopper setSlingLoad _cargo;
 if (!_success) exitWith { 
-
 	[HQ,"Sorry guy, we are unable to drop this kind of vehicle... Try a lighter vehicle"] remoteExec ["DCW_fnc_talk"];
     [GROUP_PLAYERS,150] remoteExec ["DCW_fnc_updateScore",2];   
 	{deleteVehicle _x} foreach crew _chopper; 

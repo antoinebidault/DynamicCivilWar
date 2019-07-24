@@ -208,6 +208,13 @@ addMissionEventHandler
 					_map ctrlMapCursor ["Track","Track"];
 					if (_mapMarker select 0 == "marker"  ) then {
 						_map ctrlMapCursor ["Track","HC_overFriendly"];
+						if (DEBUG) then {
+							{
+								if (_x getVariable["marker",""] == _mapMarker select 1) then {
+									hint format["Type : %1",_x getVariable["DCW_type","unknown"]];
+								};
+							} foreach allUnits;
+						};
 						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString && CurrentMarker != _mapMarker select 1) then {
 							CurrentMarker = _mapMarker select 1;
 							_marker = [_markers,_mapMarker select 1] call DCW_fnc_getMarkerById;

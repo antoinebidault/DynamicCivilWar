@@ -62,6 +62,7 @@ for "_j" from 1 to _nb do {
                     
     for "_i" from 1 to _nbGuards do {
         _enemy = [_grp,_posToSpawn,false] call DCW_fnc_spawnEnemy;
+        _enemy setVariable["DCW_type","mortar-crew"];
         _enemy setDir ([_posToSpawn,_pos] call BIS_fnc_dirTo);
         _units pushBack _enemy;
         if (_i == 1)then{

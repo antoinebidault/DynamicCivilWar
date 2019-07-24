@@ -107,6 +107,7 @@ for "_j" from 1 to _nb do {
          _posToSpawn = _posBuildings call BIS_fnc_selectRandom;
          _posBuildings = _posBuildings -[_posToSpawn];
         _enemy = [_grp,_posToSpawn,false] call DCW_fnc_spawnEnemy;
+        _enemy setVariable["DCW_type","hostageguard"];
         _units pushBack _enemy;
     };
 

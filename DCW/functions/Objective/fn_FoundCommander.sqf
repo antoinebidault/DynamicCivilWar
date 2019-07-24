@@ -42,7 +42,7 @@ sleep 10;
 
 sleep 10;
 
-[_unit,format["There is some footprints over here ! I think he moved to this direction : %1deg",str (_dir)], true] remoteExec ["DCW_fnc_talk",GROUP_PLAYERS];
+[_unit,format["There is some footprints over here ! I think he moved in this direction : %1deg",str (_dir)], true] remoteExec ["DCW_fnc_talk",GROUP_PLAYERS];
 
 sleep 10;
 

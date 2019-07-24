@@ -259,8 +259,8 @@ DCW_fnc_addActionLookInventory = {
         [_talker,"Hello sir !",false] call DCW_fnc_talk;
         
         if (!weaponLowered _talker) exitWith { 
-            [_unit,"I don't talk to somebody pointing his gun on me ! Go away !",false] remoteExec ["DCW_fnc_talk",_talker];
-            [_unit, "gestureNo"] remoteExec ["playActionNow",2];
+            [_unit,"I don't talk to somebody pointing his gun on me ! Go away !",false]  call DCW_fnc_talk;
+            [_unit, "gestureNo"] remoteExec ["playActionNow"];
             [_talker,"I'm sorry, sir !",false] call DCW_fnc_talk;
             [_unit,-2] remoteExec ["DCW_fnc_updateRep",2];
             _unit stop false;
