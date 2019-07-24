@@ -1,14 +1,20 @@
-
-/**
- * DYNAMIC CIVIL WAR
- * Created: 2017-11-29
- * Author: Bidass
+/*
+  Author: 
+    Bidass
 
   Version:
     {VERSION}
- * License : GNU (GPL)
- * Show chat
- */
+
+  Description:
+    Display the chat
+
+  Parameters:
+    0: OBJECT - player
+
+  Returns:
+    BOOL - true 
+*/
+
  if (isNull player) exitWith{};
 _talker = _this select 0;
 _say = _this select 1;
@@ -20,7 +26,7 @@ _this pushBack _layer;
 TALK_QUEUE pushback _this;
 waitUntil { sleep .2; TALK_QUEUE select 0 isEqualTo _this};
 
-_side = side _talker;
+_side = side group _talker;
 _color = "#E0E0E0";
 if (_side == CIVILIAN) then {
 	_color = '#c6b32b';
@@ -38,10 +44,9 @@ if (_side == CIVILIAN) then {
 	};
 };
 
-/*
-if (_sound) then {
-	[] spawn { playSound (RADIO_CHAT_LIST call BIS_fnc_selectRandom); };
-};*/
+player createDiarySubject ["ConvLog", "Conversation Log"];
+player createDiaryRecord ["ConvLog", [name _talker, format["%1 %2", date,_say]]];
+
 
 // Create display and control
 disableSerialization;
@@ -117,8 +122,5 @@ if (count TALK_QUEUE > 1) then {
 	TALK_QUEUE = TALK_QUEUE - [_this];
 	MESS_SHOWN = false;
 };
-
-player createDiarySubject ["ConvLog", "Conversation Log"];
-player createDiaryRecord ["ConvLog", [name _talker, format["%1 %2", date,_say]]];
 
 ctrlDelete _ctrl;

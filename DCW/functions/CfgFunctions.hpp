@@ -42,6 +42,7 @@ class CfgFunctions
 			class factionList {};
 			class factionGetSupportUnits {};
 			class getConfigVehicles {};
+			class getCompoundStateLabel {};
 			class getClusters {};
 			class isInMarker {};
 			class findBuildings {};

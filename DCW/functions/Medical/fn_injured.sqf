@@ -52,7 +52,7 @@ if (isPlayer _unit && _unit == player) then {
 			[_foundCloseUnit, _unit,false] spawn DCW_fnc_firstAid;
 		};
 
-		hintSilent format["Medic at %1m",str round _dist];
+		hintSilent format[localize "STR_DCW_injured_medicAt",str round _dist];
 
 		sleep .5;
 
@@ -74,13 +74,13 @@ if (isPlayer _unit && _unit == player) then {
 	_foundCloseUnit = objNull;
 	_dist = 200;
 	{
-		if(!isPlayer _x && alive _x && (_x distance _unit) < _dist && (lifeState _x == "HEALTHY" || lifeState _x == "INJURED")) then {
+		if(!isPlayer _x && alive _x && (_x distance _unit) < _dist && lifeState _x != "INCAPACITATED" ) then {
 			_foundCloseUnit = _x;
 			_dist = _x distance _unit;
 		};
 	}foreach units GROUP_PLAYERS;
 
-	if (!isNull _foundCloseUnit) then {
+	if (!isNull _foundCloseUnit ) then {
 		[_foundCloseUnit, ["I'm on it sir !","I'm gonna help him !","I am looking after him !"] call BIS_fnc_selectRandom] remoteExec ["DCW_fnc_talk"];
 		[_foundCloseUnit,_unit,false] spawn DCW_fnc_firstAid;
 	};

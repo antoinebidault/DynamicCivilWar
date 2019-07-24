@@ -63,7 +63,7 @@ while { true } do {
 					if (_triggered && _playerPos distance _pos < _radius ) then {
 						_currentMarker = _x;
 						_playerInMarker = true;
-						[format["<t color='#cd8700'>%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState,_supportScore], 40] remoteExec ["DCW_fnc_showIndicator",_player,false];
+						[format["<t color='#cd8700'>%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState call DCW_fnc_getCompoundStateLabel,_supportScore], 40] remoteExec ["DCW_fnc_showIndicator",_player,false];
 				
 						if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "resistance")  ) then {
 							[_currentCompound,_player] spawn {

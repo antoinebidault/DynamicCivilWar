@@ -223,7 +223,7 @@ addMissionEventHandler
 								_dbg =  _dbg + format["<br/><t>Defend task state:%1</t>",_compound select 16];
 							};
 							
-							hintsilent parseText format["<t color='#cd8700' >%1</t><br/><t size='1.3'>State : %2</t><br/><t size='1.3'>Reputation : %3/100</t><br/><t size='1.3'>Population : %4</t>%5",(_marker select 0) select 14,(_marker select 0) select 12,(_marker select 0) select 13,_population,_dbg];
+							hintsilent parseText format["<t color='#cd8700' >%1</t><br/><t size='1.3'>State : %2</t><br/><t size='1.3'>Reputation : %3/100</t><br/><t size='1.3'>Population : %4</t>%5",(_marker select 0) select 14,((_marker select 0) select 12) call DCW_fnc_getCompoundStateLabel,(_marker select 0) select 13,_population,_dbg];
 						} else {
 							CurrentMarker = "";
 						};

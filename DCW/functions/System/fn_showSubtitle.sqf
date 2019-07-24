@@ -13,7 +13,7 @@
 _talker = _this select 0;
 _sentence = _this select 1;
 
-_side = side _talker;
+_side = side group _talker;
 _color = "#E0E0E0";
 if (_side == CIVILIAN) then {
 	_color = '#c6b32b';

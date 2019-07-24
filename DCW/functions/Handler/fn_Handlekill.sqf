@@ -34,7 +34,7 @@
                 },nil,1.5,false,true,"","true",3,false,""]] remoteExec["addAction",0];
 
                 //Search intel;
-                 [ _unit,"Search and secure","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","_this distance _target < 2","true",
+                 [ _unit,localize "STR_DCW_handleKill_searchAndSecure","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","_this distance _target < 2","true",
                  {(_this select 1) playActionNow "TakeFlag";},
                  {},
                  {

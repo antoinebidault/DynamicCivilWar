@@ -259,11 +259,11 @@ DCW_fnc_saveAndCloseConfigDialog = {
 		// Delete the chopper
 		if(!isNull CHOPPER_DEMO) then { { deleteVehicle _x; } foreach crew CHOPPER_DEMO; deleteVehicle CHOPPER_DEMO};
 
-		titleCut ["Preparing units...", "BLACK OUT", .5];
+		titleCut [localize "STR_DCW_configDialogFunctions_preparing", "BLACK OUT", .5];
 			
 		sleep .5;
 
-		titleCut ["Preparing units...", "BLACK FADED", 999];
+		titleCut ["Configuring units...", "BLACK FADED", 999];
 
 		// Execute mission setup on server
 		[] remoteExec ["DCW_fnc_missionSetup", 2];

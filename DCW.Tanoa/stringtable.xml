@@ -142,7 +142,15 @@
       </Key>
     </Container>
   </Package>
-  <Package name="Medical" />
+  <Package name="Medical">
+    <Container name="injured">
+      <Key ID="STR_DCW_injured_medicAt">
+        <Original>Medic at %1m</Original>
+        <English>Medic at %1m</English>
+        <French>Médecin à %1m</French>
+      </Key>
+    </Container>
+  </Package>
   <Package name="Behavior">
     <Container name="addActionFunctions">
       <Key ID="STR_DCW_addActionFunctions_actionRecruitHimLabel">
@@ -502,6 +510,15 @@
         <Original>Next step is to consolidate our position and catch the main commander of the movement %1...</Original>
         <English>Next step is to consolidate our position and catch the main commander of the movement %1...</English>
         <French>L'étape suivante sera de consolider notre position et de capturer le commandant ennemi.</French>
+      </Key>
+    </Container>
+  </Package>
+  <Package name="Handler">
+    <Container name="handleKill">
+      <Key ID="STR_DCW_handleKill_searchAndSecure">
+        <Original>Search and secure</Original>
+        <English>Search and secure</English>
+        <French>Fouiller et sécuriser</French>
       </Key>
     </Container>
   </Package>

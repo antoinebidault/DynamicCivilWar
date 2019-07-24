@@ -6,13 +6,11 @@
     {VERSION}
 
   Description:
-    TODO
+    This function enable the respawning features on the player
+	This must be executed on client side
 
   Parameters:
-    0: OBJECT - TODO
-
-  Returns:
-    BOOL - true 
+    0: OBJECT - Player
 */
 
 params ["_player"];
