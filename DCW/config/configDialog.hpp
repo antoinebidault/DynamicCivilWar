@@ -55,7 +55,7 @@ class PARAMETERS_DIALOG
          class RscText_1002: RscText
         {
             idc = 1002;
-            text = "Time of the day";
+            text = $STR_DCW_configDialog_timeOfDay;
             x = -19 * GUI_GRID_W + GUI_GRID_X;
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -64,17 +64,17 @@ class PARAMETERS_DIALOG
         class RscCombo_2100: RscCombo
         {
           idc = 2100;
-          text = "Time of the day";
+          text = $STR_DCW_configDialog_timeOfDay;
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 2 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Time day";
+          tooltip = $STR_DCW_configDialog_timeOfDay;
         };
          class RscText_1003: RscText
         {
             idc = 1003;
-            text = "Weather";
+            text = $STR_DCW_configDialog_weather;
             x = -19 * GUI_GRID_W + GUI_GRID_X;
             y = 4 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -83,19 +83,19 @@ class PARAMETERS_DIALOG
          class RscCombo_2101: RscCombo
         {
           idc = 2101;
-          text = "Weather";
+          text = $STR_DCW_configDialog_weather;
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 5 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Time weather";
+          tooltip =  $STR_DCW_configDialog_weather;
         };
 
         
      class RscText_1004: RscText
         {
             idc = 1004;
-            text = "Enemy compound percentage";
+            text = $STR_DCW_configDialog_enemyPerc;
             x = -19 * GUI_GRID_W + GUI_GRID_X;
             y = 7 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -104,18 +104,18 @@ class PARAMETERS_DIALOG
        class RscCombo_2102: RscCombo
         {
           idc = 2102;
-          text = "Enemy compound percentage";
+          text = $STR_DCW_configDialog_enemyPerc ;
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 8 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Enemy compound percentage";
+          tooltip = $STR_DCW_configDialog_enemyPerc;
         };
 
         class RscText_1011: RscText
         {
             idc = 1011;
-            text = "Friendly side";
+            text = $STR_DCW_configDialog_friendlySide;
             x = -19 * GUI_GRID_W + GUI_GRID_X;
             y = 10 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -124,18 +124,18 @@ class PARAMETERS_DIALOG
        class RscCombo_2111: RscCombo
         {
           idc = 2111;
-          text = "Friendly side";
+          text = $STR_DCW_configDialog_friendlySide;
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 11 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Side";
+          tooltip = $STR_DCW_configDialog_friendlySide;
         };
 
         class RscText_1005: RscText
         {
             idc = 1005;
-            text = "Friendly faction";
+            text = $STR_DCW_configDialog_friendlyFaction;
             x = -19 * GUI_GRID_W + GUI_GRID_X;
             y = 13 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -145,20 +145,18 @@ class PARAMETERS_DIALOG
        class RscCombo_2103: RscCombo
         {
           idc = 2103;
-          text = "Friendly faction";
+          text = $STR_DCW_configDialog_friendlyFaction ;
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 14 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Faction";
+          tooltip = $STR_DCW_configDialog_friendlyFaction;
         };
-
-
         
         class RscText_1015: RscText
         {
             idc = 1015;
-            text = "Allied faction";
+            text = $STR_DCW_configDialog_resistanceFaction;
             x = -19 * GUI_GRID_W + GUI_GRID_X;
             y = 16 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -168,19 +166,19 @@ class PARAMETERS_DIALOG
        class RscCombo_2113: RscCombo
         {
           idc = 2113;
-          text = "Allied faction";
+          text = $STR_DCW_configDialog_resistanceFaction;
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 17 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Allied faction";
+          tooltip = $STR_DCW_configDialog_resistanceFaction;
         };
 
 
         class RscText_1006: RscText
         {
             idc = 1006;
-            text = "Medevac AI system enabled";
+            text = $STR_DCW_configDialog_medevac;
             x = -3 * GUI_GRID_W + GUI_GRID_X;
             y = 16 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -193,12 +191,13 @@ class PARAMETERS_DIALOG
           y = 16 * GUI_GRID_H + GUI_GRID_Y;
           w = 1 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Enable AI medevac system";
+          tooltip =  $STR_DCW_configDialog_medevac ;
         };
+
         class RscText_1007: RscText
         {
             idc = 1007;
-            text = "Respawn available";
+            text =$STR_DCW_configDialog_respawn;
             x = -3 * GUI_GRID_W + GUI_GRID_X;
             y = 17 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -211,13 +210,13 @@ class PARAMETERS_DIALOG
           y = 17 * GUI_GRID_H + GUI_GRID_Y;
           w = 1 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Enable respawn";
+          tooltip =$STR_DCW_configDialog_respawn;
         };
 
         class RscText_1008: RscText
         {
             idc = 1008;
-            text = "Restricted arsenal";
+            text = $STR_DCW_configDialog_arsenal;
             x = -3 * GUI_GRID_W + GUI_GRID_X;
             y = 18 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -230,13 +229,13 @@ class PARAMETERS_DIALOG
           y = 18 * GUI_GRID_H + GUI_GRID_Y;
           w = 1 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Enable restricted arsenal";
+          tooltip = $STR_DCW_configDialog_arsenal;
         };
 
       class RscText_2121: RscText
         {
             idc = 2121;
-            text = "Compound markers visible";
+            text = $STR_DCW_configDialog_compound;
             x = -3 * GUI_GRID_W + GUI_GRID_X;
             y = 19 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -249,14 +248,14 @@ class PARAMETERS_DIALOG
           y = 19 * GUI_GRID_H + GUI_GRID_Y;
           w = 1 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Compound markers visible";
+          tooltip = $STR_DCW_configDialog_compound;
         };
 
 
        class RscText_1009: RscText
         {
             idc = 1009;
-            text = "Enemy side";
+            text = $STR_DCW_configDialog_enemySide ;
             x = -5 * GUI_GRID_W + GUI_GRID_X;
             y = 1 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -265,18 +264,18 @@ class PARAMETERS_DIALOG
        class RscCombo_2107: RscCombo
         {
           idc = 2107;
-          text = "Enemy side";
+          text = $STR_DCW_configDialog_enemySide;
           x = -5 * GUI_GRID_W + GUI_GRID_X;
           y = 2 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Side";
+          tooltip = $STR_DCW_configDialog_enemySide;
         };
 
        class RscText_1010: RscText
         {
             idc = 1010;
-            text = "Enemy faction";
+            text = $STR_DCW_configDialog_enemyFaction;
             x = -5 * GUI_GRID_W + GUI_GRID_X;
             y = 4 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -285,17 +284,17 @@ class PARAMETERS_DIALOG
        class RscCombo_2108: RscCombo
         {
           idc = 2108;
-          text = "Enemy faction";
+          text =  $STR_DCW_configDialog_enemyFaction;
           x = -5 * GUI_GRID_W + GUI_GRID_X;
           y = 5 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Faction";
+          tooltip =  $STR_DCW_configDialog_enemyFaction;
         };
        class RscText_1012: RscText
         {
             idc = 1012;
-            text = "Civilian faction";
+            text = $STR_DCW_configDialog_civFaction;
             x = -5 * GUI_GRID_W + GUI_GRID_X;
             y = 7 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -304,18 +303,18 @@ class PARAMETERS_DIALOG
        class RscCombo_2110: RscCombo
         {
           idc = 2110;
-          text = "Civilian faction";
+          text =  $STR_DCW_configDialog_civFaction;
           x = -5 * GUI_GRID_W + GUI_GRID_X;
           y = 8 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Faction";
+          tooltip =  $STR_DCW_configDialog_civFaction;
         };
 
         class RscText_1014: RscText
         {
             idc = 1014;
-            text = "Number of respawn";
+            text = $STR_DCW_configDialog_numberRespawn; 
             x = -5 * GUI_GRID_W + GUI_GRID_X;
             y = 10 * GUI_GRID_H + GUI_GRID_Y;
             w = 12 * GUI_GRID_W;
@@ -324,19 +323,19 @@ class PARAMETERS_DIALOG
        class RscCombo_2112: RscCombo
         {
           idc = 2112;
-          text = "Number of respawn";
+          text = $STR_DCW_configDialog_numberRespawn;
           x = -5 * GUI_GRID_W + GUI_GRID_X;
           y = 11 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;
           h = 1 * GUI_GRID_H;
-          tooltip = "Number of respawn";
+          tooltip = $STR_DCW_configDialog_numberRespawn;
         };
 
 
         class Button_Submit_1000: RscButton
         {
           idc = 2222;
-          text = "Next (Loadout)";
+          text = $STR_DCW_configDialog_nextButton ;
           x = -19 * GUI_GRID_W + GUI_GRID_X;
           y = 22 * GUI_GRID_H + GUI_GRID_Y;
           w = 26 * GUI_GRID_W;
@@ -347,7 +346,7 @@ class PARAMETERS_DIALOG
         class RscButton_1601: RscButton
         {
           idc = 1601;
-          text = "Choose insertion point"; //--- ToDo: Localize;
+          text = $STR_DCW_configDialog_chooseLocation; 
           x = -5 * GUI_GRID_W + GUI_GRID_X;
           y = 13 * GUI_GRID_H + GUI_GRID_Y;
           w = 12 * GUI_GRID_W;

@@ -60,15 +60,15 @@ class CfgMusic
 
 
 
-#include "config\mission-parameters.hpp"
+#include "config\missionParameters.hpp"
 #include "functions\supportui\Defines.hpp"
 #include "functions\supportui\buySupports.hpp" 
 #include "functions\supportui\notification.hpp" 
 #include "functions\building\buildingDialog.hpp"
 #include "functions\building\recruitDialog.hpp"
 #include "config\respawn.hpp"   
-#include "config\config-dialog.hpp"  
-#include "config\loadout-dialog.hpp"  
+#include "config\configDialog.hpp"  
+#include "config\loadoutDialog.hpp"  
 #include "functions\CfgFunctions.hpp"
 #include "voices\CfgSentences.hpp"
    

@@ -40,7 +40,7 @@ class building_Dialog
         class building_okButton: RscButton
         {
             idc = 1600;
-            text = "Buy object";
+            text = $STR_DCW_buildDialog_buy;
             x = 0.309 * safezoneW + safezoneX;
             y = 0.70 * safezoneH + safezoneY;
             w = 0.370 * safezoneW;
@@ -51,7 +51,7 @@ class building_Dialog
         class building_cancelButton: RscButton
         {
             idc = 1601;
-            text = "Cancel";
+            text = $STR_DCW_buildDialog_cancel;
             x = 0.309 * safezoneW + safezoneX;
             y = 0.75 * safezoneH + safezoneY;
             w = 0.370 * safezoneW;

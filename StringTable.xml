@@ -143,6 +143,42 @@
         <French>Défendre les civils</French>
       </Key>
     </Container>
+    <Container name="surrender">
+      <Key ID="STR_DCW_surrender_1">
+        <Original>He gives up !</Original>
+        <English>He gives up !</English>
+        <French>Il se rend !</French>
+      </Key>
+      <Key ID="STR_DCW_surrender_4">
+        <Original>This enemy is surrendering !</Original>
+        <English>This enemy is surrendering !</English>
+        <French>Un des gars se rend !</French>
+      </Key>
+      <Key ID="STR_DCW_surrender_3">
+        <Original>Hands up !</Original>
+        <English>Hands up !</English>
+        <French>Mains sur la tête !</French>
+      </Key>
+      <Key ID="STR_DCW_surrender_2">
+        <Original>Your hands in the hair !</Original>
+        <English>Your hands in the hair !</English>
+        <French>Mets tes mains bien en évidence !</French>
+      </Key>
+    </Container>
+    <Container name="mortarBombing">
+      <Key ID="STR_DCW_mortarBombing_incoming">
+        <Original>Mortar incoming ! Bearing %1, take cover guys !</Original>
+        <English>Mortar incoming ! Bearing %1, take cover guys !</English>
+        <French>Tirs de mortier en approche ! Azimut %1, tout le monde à couvert ! </French>
+      </Key>
+    </Container>
+    <Container name="buildDialog">
+      <Key ID="STR_DCW_buildDialog_buyObject">
+        <Original>Buy object</Original>
+        <English>Buy object</English>
+        <French>Acheter cet objet</French>
+      </Key>
+    </Container>
   </Package>
   <Package name="Description">
     <Container name="Description">

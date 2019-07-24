@@ -38,5 +38,5 @@ _unit call DCW_fnc_addActionGetIntel;
 [_unit] call DCW_fnc_shout;
 
 if (!isNull _gunner && group _gunner == GROUP_PLAYERS) then {
-  [_gunner, ["This enemy is surrendering","He gives up !","Hands up !", "Your hands in the hair !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+  [_gunner,localize (["STR_DCW_surrender_1","STR_DCW_surrender_2","STR_DCW_surrender_3", "STR_DCW_surrender_4"] call BIS_fnc_selectRandom), false] spawn DCW_fnc_talk;
 };

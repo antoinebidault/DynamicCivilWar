@@ -53,7 +53,7 @@ class LOADOUT_DIALOG
         {
           idc = 1000;
           action = "[] call DCW_fnc_saveAndCloseConfigDialog";
-          text = "Start mission"; //--- ToDo: Localize;
+          text = $STR_DCW_loadoutDialog_startMissionButton ; 
           x = 7 * GUI_GRID_W + GUI_GRID_X;
           y = 23.5 * GUI_GRID_H + GUI_GRID_Y;
           w = 26 * GUI_GRID_W;
@@ -63,7 +63,7 @@ class LOADOUT_DIALOG
         {
           idc = 1001;
           action = "[""prev""] call DCW_fnc_switchUnit;";
-          text = "Previous unit"; //--- ToDo: Localize;
+          text = $STR_DCW_loadoutDialog_backButton ;
           x = 0 * GUI_GRID_W + GUI_GRID_X;
           y = 20 * GUI_GRID_H + GUI_GRID_Y;
           w = 9 * GUI_GRID_W;
@@ -74,7 +74,7 @@ class LOADOUT_DIALOG
           idc = 1002;
           action = "[] call DCW_fnc_editloadout;";
 
-          text = "Edit loadout"; //--- ToDo: Localize;
+          text = $STR_DCW_loadoutDialog_editButton ;
           x = 12 * GUI_GRID_W + GUI_GRID_X;
           y = 20 * GUI_GRID_H + GUI_GRID_Y;
           w = 16 * GUI_GRID_W;
@@ -85,7 +85,7 @@ class LOADOUT_DIALOG
           idc = 1003;
           action = "[""next""] call DCW_fnc_switchUnit;";
 
-          text = "Next unit"; //--- ToDo: Localize;
+          text = $STR_DCW_loadoutDialog_nextButton ;
           x = 31 * GUI_GRID_W + GUI_GRID_X;
           y = 20 * GUI_GRID_H + GUI_GRID_Y;
           w = 9.5 * GUI_GRID_W;

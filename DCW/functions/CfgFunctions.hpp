@@ -16,7 +16,6 @@ class CfgFunctions
 			class addTorch {};
 			class badGuyLoadout {};
 			class camp {};
-			class discussion {};
 			class localChief {};
 			class medic {};
 			class mortarbombing {};
