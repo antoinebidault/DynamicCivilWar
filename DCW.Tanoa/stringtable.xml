@@ -37,7 +37,110 @@
     </Container>
   </Package>
   <Package name="Config">
-    <Container name="config-dialog" />
+    <Container name="configDialog">
+      <Key ID="STR_DCW_configDialog_timeOfDay">
+        <Original>Time of the day</Original>
+        <English>Time of the day</English>
+        <French>Heure du jour</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_weather">
+        <Original>Weather</Original>
+        <English>Weather</English>
+        <French>Weather</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_enemyPerc">
+        <Original>Enemy compound percentage</Original>
+        <English>Enemy compound percentage</English>
+        <French>Pourcentage de villages ennemis</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_friendlySide">
+        <Original>Friendly side (Yours)</Original>
+        <English>Friendly side (Yours)</English>
+        <French>Votre camp</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_enemySide">
+        <Original>Enemy side </Original>
+        <English>Enemy side </English>
+        <French>Camp ennemi</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_enemyFaction">
+        <Original>Enemy faction</Original>
+        <English>Enemy faction</English>
+        <French>Faction ennemi</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_friendlyFaction">
+        <Original>Friendly faction (Yours)</Original>
+        <English>Friendly faction (Yours)</English>
+        <French>Votre faction</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_resistanceFaction">
+        <Original>Resistance side </Original>
+        <English>Resistance side </English>
+        <French>Le camp de la resistance</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_medevac">
+        <Original>Enable AI medical system</Original>
+        <English>Enable AI medical system</English>
+        <French>Activer le système de soin des IAs</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_compound">
+        <Original>Compound markers visible</Original>
+        <English>Compound markers visible</English>
+        <French>Marqueurs de blocs visibles</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_respawn">
+        <Original>Enable respawn</Original>
+        <English>Enable respawn</English>
+        <French>Activer le respawn</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_arsenal">
+        <Original>Restricted arsenal (faction)</Original>
+        <English>Restricted arsenal (faction)</English>
+        <French>Arsenal restreint (faction)</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_civFaction">
+        <Original>Civilian faction</Original>
+        <English>Civilian faction</English>
+        <French>Faction des civils</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_nextButton">
+        <Original>Next (Loadout)</Original>
+        <English>Next (Loadout)</English>
+        <French>Suivant (Arsenal)</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_numberRespawn">
+        <Original>Number of respawn</Original>
+        <English>Number of respawn</English>
+        <French>Nombre de réapparition</French>
+      </Key>
+      <Key ID="STR_DCW_configDialog_chooseLocation">
+        <Original>Choose location</Original>
+        <English>Choose location</English>
+        <French>Choisir le DZ</French>
+      </Key>
+    </Container>
+    <Container name="loadoutDialog">
+      <Key ID="STR_DCW_loadoutDialog_startMissionButton">
+        <Original>Start mission</Original>
+        <English>Start mission</English>
+        <French>Démarrer la mission</French>
+      </Key>
+      <Key ID="STR_DCW_loadoutDialog_editButton">
+        <Original>Edit unit loadout</Original>
+        <English>Edit unit loadout</English>
+        <French>Inventaire de l'unité</French>
+      </Key>
+      <Key ID="STR_DCW_loadoutDialog_nextButton">
+        <Original>Next unit</Original>
+        <English>Next unit</English>
+        <French>Unité suivante</French>
+      </Key>
+      <Key ID="STR_DCW_loadoutDialog_backButton">
+        <Original>Previous unit</Original>
+        <English>Previous unit</English>
+        <French>Unité précédente</French>
+      </Key>
+    </Container>
   </Package>
   <Package name="Medical" />
   <Package name="Behavior">
@@ -177,6 +280,11 @@
         <Original>Buy object</Original>
         <English>Buy object</English>
         <French>Acheter cet objet</French>
+      </Key>
+      <Key ID="STR_DCW_buildDialog_cancel">
+        <Original>Cancel</Original>
+        <English>Cancel</English>
+        <French>Annuler</French>
       </Key>
     </Container>
   </Package>
