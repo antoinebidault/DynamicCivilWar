@@ -1,3 +1,15 @@
+/*
+  Author: 
+    Bidass
+
+  Version:
+    {VERSION}
+
+  Description:
+    Player's surrendering system 
+
+*/
+
 DCW_map_teleport_enabled = false;
 
 map_click_handler =

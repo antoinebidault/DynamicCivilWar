@@ -6,7 +6,7 @@
     {VERSION}
 
   Description:
-    Player's surrendering system (Including a loop)
+    Player's surrendering system 
 
   Parameters:
     0: OBJECT - player

@@ -141,6 +141,13 @@
         <French>Unité précédente</French>
       </Key>
     </Container>
+    <Container name="configDialogFunctions">
+      <Key ID="STR_DCW_configDialogFunctions_preparing">
+        <Original>Preparing units...</Original>
+        <English>Preparing units...</English>
+        <French>Configuration des unités...</French>
+      </Key>
+    </Container>
   </Package>
   <Package name="Medical">
     <Container name="injured">
