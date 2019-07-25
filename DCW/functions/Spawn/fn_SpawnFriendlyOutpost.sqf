@@ -6,13 +6,17 @@
     {VERSION}
 
   Description:
-    TODO
+    Spawn a friendly outpost with all friendly units patroling and some vehicles + flag & ammo box
 
   Parameters:
-    0: OBJECT - TODO
+    0: ARRAY - Position
+    1: NUMBER - Radius in meters
+    2: NUMBER - Number of units presents
+    3: ARRAY - Position of the meeting point (Units will go randomly to the position)
+    4: ARRAY - List of buildings in this position
 
   Returns:
-    BOOL - true 
+    ARRAY - list of units spawned 
 */
  
 if (!isServer) exitWith{false};

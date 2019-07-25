@@ -18,7 +18,6 @@ if (!isMultiplayer)then{
 
 addMissionEventHandler ["HandleDisconnect", {
 	params ["_unit", "_id", "_uid", "_name"];
-	//_unit = _this select 0;
     deleteVehicle _unit;
 	if (count ([] call DCW_fnc_allPlayers) == 0) then {
 	  // "EveryoneLost" call BIS_fnc_endMissionServer;
@@ -332,7 +331,6 @@ publicVariable "MARKER_WHITE_LIST";
 waitUntil {count CLUSTERS > 0};
 
 MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
-
 
 [] call DCW_fnc_camp;
 [] call DCW_fnc_supportInit; // Support ui init

@@ -9,13 +9,14 @@
     Main components preloading and initialization
 */
 
-
+// Total blackout on startup
 if (!isNull player) then {
 	titleCut ["", "BLACK FADED",9999];
 	enableSentences false;
 	enableRadio false;
 }; 
 
+// Global simulation system enabled
 enableDynamicSimulationSystem true;
 "Group" setDynamicSimulationDistance 600;
 
@@ -47,7 +48,6 @@ compo_startup =  call (compileFinal preprocessFileLineNumbers "DCW\composition\s
 compos_turrets=  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\turrets.sqf");
 compos_objects =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\objects.sqf");
 compos_medical =  call (compileFinal preprocessFileLineNumbers "DCW\composition\compound\medical.sqf");
- 
 
 // Default configuration is called here
 [] call (compileFinal preprocessFileLineNumbers "DCW\config\config-default.sqf"); 
@@ -63,10 +63,6 @@ if (ACE_ENABLED) then {
 
 // Wait until everything is ready
 waitUntil {count ([] call DCW_fnc_allPlayers) > 0 && time > 0 };
-
-
-//DCW_STARTED = true;
-//titleCut ["", "BLACK IN",1];
 
 // Public variables
 call (compileFinal preprocessFileLineNumbers "DCW\variables.sqf"); 

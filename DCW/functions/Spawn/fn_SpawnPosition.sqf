@@ -6,13 +6,14 @@
     {VERSION}
 
   Description:
-    TODO
+    Get the enterable buildings in a position
 
   Parameters:
-    0: OBJECT - TODO
+    0: ARRAY - pos
+    1: NUMBER - radius
 
   Returns:
-    BOOL - true 
+    ARRAY - [positions,buildings] list of buildings and positions 
 */
 
 //list buildings

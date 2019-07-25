@@ -6,13 +6,15 @@
     {VERSION}
 
   Description:
-    TODO
+    IED spawning on roads randomly
 
   Parameters:
-    0: OBJECT - TODO
+    0: ARRAY - Position
+    1: NUMBER - Radius
+    2: NUMBER - Number
 
   Returns:
-    BOOL - true 
+    ARRAY - array of ied objects + random garbage objects (Used for the cache system)
 */
 
 private["_pos","_radius","_nb","_roads","_car","_cars","_ied"];
@@ -32,7 +34,11 @@ private _ieds = [];
 private _roads = _pos nearRoads (_radius + 300);
 private _roadSelects = [];
 private _i = _nb;
+
+// If no roads found, exit the loop
 if (count _roads == 0) exitWith {_ieds};
+
+// Select a few roads;
 while {_i > 0} do {
 	if (_i > count _roads) exitWith{};
     _rnd = _roads call BIS_fnc_selectRandom;
@@ -41,9 +47,8 @@ while {_i > 0} do {
     _i = _i-1;
 };
 
-
+// Create the ied on the roads selected
 {
-	_x;
 	_ied=selectRandom iedList;
 	_junk=selectRandom iedJunk;
 	_ied = createMine[_ied,getPosATL _x,[],8];
@@ -51,7 +56,7 @@ while {_i > 0} do {
 	_ied setDir(random 359);
 	_ied allowDamage true;
 	_ieds pushBack _ied;
-	
+
 	_iedJunk=createVehicle[_junk,getPosATL _ied,[],0,"NONE"];
 	_iedJunk setPosATL(getPosATL _iedJunk select 2+1);
 	_iedJunk enableSimulationGlobal false;
@@ -63,6 +68,7 @@ while {_i > 0} do {
 	_ieds pushBack _iedJunk;
 
 	if (count _roads == 0)exitWith {};
+
 	_jnkR=selectRandom _roads;
 	_junk=createVehicle[_junk,getPosATL _jnkR,[],8,"NONE"];
 	_junk setPosATL(getPosATL _junk select 2+1);

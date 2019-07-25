@@ -1,3 +1,20 @@
+
+
+/*
+  Author: 
+    Bidass
+
+  Version:
+    {VERSION}
+
+  Description:
+    Spawn a defend task
+
+  Parameters:
+    0: ARRAY - Compound config array
+
+*/
+
 params["_compound"];
 
 _units = [];
@@ -19,40 +36,28 @@ _unitsInCompound = _compound select 5;
 foreach _unitsInCompound;
 
 for "_j" from 1 to _nbGroups do {
+
 	_grp = createGroup SIDE_ENEMY;
 	_spawnPos = [_compound select 1, .65*SPAWN_DISTANCE,.65*(SPAWN_DISTANCE+100), 1, 0, .3, 0, MARKER_WHITE_LIST] call BIS_fnc_findSafePos;
-	//_unitName = ENEMY_LIST_CARS call BIS_fnc_selectRandom;
-	//_car = ([_spawnPos, random 360,_unitName, _grp] call bis_fnc_spawnvehicle)  select 0;
-	//_car enableDynamicSimulation false;
-	_nbUnits =  4 + floor(random 6); // min (count (fullCrew [_car,"cargo",true]));
-	//(driver _car) setBehaviour "AWARE";
-	//{_units pushback _x; _x enableDynamicSimulation false; }foreach crew _car;
+	_nbUnits =  4 + floor(random 6); 
 
 	for "_xc" from 1 to _nbUnits  do {
 		_unit =[_grp,_spawnPos,true] call DCW_fnc_spawnEnemy;
-		//_unit moveInCargo _car;
 		_unit setBehaviour "AWARE";
 		_unit setSpeedMode "FULL";
 		_unit enableDynamicSimulation false;
 		_units pushback _unit;
 	};
-	
-	// If not many units in car. Spawn a little team of soldier 
-	// At the back of the vehicle
-	/*if (_nbUnits < 7) then {
-		for "_xc" from 1 to 4  do {
-			_unit =[_grp,[_spawnPos,6,180] call BIS_fnc_relPos,true] call DCW_fnc_spawnEnemy;
-			_units pushback _unit;
-			_unit enableDynamicSimulation false;
-		};
-	};*/
 
-	_dir = round([_spawnPos,_compound select 1] call BIS_fnc_dirTo);
 		
 	_mkrName = format["DCW_defend_%1",str _j];
 	if (getMarkerColor _mkrName !="") then{
 		deleteMarker _mkrName;
 	};
+
+	// Calculate direction for the marker
+	_dir = round([_spawnPos,_compound select 1] call BIS_fnc_dirTo);
+
 	_marker = createMarker [_mkrName,_spawnPos];
 	_marker setMarkerShape "ICON";
 	_marker setMarkerColor "ColorRed";
