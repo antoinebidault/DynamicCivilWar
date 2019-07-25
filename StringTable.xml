@@ -238,7 +238,7 @@
         <Original>Impossible to build the camp here. Check there is not any object in front of you.</Original>
         <English>Impossible to build the camp here. Check there is not any object in front of you.</English>
         <French>Impossible de construire le camp sur cet emplacement car il n'est pas assez plat ou il y a des objets bloquant la zone de construction.</French>
-      </Key>
+      </Key> 
       <Key ID="STR_DCW_actionCamp_hourLater">
         <Original>hour later...</Original>
         <English>hour later...</English>

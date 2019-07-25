@@ -64,7 +64,6 @@ And then for debugging
 ```
 npm start
 ```
-And for
 
 Credits
 ---
