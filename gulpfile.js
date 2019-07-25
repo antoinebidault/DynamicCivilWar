@@ -12,7 +12,7 @@ var pjson = require('./package.json');
 
 var version = pjson.version;
 
-var directories = ['DCW.Malden','DCW.Tanoa', 'DCW.Lythium', 'DCW.Takistan', 'DCW.Chongo','DCW.Module/functions'];  
+var directories = ['DCW.Malden','DCW.Enoch','DCW.Tanoa', 'DCW.Lythium', 'DCW.Takistan', 'DCW.Chongo','DCW.Module/functions'];  
 
 // Perform a default watch to the root folder
 gulp.task('default', function () {
@@ -26,7 +26,7 @@ gulp.task('default', function () {
         .on('change', function(data){ log('File change - copying ' + data ); })
         .on('added', function(data){ log('File added - copying '+ data ); })
         .pipe(replace('{VERSION}', version))
-        .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
+        .pipe(replace('{WORLD_NAME}', getDirectory(directories[i])))
         .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
 
         gulp.src('./stringtable.xml')
@@ -34,7 +34,7 @@ gulp.task('default', function () {
         .on('change', function(data){ log('File change - stringtable.xml ' ); })
         .on('added', function(data){ log('File added -  stringtable.xml '); })
         .pipe(replace('{VERSION}', version))
-        .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
+        .pipe(replace('{WORLD_NAME}', getDirectory(directories[i])))
         .pipe(gulp.dest('./'+directories[i]));  
     }
 
@@ -45,8 +45,12 @@ gulp.task('copy',function() {
         console.log(directories[i].split('.')[1]);
         gulp.src('DCW/**/*')
         .pipe(replace('{VERSION}', version))
-        .pipe(replace('{WORLD_NAME}', directories[i].split('.')[1]))
+        .pipe(replace('{WORLD_NAME}', getDirectory(directories[i])))
         .pipe(gulp.dest('./'+directories[i]+'/DCW'));  
+        gulp.src('./stringtable.xml')
+        .pipe(replace('{VERSION}', version))
+        .pipe(replace('{WORLD_NAME}', getDirectory(directories[i])))
+        .pipe(gulp.dest('./'+directories[i]));  
     } 
 });
 
@@ -57,6 +61,16 @@ gulp.task('clean', function () {
         .pipe(rimraf());
     }
 });
+
+function getDirectory(dir){
+    var island = dir.split('.')[1]
+    switch(island){
+        case "Enoch":
+            return "Livonia"
+         default:
+             return island;
+    }
+}
 
 const pbo = require('gulp-armapbo');
 
