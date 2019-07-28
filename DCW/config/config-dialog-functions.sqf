@@ -263,7 +263,7 @@ DCW_fnc_saveAndCloseConfigDialog = {
 			
 		sleep .5;
 
-		titleCut ["Configuring units...", "BLACK FADED", 999];
+		titleCut [localize "STR_DCW_configDialogFunctions_preparing", "BLACK FADED", 999];
 
 		// Execute mission setup on server
 		[] remoteExec ["DCW_fnc_missionSetup", 2];
