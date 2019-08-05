@@ -182,7 +182,7 @@ DCW_fnc_save = {
 	SHOW_SECTOR = 2122 call DCW_fnc_getValueChkBx;
 	publicVariable "SHOW_SECTOR";
 
-	if (SIDE_FRIENDLY == SIDE_ENEMY) exitWith{hintC "Choose a different enemy side !";false};
+	if (SIDE_FRIENDLY == SIDE_ENEMY) exitWith{hintC localize "STR_DCW_configDialogFunctions_chooseEnySide";false};
 
 	true;
 };
@@ -210,7 +210,7 @@ DCW_fnc_chooseLocation = {
 	//move the marker to the click position
 	player onMapSingleClick {
 		if (surfaceIsWater _pos || !(_pos inArea "GAME_ZONE")) then {
-			hint "Please, select a position on the ground";
+			hint localize "STR_DCW_configDialogFunctions_selectPos";
 		}else{
 			"marker_base" setMarkerPos _pos;
 			marker_setup = true;
@@ -263,7 +263,7 @@ DCW_fnc_saveAndCloseConfigDialog = {
 			
 		sleep .5;
 
-		titleCut ["Configuring units...", "BLACK FADED", 999];
+		titleCut [localize "STR_DCW_configDialogFunctions_preparing", "BLACK FADED", 999];
 
 		// Execute mission setup on server
 		[] remoteExec ["DCW_fnc_missionSetup", 2];
@@ -334,7 +334,7 @@ DCW_fnc_editLoadout = {
 		sleep 1;
 		[ "dcw-arsenalof", "onEachFrame", {
 			if (isNull ( uiNamespace getVariable [ "BIS_fnc_arsenal_cam", objNull ])) then {
-				hintSilent "done";
+				hintSilent localize "STR_DCW_configDialogFunctions_done";
 				["dcw-arsenalof", "onEachFrame" ] call BIS_fnc_removeStackedEventHandler ;
 				[] spawn DCW_fnc_initcamera;
 				[] call DCW_fnc_openLoadoutDialog;
