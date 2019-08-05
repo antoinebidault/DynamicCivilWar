@@ -68,13 +68,13 @@ _this select 0 addEventHandler["FiredNear",
 		_civ removeAllEventHandlers "FiredNear";
 
 		//Action to make him calm down !
-		[_civ,["<t color='#cd8700'>Calm down !</t>",{
+		[_civ,["STR_DCW_handleKill_calm",{
 			params["_unit","_asker","_action"];
 			_unit removeAction _action;
 				if (!weaponLowered _asker)then{
 				_asker  action ["WeaponOnBack", _asker];
 			};
-			[_asker,"Calm down my friend !",false] call DCW_fnc_talk;
+			[_asker,"STR_DCW_handleKill_calmFriend",false] call DCW_fnc_talk;
 			_unit stop true;
 			_unit  setVariable["civ_affraid",false];
 			sleep .3;
