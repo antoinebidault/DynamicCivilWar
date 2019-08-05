@@ -34,7 +34,7 @@ class LOADOUT_DIALOG
           idc = 3333;
           style = 2;
           sizeEx = .1;
-          text = "DYNAMIC CIVIL WAR"; //--- ToDo: Localize;
+          text = $STR_DCW_loadoutDialog_DCW ;
           x = 3.5 * GUI_GRID_W + GUI_GRID_X;
           y = 0.5 * GUI_GRID_H + GUI_GRID_Y;
           w = 32 * GUI_GRID_W;
