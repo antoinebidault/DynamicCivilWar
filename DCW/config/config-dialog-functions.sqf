@@ -1,13 +1,10 @@
 /*
 	Author: 
 		Bidass
-
   Version:
     {VERSION}
-
 	Description:
 		Functions library for the config dialog
-
 */
 
 
@@ -182,7 +179,7 @@ DCW_fnc_save = {
 	SHOW_SECTOR = 2122 call DCW_fnc_getValueChkBx;
 	publicVariable "SHOW_SECTOR";
 
-	if (SIDE_FRIENDLY == SIDE_ENEMY) exitWith{hintC "Choose a different enemy side !";false};
+	if (SIDE_FRIENDLY == SIDE_ENEMY) exitWith{hintC localize "STR_DCW_configDialogFunctions_chooseEnySide";false};
 
 	true;
 };
@@ -210,7 +207,7 @@ DCW_fnc_chooseLocation = {
 	//move the marker to the click position
 	player onMapSingleClick {
 		if (surfaceIsWater _pos || !(_pos inArea "GAME_ZONE")) then {
-			hint "Please, select a position on the ground";
+			hint localize "STR_DCW_configDialogFunctions_selectPos";
 		}else{
 			"marker_base" setMarkerPos _pos;
 			marker_setup = true;
@@ -263,7 +260,7 @@ DCW_fnc_saveAndCloseConfigDialog = {
 			
 		sleep .5;
 
-		titleCut ["Configuring units...", "BLACK FADED", 999];
+		titleCut [localize "STR_DCW_configDialogFunctions_preparing", "BLACK FADED", 999];
 
 		// Execute mission setup on server
 		[] remoteExec ["DCW_fnc_missionSetup", 2];
@@ -334,7 +331,7 @@ DCW_fnc_editLoadout = {
 		sleep 1;
 		[ "dcw-arsenalof", "onEachFrame", {
 			if (isNull ( uiNamespace getVariable [ "BIS_fnc_arsenal_cam", objNull ])) then {
-				hintSilent "done";
+				hintSilent localize "STR_DCW_configDialogFunctions_done";
 				["dcw-arsenalof", "onEachFrame" ] call BIS_fnc_removeStackedEventHandler ;
 				[] spawn DCW_fnc_initcamera;
 				[] call DCW_fnc_openLoadoutDialog;
@@ -404,7 +401,7 @@ DCW_fnc_switchFaction = {
 DCW_fnc_displayUnitName ={
 	_ctrl = ((findDisplay 5001) displayCtrl 4444) ;
 	 //getText(configfile >> "CfgVehicles" >> typeOf UNIT_SHOWCASE >> "displayName")
-	_text = format["%1 %2", name UNIT_SHOWCASE,if ( UNIT_SHOWCASE == leader GROUP_PLAYERS ) then {"(player)"} else { "" }];
+	_text = format["%1 %2", name UNIT_SHOWCASE,if ( UNIT_SHOWCASE == leader GROUP_PLAYERS ) then {localize "STR_DCW_configDialogFunctions_player"} else { "" }];
     ctrlSetText [4444,_text];
 };
 
@@ -428,59 +425,83 @@ DCW_fnc_openConfigDialog = {
 
 	//Time
 	private _ctrlListTime = _display displayCtrl 2100;
-	_ctrlListTime lbAdd "Night";
-	_ctrlListTime lbSetValue  [0,23];
-	_ctrlListTime lbAdd  "Early morning";
-	_ctrlListTime lbSetValue  [1,7];
-	_ctrlListTime lbAdd  "Afternoon";
-	_ctrlListTime lbSetValue  [2,12];
-	_ctrlListTime lbAdd "Evening";
-	_ctrlListTime lbSetValue  [3,19];
-	_ctrlListTime lbSetCurSel  2;
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_earlyMorning";
+	_ctrlListTime lbSetValue  [0,4];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_sunRise";
+	_ctrlListTime lbSetValue  [1,6];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_morning";
+	_ctrlListTime lbSetValue  [2,8];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_morningAdvanced";
+	_ctrlListTime lbSetValue  [3,10];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_noon";
+	_ctrlListTime lbSetValue  [4,12];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_startAfternoon";
+	_ctrlListTime lbSetValue  [5,14];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_afternoon";
+	_ctrlListTime lbSetValue  [6,16];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_endAfternoon";
+	_ctrlListTime lbSetValue  [7,18];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_sunset";
+	_ctrlListTime lbSetValue  [8,20];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_evening";
+	_ctrlListTime lbSetValue  [9,22];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_midnight";
+	_ctrlListTime lbSetValue  [10,0];
+	_ctrlListTime lbAdd localize "STR_DCW_missionParameters_darknight";
+	_ctrlListTime lbSetValue  [11,2];
+	_ctrlListTime lbSetCurSel  4;
 	
 
 
 	//Weather
 	private _ctrlListWeather = _display displayCtrl 2101;
-	_ctrlListWeather lbAdd "Beautiful";
+	_ctrlListWeather lbAdd localize "STR_DCW_configDialogFunctions_weatherBeautiful";
 	_ctrlListWeather lbSetValue  [0,0];
-	_ctrlListWeather lbAdd "Clouds";
+	_ctrlListWeather lbAdd localize "STR_DCW_configDialogFunctions_weatherClouds";
 	_ctrlListWeather lbSetValue  [1,25];
-	_ctrlListWeather lbAdd  "Average";
+	_ctrlListWeather lbAdd localize "STR_DCW_configDialogFunctions_weatherAverage";
 	_ctrlListWeather lbSetValue  [2,50];
-	_ctrlListWeather lbAdd "Storm";
+	_ctrlListWeather lbAdd localize "STR_DCW_configDialogFunctions_weatherStorm";
 	_ctrlListWeather lbSetValue  [3,70];
-	_ctrlListWeather lbAdd "Rain";
+	_ctrlListWeather lbAdd localize "STR_DCW_configDialogFunctions_weatherRain";
 	_ctrlListWeather lbSetValue  [4,100];
-	_ctrlListWeather lbSetCurSel  1;
+	_ctrlListWeather lbSetCurSel  2;
 
 	//Population
 	private _ctrlListPopulation = _display displayCtrl 2102;
 
-	_ctrlListPopulation lbAdd "Highest (50%)";
+	_ctrlListPopulation lbAdd localize "STR_DCW_configDialogFunctions_populationHighest";
 	_ctrlListPopulation lbSetValue  [0,50];
-	_ctrlListPopulation lbAdd "High (25%)";
+	_ctrlListPopulation lbAdd localize "STR_DCW_configDialogFunctions_populationHigh";
 	_ctrlListPopulation lbSetValue  [1,25];
-	_ctrlListPopulation lbAdd  "Standard (5%)";
+	_ctrlListPopulation lbAdd localize "STR_DCW_configDialogFunctions_populationStandard";
 	_ctrlListPopulation lbSetValue  [2,5];
-	_ctrlListPopulation lbAdd "Low (3%)";
+	_ctrlListPopulation lbAdd localize "STR_DCW_configDialogFunctions_populationLow";
 	_ctrlListPopulation lbSetValue  [3,3];
 	_ctrlListPopulation lbSetCurSel  2;
 
 
-	//Weather
+	//RespawnNumber
 	private _ctrlListResp = _display displayCtrl 2112;
-	_ctrlListResp lbAdd "None";
+	_ctrlListResp lbAdd localize "STR_DCW_configDialogFunctions_respawnNone";
 	_ctrlListResp lbSetValue  [0,0];
-	_ctrlListResp lbAdd  "4";
-	_ctrlListResp lbSetValue  [1,4];
+	_ctrlListResp lbAdd  "1";
+	_ctrlListResp lbSetValue  [1,1];
+	_ctrlListResp lbAdd "2";
+	_ctrlListResp lbSetValue  [2,2];
+	_ctrlListResp lbAdd "3";
+	_ctrlListResp lbSetValue  [3,3];
+	_ctrlListResp lbAdd "4";
+	_ctrlListResp lbSetValue  [4,4];
+	_ctrlListResp lbAdd "5";
+	_ctrlListResp lbSetValue  [5,5];
 	_ctrlListResp lbAdd "10";
-	_ctrlListResp lbSetValue  [2,10];
-	_ctrlListResp lbAdd "40";
-	_ctrlListResp lbSetValue  [3,40];
-	_ctrlListResp lbAdd "Infinite";
-	_ctrlListResp lbSetValue  [4,-1];
-	_ctrlListResp lbSetCurSel  1;
+	_ctrlListResp lbSetValue  [6,10];
+	_ctrlListResp lbAdd "50";
+	_ctrlListResp lbSetValue  [7,50];	
+	_ctrlListResp lbAdd localize "STR_DCW_missionParameters_unlimited";
+	_ctrlListResp lbSetValue  [8,-1];
+	_ctrlListResp lbSetCurSel  4;
 
 	//Data
 	private _ctrlReviveOn = _display displayCtrl 2104;
