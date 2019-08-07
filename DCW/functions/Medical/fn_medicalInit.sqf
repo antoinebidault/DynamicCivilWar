@@ -4,7 +4,7 @@
  * Author: Bidass
 
   Version:
-    {VERSION}
+    0.9.1
  * License : GNU (GPL)
  * Revive system
  */
@@ -57,7 +57,7 @@ while {true} do {
 
 		deleteMarker "medevac_marker";
 
-		[HQ,"We're waiting now for your mark on the map !",true] remoteExec ["DCW_fnc_talk"];
+		[HQ,localize "STR_DCW_voices_HQ_waitingMark",true] remoteExec ["DCW_fnc_talk"];
 
 		//open the map
 		if ((count _soldiersDead > 0) && isPlayer _leader) then {
@@ -82,7 +82,7 @@ while {true} do {
 				publicVariableServer "MEDEVAC_State";
 
 				_leader onMapSingleClick "";
-				[HQ,"I copy!",true] remoteExec ["DCW_fnc_talk"];
+				[HQ,localize "STR_DCW_voices_HQ_copy",true] remoteExec ["DCW_fnc_talk"];
 				sleep 1;
 				openMap false;
 
@@ -107,20 +107,20 @@ while {true} do {
 		[_leader,_soldiersDead] call DCW_fnc_caller;
 	}else{
 		if (MEDEVAC_State == "succeeded") then {
-			[HQ,"Medevac mission succeeded",true] remoteExec ["DCW_fnc_talk"];
+			[HQ,localize "STR_DCW_voices_HQ_medevacSucceeded",true] remoteExec ["DCW_fnc_talk"];
 			[_transportHelo,_group] call DCW_fnc_deleteMedevac;
 			MEDEVAC_State = "standby";
 			sleep 120;
 		} else {
 			if (MEDEVAC_State == "aborted") then {
-				[HQ,"Medevac mission aborted",true] remoteExec ["DCW_fnc_talk"];
+				[HQ,localize "STR_DCW_voices_HQ_medevacAborted",true] remoteExec ["DCW_fnc_talk"];
 				_transportHelo move _posChopper;
 				sleep 120;
 				[_transportHelo,_group] call DCW_fnc_deleteMedevac;
 				MEDEVAC_State = "standby";
 			} else {
 				if (MEDEVAC_State == "inbound" && (!alive _transportHelo || damage _transportHelo > .6)) then {
-					[HQ,"The chopper is destroyed ! MEDEVAC helicopter available in 2 minutes",true] remoteExec ["DCW_fnc_talk"];
+					[HQ,localize "STR_DCW_voices_HQ_medevacDestroyed",true] remoteExec ["DCW_fnc_talk"];
 					sleep 120;	
 					[_transportHelo,_group] call DCW_fnc_deleteMedevac;
 					MEDEVAC_State = "standby";
@@ -130,4 +130,3 @@ while {true} do {
 	};
 	sleep 3;
 };*/
-
