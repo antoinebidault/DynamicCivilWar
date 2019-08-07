@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     Init the state of the chopper helo evacuation
@@ -23,11 +23,11 @@ params["_unit","_soldiersDead"];
 
 if (MEDEVAC_State == "menu") then {
 	// Delete all useless commmenu item
-	MEDEVAC_MENU_LASTID = [_unit, "Medevac"] call BIS_fnc_addCommMenuItem;
+	MEDEVAC_MENU_LASTID = [_unit, localize "STR_DCW_fnCaller_medevacMenu"] call BIS_fnc_addCommMenuItem;
 };
 
 if (MEDEVAC_State == "inbound") then{
-	MEDEVAC_action = _unit addAction ["<t color='#cd8700'>Abort medevac</t>", { 
+	MEDEVAC_action = _unit addAction [localize "STR_DCW_fnCaller_abortMedevac", { 
 		params["_unit","_actionId"];
 		_unit removeAction MEDEVAC_action;
 		MEDEVAC_State = "aborted";
