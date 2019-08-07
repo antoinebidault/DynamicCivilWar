@@ -33,7 +33,7 @@ class DCW_DIALOG
          class DCW_BUTTONARTILLERY: RscButton
          {
           idc = -1;
-          text = "ARTILLERY (-300 points)";
+          text = $STR_DCW_buySupport_artillery;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.5 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
@@ -44,7 +44,7 @@ class DCW_DIALOG
         class DCW_BUTTONCAS: RscButton
          {
           idc = -1;
-          text = "CAS Helicopter (-400 points)";
+          text = $STR_DCW_buySupport_cas;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.45 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
@@ -54,7 +54,7 @@ class DCW_DIALOG
          class DCW_BUTTONAMMO: RscButton
          {
           idc = -1;
-          text = "AMMO (-100 points)";
+          text = $STR_DCW_buySupport_ammo;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.4 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
@@ -64,7 +64,7 @@ class DCW_DIALOG
          class DCW_BUTTONTRANSPORT: RscButton
          {
           idc = -1;
-          text = "TRANSPORT (-150 points)";
+          text = $STR_DCW_buySupport_transport;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.35 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
@@ -75,7 +75,7 @@ class DCW_DIALOG
          class DCW_BUTTONUAV: RscButton
          {
           idc = -1;
-          text = "UAV MQ-9 (-1000 points)";
+          text = $STR_DCW_buySupport_uav;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.55 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
@@ -87,7 +87,7 @@ class DCW_DIALOG
            class DCW_BUTTONVEHICLE: RscButton
          {
           idc = -1;
-          text = "vehicle paradrop (-150 points)";
+          text = $STR_DCW_buySupport_vehiclePara;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.6 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
@@ -99,7 +99,7 @@ class DCW_DIALOG
            class DCW_BUTTONOUTPOST: RscButton
          {
           idc = -1;
-          text = "Outpost building kit (-300 points)";
+          text = $STR_DCW_buySupport_outpostBuilding;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.65 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
@@ -111,7 +111,7 @@ class DCW_DIALOG
         class DCW_BUTTONNO: RscButton
         {
           idc = -1;
-          text = "Back";
+          text = $STR_DCW_buySupport_back;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.75 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
