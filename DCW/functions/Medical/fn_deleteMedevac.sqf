@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     TODO
@@ -22,4 +22,9 @@ if(!isNull _helo)then{
 	{ deleteVehicle _x ;} forEach units interventionGroup;
 	{ deleteVehicle _x ;} forEach crew _helo;
 	deleteVehicle _helo;
+	
+sleep 5;
+	
+[HQ,localize "STR_DCW_voices_HQ_rtb",true] remoteExec ["DCW_fnc_talk"];
+
 };
