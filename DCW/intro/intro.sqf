@@ -1,6 +1,5 @@
-
 0 fadeSound .2;
-titleCut ["Mission loading...", "BLACK FADED",999];
+titleCut [localize "STR_DCW_intro_loading", "BLACK FADED",999];
 _cam = "camera" camcreate START_POSITION;
 _cam cameraeffect ["internal", "back"];
 showCinemaBorder true;
@@ -22,13 +21,21 @@ playMusic "seal";
 
 [] spawn {
 	sleep 4;
-	nul = ["Bidass presents",.3,.7,8] spawn BIS_fnc_dynamicText;
+	nul = [localize "STR_DCW_intro_authorPresent",.3,.7,8] spawn BIS_fnc_dynamicText;
 	sleep 14;
-	nul = ["An arma III scenario",.5,.2,8] spawn BIS_fnc_dynamicText;
+	nul = [localize "STR_DCW_intro_scenario",.5,.2,8] spawn BIS_fnc_dynamicText;
 	sleep 14;
-	nul = ["<t color='#cd8700' size = '2.4'>Dynamic Civil War</t>",-1,-1,10,1,0] spawn BIS_fnc_dynamicText;
-	sleep 13;
-	nul = ["Music by Explosion in the sky",.3,.7,5] spawn BIS_fnc_dynamicText;
+	nul = ["<t color='#cd8700' size = '2.4'>DYNAMIC CIVIL WAR</t>",-1,-1,10,1,0] spawn BIS_fnc_dynamicText; //maybe splash?
+	sleep 14;
+	nul = [localize "STR_DCW_intro_oriIdea",.2,.3,5] spawn BIS_fnc_dynamicText;
+	sleep 8;
+	nul = [localize "STR_DCW_intro_trad",.3,.2,5] spawn BIS_fnc_dynamicText;
+	sleep 8;
+	nul = [localize "STR_DCW_intro_music",.3,.7,5] spawn BIS_fnc_dynamicText;
+	sleep 8;
+	nul = [localize "STR_DCW_intro_speThanks",.1,.1,5] spawn BIS_fnc_dynamicText;
+	sleep 5;
+	nul = [localize "STR_DCW_intro_speThanksNovakat77",.3,.5,5] spawn BIS_fnc_dynamicText;
 };
 
 _camPos =  [getPos _chopper, 400,[getPos _chopper,_dest] call BIS_fnc_dirTo] call BIS_fnc_relPos;
@@ -77,4 +84,3 @@ _cam cameraeffect ["terminate", "back"];
 ["",0,true] call bis_fnc_setppeffecttemplate;
 
 //[player, "All units deployed to the insertion point", 150, 250, 75, 1, [], 0, false] call BIS_fnc_establishingShot;
-
