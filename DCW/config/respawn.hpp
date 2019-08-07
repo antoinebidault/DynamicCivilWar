@@ -23,7 +23,7 @@ class RESPAWN_DIALOG
          class RESPAWNFRAME: RscFrame
          {
           idc = -1;
-          text = "Respawn options";
+          text = $STR_DCW_respawn_respawnOptions;
           x = 0.390476 * safezoneW + safezoneX;
           y = 0.290476 * safezoneH + safezoneY;
           w = 0.236905 * safezoneW;
@@ -33,7 +33,7 @@ class RESPAWN_DIALOG
          class BUTTONRESPAWN_CAMP: RscButton
          {
           idc = 4101;
-          text = "Camp";
+          text = $STR_DCW_respawn_camp;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.5 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
@@ -44,7 +44,7 @@ class RESPAWN_DIALOG
         class BUTTONRESPAWNBASE: RscButton
          {
           idc = 4102;
-          text = "Base";
+          text = $STR_DCW_respawn_base;
           x = 0.4 * safezoneW + safezoneX;
           y = 0.45 * safezoneH + safezoneY;
           w = 0.22 * safezoneW;
