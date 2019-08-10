@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     Get a clean compound state label
@@ -15,24 +15,24 @@
     BOOL - true 
 */
 
-_name = "Secured";
+_name = localize "STR_DCW_GetCompoundStateLabel_secured";
 if (_this == "secured") then{
-	_name = "Secured";
+	_name = localize "STR_DCW_GetCompoundStateLabel_secured";
 }else{
 	if (_this == "neutral") then {
-		_name = "Neutral settlement";
+		_name = localize "STR_DCW_GetCompoundStateLabel_neutral";
 	}else {
 		if (_this == "bastion") then {
-			_name = "Enemy bastion";
+			_name = localize "STR_DCW_GetCompoundStateLabel_eniBastion";
 		}else {
 			if (_this == "humanitary") then {
-				_name = "Humanitary mission";
+				_name = localize "STR_DCW_GetCompoundStateLabel_humanitary";
 			} else {
 				if (_this == "massacred") then {
-					_name = "Civilian massacred";
+					_name = localize "STR_DCW_GetCompoundStateLabel_civilianMassacred";
 				} else {
 					if (_this == "resistance") then {
-						_name = "Resistance settlement";
+						_name = localize "STR_DCW_GetCompoundStateLabel_resistance";
 					}
 				};
 			};
@@ -42,5 +42,7 @@ if (_this == "secured") then{
 
 
 _name;
+
+
 
 
