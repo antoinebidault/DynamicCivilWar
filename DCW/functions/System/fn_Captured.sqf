@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     Trigger when unit is captured.
@@ -22,13 +22,13 @@ params["_player"];
 
 COMPO_OBJS = [];
 
-_player action ["Surrender", _player]; 
+_player action [localize "STR_DCW_captured_surrender", _player]; 
 _player setVariable ["dcw_surrender_action", true, false]; 
 _player setCaptive true;
 _wasTheLeader = (leader GROUP_PLAYERS == _player);
 
 sleep 3;
-cutText ["You've been captured","BLACK OUT", 7];
+cutText [localize "STR_DCW_captured_captured","BLACK OUT", 7];
 sleep 7;
 
 // Find a random building pos at the first floor preferently.
@@ -120,7 +120,7 @@ if (!isMultiplayer) then {
 	setAccTime 6;
 };
 
-cutText ["6 hours later...","BLACK FADED", 7];
+cutText [localize "STR_DCW_captured_sixHours","BLACK FADED", 7];
 sleep 7;
 _general switchMove "Acts_Executioner_StandingLoop";
 cutText ["","BLACK IN", 7];
@@ -128,9 +128,9 @@ sleep 7;
 
 sleep 3;
 
-[_player, "I think you made a huge mistake, asshole !",false] call DCW_fnc_talk;
-[_general, "Shut up american... you just betrayed all of your team members.  You're just a traitor !",false] call DCW_fnc_talk;
-[_general, "And do you know what we do in our country to traitors like you ?",false] call DCW_fnc_talk;
+[_player, localize "STR_DCW_voices_teamLeader_hugeMistake",false] call DCW_fnc_talk;
+[_general, localize "STR_DCW_voices_general_shutUp",false] call DCW_fnc_talk;
+[_general, localize "STR_DCW_voices_general_traitor",false] call DCW_fnc_talk;
 
 // Animation 
 _general switchMove "Acts_Executioner_Backhand";
@@ -156,14 +156,14 @@ _player switchMove "Acts_ExecutionVictim_Loop";
 _general switchMove "Acts_Executioner_StandingLoop";
 
 sleep 5;
-cutText ["2 days later","BLACK OUT", 3];
+cutText [localize "STR_DCW_captured_twoDays","BLACK OUT", 3];
 sleep 3;
-cutText ["2 days later...","BLACK FADED", 999];
+cutText [localize "STR_DCW_captured_twoDays","BLACK FADED", 999];
 detach _general;
 deleteVehicle _general;
 sleep 7;
 
-cutText ["2 days later...","BLACK IN", 3];
+cutText [localize "STR_DCW_captured_twoDays","BLACK IN", 3];
 
 if (!isMultiplayer) then {
 	setAccTime 44;
@@ -179,7 +179,7 @@ while {_notWatched} do
 	{
 		if (_player distance _x < 1.675) then {
 			if (_actionId == 0) then {
-				_actionId = _player addAction ["kill", {
+				_actionId = _player addAction [localize "STR_DCW_captured_kill", {
 					params ["_target", "_caller", "_actionId", "_arguments"];
 					_soldier = _arguments select 0;
 					_target switchMove "acts_miller_knockout";
@@ -197,7 +197,7 @@ while {_notWatched} do
 		if (side _x == SIDE_ENEMY && _x knowsAbout _player > 1) then{
 			_know =  [_x,_player] call DCW_fnc_getVisibility; 
 			if ([_x,_player] call DCW_fnc_getVisibility > 50 && alive _x) then{
-				hint "You've been watched";
+				hint localize "STR_DCW_captured_beenWatched";
 				_notWatched = false;
 				_player setCaptive false;
 			};
@@ -211,7 +211,7 @@ while {_notWatched} do
 	sleep 0.4;
 };
 
-hintSilent "You've been watched by enemies. Go back to your troops as fast as possible";
+hintSilent localize "STR_DCW_captured_beenWatched2";
 
 waitUntil { sleep .3; (lifestate _player == "INCAPACITATED")  || { side _x == SIDE_FRIENDLY && (_player distance _x) < 10} count allUnits > 1 };
 
@@ -225,9 +225,9 @@ if (_wasTheLeader) then{group _player selectLeader _player;};
 
 if (_wasKIA) then {
 	waitUntil {lifestate _player != "INCAPACITATED"};
-	[leader GROUP_PLAYERS, "Good to see you back home !",false] call DCW_fnc_talk;
+	[leader GROUP_PLAYERS, localize "STR_DCW_voices_teamLeader_goodToSeeYou",false] call DCW_fnc_talk;
 } else {
-	[leader GROUP_PLAYERS, "Welcome back mate, you seem to have some interresting news ! What did you see during your captivity ?",false] call DCW_fnc_talk;
+	[leader GROUP_PLAYERS, localize "STR_DCW_voices_teamLeader_welcomeBack",false] call DCW_fnc_talk;
 	[_player] remoteExec ["DCW_fnc_mainobjectiveIntel"];
 };
 
