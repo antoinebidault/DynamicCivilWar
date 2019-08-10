@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     Player's surrendering system 
@@ -18,7 +18,7 @@ map_click_handler =
 	{
 		if (DCW_map_teleport_enabled) then {
 			player setPos _pos; // _pos is predefined for onMapSingleClick
-			systemChat format ["Teleported to map position; %1", _pos];
+			systemChat format [localize "STR_DCW_teleport_teleportToMapPosition", _pos];
 			DCW_map_teleport_enabled = false;
 			openMap false;
 		};
@@ -28,7 +28,7 @@ map_click_handler =
 
 _id = _this addAction
 [
-	"Teleport to position on map",
+	localize "STR_DCW_teleport_teleportTo",
 	{
 		DCW_map_teleport_enabled = true;
 		if (!visibleMap) then {
@@ -39,7 +39,7 @@ _id = _this addAction
 		mapCenterOnCamera ((findDisplay 12) displayCtrl 51);
 		waitUntil {!visibleMap};
 		if (DCW_map_teleport_enabled) then {
-			systemChat "Teleport to map position cancelled.";
+			systemChat localize "STR_DCW_teleport_teleportCancel";
 		};
 		DCW_map_teleport_enabled = false;
 	},
