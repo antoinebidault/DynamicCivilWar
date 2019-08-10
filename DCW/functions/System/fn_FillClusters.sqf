@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     Fill up the cluster (An array of marker) with population pool data, states...etc...
@@ -19,7 +19,7 @@
 
 params ["_clusters"];
 
-diag_log "[FillClusters] Start process";
+diag_log localize "STR_DCW_fillClusters_start";
 
 _markers = [];
 _popbase = 0;
