@@ -64,7 +64,7 @@ if (_state == "secured" ) then{
 
 	_units = _marker select 5;
 	_pos = _marker select 1;
-	_radius = _marker select 4;
+	_radius = _marker select 4; 
 	_meetingPointPosition = _marker select 7;
 	_units = _units +  ([_pos,_radius,_populations select 9,_meetingPointPosition, _marker select 11] call DCW_fnc_spawnFriendlyOutpost);
 	_marker  set [5,_units];
