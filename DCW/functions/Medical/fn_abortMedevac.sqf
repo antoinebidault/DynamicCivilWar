@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     TODO
@@ -17,4 +17,4 @@
 
 params["_helo"];
 MEDEVAC_ISABORTED = true;
-hint "The medevac is aborted";
+hint localize "STR_DCW_abortMedevac_hint";
