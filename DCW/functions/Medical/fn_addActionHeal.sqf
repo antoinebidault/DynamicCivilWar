@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     Add the heal action to unit
@@ -19,16 +19,18 @@
 if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 
 [_this, {
-	_actionId = [_this,"Heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
+	_actionId = [_this,localize "STR_DCW_addActionHeal_heal","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa","_this distance _target <= 2","true",{
 			params["_injured","_healer"];
 			if (!alive _injured) exitWith {};
 			_healer setVariable["DCW_heal_injured", _injured, true];
 			_injured setVariable["DCW_healer", _healer, true];
 			[_healer, "medicStart"] remoteExec ["playActionNow"];
 			[_injured,"DCW_fnc_carry"] spawn DCW_fnc_removeAction; 
-			[_injured,"Aaaargh...", false] spawn DCW_fnc_talk;
-			[_injured,["Sorry man... I just fucked up...","Shit ! It's a fucking mess...","I am in pain...","That hurts !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
-			[_healer,["Don't give up mate !","Stay with us !","Stay alive !","We won't abandon you !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+			[_injured,[localize "STR_DCW_voices_injured_Argh",localize "STR_DCW_voices_injured_ouch"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+			sleep 2;
+			[_injured,[localize "STR_DCW_voices_injured_sryMan",localize "STR_DCW_voices_injured_fuckingMess",localize "STR_DCW_voices_injured_iamPain",localize "STR_DCW_voices_injured_hurts",localize "STR_DCW_voices_injured_hitMe"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+			sleep 2;
+			[_healer,[localize "STR_DCW_voices_healer_dontGiveUp",localize "STR_DCW_voices_healer_stayWithUs",localize "STR_DCW_voices_healer_stayAlive",localize "STR_DCW_voices_healer_wontAbandonYou",localize "STR_DCW_voices_healer_keepOpenEyes"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
 			[_injured] spawn DCW_fnc_shout;
 			[_healer,_injured,20] spawn DCW_fnc_spawnHealEquipement;
 			_offset = [0,0,0];
@@ -63,7 +65,8 @@ if (_this getVariable["DCW_fnc_addActionHeal",-1] != -1) exitWith{};
 				[GROUP_PLAYERS,25] remoteExec ["DCW_fnc_updateScore",2];   
 			};
 			
-			[_healer,["Ok, you're good to go !","Get a cover to take back strength !"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+			[_healer,[localize "STR_DCW_voices_healer_yourGoodToGo",localize "STR_DCW_voices_healer_getCover",localize "STR_DCW_voices_healer_goodForYouBuddy"] call BIS_fnc_selectRandom, false] spawn DCW_fnc_talk;
+			sleep 2;
 			true;
 		},{
 			params["_injured","_healer"];
