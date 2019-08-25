@@ -1,40 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project name="DynamicCivilWar">
   <Package name="Support">
+	<Container name="buySupport">
+      <Key ID="STR_DCW_buySupport_artillery">
+        <Original>Artillery (-300 points)</Original>
+        <English>Artillery (-300 points)</English>
+        <French>Artillerie (-300 points)</French>
+		<German>Artillerie (-300 Punkte)</German>
+		<Spanish>Artillería (-300 puntos)</Spanish>
+		<Italian>Artiglieria (-300 punti)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_buySupport_cas">
+        <Original>CAS Helicopter (-400 points)</Original>
+        <English>CAS Helicopter (-400 points)</English>
+        <French>Hélicoptère CAS (-400 points)</French>
+		<German>CAS Hubschrauber (-400 Punkte)</German>
+		<Spanish>Helicóptero CAS (-400 puntos)</Spanish>
+		<Italian>CAS Helicopter (-400 punti)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_buySupport_ammo">
+        <Original>Ammo (-100 points)</Original>
+        <English>Ammo (-100 points)</English>
+        <French>Munition (-100 points)</French>
+		<German>Munition (-100 Punkte)</German>
+		<Spanish>Munición (-100 puntos)</Spanish>
+		<Italian>Munizioni (-100 punti)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_buySupport_transport">
+        <Original>Transport (-150 points)</Original>
+        <English>Transport (-100 points)</English>
+        <French>Transport (-100 points)</French>
+		<German>Transport (-150 Punkte)</German>
+		<Spanish>Transporte (-150 puntos)</Spanish>
+		<Italian>Trasporto (-150 punti)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_buySupport_uav">
+        <Original>UAV MQ-9 (-1000 points)</Original>
+        <English>UAV MQ-9 (-1000 points)</English>
+        <French>Drone MQ-9 (-100 points)</French>
+		<German>Drohne MQ-9 (-1000 Punkte)</German>
+		<Spanish>Drone MQ-9 (-1000 puntos)</Spanish>
+		<Italian>Drone MQ-9 (-1000 punti)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_buySupport_vehiclePara">
+        <Original>Vehicle Paradrop (-150 points)</Original>
+        <English>Vehicle Paradrop (-150 points)</English>
+        <French>Larguage de Véhicule (-150 points)</French>
+		<German>Fahrzeugparadrop (-150 Punkte)</German>
+		<Spanish>Paracaídas del vehículo (-150 puntos)</Spanish>
+		<Italian>Paracadute del veicolo (-150 punti)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_buySupport_outpostBuilding">
+        <Original>Outpost Building Kit (-300 points)</Original>
+        <English>Outpost Building Kit (-300 points)</English>
+        <French>Kit Construction de BOA (-300 points)</French>
+		<German>Baukasten</German>
+		<Spanish>Kit de construcción</Spanish>
+		<Italian>Kit di costruzione di base</Italian>
+      </Key>
+		<Key ID="STR_DCW_buySupport_back">
+        <Original>Back</Original>
+        <English>Back</English>
+        <French>Retour</French>
+		<German>Zurück</German>
+		<Spanish>Atrás</Spanish>
+		<Italian>Indietro</Italian>
+      </Key>
+    </Container>
     <Container name="AddSupportUI">
       <Key ID="STR_DCW_support_getSupportActionLabel">
         <Original>Get support</Original>
         <English>Get support</English>
         <French>Demander du soutien</French>
+		<German>Um die Unterstützung bitten</German>
+		<Spanish>Pedir del apoyo</Spanish>
+		<Italian>Chiedere del sostegno</Italian>
       </Key>
       <Key ID="STR_DCW_support_hint1">
         <Original>Wait the mission has finished to load...</Original>
         <English>Wait the mission has finished to load...</English>
         <French>Attendez que la mission termine son chargement...</French>
+		<German>Warten Sie, bis die Mission beendet ist...</German>
+		<Spanish>Espera a que la misión complete su carga...</Spanish>
+		<Italian>Aspettate che la missione finisca il suo carico...</Italian>
       </Key>
       <Key ID="STR_DCW_support_hint2">
         <Original>With this user interface, you can order supports with your points ! Interrogating civilian, destroying weapons caches, eliminating patrols will give you extra points.</Original>
         <English>With this user interface, you can order supports with your points ! Interrogating civilian, destroying weapons caches, eliminating patrols will give you extra points.</English>
-        <French>Avec cette interface, vous pouvez acheter du soutien avec vos points ! Interroger les civils, détruire les caches d'arme, éliminer les patrouilles vous donnera des points supplémentaires</French>
+        <French>Avec cette interface, vous pouvez acheter du soutien avec vos points ! Interroger des civils, détruire des caches d'arme, éliminer des patrouilles vous donnera des points supplémentaires.</French>
+		<German>Mit dieser Benutzer-Schnittstelle können Sie Unterstützungen mit Ihren Punkten bestellen(befehlen)! Abfragung des Zivilisten, Waffe-Verstecke zerstörend, Patrouillen beseitigend, wird Ihnen Extrapunkte geben.</German>
+		<Spanish>¡Con esta interfaz de usuario, usted puede pedir soportes con sus puntos! Interrogar a civiles, destruir alijos de armas, eliminar patrullas te dará puntos extra.</Spanish>
+		<Italian>Con questa interfaccia utente, è possibile ordinare i supporti con i punti! Interrogare civili, distruggere nascondigli di armi, eliminare pattuglie vi darà punti extra.</Italian>
       </Key>
     </Container>
     <Container name="Afford">
       <Key ID="STR_DCW_support_Hint3">
         <Original>Can't afford this</Original>
         <English>Can't afford this</English>
-        <French>Vous ne pouvez pas acheter cet élément</French>
+        <French>Vous ne pouvez pas acheter ceci</French>
+		<German>Sie können das nicht kaufen</German>
+		<Spanish>No puedes comprar esto</Spanish>
+		<Italian>Non potete comprare questo</Italian>
       </Key>
     </Container>
     <Container name="BuildingKit">
       <Key ID="STR_DCW_support_ImpossibleToDrop">
-        <Original>Impossible to setup a base on a compound or a friendly base.</Original>
-        <English>Impossible to setup a base on a compound or a friendly base.</English>
-        <French>Impossible de déployer un poste avancé sur des habitations.</French>
+        <Original>Impossible to set up a base on a compound or a friendly base.</Original>
+        <English>Impossible to set up a base on a compound or a friendly base.</English>
+        <French>Impossible de déployer une BOA (Base Opérationelle Avancée) sur des habitations ou une base amie.</French>
+		<German>Es ist unmöglich, einen Militärstützpunkt auf einem Dorf oder einer freundlichen Basis zu errichten.</German>
+		<Spanish>Imposible construir una base militar en un pueblo o en una base amistosa.</Spanish>
+		<Italian>Impossibile creare un basato su compound o un basato amico.</Italian>
       </Key>
       <Key ID="STR_DCW_support_tooMany">
         <Original>Impossible to setup a new base. You have too many base created</Original>
         <English>Impossible to setup a new base. You have too many base created</English>
-        <French>Impossible de créer une base ici, car vous en avez trop.</French>
+        <French>Impossible de créer une nouvelle base ici, car vous en avez trop.</French>
+		<German>Sie können hier keine neue Basis erstellen, weil Sie zu viele haben.</German>
+		<Spanish>No podemos crear una nueva base aquí, porque tenemos demasiadas.</Spanish>
+		<Italian>Impossibile creare una nuova base qui, perché ne hai troppi.</Italian>
       </Key>
     </Container>
   </Package>
@@ -43,104 +127,172 @@
       <Key ID="STR_DCW_configDialog_timeOfDay">
         <Original>Time of the day</Original>
         <English>Time of the day</English>
-        <French>Type de journée</French>
+        <French>Moment de la journée</French>
+		<German>Tageszeit</German>
+		<Spanish>Momento del día</Spanish>
+		<Italian>Momento della giornata</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_weather">
         <Original>Weather</Original>
         <English>Weather</English>
         <French>Météo</French>
+		<German>Wetter</German>
+		<Spanish>Clima</Spanish>
+		<Italian>Tempo</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_enemyPerc">
         <Original>Enemy compound percentage</Original>
         <English>Enemy compound percentage</English>
         <French>Pourcentage de villages ennemis</French>
+		<German>Prozentsatz der feindlichen Dörfer</German>
+		<Spanish>Porcentaje de aldeas enemigas</Spanish>
+		<Italian>Percentuale di villaggi nemici</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_friendlySide">
         <Original>Friendly side (Yours)</Original>
         <English>Friendly side (Yours)</English>
         <French>Votre camp</French>
+		<German>Freundliche Seite (Ihre)</German>
+		<Spanish>Lado amistoso (el Suyo)</Spanish>
+		<Italian>Lato amichevole (il Suo)</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_enemySide">
-        <Original>Enemy side </Original>
-        <English>Enemy side </English>
+        <Original>Enemy side</Original>
+        <English>Enemy side</English>
         <French>Camp ennemi</French>
+		<German>Gegnerische Seite</German>
+		<Spanish>Lado enemigo</Spanish>
+		<Italian>Lato di nemico</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_enemyFaction">
         <Original>Enemy faction</Original>
         <English>Enemy faction</English>
-        <French>Faction ennemi</French>
+        <French>Faction ennemie</French>
+		<German>Feindliche Fraktion</German>
+		<Spanish>Facción enemiga</Spanish>
+		<Italian>Fazione di nemico</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_friendlyFaction">
         <Original>Friendly faction (Yours)</Original>
         <English>Friendly faction (Yours)</English>
         <French>Votre faction</French>
+		<German>Deine Partei</German>
+		<Spanish>Tu facción</Spanish>
+		<Italian>La tua fazione</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_resistanceFaction">
-        <Original>Resistance side </Original>
-        <English>Resistance side </English>
-        <French>Camp de la resistance</French>
+        <Original>Resistance side</Original>
+        <English>Resistance side</English>
+        <French>Camp de la résistance</French>
+		<German>Partei Widerstand(Widerstandsfähigkeit)</German>
+		<Spanish>Facción resistencia</Spanish>
+		<Italian>Fazione resistenza</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_medevac">
         <Original>Enable AI medical system</Original>
         <English>Enable AI medical system</English>
-        <French>Activer le système de soin des IA's</French>
+        <French>Activer le système de soin (IA's)</French>
+		<German>Medizinische System aktivieren (AI)</German>
+		<Spanish>Activar el sistema médico (AI)</Spanish>
+		<Italian>Abilitare il sistema medico (AI)</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_compound">
         <Original>Compound markers visible</Original>
         <English>Compound markers visible</English>
-        <French>Marqueurs de blocs visibles</French>
+        <French>Marqueurs de ville visibles</French>
+		<German>Sichtbare Markierungen für Städte</German>
+		<Spanish>Marcadores de ciudad visibles</Spanish>
+		<Italian>Indicatori di città visibili</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_respawn">
         <Original>Enable respawn</Original>
         <English>Enable respawn</English>
         <French>Activer le respawn</French>
+		<German>Das Aufleben(Auferstehung) beschleunigen(aktivieren)</German>
+		<Spanish>Acelerar la ressurección</Spanish>
+		<Italian>Attivare la risurrezione</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_arsenal">
         <Original>Restricted arsenal (faction)</Original>
         <English>Restricted arsenal (faction)</English>
         <French>Arsenal restreint (faction)</French>
+		<German>Waffenlager beschränkt (Partei)</German>
+		<Spanish>Arsenal restringe (facción)</Spanish>
+		<Italian>Arsenale restringe (fazione)</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_civFaction">
         <Original>Civilian faction</Original>
         <English>Civilian faction</English>
-        <French>Faction civiles</French>
+        <French>Faction civile</French>
+		<German>Zivilpartei</German>
+		<Spanish>Facción civil</Spanish>
+		<Italian>Fazione civile</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_nextButton">
         <Original>Next (Loadout)</Original>
         <English>Next (Loadout)</English>
         <French>Suivant (Arsenal)</French>
+		<German>Entsprechend (Ausrüstung)</German>
+		<Spanish>Según (equipo)</Spanish>
+		<Italian>Seguendo (attrezzatura)</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_numberRespawn">
         <Original>Number of respawn</Original>
         <English>Number of respawn</English>
         <French>Nombre de réapparition</French>
+		<German>Anzahl von der Rückkehr</German>
+		<Spanish>Número de reaparición</Spanish>
+		<Italian>Numero di riapparizione</Italian>
       </Key>
       <Key ID="STR_DCW_configDialog_chooseLocation">
         <Original>Choose location</Original>
         <English>Choose location</English>
         <French>Choisir la DZ</French>
+		<German>Lage wählen</German>
+		<Spanish>Escoger posición</Spanish>
+		<Italian>Scegliere posizione</Italian>
       </Key>
     </Container>
     <Container name="loadoutDialog">
+		<Key ID="STR_DCW_loadoutDialog_DCW">
+        <Original>DYNAMIC CIVIL WAR</Original>
+        <English>DYNAMIC CIVIL WAR</English>
+        <French>DYNAMIC CIVIL WAR</French>
+		<German>DYNAMIC CIVIL WAR</German>
+		<Spanish>DYNAMIC CIVIL WAR</Spanish>
+		<Italian>DYNAMIC CIVIL WAR</Italian>
+      </Key>
       <Key ID="STR_DCW_loadoutDialog_startMissionButton">
         <Original>Start mission</Original>
         <English>Start mission</English>
         <French>Démarrer la mission</French>
+		<German>Die Mission beginnen</German>
+		<Spanish>Comenzar la misión</Spanish>
+		<Italian>Iniziare la missione</Italian>
       </Key>
       <Key ID="STR_DCW_loadoutDialog_editButton">
         <Original>Edit unit loadout</Original>
         <English>Edit unit loadout</English>
         <French>Inventaire de l'unité</French>
+		<German>Inventar der Person</German>
+		<Spanish>Inventario del personaje</Spanish>
+		<Italian>Inventario del personaggio</Italian>
       </Key>
       <Key ID="STR_DCW_loadoutDialog_nextButton">
         <Original>Next unit</Original>
         <English>Next unit</English>
         <French>Unité suivante</French>
+		<German>Folgende Einheit</German>
+		<Spanish>Unidad siguiente</Spanish>
+		<Italian>Seguente unità</Italian>
       </Key>
       <Key ID="STR_DCW_loadoutDialog_backButton">
         <Original>Previous unit</Original>
         <English>Previous unit</English>
         <French>Unité précédente</French>
+		<German>Vorige Einheit</German>
+		<Spanish>Unidad precedente</Spanish>
+		<Italian>Unità precedente</Italian>
       </Key>
     </Container>
     <Container name="configDialogFunctions">
@@ -148,17 +300,747 @@
         <Original>Preparing units...</Original>
         <English>Preparing units...</English>
         <French>Configuration des unités...</French>
+		<German>Einheiten werden vorbereitet...</German>
+		<Spanish>Preparación de unidades...</Spanish>
+		<Italian>Unità che preparano...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_selectPos">
+        <Original>Please, select a position on the ground</Original>
+        <English>Please, select a position on the ground</English>
+        <French>S'il vous plait, sélectionnez une position sur la carte</French>
+		<German>Bitte wählen Sie eine Position auf der Karte</German>
+		<Spanish>Por favor seleccione una posición en el mapa</Spanish>
+		<Italian>Seleziona una posizione sulla mappa</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_chooseEnySide">
+        <Original>Choose a different enemy side !</Original>
+        <English>Choose a different enemy side !</English>
+        <French>Choisissez un camp ennemi différent !</French>
+		<German>Wähle ein anderes feindliches Lager!</German>
+		<Spanish>¡Elige un campamento enemigo diferente!</Spanish>
+		<Italian>Scegli un altro accampamento nemico!</Italian>
+      </Key>
+	   <Key ID="STR_DCW_configDialogFunctions_done">
+        <Original>Done !</Original>
+        <English>Done !</English>
+        <French>Fait !</French>
+		<German>Erledigt!</German>
+		<Spanish>¡Hecho!</Spanish>
+		<Italian>Fatto!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_player">
+        <Original>(PLAYER)</Original>
+        <English>(PLAYER)</English>
+        <French>(JOUEUR)</French>
+		<German>(SPIELER)</German>
+		<Spanish>(JUGADOR)</Spanish>
+		<Italian>(GIOCATORE)</Italian>
+      </Key>
+	   <Key ID="STR_DCW_configDialogFunctions_weatherBeautiful">
+        <Original>Beautiful</Original>
+        <English>Beautiful</English>
+        <French>Beau temps</French>
+		<German>Schönes wetter</German>
+		<Spanish>Buen tiempo</Spanish>
+		<Italian>Bel tempo</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_weatherClouds">
+        <Original>Clouds</Original>
+        <English>Clouds</English>
+        <French>Nuageux</French>
+		<German>Trüb</German>
+		<Spanish>Nublado</Spanish>
+		<Italian>Nuvoloso</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_weatherAverage">
+        <Original>Average</Original>
+        <English>Average</English>
+        <French>Mitigé</French>
+		<German>Durchschnitt</German>
+		<Spanish>Promedio</Spanish>
+		<Italian>Media</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_weatherStorm">
+        <Original>Storm</Original>
+        <English>Storm</English>
+        <French>Orageux</French>
+		<German>Stürmisch</German>
+		<Spanish>Tempestuoso</Spanish>
+		<Italian>Tempestoso</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_weatherRain">
+        <Original>Rain</Original>
+        <English>Rain</English>
+        <French>Pluie</French>
+		<German>Regen</German>
+		<Spanish>Lluvia</Spanish>
+		<Italian>Pioggia</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_populationHighest">
+        <Original>Highest (50%)</Original>
+        <English>Highest (50%)</English>
+        <French>Très élevée (50%)</French>
+		<German>Höchste (50%)</German>
+		<Spanish>Más alto (50%)</Spanish>
+		<Italian>Massima (50%)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_populationHigh">
+        <Original>High (25%)</Original>
+        <English>High (25%)</English>
+        <French>Élevée (25%)</French>
+		<German>Hoch</German>
+		<Spanish>Alta</Spanish>
+		<Italian>Alta</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_populationStandard">
+        <Original>Standard (5%)</Original>
+        <English>Standard (5%)</English>
+        <French>Standard (5%)</French>
+		<German>Standard (5%)</German>
+		<Spanish>Estándar (5%)</Spanish>
+		<Italian>Standard (5%)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_populationLow">
+        <Original>Low (3%)</Original>
+        <English>Low (3%)</English>
+        <French>Basse (3%)</French>
+		<German>Niedrig (3%)</German>
+		<Spanish>Bajo (3%)</Spanish>
+		<Italian>Basso (3%)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_configDialogFunctions_respawnNone">
+        <Original>None</Original>
+        <English>None</English>
+        <French>Aucun</French>
+		<German>Keiner</German>
+		<Spanish>Ninguna</Spanish>
+		<Italian>Nessuna</Italian>
+      </Key>
+    </Container>
+	<Container name="missionParameters">
+      <Key ID="STR_DCW_missionParameters_AiSkill">
+        <Original>AI Skill</Original>
+        <English>AI Skill</English>
+        <French>Niveau IA</French>
+		<German>AI-Fähigkeit</German>
+		<Spanish>Habilidad AI</Spanish>
+		<Italian>Abilità AI</Italian>
+      </Key>
+      <Key ID="STR_DCW_missionParameters_recruit">
+        <Original>Recruit</Original>
+        <English>Recruit</English>
+        <French>Recrue</French>
+		<German>Rekrut</German>
+		<Spanish>Recluta</Spanish>
+		<Italian>Recluta</Italian>
+      </Key>
+      <Key ID="STR_DCW_missionParameters_regular">
+        <Original>Regular</Original>
+        <English>Regular</English>
+        <French>Normal</French>
+		<German>Regulär</German>
+		<Spanish>Regular</Spanish>
+		<Italian>Regolare</Italian>
+      </Key>
+      <Key ID="STR_DCW_missionParameters_veteran">
+        <Original>Veteran (recommended)</Original>
+        <English>Veteran (recommended)</English>
+        <French>Vétéran (recommandé)</French>
+		<German>Veteran (empfohlen)</German>
+		<Spanish>Veterano (recomendado)</Spanish>
+		<Italian>Veterano (consigliato)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_debug">
+        <Original>Debug</Original>
+        <English>Debug</English>
+        <French>Débug</French>
+		<German>Debuggen</German>
+		<Spanish>Debug</Spanish>
+		<Italian>Debug</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_yes">
+        <Original>Yes</Original>
+        <English>Yes</English>
+        <French>Oui</French>
+		<German>Ya</German>
+		<Spanish>Sí</Spanish>
+		<Italian>Sí</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_yesdefault">
+        <Original>Yes (default)</Original>
+        <English>Yes (default)</English>
+        <French>Oui (par défaut)</French>
+		<German>Ya</German>
+		<Spanish>Sí (predeterminado)</Spanish>
+		<Italian>Sì (impostazione predefinita)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_no">
+        <Original>No</Original>
+        <English>No</English>
+        <French>Non</French>
+		<German>Nein</German>
+		<Spanish>No</Spanish>
+		<Italian>No</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_respawn">
+        <Original>Respawn</Original>
+        <English>Respawn</English>
+        <French>Respawn</French>
+		<German>Respawn</German>
+		<Spanish>Respawn</Spanish>
+		<Italian>Respawn</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_reviving">
+        <Original>Reviving (With medevac module that replaces dead AI)</Original>
+        <English>Reviving (With medevac module that replaces dead AI)</English>
+        <French>Reviving (Avec le module MEDEVAC qui remplace la mort IA)</French>
+		<German>Reviving (mit Medevac-Modul, das tote KI ersetzt)</German>
+		<Spanish>Reviving (con el módulo medevac que reemplaza a la IA muerta)</Spanish>
+		<Italian>Reviving (con il modulo medevac che sostituisce l'IA morta)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_numberRespawn">
+        <Original>Number of Respawn</Original>
+        <English>Number of Respawn</English>
+        <French>Nombre de Respawn</French>
+		<German>Anzahl der Respawns</German>
+		<Spanish>Numero de Respawn</Spanish>
+		<Italian>Numero di Respawn</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_4default">
+        <Original>4 (default)</Original>
+        <English>4 (default)</English>
+        <French>4 (par défaut)</French>
+		<German>4 (Standard)</German>
+		<Spanish>4 (predeterminado)</Spanish>
+		<Italian>4 (impostazione predefinita)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_unlimited">
+        <Original>Unlimited</Original>
+        <English>Unlimited</English>
+        <French>Illimité</French>
+		<German>Unbegrenzt</German>
+		<Spanish>Ilimitado</Spanish>
+		<Italian>Illimitato</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_time">
+        <Original>Time</Original>
+        <English>Time</English>
+        <French>Heure</French>
+		<German>Zeit</German>
+		<Spanish>Hora</Spanish>
+		<Italian>Tempo</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_earlyMorning">
+        <Original>Early morning</Original>
+        <English>Early morning</English>
+        <French>Tôt le matin</French>
+		<German>Früher Morgen</German>
+		<Spanish>Temprano en la mañana</Spanish>
+		<Italian>Mattina presto</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_sunRise">
+        <Original>Sunrise</Original>
+        <English>Sunrise</English>
+        <French>Levé du Soleil</French>
+		<German>Sonnenaufgang</German>
+		<Spanish>Amanecer</Spanish>
+		<Italian>Alba</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_morning">
+        <Original>Morning</Original>
+        <English>Morning</English>
+        <French>Matin</French>
+		<German>Morgen</German>
+		<Spanish>Mañana</Spanish>
+		<Italian>Mattina</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_morningAdvanced">
+        <Original>Morning Advanced</Original>
+        <English>Morning Advanced</English>
+        <French>Matin avancé</French>
+		<German>Morgen fortgeschritten</German>
+		<Spanish>Mañana avanzada</Spanish>
+		<Italian>Tarda mattinata</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_noon">
+        <Original>Noon (default)</Original>
+        <English>Noon (default)</English>
+        <French>Midi (par défaut)</French>
+		<German>Mittag (Standard)</German>
+		<Spanish>Mediodía (predeterminado)</Spanish>
+		<Italian>Mezzogiorno (impostazione predefinita)</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_startAfternoon">
+        <Original>Start of Afternoon</Original>
+        <English>Start of Afternoon</English>
+        <French>Début d'après-midi</French>
+		<German>Am frühen nachmittag</German>
+		<Spanish>Temprano en la tarde</Spanish>
+		<Italian>Primo pomeriggio</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_afternoon">
+        <Original>Afternoon</Original>
+        <English>Afternoon</English>
+        <French>Après-midi</French>
+		<German>Nachmittag</German>
+		<Spanish>Tarde</Spanish>
+		<Italian>Pomeriggio</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_endAfternoon">
+        <Original>End of Afternoon</Original>
+        <English>End of Afternoon</English>
+        <French>Fin d'après-midi</French>
+		<German>Am späten Nachmittag</German>
+		<Spanish>Final de la tarde</Spanish>
+		<Italian>Nel tardo pomeriggio</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_sunset">
+        <Original>Sunset</Original>
+        <English>Sunset</English>
+        <French>Couché de soleil</French>
+		<German>Sonnenuntergang</German>
+		<Spanish>Puesta de sol</Spanish>
+		<Italian>Tramonto</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_evening">
+        <Original>Evening</Original>
+        <English>Evening</English>
+        <French>Soirée</French>
+		<German>Abend</German>
+		<Spanish>Noche</Spanish>
+		<Italian>Sera</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_midnight">
+        <Original>Midnight</Original>
+        <English>Midnight</English>
+        <French>Minuit</French>
+		<German>Mitternacht</German>
+		<Spanish>Medianoche</Spanish>
+		<Italian>Mezzanotte</Italian>
+      </Key>
+	  <Key ID="STR_DCW_missionParameters_darknight">
+        <Original>Dark Night</Original>
+        <English>Dark Night</English>
+        <French>Pleine nuit</French>
+		<German>Dunkle Nacht</German>
+		<Spanish>Noche oscura</Spanish>
+		<Italian>Notte oscura</Italian>
+      </Key>
+    </Container>
+	<Container name="respawn">
+      <Key ID="STR_DCW_respawn_respawnOptions">
+        <Original>Respawn Options</Original>
+        <English>Respawn Options</English>
+        <French>Options de Respawn</French>
+		<German>Respawn-Optionen</German>
+		<Spanish>Opciones de Respawn</Spanish>
+		<Italian>Opzioni di Respawn</Italian>
+      </Key>
+      <Key ID="STR_DCW_respawn_camp">
+        <Original>Camp</Original>
+        <English>Camp</English>
+        <French>Au camp</French>
+		<German>Lager</German>
+		<Spanish>Acampar</Spanish>
+		<Italian>Campo</Italian>
+      </Key>
+      <Key ID="STR_DCW_respawn_base">
+        <Original>Base</Original>
+        <English>Base</English>
+        <French>À la base</French>
+		<German>Base</German>
+		<Spanish>Base</Spanish>
+		<Italian>Base</Italian>
       </Key>
     </Container>
   </Package>
   <Package name="Medical">
+	<Container name="fn_caller">
+      <Key ID="STR_DCW_fnCaller_medevacMenu">
+        <Original>MEDEVAC</Original>
+        <English>MEDEVAC</English>
+        <French>MEDEVAC</French>
+		<German>MEDEVAC</German>
+		<Spanish>MEDEVAC</Spanish>
+		<Italian>MEDEVAC</Italian>
+      </Key>
+	  <Key ID="STR_DCW_fnCaller_abortMedevac">
+        <Original>&lt;t color='#cd8700'&gt;Abort MEDEVAC&lt;/t&gt;</Original>
+        <English>&lt;t color='#cd8700'&gt;Abort MEDEVAC&lt;/t&gt;</English>
+        <French>&lt;t color='#cd8700'&gt;Annuler MEDEVAC&lt;/t&gt;</French>
+		<German>&lt;t color='#cd8700'&gt;MEDEVAC abbrechen&lt;/t&gt;</German>
+		<Spanish>&lt;t color='#cd8700'&gt;Abortar MEDEVAC&lt;/t&gt;</Spanish>
+		<Italian>&lt;t color='#cd8700'&gt;Annulla MEDEVAC&lt;/t&gt;</Italian>
+      </Key>
+    </Container>
     <Container name="injured">
       <Key ID="STR_DCW_injured_medicAt">
         <Original>Medic at %1m</Original>
         <English>Medic at %1m</English>
         <French>Médecin à %1m</French>
+		<German>Medic bei %1m</German>
+		<Spanish>Médico a %1m</Spanish>
+		<Italian>Medico a %1m di distanza</Italian>
+      </Key>
+	  <Key ID="STR_DCW_injured_forceRespawn">
+        <Original>Force respawn</Original>
+        <English>Force respawn</English>
+        <French>Réapparition forcée</French>
+		<German>Erzwinge Respawn</German>
+		<Spanish>Forzar Respawn</Spanish>
+		<Italian>Forza Respawn</Italian>
+      </Key>
+	  <Key ID="STR_DCW_injured_hintMedicKia">
+        <Original>All medics are KIA</Original>
+        <English>All medics are KIA</English>
+        <French>Tout les médecin sont morts</French>
+		<German>Alle Mediziner sind KIA</German>
+		<Spanish>Todos los médicos son KIA</Spanish>
+		<Italian>Tutti i medici sono KIA</Italian>
       </Key>
     </Container>
+	<Container name="abortMedevac">
+      <Key ID="STR_DCW_abortMedevac_hint">
+        <Original>The medevac is aborted</Original>
+        <English>The medevac is aborted</English>
+        <French>MEDEVAC annulée</French>
+		<German>Der Medevac wird abgebrochen</German>
+		<Spanish>El medevac está abortado.</Spanish>
+		<Italian>Il medevac viene interrotto</Italian>
+      </Key>
+    </Container>
+	<Container name="fn_addActionHeal">
+      <Key ID="STR_DCW_addActionHeal_heal">
+        <Original>&lt;t color='#cd8700'&gt;Heal&lt;/t&gt;</Original>
+        <English>&lt;t color='#cd8700'&gt;Heal&lt;/t&gt;</English>
+        <French>&lt;t color='#cd8700'&gt;Soigner&lt;/t&gt;</French>
+		<German>&lt;t color='#cd8700'&gt;Heilen&lt;/t&gt;</German>
+		<Spanish>&lt;t color='#cd8700'&gt;Sanar&lt;/t&gt;</Spanish>
+		<Italian>&lt;t color='#cd8700'&gt;Guarire&lt;/t&gt;</Italian>
+      </Key>
+    </Container>
+	<Container name="fn_carry">
+      <Key ID="STR_DCW_carry_drop">
+        <Original>&lt;t color='#cd8700'&gt;Drop&lt;/t&gt;</Original>
+        <English>&lt;t color='#cd8700'&gt;Drop&lt;/t&gt;</English>
+        <French>&lt;t color='#cd8700'&gt;Lâcher&lt;/t&gt;</French>
+		<German>&lt;t color='#cd8700'&gt;Fallen&lt;/t&gt;</German>
+		<Spanish>&lt;t color='#cd8700'&gt;Soltar&lt;/t&gt;</Spanish>
+		<Italian>&lt;t color='#cd8700'&gt;Cadere&lt;/t&gt;</Italian>
+      </Key>
+    </Container>
+	<Container name="chopper">
+      <Key ID="STR_DCW_chopperPath_hintRTB">
+        <Original>50 seconds before the chopper RTB...</Original>
+        <English>50 seconds before the chopper RTB...</English>
+        <French>50 secondes avant que l'hélico retourne à la BOA.</French>
+		<German>50 Sekunden vor dem Chopper RTB ...</German>
+		<Spanish>50 segundos antes del chopper RTB ...</Spanish>
+		<Italian>50 secondi prima dell'RTB del chopper ...</Italian>
+      </Key>
+    </Container>
+	<Container name="Damage">
+      <Key ID="STR_DCW_handleDamage_markerTeammates">
+        <Original>An injured TeamMate : %1</Original>
+        <English>An injured TeamMate : %1</English>
+        <French>Un équipier blessé : %1</French>
+		<German>Ein verletzter Teammitglied: %1</German>
+		<Spanish>Un compañero de equipo lesionado: %1</Spanish>
+		<Italian>Un compagno di squadra infortunato: %1</Italian>
+      </Key>
+    </Container>
+  </Package>
+  <Package name="System">
+	<Container name="addAction">
+		<Key ID="STR_DCW_addAction_drag">
+        <Original>&lt;t color='#cd8700'&gt;Drag&lt;/t&gt;</Original>
+        <English>&lt;t color='#cd8700'&gt;Drag&lt;/t&gt;</English>
+        <French>&lt;t color='#cd8700'&gt;Tirer&lt;/t&gt;</French>
+		<German>&lt;t color='#cd8700'&gt;Ziehen&lt;/t&gt;</German>
+		<Spanish>&lt;t color='#cd8700'&gt;Arrastrar&lt;/t&gt;</Spanish>
+		<Italian>&lt;t color='#cd8700'&gt;Trascinare&lt;/t&gt;</Italian>
+      </Key>
+	</Container>
+	<Container name="captured">
+		<Key ID="STR_DCW_captured_surrender">
+        <Original>&lt;t color='#cd8700'&gt;Surrender&lt;/t&gt;</Original>
+        <English>&lt;t color='#cd8700'&gt;Surrender&lt;/t&gt;</English>
+        <French>&lt;t color='#cd8700'&gt;Se Rendre&lt;/t&gt;</French>
+		<German>&lt;t color='#cd8700'&gt;Kapitulation&lt;/t&gt;</German>
+		<Spanish>&lt;t color='#cd8700'&gt;Rendición&lt;/t&gt;</Spanish>
+		<Italian>&lt;t color='#cd8700'&gt;Capitolare&lt;/t&gt;</Italian>
+      </Key>
+	  <Key ID="STR_DCW_captured_captured">
+        <Original>You've been captured</Original>
+        <English>You've been captured</English>
+        <French>Vous avez été capturé</French>
+		<German>Du wurdest gefangen genommen</German>
+		<Spanish>Has sido capturado</Spanish>
+		<Italian>Sei stato catturato</Italian>
+      </Key>
+	  <Key ID="STR_DCW_captured_sixHours">
+        <Original>6 hours later ...</Original>
+        <English>6 hours later ...</English>
+        <French>6 heures plus tard ...</French>
+		<German>6 Stunden später ...</German>
+		<Spanish>6 horas después ...</Spanish>
+		<Italian>6 ore dopo ...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_captured_twoDays">
+        <Original>2 days later...</Original>
+        <English>2 days later...</English>
+        <French>2 jours plus tard...</French>
+		<German>2 Tage später...</German>
+		<Spanish>2 días después...</Spanish>
+		<Italian>2 giorni dopo ...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_captured_kill">
+        <Original>Kill</Original>
+        <English>Kill</English>
+        <French>Tuer</French>
+		<German>Töten</German>
+		<Spanish>Matar</Spanish>
+		<Italian>Uccidere</Italian>
+      </Key>
+	  <Key ID="STR_DCW_captured_beenWatched">
+        <Original>You've been watched</Original>
+        <English>You've been watched</English>
+        <French>Vous avez été repéré</French>
+		<German>Du wurdest beobachtet</German>
+		<Spanish>Has sido visto</Spanish>
+		<Italian>Sei stato visto</Italian>
+      </Key>
+	  <Key ID="STR_DCW_captured_beenWatched2">
+        <Original>You've been watched by enemies. Go back to your troops as fast as possible</Original>
+        <English>You've been watched by enemies. Go back to your troops as fast as possible</English>
+        <French>Vous avez été repéré pour l'ennemi. Retournez auprès de vos troupes le plus vite possible</French>
+		<German>Sie wurden von Feinden beobachtet. Geh so schnell wie möglich zu deinen Truppen zurück</German>
+		<Spanish>Has sido observado por los enemigos. Regresa a tus tropas lo más rápido posible</Spanish>
+		<Italian>Sei stato guardato dai nemici. Torna alle tue truppe il più velocemente possibile</Italian>
+      </Key>
+	</Container>
+	<Container name="conversation">
+		<Key ID="STR_DCW_conversation_convLog">
+        <Original>Conversation Log</Original>
+        <English>Conversation Log</English>
+        <French>Journal des conversations</French>
+		<German>Konversationsprotokoll</German>
+		<Spanish>Registro de conversación</Spanish>
+		<Italian>Registro delle conversazioni</Italian>
+      </Key>
+	</Container>
+	<Container name="fillClusters">
+		<Key ID="STR_DCW_fillClusters_start">
+        <Original>[FillClusters] Start process</Original>
+        <English>[FillClusters] Start process</English>
+        <French>[FillClusters] Lancement du processus</French>
+		<German>[FillClusters] Prozess starten</German>
+		<Spanish>[FillClusters] Proceso de inicio</Spanish>
+		<Italian>[FillClusters] Inizia il processo</Italian>
+      </Key>
+	</Container>
+	<Container name="getClusters">
+	<Key ID="STR_DCW_getclusters_startProcess">
+        <Original>[GetClusters] Start process</Original>
+        <English>[GetClusters] Start process</English>
+        <French>[GetClusters] Lancement du processus</French>
+		<German>[GetClusters] Prozess starten</German>
+		<Spanish>[GetClusters] Proceso de inicio</Spanish>
+		<Italian>[GetClusters] Inizia il processo</Italian>
+      </Key>
+	  <Key ID="STR_DCW_getclusters_endProcess">
+        <Original>[GetClusters] End of process</Original>
+        <English>[GetClusters] End of process</English>
+        <French>[GetClusters] Fin du processus</French>
+		<German>[GetClusters] Prozess beenden</German>
+		<Spanish>[GetClusters] Proceso finalizado</Spanish>
+		<Italian>[GetClusters] Fine del processo</Italian>
+      </Key>
+	  <Key ID="STR_DCW_getclusters_unknownLocation">
+        <Original>Unknown location</Original>
+        <English>Unknown location</English>
+        <French>Aucun endroit</French>
+		<German>Unbekannter Ort</German>
+		<Spanish>Ubicación desconocida</Spanish>
+		<Italian>Posizione sconosciuta</Italian>
+      </Key>
+	<Key ID="STR_DCW_getclusters_compound">
+        <Original>Compound</Original>
+        <English>Compound</English>
+        <French>Complexe</French>
+		<German>Verbindung</German>
+		<Spanish>Compuesto</Spanish>
+		<Italian>Composto</Italian>
+      </Key>
+		<Key ID="STR_DCW_getclusters_landHouse">
+        <Original>Land House</Original>
+        <English>Land House</English>
+        <French>Maison isolée</French>
+		<German>Alleinstehendes Haus</German>
+		<Spanish>Casa aislada</Spanish>
+		<Italian>Casa isolata</Italian>
+      </Key>
+	  <Key ID="STR_DCW_getclusters_smallCompound">
+        <Original>Small Compound</Original>
+        <English>Small Compound</English>
+        <French>Petit Complexe</French>
+		<German>Kleine Verbindung</German>
+		<Spanish>Pequeño compuesto</Spanish>
+		<Italian>Piccolo composto</Italian>
+      </Key>
+	  <Key ID="STR_DCW_getclusters_largeCompound">
+        <Original>Large Compound</Original>
+        <English>Large Compound</English>
+        <French>Grand Complexe</French>
+		<German>Große Verbindung</German>
+		<Spanish>Compuesto grande</Spanish>
+		<Italian>Composto di grandi dimensioni</Italian>
+      </Key>
+	  <Key ID="STR_DCW_getclusters_village">
+        <Original>Village</Original>
+        <English>Village</English>
+        <French>Village</French>
+		<German>Dorf</German>
+		<Spanish>Pueblo</Spanish>
+		<Italian>Villaggio</Italian>
+      </Key>
+	  <Key ID="STR_DCW_getclusters_town">
+        <Original>Town</Original>
+        <English>Town</English>
+        <French>Ville</French>
+		<German>Stadt</German>
+		<Spanish>Ciudad</Spanish>
+		<Italian>Città</Italian>
+      </Key>
+	</Container>
+	<Container name="GetCompoundStateLabel">
+		<Key ID="STR_DCW_GetCompoundStateLabel_secured">
+        <Original>Secured</Original>
+        <English>Secured</English>
+        <French>Sécurisée</French>
+		<German>Gesichert</German>
+		<Spanish>Asegurado</Spanish>
+		<Italian>Assicurato</Italian>
+      </Key>
+	  <Key ID="STR_DCW_GetCompoundStateLabel_neutral">
+        <Original>Neutral settlement</Original>
+        <English>Neutral settlement</English>
+        <French>Installation Neutre</French>
+		<German>Neutrale Abwicklung</German>
+		<Spanish>Asentamiento neutral</Spanish>
+		<Italian>Insediamento neutro</Italian>
+      </Key>
+	  <Key ID="STR_DCW_GetCompoundStateLabel_eniBastion">
+        <Original>Enemy bastion</Original>
+        <English>Enemy bastion</English>
+        <French>Bastion Ennemi</French>
+		<German>Feindliche Bastion</German>
+		<Spanish>Bastión enemigo</Spanish>
+		<Italian>Bastione nemico</Italian>
+      </Key>
+	  <Key ID="STR_DCW_GetCompoundStateLabel_humanitary">
+        <Original>Humanitary mission</Original>
+        <English>Humanitary mission</English>
+        <French>Mission Humanitaire</French>
+		<German>Humanitäre Mission</German>
+		<Spanish>Misión humanitaria</Spanish>
+		<Italian>Missione umanitaria</Italian>
+      </Key>
+	  <Key ID="STR_DCW_GetCompoundStateLabel_civilianMassacred">
+        <Original>Civilians massacred</Original>
+        <English>Civilians massacred</English>
+        <French>Civils Massacrés</French>
+		<German>Zivilisten massakriert</German>
+		<Spanish>Civiles masacrados</Spanish>
+		<Italian>Civili massacrati</Italian>
+      </Key>
+	  <Key ID="STR_DCW_GetCompoundStateLabel_resistance">
+        <Original>Resistance settlement</Original>
+        <English>Resistance settlement</English>
+        <French>Installation de la Résistance</French>
+		<German>Widerstandsregelung</German>
+		<Spanish>Asentamiento de resistencia</Spanish>
+		<Italian>Insediamento di resistenza</Italian>
+      </Key>
+	</Container>
+	<Container name="talk">
+		<Key ID="STR_DCW_talk_spaceToSkip">
+        <Original>Space to skip</Original>
+        <English>Space to skip</English>
+        <French>ESPACE pour passer</French>
+		<German>Space zum Überspringen</German>
+		<Spanish>Space para saltar</Spanish>
+		<Italian>Space per saltare</Italian>
+      </Key>
+	</Container>
+	<Container name="teleport">
+		<Key ID="STR_DCW_teleport_teleportTo">
+        <Original>Teleport to position on map</Original>
+        <English>Teleport to position on map</English>
+        <French>Téléportation sur la position sur carte</French>
+		<German>Zur Position auf der Karte teleportieren</German>
+		<Spanish>Teletransportarse para posicionarse en el mapa</Spanish>
+		<Italian>Teletrasporto da posizionare sulla mappa</Italian>
+      </Key>
+	  <Key ID="STR_DCW_teleport_teleportToMapPosition">
+        <Original>Teleported to map position; %1</Original>
+        <English>Teleported to map position; %1</English>
+        <French>Téléportation sur la position; %1</French>
+		<German>Zur Kartenposition teleportiert; %1</German>
+		<Spanish>Teletransportado a la posición del mapa; %1</Spanish>
+		<Italian>Teletrasportato per mappare la posizione; %1</Italian>
+      </Key>
+	  <Key ID="STR_DCW_teleport_teleportCancel">
+        <Original>Teleport to map position cancelled.</Original>
+        <English>Teleport to map position cancelled.</English>
+        <French>Téléportation sur la position annulée</French>
+		<German>Teleport zur Kartenposition abgebrochen.</German>
+		<Spanish>Teleportación a la posición del mapa cancelada.</Spanish>
+		<Italian>Teletrasporto per la posizione della mappa annullato.</Italian>
+      </Key>
+	</Container>
+	<Container name="undercover">
+		<Key ID="STR_DCW_undercover_changeYourClothes">
+        <Original>You changed your clothes !</Original>
+        <English>You changed your clothes !</English>
+        <French>Vous avez changé de vêtements !</French>
+		<German>Du hast dich umgezogen!</German>
+		<Spanish>¡Te cambiaste de ropa!</Spanish>
+		<Italian>Hai cambiato i tuoi vestiti!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_undercover_attacked">
+        <Original>Attacked !</Original>
+        <English>Attacked !</English>
+        <French>Attaqué !</French>
+		<German>Angegriffen !</German>
+		<Spanish>¡Atacado!</Spanish>
+		<Italian>Attaccato !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_undercover_hearYourVoice">
+        <Original>Their hear your voice !</Original>
+        <English>Their hear your voice !</English>
+        <French>Ils ont entendus votre voix !</French>
+		<German>Sie hören deine Stimme !</German>
+		<Spanish>¡Escuchan tu voz!</Spanish>
+		<Italian>Loro sentono la tua voce !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_undercover_watched">
+        <Original>Watched !</Original>
+        <English>Watched !</English>
+        <French>Repéré !</French>
+		<German>Schaute !</German>
+		<Spanish>¡Mirado!</Spanish>
+		<Italian>Guardato !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_undercover_tooClose">
+        <Original>You're too close !</Original>
+        <English>You're too close !English>
+        <French>Vous êtes trop près !</French>
+		<German>Du bist zu nah dran !</German>
+		<Spanish>¡Estás muy cerca!</Spanish>
+		<Italian>Sei troppo vicino !</Italian>
+      </Key>
+	</Container>
   </Package>
   <Package name="Behavior">
     <Container name="addActionFunctions">
@@ -166,88 +1048,139 @@
         <Original>Recruit him as a persistent team member</Original>
         <English>Recruit him as a persistent team member</English>
         <French>Recruter en tant que membre d'équipe persistent</French>
+		<German>Rekrutieren Sie ihn als hartnäckiges Teammitglied</German>
+		<Spanish>Reclutarlo como miembro del equipo persistente</Spanish>
+		<Italian>Reclutarlo come un membro del team persistente</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_morePoints">
         <Original>I need more points !</Original>
         <English>I need more points !</English>
-        <French>J'ai besoin de plus de points</French>
+        <French>J'ai besoin de plus de points !</French>
+		<German>Ich brauche mehr Punkte !</German>
+		<Spanish>¡Necesito más puntos !</Spanish>
+		<Italian>Mi servono più punti !</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_actionRecruitMilitaryAdvLabel">
         <Original>Recruit him as a military advisor</Original>
         <English>Recruit him as a military advisor</English>
-        <French>Le recruter en tant que conseiller militaire</French>
+        <French>Recruter en tant que conseiller militaire</French>
+		<German>Rekrutieren Sie ihn als Militärberater</German>
+		<Spanish>Reclutarlo como asesor militar</Spanish>
+		<Italian>Reclutarlo come consigliere militare</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_cantRecruitMoreAdvisors">
         <Original>You can't recruit more than two military advisors...</Original>
         <English>You can't recruit more than two military advisors...</English>
         <French>Vous ne pouvez pas recruter plus de deux conseillers militaires...</French>
+		<German>Sie können nicht mehr als zwei Militärberater rekrutieren...</German>
+		<Spanish>No se puede reclutar a más de dos asesores militares...</Spanish>
+		<Italian>Non puoi reclutare più di due consiglieri militari...</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_captured">
         <Original>Civilian captured</Original>
         <English>Civilian captured</English>
         <French>Civil capturé</French>
+		<German>Zivilisten gefangen genommen</German>
+		<Spanish>Civil capturó</Spanish>
+		<Italian>Il borghese catturò</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_saveGame">
         <Original>Savegame</Original>
         <English>Savegame</English>
         <French>Sauvegarder la mission</French>
+		<German>Die Mission sichern(schützen)</German>
+		<Spanish>Salvaguardar la misión</Spanish>
+		<Italian>Salvaguardare la missione</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_briefing">
         <Original>Mission's briefing</Original>
         <English>Mission's briefing</English>
         <French>Briefing de la mission</French>
+		<German>Briefing der Mission</German>
+		<Spanish>Briefing de la misión</Spanish>
+		<Italian>Briefing della missione</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_giveUs">
         <Original>Ask them to cover you</Original>
         <English>Ask them to cover you</English>
-        <French>Demander un soutien</French>
+        <French>Leur demander de vous appuyer</French>
+		<German>Sie um Hilfe bitten</German>
+		<Spanish>Pedirles que les presten asistencia</Spanish>
+		<Italian>Chiedere un assistenza</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_liberateHim">
         <Original>Liberate him</Original>
         <English>Liberate him</English>
         <French>Libérez-le</French>
+		<German>Befreien Sie ihn</German>
+		<Spanish>liberarlo</Spanish>
+		<Italian>Lo liberi</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_searchInGear">
         <Original>Search in gear (Look for IEDs...)</Original>
         <English>Search in gear (Look for IEDs...)</English>
-        <French>Le fouiller (Recherche IEDs...)</French>
+        <French>Fouiller l'équipement (Recherche IEDs...)</French>
+		<German>Ausrüstung durchsuchen (Suche nach Ieds...)</German>
+		<Spanish>Registrar el equipo (Investigación IEDs...)</Spanish>
+		<Italian>Perquisire l’apparecchiatura (Ricerca IED...)</Italian>
       </Key>
       <Key ID="STR_DCW_addActionFunctions_sayHello">
         <Original>Say hello</Original>
         <English>Say hello</English>
         <French>Saluer</French>
+		<German>Grüßen</German>
+		<Spanish>Decir Hola</Spanish>
+		<Italian>Salutare</Italian>
       </Key>
     </Container>
     <Container name="actionCamp">
       <Key ID="STR_DCW_actionCamp_packUpAction">
         <Original>Pack up camp</Original>
         <English>Pack up camp</English>
-        <French>Lever le camp</French>
+        <French>Plier le camp</French>
+		<German>Das Lager falten(beugen)</German>
+		<Spanish>Empaque el campamento</Spanish>
+		<Italian>Piegare il campo</Italian>
       </Key>
       <Key ID="STR_DCW_actionCamp_setUpAction">
         <Original>Set up camp</Original>
         <English>Set up camp</English>
         <French>Installer le camp</French>
+		<German>Das Lager einrichten(unterbringen)</German>
+		<Spanish>Instalar el campo</Spanish>
+		<Italian>Installare il campo</Italian>
       </Key>
       <Key ID="STR_DCW_actionCamp_error">
         <Original>Impossible untill there is enemies around (100m radius)</Original>
         <English>Impossible untill there is enemies around (100m radius)</English>
-        <French>Impossible tant qu'il y a des ennemis autour (100m de rayon)</French>
+        <French>Impossible tant qu'il y a des ennemis dans la zone (100m de rayon)</French>
+		<German>Unmöglich, solange Feinde in der Zone sind (100 m Radius)</German>
+		<Spanish>Imposible mientras haya enemigos en la zona (100 m de radio)</Spanish>
+		<Italian>Impossibile finché ci sono nemici nella zona (100m di raggio)</Italian>
       </Key>
       <Key ID="STR_DCW_actionCamp_error2">
         <Original>Impossible to build the camp here. Check there is not any object in front of you.</Original>
         <English>Impossible to build the camp here. Check there is not any object in front of you.</English>
         <French>Impossible de construire le camp sur cet emplacement car il n'est pas assez plat ou il y a des objets bloquant la zone de construction.</French>
+		<German>Das Lager kann hier nicht gebaut werden, weil der Ort nicht flach genug ist oder es Objekte gibt, die den Baubereich blockieren.</German>
+		<Spanish>No podemos construir el campamento aquí porque la ubicación no es lo suficientemente plana o hay objetos bloqueando la zona de construcción.</Spanish>
+		<Italian>Impossibile costruire il campo qui perché la posizione non è abbastanza piatta o ci sono oggetti che bloccano l’area di costruzione.</Italian>
       </Key> 
       <Key ID="STR_DCW_actionCamp_hourLater">
         <Original>hour later...</Original>
         <English>hour later...</English>
         <French>heure plus tard...</French>
+		<German>stunde später...</German>
+		<Spanish>hora más tarde...</Spanish>
+		<Italian>ora più tardi...</Italian>
       </Key>
       <Key ID="STR_DCW_actionCamp_hint">
-        <Original> If you want to pack up the camp, watch the map on the ground and use the action button : 'pack up the camp'. Get close to the tent to make your unit rest (and accelerate the time of the day in singleplayer only).</Original>
-        <English> If you want to pack up the camp, watch the map on the ground and use the action button : 'pack up the camp'. Get close to the tent to make your unit rest (and accelerate the time of the day in singleplayer only).</English>
-        <French>Si vous souhaitez replier le camp, regardez la carte au sol et utilisez l'action "replier le camp". Approchez vous de la tente pour vous reposer quelques heures...</French>
+        <Original>If you want to pack up the camp, watch the map on the ground and use the action button : 'Pack up camp'. Get close to the tent to make your unit rest (and accelerate the time of the day in singleplayer only).</Original>
+        <English>If you want to pack up the camp, watch the map on the ground and use the action button : 'Pack up camp'. Get close to the tent to make your unit rest (and accelerate the time of the day in singleplayer only).</English>
+        <French>Si vous souhaitez replier le camp, regardez la carte au sol et utilisez l'action "Plier le camp". Approchez vous de la tente pour vous reposer quelques heures...</French>
+		<German>Wenn Sie das Camp packen möchten, sehen Sie sich die Karte auf dem Boden an und benutzen Sie die Aktionsschaltfläche: 'Das Lager falten(beugen)'. Machen Sie sich in der Nähe des Zeltes auf, um Ihre Einheit stillzustehen (und beschleunigen Sie die Tageszeit nur im Singleplayer).</German>
+		<Spanish>Si desea empacar el campamento, ver el mapa en el suelo y utilizar el botón de acción : 'Empaque el campamento'. Acércate a la tienda para hacer que tu unidad descanse (y acelera la hora del día sólo en Singleplayer).</Spanish>
+		<Italian>Se vuoi fare i bagagli, guarda la mappa a terra e usa il pulsante d'azione : 'Piegare il campo'. Avvicinati alla tenda per far riposare la tua unità (e accelera il tempo della giornata solo in monostrato).</Italian>
       </Key>
     </Container>
     <Container name="localChief" />
@@ -255,12 +1188,18 @@
       <Key ID="STR_DCW_spawnDefendTask_taskDesc">
         <Original>Enemy attack incoming, set up the defenses</Original>
         <English>Enemy attack incoming, set up the defenses</English>
-        <French>Attaque enemie ! Défendez la ville et protégez les civils. Eliminez tous les ennemis pour accomplir la tâche</French>
+        <French>Attaque ennemie! Défendez la position et protégez les civils. Éliminez tous les ennemis pour accomplir la tâche</French>
+		<German>Feindlicher Angriff! Verteidigen Sie die Position und schützen Sie die Zivilisten. Eliminieren Sie alle Feinde, um die Aufgabe zu erfüllen</German>
+		<Spanish>¡Ataque enemigo! Defienda la posición y proteja a los civiles. Elimine a todos los enemigos para llevar a cabo la tarea</Spanish>
+		<Italian>Attacco nemico! difendere la posizione e proteggere i civili. eliminare tutti i nemici per completare il compito</Italian>
       </Key>
       <Key ID="STR_DCW_spawnDefendTask_taskName">
         <Original>Defend civilian</Original>
         <English>Defend civilian</English>
         <French>Défendre les civils</French>
+		<German>Die Zivilisten schützen</German>
+		<Spanish>Defender a los civiles</Spanish>
+		<Italian>Difendere i civili</Italian>
       </Key>
     </Container>
     <Container name="surrender">
@@ -268,28 +1207,43 @@
         <Original>He gives up !</Original>
         <English>He gives up !</English>
         <French>Il se rend !</French>
+		<German>Er begibt sich!</German>
+		<Spanish>¡ Capitula!</Spanish>
+		<Italian>Si rende!</Italian>
       </Key>
       <Key ID="STR_DCW_surrender_4">
         <Original>This enemy is surrendering !</Original>
         <English>This enemy is surrendering !</English>
         <French>Un des gars se rend !</French>
+		<German>Dieser Feind gibt sich zurück!</German>
+		<Spanish>¡Este enemigo se está rindiendo !</Spanish>
+		<Italian>Questo nemico si sta arrendendo !</Italian>
       </Key>
       <Key ID="STR_DCW_surrender_3">
         <Original>Hands up !</Original>
         <English>Hands up !</English>
         <French>Mains sur la tête !</French>
+		<German>Hände auf den Kopf!</German>
+		<Spanish>¡Las manos sobre la cabeza!</Spanish>
+		<Italian>Mani in alto!</Italian>
       </Key>
       <Key ID="STR_DCW_surrender_2">
-        <Original>Your hands in the hair !</Original>
-        <English>Your hands in the hair !</English>
+        <Original>Your hands in the air !</Original>
+        <English>Your hands in the air !</English>
         <French>Mets tes mains bien en évidence !</French>
+		<German>Ihre Hände in der Luft !</German>
+		<Spanish>¡Las manos en alto !</Spanish>
+		<Italian>Le mani in alto !</Italian>
       </Key>
     </Container>
     <Container name="mortarBombing">
       <Key ID="STR_DCW_mortarBombing_incoming">
         <Original>Mortar incoming ! Bearing %1, take cover guys !</Original>
         <English>Mortar incoming ! Bearing %1, take cover guys !</English>
-        <French>Tirs de mortier en approche ! Azimut %1, tout le monde à couvert ! </French>
+        <French>Tirs de mortier en approche ! Azimut %1, tout le monde à couvert !</French>
+		<German>Mörserfeuer im Anflug! Azimut %1, alle in Deckung!</German>
+		<Spanish>¡Municiones de mortero aproximándose! ¡azimut %1, todo el mundo cubierto!</Spanish>
+		<Italian>Spari di mortaio in avvicinamento! azimut %1, tutti al riparo!</Italian>
       </Key>
     </Container>
     <Container name="buildDialog">
@@ -297,11 +1251,17 @@
         <Original>Buy object</Original>
         <English>Buy object</English>
         <French>Acheter cet objet</French>
+		<German>Diesen Gegenstand(Ziel) kaufen</German>
+		<Spanish>Comprar este objeto</Spanish>
+		<Italian>Acquistare questo oggetto</Italian>
       </Key>
       <Key ID="STR_DCW_buildDialog_cancel">
         <Original>Cancel</Original>
         <English>Cancel</English>
         <French>Annuler</French>
+		<German>Absagen</German>
+		<Spanish>Anular</Spanish>
+		<Italian>Annullare</Italian>
       </Key>
     </Container>
   </Package>
@@ -310,158 +1270,526 @@
       <Key ID="STR_DCW_description_onLoadMission">
         <Original>Your objective is to stop the insurgency propagation and locate the enemy commander.</Original>
         <English>Your objective is to stop the insurgency propagation and locate the enemy commander.</English>
-        <French>Votre objectif est de stopper la propagation des insurgés dans la région, puis localiser et éliminer le commandant ennemi.</French>
+        <French>Votre objectif est de stopper l'insurrection dans la région, puis de localiser et éliminer le commandant ennemi.</French>
+		<German>Ihr Ziel ist es, die Aufstandsausbreitung zu stoppen und den feindlichen Befehlshaber ausfindig zu machen.</German>
+		<Spanish>Su objetivo es detener la propagación de la insurgencia y localizar al comandante enemigo.</Spanish>
+		<Italian>Il vostro obiettivo è quello di fermare la propagazione insurrezione e localizzare il comandante nemico.</Italian>
       </Key>
     </Container>
   </Package>
   <Package name="Voices">
+  	<Container name="addActionHeal">
+      <Key ID="STR_DCW_voices_injured_Argh">
+        <Original>Aaaargh...</Original>
+        <English>Aaaargh...</English>
+        <French>Aaaargh...</French>
+		<German>Aaaargh...</German>
+		<Spanish>Aaaargh...</Spanish>
+		<Italian>Aaaargh...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_injured_sryMan">
+        <Original>Sorry man...  I just fucked up...</Original>
+        <English>Sorry man...  I just fucked up...</English>
+        <French>Désolé mec... J'ai merdé...</French>
+		<German>Tut mir leid, Mann ... Ich habe es einfach versaut ...</German>
+		<Spanish>Lo siento hombre ... solo la jodí ...</Spanish>
+		<Italian>Scusa amico ... ho appena fatto una cazzata ...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_injured_fuckingMess">
+        <Original>Shit ! It's a fucking mess...</Original>
+        <English>Shit ! It's a fucking mess...</English>
+        <French>Merde! C'est un putain de bordel...</French>
+		<German>Scheisse ! Es ist eine verdammte Sauerei ...</German>
+		<Spanish>Mierda Es un jodido desastre ...</Spanish>
+		<Italian>Merda! È un fottuto casino ...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_injured_iamPain">
+        <Original>I am in pain...</Original>
+        <English>I am in pain...</English>
+        <French>J'ai mal...</French>
+		<German>Ich habe Schmerzen..</German>
+		<Spanish>Tengo dolor...</Spanish>
+		<Italian>Sono dolorante...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_injured_hurts">
+        <Original>That hurts !</Original>
+        <English>That hurts !</English>
+        <French>C'est douloureux !</French>
+		<German>Das tut weh !</German>
+		<Spanish>Eso duele !</Spanish>
+		<Italian>Fa male !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_healer_dontGiveUp">
+        <Original>Don't give up mate !</Original>
+        <English>Don't give up mate !</English>
+        <French>N'abandonnes pas mon pote !</French>
+		<German>Gib nicht auf, Kumpel!</German>
+		<Spanish>¡No te rindas amigo!</Spanish>
+		<Italian>Non mollare amico!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_healer_stayWithUs">
+        <Original>Stay with us !</Original>
+        <English>Stay with us !</English>
+        <French>Restes avec nous !</French>
+		<German>Bleib bei uns !</German>
+		<Spanish>Quédate con nosotros !</Spanish>
+		<Italian>Resta con noi !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_healer_stayAlive">
+        <Original>Stay alive !</Original>
+        <English>Stay alive !</English>
+        <French>Accroches toi !</French>
+		<German>Bleib am Leben !</German>
+		<Spanish>Mantente vivo!</Spanish>
+		<Italian>Rimani vivo !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_healer_wontAbandonYou">
+        <Original>We won't abandon you !</Original>
+        <English>We won't abandon you !</English>
+        <French>On ne va pas t'abandonner !</French>
+		<German>Wir werden dich nicht im Stich lassen!</German>
+		<Spanish>¡No te abandonaremos!</Spanish>
+		<Italian>Non ti abbandoneremo!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_healer_yourGoodToGo">
+        <Original>Ok, you're good to go !</Original>
+        <English>Ok, you're good to go !</English>
+        <French>Ok, tu es prêt à y retourner !</French>
+		<German>Ok, du bist bereit zurückzukehren!</German>
+		<Spanish>Ok, ya estás listo para volver!</Spanish>
+		<Italian>Ok, sei pronto per tornare indietro!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_healer_getCover">
+        <Original>Get a cover to take back strength !</Original>
+        <English>Get a cover to take back strength !</English>
+        <French>Mets-toi à couvert et reprends des forces !</French>
+		<German>Versetzen Sie sich in den Abir und erholen Sie sich</German>
+		<Spanish>Ponte en el abir y recupera fuerzas</Spanish>
+		<Italian>Mettiti nel fuoco e recupera le forze</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_injured_ouch">
+        <Original>OUCH ! OUCH! OUCH !</Original>
+        <English>OUCH ! OUCH! OUCH !</English>
+        <French>AÏE ! AÏE ! AÏE !</French>
+		<German>AUTSCH ! AUTSCH ! AUTSCH !</German>
+		<Spanish>¡AY ¡AY ¡AY</Spanish>
+		<Italian>OHI ! OHI ! OHI !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_injured_hitMe">
+        <Original>They hit me... FUCK !</Original>
+        <English>They hit me... FUCK !</English>
+        <French>Ils m'ont touché PUTAIN !</French>
+		<German>Sie haben mich geschlagen ... Scheiße!</German>
+		<Spanish>Me pegaron ... ¡Joder!</Spanish>
+		<Italian>Mi hanno colpito ... Cazzo!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_healer_goodForYouBuddy">
+        <Original>It's good for you buddy !</Original>
+        <English>It's good for you buddy !</English>
+        <French>C'est bon pour toi mon pote !</French>
+		<German>Es ist gut für dich, Kumpel!</German>
+		<Spanish>¡Es bueno para ti amigo!</Spanish>
+		<Italian>È buono per te amico!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_healer_keepOpenEyes">
+        <Original>Keep your eyes open !</Original>
+        <English>Keep your eyes open !</English>
+        <French>Gardes les yeux ouverts !</French>
+		<German>Halt deine Augen offen !</German>
+		<Spanish>Mantén tus ojos abiertos !</Spanish>
+		<Italian>Tieni gli occhi aperti !</Italian>
+      </Key>
+    </Container>
+	<Container name="chopperPath">
+      <Key ID="STR_DCW_voices_HQ_inBound">
+        <Original>Be advised: medevac chopper in bound ! ETA : %1min</Original>
+        <English>Be advised: medevac chopper in bound ! ETA : %1min</English>
+        <French>Attention: le MEDEVAC est en route! ETA:% 1min</French>
+		<German>Achtung: medevac Hubschrauber im Einband! ETA: %1min</German>
+		<Spanish>Tenga en cuenta: ¡Medevac helicóptero en atado! ETA: %1min</Spanish>
+		<Italian>Nota: medevac elicottero in bound! ETA: %1min</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_HQ_smoke">
+        <Original>Squad leader, throw a smoke to mark the LZ !</Original>
+        <English>Squad leader, throw a smoke to mark the LZ !</English>
+        <French>Chef de groupe, lancez un FUM pour marquer la DZ !</French>
+		<German>Squad Leader, wirf einen Rauch, um die LZ zu markieren!</German>
+		<Spanish>Líder de escuadrón, ¡echa un humo para marcar el LZ!</Spanish>
+		<Italian>Capo squadra, lancia un fumo per segnare la LZ!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_HQ_landing">
+        <Original>Landing procedure started !</Original>
+        <English>Landing procedure started !</English>
+        <French>Procédure d'aterrissage en cours !</French>
+		<German>Landevorgang gestartet!</German>
+		<Spanish>¡Se inició el procedimiento de aterrizaje!</Spanish>
+		<Italian>Procedura di atterraggio iniziata!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_HQ_reinforcement">
+        <Original>Reinforcements arriving.</Original>
+        <English>Reinforcements arriving.</English>
+        <French>Les renforts arrivent.</French>
+		<German>Die Verstärkungen kommen an.</German>
+		<Spanish>Llegan los refuerzos.</Spanish>
+		<Italian>Arrivano i rinforzi.</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_HQ_startingEvac">
+        <Original>We're starting the %1 injured's evacuations.</Original>
+        <English>We're starting the %1 injured's evacuations.</English>
+        <French>Nous commençons l'évacuation de %1 blessé.</French>
+		<German>Wir beginnen mit der Evakuierung von %1 Verwundeten.</German>
+		<Spanish>Comenzamos la evacuación de %1 heridos.</Spanish>
+		<Italian>Iniziamo l'evacuazione di %1 ferito.</Italian>
+      </Key>
+	  </Container>
+	  <Container name="deleteMedevac">
+	  <Key ID="STR_DCW_voices_HQ_rtb">
+        <Original>This is HQ, the MEDEVAC arrived at the base.</Original>
+        <English>This is HQ, the MEDEVAC arrived at the base.</English>
+        <French>Ici QG, le MEDEVAC est arrivé à la base.</French>
+		<German>Dies ist das Hauptquartier, die MEDEVAC ist an der Basis angekommen.</German>
+		<Spanish>Esto es HQ, el MEDEVAC llegó a la base.</Spanish>
+		<Italian>Questo è HQ, il MEDEVAC è arrivato alla base.</Italian>
+      </Key>
+	</Container>
+	<Container name="handleKilled">
+	  <Key ID="STR_DCW_voices_teamLeader_kia">
+        <Original>Shit ! We have a KIA soldier here !</Original>
+        <English>Shit ! We have a KIA soldier here !</English>
+        <French>Merde ! On a un mort ici !</French>
+		<German>Scheisse ! Wir haben hier einen KIA-Soldaten!</German>
+		<Spanish>Mierda ¡Tenemos un soldado KIA aquí!</Spanish>
+		<Italian>Merda! Abbiamo un soldato KIA qui!</Italian>
+      </Key>
+	</Container>
+	<Container name="handleDamage">
+      <Key ID="STR_DCW_voices_teamLeader_manDown">
+        <Original>Man down ! Man down !</Original>
+        <English>Man down ! Man down !</English>
+        <French>Homme à terre ! Homme à terre !</French>
+		<German>Ein Mann weniger ! Ein Mann weniger !</German>
+		<Spanish>Hombre caído ! Hombre caído !</Spanish>
+		<Italian>Uomo a terra ! Uomo a terra !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_teamLeader_isDown">
+        <Original>%1 is down !</Original>
+        <English>%1 is down !</English>
+        <French>%1 est à terre !</French>
+		<German>%1 ist ausgefallen!</German>
+		<Spanish>¡%1 está abajo!</Spanish>
+		<Italian>%1 è in calo!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_teamLeader_needMedic">
+        <Original>%1 needs a medic !</Original>
+        <English>%1 needs a medic !</English>
+        <French>%1 a besoin d'un médecin !</French>
+		<German>%1 braucht einen Sanitäter!</German>
+		<Spanish>¡%1 necesita un médico!</Spanish>
+		<Italian>%1 ha bisogno di un medico!</Italian>
+      </Key>
+	</Container>
+	<Container name="fn_injured">
+      <Key ID="STR_DCW_voices_teamMember_onIt">
+        <Original>I'm on it sir !</Original>
+        <English>I'm on it sir !</English>
+        <French>Je m'en occupe chef !</French>
+		<German>Ich kümmere mich darum Chef!</German>
+		<Spanish>¡Me encargo de eso jefe!</Spanish>
+		<Italian>Me ne occupo io capo!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_teamMember_helpHim">
+        <Original>I'm gonna help him !</Original>
+        <English>I'm gonna help him !</English>
+        <French>Je vais l'aider !</French>
+		<German>Ich werde ihm helfen!</German>
+		<Spanish>¡Lo ayudaré!</Spanish>
+		<Italian>Lo aiuterò!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_teamLeader_afterHim">
+        <Original>I am looking after him !</Original>
+        <English>I am looking after him !</English>
+        <French>Je vais aller le voir !</French>
+		<German>Ich gehe zu ihm!</German>
+		<Spanish>¡Iré a verlo!</Spanish>
+		<Italian>Vado a vederlo!</Italian>
+      </Key>
+	</Container>
+	<Container name="medicalInit">
+      <Key ID="STR_DCW_voices_HQ_waitingMark">
+        <Original>We're waiting now for your mark on the map !</Original>
+        <English>We're waiting now for your mark on the map !</English>
+        <French>Nous attendons le marquage sur carte !</French>
+		<German>Wir warten jetzt auf Ihre Markierung auf der Karte!</German>
+		<Spanish>¡Estamos esperando tu marca en el mapa!</Spanish>
+		<Italian>Stiamo aspettando ora il tuo segno sulla mappa!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_HQ_copy">
+        <Original>I copy!</Original>
+        <English>I copy!</English>
+        <French>C'est reçu !</French>
+		<German>Ich kopiere!</German>
+		<Spanish>¡Yo copio!</Spanish>
+		<Italian>Copio!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_HQ_medevacSucceeded">
+        <Original>Medevac mission succeeded.</Original>
+        <English>Medevac mission succeeded.</English>
+        <French>MEDEVAC réussie.</French>
+		<German>Die Medevac-Mission war erfolgreich.</German>
+		<Spanish>La misión de Medevac tuvo éxito.</Spanish>
+		<Italian>Missione Medevac riuscita.</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_HQ_medevacAborted">
+        <Original>Medevac mission aborted.</Original>
+        <English>Medevac mission aborted.</English>
+        <French>MEDEVAC annulée.</French>
+		<German>Medevac Mission abgebrochen.</German>
+		<Spanish>Misión de Medevac abortada.</Spanish>
+		<Italian>Missione Medevac interrotta.</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_HQ_medevacDestroyed">
+        <Original>The chopper is destroyed ! MEDEVAC helicopter available in 2 minutes.</Original>
+        <English>The chopper is destroyed ! MEDEVAC helicopter available in 2 minutes.</English>
+        <French>L'hélicoptère a été détruit ! MEDEVAC disponible dans 2 minutes.</French>
+		<German>Der Hubschrauber wurde zerstört! MEDEVAC in 2 Minuten verfügbar.</German>
+		<Spanish>¡El helicóptero fue destruido! MEDEVAC disponible en 2 minutos.</Spanish>
+		<Italian>L'elicottero è stato distrutto! MEDEVAC disponibile in 2 minuti.</Italian>
+      </Key>
+	</Container>	
     <Container name="localChief">
       <Key ID="STR_DCW_voices_localchief_tellUsAllYouKnow">
         <Original>Tell us all you know about the insurgent commander !</Original>
         <English>Tell us all you know about the insurgent commander !</English>
         <French>Dis-nous ce que tu sais sur le commandant des insurgés !</French>
+		<German>Sagen Sie uns alles, was Sie über den aufständischen Befehlshaber wissen!</German>
+		<Spanish>¡Dinos todo lo que sabes sobre el comandante insurgente !</Spanish>
+		<Italian>Dicci tutto quello che sai sul comandante dei ribelli !</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_iDontKnow">
         <Original>I don't know where he is...</Original>
         <English>I don't know where he is...</English>
-        <French>Je ne sais pas où il se trouve</French>
+        <French>Je ne sais pas où il se trouve...</French>
+		<German>Ich weiß nicht, wo er ist...</German>
+		<Spanish>No sé dónde está...</Spanish>
+		<Italian>Non so dove sia...</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_noIdea">
         <Original>I have no idea...</Original>
         <English>I have no idea...</English>
-        <French>Aucune idée…</French>
+        <French>Aucune idée...</French>
+		<German>Keine Idee...</German>
+		<Spanish>Ninguna idea...</Spanish>
+		<Italian>Nessuna idea...</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_iWouldntCollaborate">
         <Original>I wouldn't collaborate... This is too dangerous for my family...</Original>
         <English>I wouldn't collaborate... This is too dangerous for my family...</English>
-        <French>Je refuse de vous aider… Je ne veux pas mettre ma famille en danger...</French>
+        <French>Je refuse de vous aider... Je ne veux pas mettre ma famille en danger...</French>
+		<German>Ich würde nicht zusammenarbeiten... Das ist für meine Familie zu gefährlich...</German>
+		<Spanish>Yo no colaboraría... Esto es demasiado peligroso para mi familia...</Spanish>
+		<Italian>Non collaborerei... è troppo pericoloso per la mia famiglia...</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_securePositionFirst">
         <Original>Secure our position first</Original>
         <English>Secure our position first</English>
         <French>Securisez d'abord les environs</French>
+		<German>Zuerst die Umgebung sichern</German>
+		<Spanish>Asegure los alrededores primero</Spanish>
+		<Italian>Prima garantite la zona circostante</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamLeader_isItPossibleToSetupBase">
         <Original>Is it possible to set up our camp here ?</Original>
         <English>Is it possible to set up our camp here ?</English>
-        <French>Est-ce possible d'établir une base avancée ici ?</French>
+        <French>Est-ce possible d'établir une BOA ici ?</French>
+		<German>Ist es möglich, hier eine fortgeschrittene Basis zu errichten?</German>
+		<Spanish>¿Es posible establecer una base avanzada aquí?</Spanish>
+		<Italian>È possibile stabilire una base avanzata qui?</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_thisCampIsStillOccupied">
         <Original>This camp is still occupied by enemy forces, clean up the compound to make this compound available.</Original>
         <English>This camp is still occupied by enemy forces, clean up the compound to make this compound available.</English>
-        <French>Ce camp est encore occupé par les insurgés. Vous devez libérer ce camp pour entamer les discussions</French>
+        <French>Ce camp est encore occupé par les insurgés. Vous devez le sécuriser pour entamer les discussions.</French>
+		<German>Dieses Lager ist immer noch von den Aufständischen besetzt, und Sie müssen es sichern, damit die Gespräche beginnen können.</German>
+		<Spanish>Este campamento todavía está ocupado por los insurgentes. Tienes que asegurarlo para empezar las conversaciones.</Spanish>
+		<Italian>Questo campo è ancora occupato dai ribelli. Dovete metterlo al sicuro per iniziare le discussioni.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_youNeedMoreMoney">
         <Original>You need more money !</Original>
         <English>You need more money !</English>
-        <French>Vous avez besoin de plus d'argent</French>
+        <French>Vous avez besoin de plus d'argent !</French>
+		<German>Sie brauchen mehr Geld!</German>
+		<Spanish>¡Usted necesita más dinero!</Spanish>
+		<Italian>Vi servono più soldi!</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_yourHelpIsWelcome">
         <Original>Your help is welcome here !</Original>
         <English>Your help is welcome here !</English>
         <French>Votre aide est la bienvenue ici !</French>
+		<German>Eure Hilfe ist hier willkommen!</German>
+		<Spanish>¡Su ayuda es bienvenida aquí!</Spanish>
+		<Italian>Il vostro aiuto è benvenuto qui!</Italian>
       </Key>
       <Key ID="STR_DCW_voices_HQ_sendingTroops">
         <Original>This is HQ, we're sending you troops to this compound !</Original>
         <English>This is HQ, we're sending you troops to this compound !</English>
         <French>Ici le QG, nous vous envoyons des troupes !</French>
+		<German>Hier ist das Hauptquartier, wir schicken Truppen!</German>
+		<Spanish>¡Este es el cuartel general! ¡Les enviamos tropas a ustedes!</Spanish>
+		<Italian>Qui quartier generale, mandiamo truppe!</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_thankYou">
         <Original>Thank you so much for your help !</Original>
         <English>Thank you so much for your help !</English>
         <French>Merci infiniment pour votre aide !</French>
+		<German>Vielen Dank für Ihre Hilfe !</German>
+		<Spanish>¡Muchas gracias por su ayuda !</Spanish>
+		<Italian>Grazie mille per il vostro aiuto !</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_ourVillageDoesNotNeed">
         <Original>Our village does not need your help...</Original>
         <English>Our village does not need your help...</English>
-        <French>Notre village n'a pas besoin d'aide...</French>
+        <French>Notre village n'a pas besoin de votre aide...</French>
+		<German>Unser Dorf braucht Ihre Hilfe nicht...</German>
+		<Spanish>Nuestro pueblo no necesita su ayuda...</Spanish>
+		<Italian>Il nostro villaggio non ha bisogno del vostro aiuto...</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_youMustImprove">
         <Original>You must improve your compound's reputation first</Original>
         <English>You must improve your compound's reputation first</English>
-        <French>Vous devez améliorer votre réputation d'abord.</French>
+        <French>Vous devez améliorer votre réputation d'abord</French>
+		<German>Sie müssen zuerst Ihren Ruf verbessern</German>
+		<Spanish>Primero debes mejorar tu reputación</Spanish>
+		<Italian>Devi prima migliorare la tua reputazione</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamLeader_wellProvideYou">
         <Original>We'll provide you a military advisor for helping you to defend against insurgents.</Original>
         <English>We'll provide you a military advisor for helping you to defend against insurgents.</English>
         <French>Nous pouvons vous fournir un spécialiste en technique militaire, il vous aidera à vous défendre contre les insurgés.</French>
+		<German>Wir stellen Ihnen einen Militärberater zur Verfügung, der Sie bei der Verteidigung gegen Aufständische unterstützt.</German>
+		<Spanish>Le proporcionaremos un asesor militar para ayudarle a defenderse de los insurgentes.</Spanish>
+		<Italian>Ti forniremo un consulente militare per aiutarti a difenderti dai ribelli.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_localchief_thankYou">
         <Original>Thank you so much for your help !</Original>
         <English>Thank you so much for your help !</English>
         <French>Merci pour tout !</French>
+		<German>Vielen Dank für Ihre Hilfe !</German>
+		<Spanish>¡Muchas gracias por su ayuda !</Spanish>
+		<Italian>Grazie mille per il vostro aiuto !</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamLeader_aChopperIsComing">
         <Original>A chopper is coming with medical and food supplies…</Original>
         <English>A chopper is coming with medical and food supplies…</English>
         <French>Un hélicoptère va arriver avec une caisse de nourriture et de médicaments.</French>
+		<German>Ein Hubschrauber kommt mit einer Kiste Essen und Medizin.</German>
+		<Spanish>Viene un helicóptero con una caja de comida y medicinas.</Spanish>
+		<Italian>Sta arrivando un elicottero con una cassa di cibo e medicine.</Italian>
       </Key>
     </Container>
     <Container name="addActionFunctions">
       <Key ID="STR_DCW_voices_teamLeader_hiBuddy">
         <Original>Hi buddy, I would need a new team member, are you in ?!</Original>
         <English>Hi buddy, I would need a new team member, are you in ?!</English>
-        <French>Salut mec, j'aurais besoin d'un nouveau membre dans mon équipe, tu es partant ?</French>
+        <French>Salut mec, j'aurais besoin d'un nouveau membre dans mon équipe. Es-tu partant ?</French>
+		<German>Hey, Mann, ich könnte ein neues Mitglied in meinem Team gebrauchen, würdest du?</German>
+		<Spanish>Hola, hombre, necesito un nuevo miembro de mi equipo. ¿Quieres?</Spanish>
+		<Italian>Ehi, amico, mi serve un nuovo membro della mia squadra. Vuoi?</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamMember_imIn">
         <Original>I'm in ! Let's go</Original>
         <English>I'm in ! Let's go</English>
         <French>Je suis partant, c'est parti !</French>
+		<German>In Ordnung! Gehen wir darin!</German>
+		<Spanish>¡ Vale! Vamos!!</Spanish>
+		<Italian>Di accordo! Andiamo lì!</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamLeader_hiBuddyMil">
         <Original>Hi buddy, I would need a military advisor, are you in ?!</Original>
         <English>Hi buddy, I would need a military advisor, are you in ?!</English>
         <French>Salut mec, j'aurais besoin d'un conseiller militaire, es-tu partant ?</French>
+		<German>Hey, Mann, ich könnte einen Militärberater gebrauchen, würdest du?</German>
+		<Spanish>Hola, hombre, necesito un consejero militar. ¿Quieres?</Spanish>
+		<Italian>Ehi, amico, mi serve un consulente militare. Vuoi?</Italian>
       </Key>
       <Key ID="STR_DCW_voices_instructor_briefing1">
         <Original>Your main objective is to seek and neutralize an enemy commander hidden somewhere...</Original>
         <English>Your main objective is to seek and neutralize an enemy commander hidden somewhere...</English>
         <French>Votre objectif principal est de trouver et neutraliser un commandant ennemi caché quelque part dans la région.</French>
+		<German>Ihr Hauptziel ist es, einen feindlichen Kommandanten zu suchen und zu neutralisieren, der irgendwo versteckt ist...</German>
+		<Spanish>Su objetivo principal es buscar y neutralizar a un comandante enemigo escondido en algún lugar...</Spanish>
+		<Italian>Il vostro obiettivo principale è quello di cercare e neutralizzare un comandante nemico nascosto da qualche parte...</Italian>
       </Key>
       <Key ID="STR_DCW_voices_instructor_briefing2">
         <Original>He will be always moving on the map, hiding in forestry area or compounds.</Original>
         <English>He will be always moving on the map, hiding in forestry area or compounds.</English>
-        <French>Il sera toujours en mouvement, changeant régulièrement de cachette. A vous de le débusquer !</French>
+        <French>Il sera toujours en mouvement, changeant régulièrement de cachette. À vous de le débusquer !</French>
+		<German>Er wird sich immer auf der Karte bewegen, versteckt sich im Forstgebiet oder in der Stadt.</German>
+		<Spanish>Siempre estará moviéndose en el mapa, escondiéndose en la zona forestal o en la ciudad.</Spanish>
+		<Italian>Si muoverà sempre sulla mappa, nascondendosi nella zona forestale o in città.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_instructor_briefing3">
         <Original>You have two way to get info about his location : interrogating civil chief in compound or interrogating one of his officers wandering on the map in trucks...</Original>
         <English>You have two way to get info about his location : interrogating civil chief in compound or interrogating one of his officers wandering on the map in trucks...</English>
-        <French>Vous avez deux moyens de collecter de l'information sur notre homme : interroger les chefs dans les villages aux alentours ou attraper un de ses sous-officiers qui circule moins discrètement dans des camions...</French>
+        <French>Vous avez deux moyens de collecter de l'information sur notre homme : interroger les chefs dans les villages aux alentours ou capturer un de ses sous-officiers qui circule moins discrètement dans des camions...</French>
+		<German>Sie haben zwei Möglichkeiten, um Informationen über seinen Standort zu erhalten: Sie verhören Zivilchef in der Stadt oder verhören einen seiner Offiziere, die auf der Karte in Lastwagen wandern...</German>
+		<Spanish>Usted tiene dos maneras de obtener información sobre su ubicación : interrogar al jefe civil en la ciudad o interrogar a uno de sus oficiales deambulando por el mapa en camiones...</Spanish>
+		<Italian>Hai due modi per ottenere informazioni sulla sua posizione : interrogare il capo civile in città o interrogare uno dei suoi agenti vagando sulla mappa su camion...</Italian>
       </Key>
       <Key ID="STR_DCW_voices_instructor_briefing4">
-        <Original>We've located a few of these officers spreading the insurgency accross the country. It's highly recommended to neutralize them</Original>
-        <English>We've located a few of these officers spreading the insurgency accross the country. It's highly recommended to neutralize them</English>
-        <French>Nos drones en ont déjà repéré quelques un, les infos seront sur votre carte.</French>
+        <Original>We've located a few of these officers spreading the insurgency accross the country. It's highly recommended to neutralize them.</Original>
+        <English>We've located a few of these officers spreading the insurgency accross the country. It's highly recommended to neutralize them.</English>
+        <French>Nos drones en ont déjà repéré quelques-uns, les infos seront sur votre carte. Il est fortement recommandé de les neutraliser.</French>
+		<German>Wir haben einige dieser Offiziere gefunden, die den Aufstand über das Land verbreiten. Es wird dringend empfohlen, sie zu neutralisieren.</German>
+		<Spanish>Hemos localizado a algunos de estos oficiales esparciendo la insurgencia por todo el país. Es muy recomendable neutralizarlos.</Spanish>
+		<Italian>Abbiamo localizzato alcuni di questi agenti che diffondono l'insurrezione in tutto il paese. Si raccomanda vivamente di neutralizzarli.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_instructor_briefing5">
         <Original>The key path is to make the population always supporting you. Giving people food, medicine and military training will make our investigations easier.</Original>
         <English>The key path is to make the population always supporting you. Giving people food, medicine and military training will make our investigations easier.</English>
-        <French>La clé du succès sera de conserver le soutien des civils. Fournir de la nourriture, des médicaments et un entrainement militaire vous aideront considérablement dans la collecte de renseignements.</French>
+        <French>La clé du succès sera de conserver le soutien des civils. Leur fournir de la nourriture, des médicaments et un entrainement militaire vous aideront considérablement dans la collecte de renseignements.</French>
+		<German>Der Schlüsselweg ist, die Bevölkerung zu bilden, die Sie immer stützt. Die Versorgung von Menschen mit Nahrungsmitteln, Medikamenten und militärischer Ausbildung wird unsere Untersuchungen erleichtern.</German>
+		<Spanish>El camino clave es hacer que la población siempre te apoye. Dar a la gente comida, medicinas y entrenamiento militar hará nuestras investigaciones más fáciles.</Spanish>
+		<Italian>Il percorso principale è quello di rendere la popolazione sempre sostenendo voi. Dare cibo, medicina e addestramento militare renderà le nostre indagini più facile.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_instructor_briefing6">
         <Original>Alright guys ? Any question ? Dismiss !</Original>
         <English>Alright guys ? Any question ? Dismiss !</English>
-        <French>Est-ce que tout est clair ? Des questions ? Rompez !</French>
+        <French>Est-ce que tout est clair ? Des questions ? Vous pouvez disposer !</French>
+		<German>Gut Jungs? Haben Sie Fragen? Verwerfen !</German>
+		<Spanish>¿Está bien chicos ? ¿Alguna pregunta ? ¡Desaparece !</Spanish>
+		<Italian>Va bene ragazzi ? Qualsiasi domanda ? Respingere !</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamMember_okWereFlanking">
         <Original>Ok, we're taking your flank !</Original>
         <English>Ok, we're taking your flank !</English>
         <French>Ok, on prend votre flanc !</French>
+		<German>Gut, wir nehmen Ihre Flanke!</German>
+		<Spanish>¡Bien, tomaremos tu flanco !</Spanish>
+		<Italian>Ok, stiamo prendendo il tuo fianco !</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamMember_understood">
         <Original>Understood sir !</Original>
         <English>Understood sir !</English>
         <French>Compris chef !</French>
+		<German>Verstanden Sir!</German>
+		<Spanish>¡Señor entendido!</Spanish>
+		<Italian>Signore inteso!</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamLeader_goAway">
-        <Original>Go away now ! asshole !</Original>
-        <English>Go away now ! asshole !</English>
-        <French>Casse-toi ! Pauvre con !</French>
+        <Original>Go away now ! Asshole !</Original>
+        <English>Go away now ! Asshole !</English>
+        <French>Casse-toi ! Connard !</French>
+		<German>Geh jetzt weg! Arschloch!</German>
+		<Spanish>¡Vete ahora ! ¡Imbécil !</Spanish>
+		<Italian>Vattene via ! Stronzo !</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamLeader_holyShit">
         <Original>Holy shit ! This man is carrying material for IED purposes !</Original>
         <English>Holy shit ! This man is carrying material for IED purposes !</English>
-        <French>Bordel ! Cet enfoiré a du 'matosse' pour fabriquer des IEDs !</French>
+        <French>Bordel ! Cet enfoiré a du 'matos' pour fabriquer des IED !</French>
+		<German>Heilige Scheiße! Dieser Mann trägt Material für IED-Zwecke!</German>
+		<Spanish>Santa mierda! ¡Este hombre lleva material para propósitos de IED!</Spanish>
+		<Italian>Merda! Quest'uomo trasporta materiale per scopi IED!</Italian>
       </Key>
     </Container>
     <Container name="actionCamp">
@@ -469,11 +1797,17 @@
         <Original>The camp is set up !</Original>
         <English>The camp is set up !</English>
         <French>Le campement est installé !</French>
+		<German>Das Lager ist eingerichtet!</German>
+		<Spanish>¡El campamento está listo!</Spanish>
+		<Italian>Il campo è stato sistemato!</Italian>
       </Key>
       <Key ID="STR_DCW_voices_teamLeader_campPackedUp">
         <Original>We've packed up the camp !</Original>
         <English>We've packed up the camp !</English>
         <French>On a remballé les tentes et le matériel !</French>
+		<German>Wir haben die Zelte und die Ausrüstung weggeräumt!</German>
+		<Spanish>¡Hemos limpiado las tiendas y el equipo!</Spanish>
+		<Italian>Abbiamo messo via tende e attrezzature!</Italian>
       </Key>
     </Container>
     <Container name="spawnDefendTask">
@@ -481,16 +1815,25 @@
         <Original>Be advised, %1 enemy groups moving to your localization. You must defend the civilian at any cost.</Original>
         <English>Be advised, %1 enemy groups moving to your localization. You must defend the civilian at any cost.</English>
         <French>Faites attention, %1 groupes ENI progressent vers votre position. Vous devez défendre les civils à tout prix !</French>
+		<German>Es wird empfohlen, %1 gegnerische Gruppen zu Ihrer Lokalisierung zu bewegen. Sie müssen den Zivilisten um jeden Preis verteidigen.</German>
+		<Spanish>Tenga en cuenta, grupos enemigos %1 moviéndose a su localización. Debe defender al civil a cualquier costo.</Spanish>
+		<Italian>Attenzione, %1 gruppi nemici si stanno muovendo verso la tua localizzazione. Devi difendere il civile ad ogni costo.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_HQ_taskDefendSuccess">
         <Original>Good job ! The compound is safe now.</Original>
         <English>Good job ! The compound is safe now.</English>
         <French>Bien joué ! Le village est sécurisé maintenant !</French>
+		<German>Gut gemacht! Die Verbindung ist jetzt sicher.</German>
+		<Spanish>¡Buen trabajo ! El compuesto es seguro ahora.</Spanish>
+		<Italian>Buon lavoro ! Il composto è sicuro ora.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_HQ_taskDefendFailed">
-        <Original> The compound wasn't defended...</Original>
-        <English> The compound wasn't defended...</English>
+        <Original>The compound wasn't defended...</Original>
+        <English>The compound wasn't defended...</English>
         <French>Les habitants n'ont pas été défendus... Échec de la mission.</French>
+		<German>Die Bewohner wurden nicht verteidigt...</German>
+		<Spanish>Los habitantes no han sido defendidos...</Spanish>
+		<Italian>Gli abitanti non sono stati difesi...</Italian>
       </Key>
     </Container>
     <Container name="spawnSecondaryObjectives">
@@ -498,28 +1841,137 @@
         <Original>The target is down ! Let's go talk to him !</Original>
         <English>The target is down ! Let's go talk to him !</English>
         <French>La cible est à terre ! Allons lui dire quelques mots !</French>
+		<German>Das Ziel ist unten ! Sprechen wir mit ihm!</German>
+		<Spanish>¡El objetivo ha caído ! ¡Vamos a hablar con él !</Spanish>
+		<Italian>L'obiettivo è a terra ! Andiamo a parlargli !</Italian>
       </Key>
       <Key ID="STR_DCW_voices_HQ_secondaryBriefing">
-        <Original>We have some new intels on the enemy officer : %1, maybe he is located %2km from %3</Original>
-        <English>We have some new intels on the enemy officer : %1, maybe he is located %2km from %3</English>
-        <French>Le drone nous a donné des informations sur la position de l'officier ennemi, %1. Il est probablement à %2km de %3</French>
+        <Original>We have some new intels on the enemy officer : %1, maybe he is located %2km from %3.</Original>
+        <English>We have some new intels on the enemy officer : %1, maybe he is located %2km from %3.</English>
+        <French>Le drone nous a donné des informations sur la position de l'officier ennemi, %1. Il est probablement à %2km de %3.</French>
+		<German>Wir haben einige neue Intel auf dem feindlichen Offizier : %1, vielleicht ist er %2km von %3 entfernt.</German>
+		<Spanish>Tenemos algunos nuevos intels en el oficial enemigo : %1, tal vez se encuentra a %2km de %3.</Spanish>
+		<Italian>Abbiamo nuove informazioni sull'ufficiale nemico : %1, forse si trova %2 km da %3.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_officer_iKnowSomeThing">
         <Original>I know something...</Original>
         <English>I know something...</English>
         <French>Je sais quelque chose...</French>
+		<German>Ich weiß etwas...</German>
+		<Spanish>Sé(Conozco) algo...</Spanish>
+		<Italian>Io so qualche cosa...</Italian>
       </Key>
       <Key ID="STR_DCW_voices_HQ_goodJob">
         <Original>Good job team, it seems you've stopped the propagation of the insurgency... The %1 officers have been neutralized.</Original>
         <English>Good job team, it seems you've stopped the propagation of the insurgency... The %1 officers have been neutralized.</English>
-        <French>Beau boulot les gars ! On dirait que vous avez stoppé la propagation des insurgés dans la région. %1 officiers ont été liquidés. Du beau boulot !</French>
+        <French>Beau boulot les gars ! On dirait que vous avez réussi à stopper l'insurrection dans la région. %1 officiers avez été neutralisés. Du bon travail !</French>
+		<German>Gute Teamkollegen, es scheint, als hätten Sie die Ausbreitung des Aufstandes gestoppt... Die %1 Offiziere wurden neutralisiert.</German>
+		<Spanish>Buenos compañeros de trabajo, parece que han detenido la propagación de la insurgencia... los oficiales %1 han sido neutralizados.</Spanish>
+		<Italian>Bravi compagni di squadra, sembra che abbiate fermato la propagazione dell'insurrezione... gli ufficiali di %1 sono stati neutralizzati.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_HQ_nextStep">
         <Original>Next step is to consolidate our position and catch the main commander of the movement %1...</Original>
         <English>Next step is to consolidate our position and catch the main commander of the movement %1...</English>
-        <French>L'étape suivante sera de consolider notre position et de capturer le commandant ennemi.</French>
+        <French>L'étape suivante sera de consolider notre position et de capturer le commandant ennemi %1...</French>
+		<German>Der nächste Schritt besteht darin, unsere Position zu festigen und den Hauptkommandanten der Bewegung %1 zu fangen...</German>
+		<Spanish>El siguiente paso es consolidar nuestra posición y atrapar al comandante principal del movimiento %1...</Spanish>
+		<Italian>Il prossimo passo è consolidare la nostra posizione e catturare il comandante principale del movimento %1...</Italian>
       </Key>
     </Container>
+	<Container name="fn_Captured">
+      <Key ID="STR_DCW_voices_teamLeader_hugeMistake">
+        <Original>I think you made a huge mistake, asshole !</Original>
+        <English>I think you made a huge mistake, asshole !</English>
+        <French>Je pense que vous faites une énorme erreur, connard !</French>
+		<German>Ich denke, du hast einen großen Fehler gemacht, Arschloch !</German>
+		<Spanish>¡Creo que cometiste un gran error, gilipollas!</Spanish>
+		<Italian>Penso che tu abbia fatto un grosso errore, coglione !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_general_shutUp">
+        <Original>Shut up ! You just betrayed all of your team members.  You're just a traitor !</Original>
+        <English>Shut up ! You just betrayed all of your team members.  You're just a traitor !</English>
+        <French>La ferme ! Tu as trahis tous les membres de ton équipe. Tu n'es qu'un traitre !</French>
+		<German>Halt die Klappe ! Du hast gerade alle deine Teammitglieder betrogen. Du bist nur ein Verräter!</German>
+		<Spanish>Cállate ! Acabas de traicionar a todos los miembros de tu equipo. Eres solo un traidor!</Spanish>
+		<Italian>Stai zitto ! Hai appena tradito tutti i membri del tuo team. Sei solo un traditore!</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_general_traitor">
+        <Original>And do you know what we do in our country to traitors like you ?</Original>
+        <English>And do you know what we do in our country to traitors like you ?</English>
+        <French>Et tu sais ce que l'on fait au traitre de ton genre dans notre beau pays?</French>
+		<German>Und wissen Sie, was wir in unserem Land Verrätern wie Ihnen antun?</German>
+		<Spanish>¿Y sabes lo que hacemos en nuestro país a traidores como tú?</Spanish>
+		<Italian>E sai cosa facciamo nel nostro paese ai traditori come te?</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_teamLeader_theGuard">
+        <Original>Where is the guard ?</Original>
+        <English>Where is the guard ?</English>
+        <French>Où est le garde ?</French>
+		<German>Wo ist die Wache ?</German>
+		<Spanish>¿Dónde está el guardia ?</Spanish>
+		<Italian>Dov'è la guardia?</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_teamLeader_goodToSeeYou">
+        <Original>Good to see you back home !</Original>
+        <English>Good to see you back home !</English>
+        <French>Ravi de te voir de retour à la maison !</French>
+		<German>Schön dich wieder zu Hause zu sehen !</German>
+		<Spanish>¡Qué bueno verte de vuelta a casa!</Spanish>
+		<Italian>È bello vederti a casa !</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_teamLeader_welcomeBack">
+        <Original>Welcome back mate, you seem to have some interresting news ! What did you see during your captivity ?</Original>
+        <English>Welcome back mate, you seem to have some interresting news ! What did you see during your captivity ?</English>
+        <French>Bienvenu mon ami, tu as l'air d'avoir d'interessantes nouvelles! Qu-est ce que tu as vu pendant ta captivité ?</French>
+		<German>Willkommen zurück Kumpel, Sie scheinen einige interessante Neuigkeiten zu haben! Was hast du in deiner Gefangenschaft gesehen ?</German>
+		<Spanish>Bienvenido de nuevo amigo, ¡parece que tienes algunas noticias interesantes! ¿Qué viste durante tu cautiverio?</Spanish>
+		<Italian>Bentornato amico, sembra che tu abbia delle notizie interessanti! Cosa hai visto durante la tua prigionia ?</Italian>
+      </Key>
+	  </Container>
+	  <Container name="fn_setCompoundState">
+      <Key ID="STR_DCW_voices_HQ_occupiedByEni">
+        <Original>%1 is occupied by enemy.</Original>
+        <English>%1 is occupied by enemy.</English>
+        <French>%1 est occupé par l'ennemi.</French>
+		<German>%1 wird vom Feind besetzt.</German>
+		<Spanish>%1 Está ocupado por el enemigo.</Spanish>
+		<Italian>%1 è occupato dal nemico.</Italian>
+      </Key>
+      <Key ID="STR_DCW_voices_HQ_civilianSlaughtered">
+        <Original>Civilian slaughtered in %1.</Original>
+        <English>Civilian slaughtered in %1.</English>
+        <French>Civils massacrés à %1.</French>
+		<German>Zivilist geschlachtet beim %1</German>
+		<Spanish>Civiles sacrificados a %1</Spanish>
+		<Italian>Macello civile a %1</Italian>
+      </Key>
+      <Key ID="STR_DCW_voices_HQ_humanitaryDeployed">
+        <Original>The humanitary will be deployed in %1.</Original>
+        <English>The humanitary will be deployed in %1.</English>
+        <French>L'aide humanitaire à été déployée à %1.</French>
+		<German>Das humanitäre wird in %1 eingesetzt</German>
+		<Spanish>El humanitario se desplegará en %1</Spanish>
+		<Italian>L'umanitario sarà schierato in %1</Italian>
+      </Key>
+    </Container>
+	  <Container name="fn_Undercover">
+	  <Key ID="STR_DCW_voices_teamLeader_IcantDoThis">
+        <Original>I can't do this ...</Original>
+        <English>I can't do this ...</English>
+        <French>Je ne peux pas faire ça ...</French>
+		<German>Ich kann das nicht tun ...</German>
+		<Spanish>No puedo hacer esto ...</Spanish>
+		<Italian>Non posso farlo ...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_voices_teamLeader_GoodIdea">
+        <Original>Good idea ! I'm gonna infiltrate their line.</Original>
+        <English>Good idea ! I'm gonna infiltrate their line.</English>
+        <French>Bonne idée ! Je pourrais m'infiltrer derrière les lignes ennemies.</French>
+		<German>Gute Idee ! Ich werde ihre Linie infiltrieren.</German>
+		<Spanish>Buena idea ! Voy a infiltrarme en su línea.</Spanish>
+		<Italian>Buona idea ! Mi infiltrerò nella loro linea.</Italian>
+      </Key>
+	</Container>
   </Package>
   <Package name="Handler">
     <Container name="handleKill">
@@ -527,6 +1979,113 @@
         <Original>Search and secure</Original>
         <English>Search and secure</English>
         <French>Fouiller et sécuriser</French>
+		<German>Suchen und sichern</German>
+		<Spanish>Búsqueda y seguro</Spanish>
+		<Italian>Ricerca e sicuro</Italian>
+      </Key>
+	 </Container>
+	 <Container name="handleDamaged">
+	  <Key ID="STR_DCW_handleKill_injuredCivil">
+        <Original>Injured civil</Original>
+        <English>Injured civil</English>
+        <French>Civil blessé</French>
+		<German>Zivil verwundet</German>
+		<Spanish>Civil herido</Spanish>
+		<Italian>Feriti civili</Italian>
+      </Key>
+    </Container>
+	<Container name="HandleFiredNear">
+	  <Key ID="STR_DCW_handleKill_calm">
+        <Original>&lt;t color='#cd8700'&gt;Calm down !&lt;/t&gt;</Original>
+        <English>&lt;t color='#cd8700'&gt;Calm down !&lt;/t&gt;</English>
+        <French>&lt;t color='#cd8700'&gt;Du calme !&lt;/t&gt;</French>
+		<German>&lt;t color='#cd8700'&gt;Beruhige dich !&lt;/t&gt;</German>
+		<Spanish>&lt;t color='#cd8700'&gt;Cálmese !&lt;/t&gt;</Spanish>
+		<Italian>&lt;t color='#cd8700'&gt;Calmati !&lt;/t&gt;</Italian>
+      </Key>
+	  <Key ID="STR_DCW_handleKill_calmFriend">
+        <Original>Calm down my friend !</Original>
+        <English>Calm down my friend !</English>
+        <French>Calme toi mon ami !</French>
+		<German>Beruhige dich mein Freund!</German>
+		<Spanish>¡Cálmate amigo!</Spanish>
+		<Italian>Calmati amico mio!</Italian>
+      </Key>
+    </Container>
+  </Package>
+  <Package name="Intro">
+    <Container name="intro_main">
+      <Key ID="STR_DCW_intro_loading">
+        <Original>Mission loading...</Original>
+        <English>Mission loading...</English>
+        <French>Chargement de la mission...</French>
+		<German>Mission wird geladen...</German>
+		<Spanish>Misión cargando...</Spanish>
+		<Italian>Caricamento missione...</Italian>
+      </Key>
+	  <Key ID="STR_DCW_intro_authorPresent">
+        <Original>Bidass presents</Original>
+        <English>Bidass presents</English>
+        <French>Bidass présente</French>
+		<German>Bidass vorhanden</German>
+		<Spanish>Bidass presente</Spanish>
+		<Italian>Bidass presente</Italian>
+      </Key>
+	  <Key ID="STR_DCW_intro_scenario">
+        <Original>An ARMA III scenario</Original>
+        <English>An ARMA III scenario</English>
+        <French>Un scénario ARMA III</French>
+		<German>Ein ARMA III-Szenario</German>
+		<Spanish>Un escenario ARMA III</Spanish>
+		<Italian>Uno scenario ARMA III</Italian>
+      </Key>
+	  <Key ID="STR_DCW_intro_music">
+        <Original>Music by Explosion in the Sky</Original>
+        <English>Music by Explosion in the Sky</English>
+        <French>Une musique d' Explosion in the Sky</French>
+		<German>Musik von Explosion in the Sky</German>
+		<Spanish>Música de Explosion in the Sky</Spanish>
+		<Italian>Musica di Explosion in the Sky</Italian>
+      </Key>
+	  <Key ID="STR_DCW_intro_oriIdea">
+        <Original>An Original Idea of Bidass</Original>
+        <English>An Original Idea of Bidass</English>
+        <French>Idée Originale : Bidass</French>
+		<German>Ursprüngliche Idee: Bidass</German>
+		<Spanish>Idea original: Bidass</Spanish>
+		<Italian>Idea originale: Bidass</Italian>
+      </Key>
+	  <Key ID="STR_DCW_intro_trad">
+        <Original>Translation: Didjo74</Original>
+        <English>Translation: Didjo74</English>
+        <French>Traduction: Didjo74</French>
+		<German>Übersetzung: Didjo74</German>
+		<Spanish>Traducción: Didjo74</Spanish>
+		<Italian>Traduzione: Didjo74</Italian>
+      </Key>
+	  <Key ID="STR_DCW_intro_speThanks">
+        <Original>Special Thanks:</Original>
+        <English>Special Thanks:</English>
+        <French>Remerciements:</French>
+		<German>Besonderer Dank:</German>
+		<Spanish>Gracias especiales:</Spanish>
+		<Italian>Ringraziamenti speciali:</Italian>
+      </Key>
+	  <Key ID="STR_DCW_intro_speThanksNovakat77">
+        <Original>to Novakat77 for the server</Original>
+        <English>to Novakat77 for the server</English>
+        <French>à Novakat77 pour le serveur</French>
+		<German>an Novakat77 für den Server</German>
+		<Spanish>a Novakat77 para el servidor</Spanish>
+		<Italian>a Novakat77 per il server</Italian>
+      </Key>
+		<Key ID="STR_DCW_intro_speThanksFFAA">
+        <Original>to the FFAA Team for the Lythium map</Original>
+        <English>to the FFAA Team for the Lythium map</English>
+        <French>à l'équipe FFAA pour la map Lythium</French>
+		<German>an das FFAA-Team für die Lythium-Karte</German>
+		<Spanish>al equipo de la FFAA para el mapa de Lythium</Spanish>
+		<Italian>al team FFAA per la mappa Lythium</Italian>
       </Key>
     </Container>
   </Package>
