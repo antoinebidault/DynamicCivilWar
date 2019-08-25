@@ -1,3 +1,15 @@
+/*
+  Author: 
+    Bidass
+
+  Version:
+    {VERSION}
+
+  Description:
+    Headless client
+*/
+
+// Send unit to Headless client
 DCW_fnc_sendToHC = {
 	_grp = _this;
 	if (!isDedicated) exitWith {2};
@@ -21,6 +33,7 @@ if (!isDedicated) exitWith{};
 
 // Refresh the HC state
 while {true} do {
+
   for "_i" from 1 to 4 do{ 
     if !(isNil format["HC%1",str _i]) then {
       _hc = (missionNamespace getVariable format["HC%1",str _i]);
@@ -30,6 +43,7 @@ while {true} do {
       };
     };
   };
+
   publicVariableServer "HCs";
 
   // Check the current HCs

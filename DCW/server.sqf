@@ -19,9 +19,9 @@ if (!isMultiplayer)then{
 addMissionEventHandler ["HandleDisconnect", {
 	params ["_unit", "_id", "_uid", "_name"];
     deleteVehicle _unit;
-	if (count ([] call DCW_fnc_allPlayers) == 0) then {
-	  // "EveryoneLost" call BIS_fnc_endMissionServer;
-	};
+	/*if (count ([] call DCW_fnc_allPlayers) == 0) then {
+	   "EveryoneLost" call BIS_fnc_endMissionServer;
+	};*/
 	true;
 }];
 

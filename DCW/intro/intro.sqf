@@ -71,7 +71,7 @@ _cam camcommit 10;
 
 sleep 10;
 
-//[_cam,_chopper, [-14,22,-15],7] call DCW_fnc_camfollow;
+// [_cam,_chopper, [-14,22,-15],7] call DCW_fnc_camfollow;
 
 titleCut ["", "BLACK OUT", 1];
 sleep 1;
@@ -83,4 +83,4 @@ _cam cameraeffect ["terminate", "back"];
 8 fadeSound 1;	
 ["",0,true] call bis_fnc_setppeffecttemplate;
 
-//[player, "All units deployed to the insertion point", 150, 250, 75, 1, [], 0, false] call BIS_fnc_establishingShot;
+// [player, "All units deployed to the insertion point", 150, 250, 75, 1, [], 0, false] call BIS_fnc_establishingShot;
