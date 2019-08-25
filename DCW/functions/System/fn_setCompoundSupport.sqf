@@ -9,6 +9,7 @@ _support =  (100 min (0 max (_support + _addedPoints)));
 _marker set [13, _support]; 
 
 waitUntil {!IN_MARKERS_LOOP}; 
+sleep .3;
 MARKERS set [_markerIndex,_marker];
 
 // _timeToSleep = floor(abs(_timeInSeconds/_addedPoints));

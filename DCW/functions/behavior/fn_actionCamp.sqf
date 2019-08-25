@@ -97,7 +97,9 @@
         disableUserInput false;
     },nil,4,true,true, ""];
 
-    
+    // Make camp undestroyable
+    {_x allowDamage false;} foreach CAMP_OBJS;
+
     //Rest animations
     (CAMP_OBJS select 18) remoteExec ["DCW_fnc_actionrest",0, true];
 

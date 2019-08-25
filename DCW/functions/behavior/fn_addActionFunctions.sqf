@@ -287,7 +287,7 @@ DCW_fnc_addActionLookInventory = {
 
         _this call DCW_fnc_endtalking;
 
-        waitUntil { _talker distance _unit > 13; sleep 4; };
+        waitUntil { sleep 4; _talker distance _unit > 13;  };
             
         _unit stop false;
         [_unit,"MOVE"] remoteExec ["enableAI"];

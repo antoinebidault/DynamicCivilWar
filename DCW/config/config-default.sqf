@@ -13,7 +13,7 @@
 
 
 // If debug enabled, each units will be visible on the map with markers
-DEBUG = getMissionConfigValue ["DCW_debug",true];
+DEBUG = getMissionConfigValue ["DCW_debug",false]; 
 AI_SKILLS = getMissionConfigValue ["DCW_AI_skills",.9];
 RESPAWN_ENABLED = true;
 MEDEVAC_ENABLED = true; // Reviving
@@ -24,7 +24,7 @@ TIME_OF_DAYS = 12;
 WEATHER = .2;
 ENABLE_DIALOG = true;
 POPULATION_INTENSITY = 1;
-PERCENTAGE_OF_ENEMY_COMPOUND = 4;
+PERCENTAGE_OF_ENEMY_COMPOUND = 4; 
 NUMBER_OFFICERS = 3;
 
 // List of vehicle config, everybody needs this part
