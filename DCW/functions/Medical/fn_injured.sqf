@@ -20,7 +20,7 @@ playSound3D [_deathsound, _unit, false, getPosASL _unit, 1.5, 1, 150];
 
 if (isPlayer _unit && _unit == player) then {
 	DCW_ai_reviving_cancelled = false;
-	_idAction = [_unit, "Force respawn","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", "true", "true", {  }, { }, { DCW_ai_reviving_cancelled = true; }, {  }, [], 3, nil, true, true] call BIS_fnc_holdActionAdd;
+	_idAction = [_unit, localize "STR_DCW_injured_forceRespawn","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", "true", "true", {  }, { }, { DCW_ai_reviving_cancelled = true; }, {  }, [], 3, nil, true, true] call BIS_fnc_holdActionAdd;
 
 	DCW_ai_current_medic = objNull;
 
@@ -43,7 +43,7 @@ if (isPlayer _unit && _unit == player) then {
 		// Check the status
 		if (_dist == 999999 || isNull _foundCloseUnit) exitWith { 
 			DCW_ai_current_medic = objNull; 
-			hintSilent "All medics are KIA";
+			hintSilent localize "STR_DCW_injured_hintMedicKia";
 		};
 		
 		if (!isNull _foundCloseUnit && isNull DCW_ai_current_medic) then {
@@ -81,7 +81,7 @@ if (isPlayer _unit && _unit == player) then {
 	}foreach units GROUP_PLAYERS;
 
 	if (!isNull _foundCloseUnit ) then {
-		[_foundCloseUnit, ["I'm on it sir !","I'm gonna help him !","I am looking after him !"] call BIS_fnc_selectRandom] remoteExec ["DCW_fnc_talk"];
+		[_foundCloseUnit, [localize "STR_DCW_voices_teamMember_onIt",localize "STR_DCW_voices_teamMember_helpHim",localize "STR_DCW_voices_teamLeader_afterHim"] call BIS_fnc_selectRandom] remoteExec ["DCW_fnc_talk"];
 		[_foundCloseUnit,_unit,false] spawn DCW_fnc_firstAid;
 	};
 };
