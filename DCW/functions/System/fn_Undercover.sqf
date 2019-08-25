@@ -5,7 +5,7 @@
  * Author: Bidass
 
   Version:
-    {VERSION}
+    0.9.1
  * License : GNU (GPL)
  * Undercover loop triggered on disguise action on enemy dead bodies
  */
@@ -17,7 +17,7 @@ params["_unit","_enemy"];
 private _inventory = getUnitLoadout _enemy;
 private _inventoryBackUp = getUnitLoadout _unit;
 
-if (CHASER_TRIGGERED || CHASER_VIEWED || _unit getVariable["DCW_undercover",false]) exitWith{[_unit,"I can't do this...", false] spawn DCW_fnc_talk;false;};
+if (CHASER_TRIGGERED || CHASER_VIEWED || _unit getVariable["DCW_undercover",false]) exitWith{[_unit,localize "STR_DCW_voices_teamLeader_IcantDoThis", false] spawn DCW_fnc_talk;false;};
 
 private _grpUnit = group _unit;
 
@@ -37,7 +37,7 @@ sleep 1;
 
 private _clothes = [uniform _unit,vest _unit,headgear _unit];
 
-_null = [_unit,"Good idea ! I'm gonna infiltrate their line.", false] spawn DCW_fnc_talk; 
+_null = [_unit,localize "STR_DCW_voices_teamLeader_GoodIdea", false] spawn DCW_fnc_talk; 
 
 private _idFiredNear = _unit addEventHandler["FiredNear",{
 	params["_unit","_veh","_dist","_weap","_muz","_mode","_am","_gunner"];
@@ -64,7 +64,7 @@ private _idFired = _unit addEventHandler["Fired",{
 while {_unit getVariable["DCW_undercover",false]}do{
 
 	if (!([uniform _unit,vest _unit,headgear _unit] isEqualTo _clothes)) then{
-		hint "You changed your clothes !";
+		hint localize "STR_DCW_undercover_changeYourClothes";
 		_unit setVariable["DCW_undercover", false];
 	};
 
@@ -96,7 +96,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 							};
 							_unit call DCW_fnc_displayscore;
 							if (([_en,_unit] call DCW_fnc_getVisibility > 50 && alive _en) && _unit getVariable["DCW_undercover", false]) then{
-								hint "Attacked !";
+								hint localize "STR_DCW_undercover_attacked";
 								_unit setVariable["DCW_undercover", false];
 							};
 						};
@@ -104,7 +104,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 				};
 
 				if (_know > 10 && alive _en && _en distance _unit < 50   && _unit getVariable["DCW_speak",false])then{
-					hint "Their hear your voice !";
+					hint localize "STR_DCW_undercover_hearYourVoice";
 					_unit setVariable["DCW_undercover", false];
 				};
 
@@ -131,7 +131,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 								_en  action ["WeaponOnBack", _en];
 							};
 							if ([_en,_unit] call DCW_fnc_getVisibility > 50  && _en distance _unit < 50 &&  ((weaponLowered _en && !weaponLowered _unit) || (behaviour _en == "SAFE" && stance _unit != "STAND" ) || speed _unit > 14) && alive _en && _unit getVariable["DCW_undercover", false]) then{
-								hint "Watched !";
+								hint localize "STR_DCW_undercover_watched";
 								_unit setVariable["DCW_undercover", false];
 							};
 						};
@@ -141,7 +141,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 				//Check if too close
 				if (_know > 2 && alive _en  && (_unit distance _en) < 4) then {
 					if (!(_en getVariable["DCW_Watching",false])) then{
-						hint "You're too close !";
+						hint localize "STR_DCW_undercover_tooClose";
 						_en setVariable["DCW_Watching",true];
 						_unit setVariable["DCW_Watched",true];
 						_unit call  DCW_fnc_displayscore;
@@ -158,7 +158,7 @@ while {_unit getVariable["DCW_undercover",false]}do{
 								_en  action ["WeaponOnBack", _en];
 							};
 							if ([_en,_unit] call DCW_fnc_getVisibility > 50  && _unit distance _en < 4 && alive _en && (_unit getVariable["DCW_undercover", false])) then {
-								hint "Watched !";
+								hint localize "STR_DCW_undercover_watched";
 								_unit setVariable["DCW_undercover", false];
 							};
 						};
