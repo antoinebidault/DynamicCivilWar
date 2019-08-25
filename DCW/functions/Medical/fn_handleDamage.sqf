@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     TODO
@@ -39,13 +39,13 @@ if (_damage >= .9  && !(_unit getVariable["DCW_unit_injured",false])) then {
 	_unit setVariable ["DCW_unit_injured", true,true];
 	[_unit] spawn DCW_fnc_injured;
 	
-	[leader GROUP_PLAYERS, ["Man down ! Man down !",format["%1 is down !",name _unit],format["%1 needs a medic !",name _unit]] call BIS_fnc_selectRandom] remoteExec ["DCW_fnc_talk"];
+	[leader GROUP_PLAYERS, [localize "STR_DCW_voices_teamLeader_manDown",format[localize "STR_DCW_voices_teamLeader_isDown",name _unit],format[localize "STR_DCW_voices_teamLeader_needMedic",name _unit]] call BIS_fnc_selectRandom] remoteExec ["DCW_fnc_talk"];
 	
     _marker = createMarker [format["DCW-injured-%1", name _unit], position _unit];
     _marker setMarkerShape "ICON";
     _marker setMarkerType "mil_dot";
     _marker setMarkerColor "ColorOrange";
-    _marker setMarkerText format["An injured comrade : %1", name _unit];
+    _marker setMarkerText format[localize "STR_DCW_handleDamage_markerTeammates", name _unit];
 	_unit setVariable ["DCW_marker_injured",  _marker, true];
 	
 } else {
