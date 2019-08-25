@@ -2067,25 +2067,25 @@
         <Original>Special Thanks:</Original>
         <English>Special Thanks:</English>
         <French>Remerciements:</French>
-		<German>Besonderer Dank:</German>
-		<Spanish>Gracias especiales:</Spanish>
-		<Italian>Ringraziamenti speciali:</Italian>
+        <German>Besonderer Dank:</German>
+        <Spanish>Gracias especiales:</Spanish>
+        <Italian>Ringraziamenti speciali:</Italian>
       </Key>
-	  <Key ID="STR_DCW_intro_speThanksNovakat77">
-        <Original>to Novakat77 for the server</Original>
-        <English>to Novakat77 for the server</English>
-        <French>à Novakat77 pour le serveur</French>
-		<German>an Novakat77 für den Server</German>
-		<Spanish>a Novakat77 para el servidor</Spanish>
-		<Italian>a Novakat77 per il server</Italian>
-      </Key>
+    <Key ID="STR_DCW_intro_speThanksNovakat77">
+      <Original>Special thanks to Novakat77</Original>
+      <English>Special thanks to Novakat77</English>
+      <French>Remerciements à Novakat77</French>
+      <German>Besonderer Dank an Novakat77</German>
+      <Spanish>Gracias especiales a Novakat77</Spanish>
+      <Italian>Ringraziamenti speciali a Novakat77</Italian>
+    </Key>
 		<Key ID="STR_DCW_intro_speThanksFFAA">
         <Original>to the FFAA Team for the Lythium map</Original>
         <English>to the FFAA Team for the Lythium map</English>
         <French>à l'équipe FFAA pour la map Lythium</French>
-		<German>an das FFAA-Team für die Lythium-Karte</German>
-		<Spanish>al equipo de la FFAA para el mapa de Lythium</Spanish>
-		<Italian>al team FFAA per la mappa Lythium</Italian>
+        <German>an das FFAA-Team für die Lythium-Karte</German>
+        <Spanish>al equipo de la FFAA para el mapa de Lythium</Spanish>
+        <Italian>al team FFAA per la mappa Lythium</Italian>
       </Key>
     </Container>
   </Package>

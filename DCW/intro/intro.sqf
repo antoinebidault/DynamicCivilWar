@@ -32,8 +32,6 @@ playMusic "seal";
 	nul = [localize "STR_DCW_intro_trad",.3,.2,5] spawn BIS_fnc_dynamicText;
 	sleep 8;
 	nul = [localize "STR_DCW_intro_music",.3,.7,5] spawn BIS_fnc_dynamicText;
-	sleep 8;
-	nul = [localize "STR_DCW_intro_speThanks",.1,.1,5] spawn BIS_fnc_dynamicText;
 	sleep 5;
 	nul = [localize "STR_DCW_intro_speThanksNovakat77",.3,.5,5] spawn BIS_fnc_dynamicText;
 };
