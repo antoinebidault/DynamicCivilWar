@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     Display the chat
@@ -44,7 +44,7 @@ if (_side == CIVILIAN) then {
 	};
 };
 
-player createDiarySubject ["ConvLog", "Conversation Log"];
+player createDiarySubject ["ConvLog", localize "STR_DCW_conversation_convLog"];
 player createDiaryRecord ["ConvLog", [name _talker, format["%1 %2", date,_say]]];
 
 
@@ -76,7 +76,7 @@ _ehId = (findDisplay 46) displayAddEventHandler ["KeyDown", {
 
 
 // Show subtitle
-_text = parseText format ["<t font='PuristaSemiBold' align = 'center' shadow = '2' size = '.8'><t color = '%1'>%2</t></t><br /><t align = 'center'  shadow = '1' size = '.63'><t color = '#E0E0E0'>%3</t></t><br/><t size='.3' align = 'center' shadow = '1' color='#cd8700' opacity='.4'>Space to skip</t>",_color,name _talker,_say];
+_text = parseText format ["<t font='PuristaSemiBold' align = 'center' shadow = '2' size = '.8'><t color = '%1'>%2</t></t><br /><t align = 'center'  shadow = '1' size = '.63'><t color = '#E0E0E0'>%3</t></t><br/><t size='.3' align = 'center' shadow = '1' color='#cd8700' opacity='.4'>%4</t>",_color,name _talker,_say,localize "STR_DCW_talk_spaceToSkip"];
 _ctrl ctrlSetStructuredText _text;
 MESS_HEIGHT = ctrlTextHeight _ctrl;
 MESS_SHOWN = true;
