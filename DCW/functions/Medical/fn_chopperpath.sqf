@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     TODO
@@ -25,7 +25,7 @@ _groupToHelp = _this select 3;
 HASLANDED = false;
 
 private _startPos = position TRANSPORTHELO;
-[HQ,format["Be advised: medevac chopper in bound ! ETA : %1min",ceil((_landPos distance _startPos)/1000)*.333] ,true] remoteExec ["DCW_fnc_talk", _groupToHelp, false];
+[HQ,format[localize "STR_DCW_voices_HQ_inBound",ceil((_landPos distance _startPos)/1000)*.333] ,true] remoteExec ["DCW_fnc_talk", _groupToHelp, false];
 
  private _wp0 = _grp addwaypoint [_landPos, 10];
  _wp0 setwaypointtype "MOVE";
@@ -50,11 +50,11 @@ TRANSPORTHELO addEventHandler ["handleDamage", {
 waitUntil {MEDEVAC_State == "aborted" || TRANSPORTHELO distance2D _landPos < 200};
 if (MEDEVAC_State == "aborted") exitWith { false };
 
-[HQ,"Squad leader, throw a smoke to mark the LZ !" ,true] remoteExec ["DCW_fnc_talk"];
-hint "50 seconds before the chopper RTB...";
+[HQ,localize "STR_DCW_voices_HQ_smoke" ,true] remoteExec ["DCW_fnc_talk"];
+hint localize "STR_DCW_chopperPath_hintRTB";
 
-// Silently add a green smoke to group leader
-(leader _groupToHelp) addItem  "SmokeShellGreen";
+// Silently add a red smoke to group leader
+(leader _groupToHelp) addItem  "SmokeShellRed";
 
 MEDEVAC_SmokeShell = objNull;
 {
@@ -81,7 +81,7 @@ sleep 5;
 	TRANSPORTHELO action ["useWeapon",TRANSPORTHELO,driver TRANSPORTHELO,1];
 };
 
-[HQ,"Landing procedure started !" ,true] remoteExec ["DCW_fnc_talk"];
+[HQ,localize "STR_DCW_voices_HQ_landing" ,true] remoteExec ["DCW_fnc_talk"];
 
 {
  	_x removeEventHandler ["Fired", 0];
@@ -121,10 +121,10 @@ replacementGroup move position (leader _groupToHelp);
 //Make replacementGroup join player
 {unassignVehicle _x;_x setBehaviour "AWARE"; _x enableAI "ALL"; _x setUnitPos "AUTO";}foreach (units replacementGroup);
 (units replacementGroup) join _groupToHelp;
-[HQ,"Reinforcements arriving.",true] remoteExec ["DCW_fnc_talk"];
+[HQ,localize "STR_DCW_voices_HQ_reinforcement",true] remoteExec ["DCW_fnc_talk"];
 
 // Save units
-//[HQ,format["We're starting the %1 injured's evacuations.",count _soldiersDead],true] remoteExec ["DCW_fnc_talk"];
+//[HQ,format[localize "STR_DCW_voices_HQ_startingEvac",count _soldiersDead],true] remoteExec ["DCW_fnc_talk"];
 //[interventionGroup,_soldiersDead,TRANSPORTHELO] spawn DCW_fnc_save;
 
 //waitUntil{sleep 2; MEDEVAC_state == "aborted" || ({_x in TRANSPORTHELO} count (units  interventionGroup) == count (units  interventionGroup)) };
@@ -141,4 +141,3 @@ sleep 5;
 // Check waypoint;
 waitUntil{sleep 2; MEDEVAC_state == "succeeded" || (TRANSPORTHELO distance2D _startPos < 150) };
 MEDEVAC_State = "succeeded";
-
