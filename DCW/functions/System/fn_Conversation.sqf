@@ -3,7 +3,7 @@
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     A new talking 
@@ -53,7 +53,7 @@ _topic = format["topic-%1-%2", _file,str (random 1000)];
 	[] call DCW_fnc_hideSubtitle;
 
 	if (!isNull player) then {
-		player createDiarySubject ["ConvLog", "Conversation Log"];
+		player createDiarySubject ["ConvLog", localize "STR_DCW_conversation_convLog"];
 		player createDiaryRecord ["ConvLog", [name _talker, format["%1 %2", date,_text]]];
 	};
 } forEach _array;
