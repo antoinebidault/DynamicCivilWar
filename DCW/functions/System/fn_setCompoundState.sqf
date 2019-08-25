@@ -93,7 +93,7 @@ if (_state == "bastion") then {
 	_populations set [0, round(_civilians/3)];
 	_populations set [2, _enemies];
 
-	if (DEBUG) then {HQ sideChat format["%1 is occupied by enemy",_marker select 14];};
+	if (DEBUG) then {HQ sideChat format[localize "STR_DCW_voices_HQ_occupiedByEni",_marker select 14];};
 } else {
 	if (_state == "massacred") then {
 		_marker select 0 setMarkerBrush "BDiagonal";
@@ -103,14 +103,14 @@ if (_state == "bastion") then {
 			// Let time to officer to leave the area
 			sleep 120;
 			[getMarkerPos (_marker select 0), _marker select 4, 456, []] call BIS_fnc_destroyCity;
-			if (DEBUG) then {HQ sideChat format["Civilian slaughtered in %1",_marker select 14];};
+			if (DEBUG) then {HQ sideChat format[localize "STR_DCW_voices_HQ_civilianSlaughtered",_marker select 14];};
 		};
 	 	
 	} else{
 		if (_state == "humanitary") then {
 			_marker select 0 setMarkerBrush "BDiagonal";
 			_marker select 0 setMarkerColor "ColorGrey";
-			if (DEBUG) then {HQ sideChat format["The humanitary will be deployed in %1",_marker select 14];};
+			if (DEBUG) then {HQ sideChat format[localize "STR_DCW_voices_HQ_humanitaryDeployed",_marker select 14];};
 		};
 	};
 };
