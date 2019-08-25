@@ -45,7 +45,7 @@ _this addEventHandler["HandleDamage",{
 			_marker setMarkerShape "ICON";
 			_marker setMarkerType "mil_dot";
 			_marker setMarkerColor "ColorOrange";
-			_marker setMarkerText "Injured civil";
+			_marker setMarkerText localize "STR_DCW_handleKill_injuredCivil";
 			_unit setVariable ["marker", _marker];
 		};
 
