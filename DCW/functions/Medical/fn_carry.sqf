@@ -41,7 +41,7 @@ while {_injured getVariable ["DCW_unit_dragged", false]} do {
 
 		[_injured,"DCW_fnc_carry"] call DCW_fnc_removeAction; 
 		_injured call DCW_fnc_removeActionHeal;
-		_dropActionId = _unit addAction ["drop", DCW_fnc_dropAction,_injured, 0, false, true];
+		_dropActionId = _unit addAction [localize "STR_DCW_carry_drop", DCW_fnc_dropAction,_injured, 0, false, true];
 
 		uiSleep 1;
 		_addAction = true;
