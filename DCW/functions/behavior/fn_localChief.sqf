@@ -167,8 +167,8 @@ _unit addHeadgear "H_Beret_blk";
         }
         foreach (_curr select 5);
 
-        [_curr, "resistance"] call DCW_fnc_setCompoundState;
-        [_curr, 25 + floor(random 10), 0] call DCW_fnc_setCompoundSupport; 
+        [_curr, "resistance"] spawn DCW_fnc_setCompoundState;
+        [_curr, 25 + floor(random 10), 0] spawn DCW_fnc_setCompoundSupport; 
     }] remoteExec["spawn",2];
 
 },nil,2.5,false,true,"","true",20,false,""]] remoteExec ["addAction", 0, true];

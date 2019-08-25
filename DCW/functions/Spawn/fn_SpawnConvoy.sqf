@@ -30,7 +30,7 @@ _roadRadius = 40;
 _worldCenter = getMarkerPos GAME_ZONE;
 
 _initPos = [_worldCenter,0,_worldSize, 4, 0, 20, 0, MARKER_WHITE_LIST,[]] call BIS_fnc_findSafePos;
-if (_initPos isEqualTo []) exitWith{ hint "unable to spawn the _units"; };
+if (_initPos isEqualTo []) exitWith{ hint "unable to spawn the convoy"; };
 _road = [_initPos,500,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad;
 _roadPos = getPos _road;
 
@@ -39,7 +39,7 @@ _car = objNull;
 CAR_DESTROYED = 0;
 
 if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
-    [HQ,"There is an enemy _units moving not far from your position. You can destroy them to earn some points.",true] call DCW_fnc_talk;
+    [HQ,"There is an enemy convoy moving not far from your position. You can destroy them to earn some points.",true] call DCW_fnc_talk;
     _roadConnectedTo = roadsConnectedTo _road;
     _connectedRoad = _roadConnectedTo select 0;
     _roadDirection = [_road, _connectedRoad] call BIS_fnc_dirTo;
@@ -96,22 +96,22 @@ if (isOnRoad(_roadPos) && _roadPos distance (leader GROUP_PLAYERS) > 300 )then{
 }else{
  hint "Error ! Not enough road to spawn objective... Restarting...";
  sleep 10;
- [30] call DCW_fnc_spawn_units;
+ [30] call DCW_fnc_spawnConvoy;
 };
 
-deleteMarker "_units-start-marker";
-private _wpt = createMarker ["_units-start-marker",_roadPos];
+deleteMarker "convoy-start-marker";
+private _wpt = createMarker ["convoy-start-marker",_roadPos];
 _wpt setMarkerShape "ICON";
 _wpt setMarkerColor "ColorRed";
 _wpt setMarkerType "mil_start";
-_wpt setMarkerText "_units start";
+_wpt setMarkerText "convoy start";
 
-deleteMarker "_units-end-marker";
-_wpt = createMarker ["_units-end-marker",[0,0,0]];
+deleteMarker "convoy-end-marker";
+_wpt = createMarker ["convoy-end-marker",[0,0,0]];
 _wpt setMarkerShape "ICON";
 _wpt setMarkerColor "ColorRed";
 _wpt setMarkerType "hd_ambush";
-_wpt setMarkerText "_units destination";
+_wpt setMarkerText "convoy destination";
 
 
 
@@ -131,8 +131,8 @@ _nextPos = _initPos;
 waitUntil {sleep 5; CAR_DESTROYED == _nbVeh || (leader _grp)  distance _nextPos < 10 };
 
 if (CAR_DESTROYED == _nbVeh) exitWith {
-    [HQ,"You successfully ambushed the _units ! Well done !",true] remoteExec ["DCW_fnc_talk"];
-    [300] spawn DCW_fnc_spawn_units;
+    [HQ,"You successfully ambushed the convoy ! Well done !",true] remoteExec ["DCW_fnc_talk"];
+    [300] spawn DCW_fnc_spawnConvoy;
 };
 
 sleep 100;
@@ -141,6 +141,6 @@ sleep 100;
 waitUntil {sleep 12; CAR_DESTROYED == _nbVeh || {_x distance (leader _grp) > 700} count ([] call DCW_fnc_allPlayers) == count ([] call DCW_fnc_allPlayers)};
 {_units = _units - [_x]; _x call DCW_fnc_deleteMarker; deleteVehicle _x; } forEach _units;
 
-[HQ,"You missed the _units ! Out !",true] remoteExec ["DCW_fnc_talk"];
-[300] spawn DCW_fnc_spawn_units;
+[HQ,"You missed the convoy ! Out !",true] remoteExec ["DCW_fnc_talk"];
+[300] spawn DCW_fnc_spawnConvoy;
 false;

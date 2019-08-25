@@ -1034,7 +1034,7 @@
       </Key>
 	  <Key ID="STR_DCW_undercover_tooClose">
         <Original>You're too close !</Original>
-        <English>You're too close !English>
+        <English>You're too close !</English>
         <French>Vous êtes trop près !</French>
 		<German>Du bist zu nah dran !</German>
 		<Spanish>¡Estás muy cerca!</Spanish>
@@ -1669,14 +1669,6 @@
 		<Spanish>Le proporcionaremos un asesor militar para ayudarle a defenderse de los insurgentes.</Spanish>
 		<Italian>Ti forniremo un consulente militare per aiutarti a difenderti dai ribelli.</Italian>
       </Key>
-      <Key ID="STR_DCW_voices_localchief_thankYou">
-        <Original>Thank you so much for your help !</Original>
-        <English>Thank you so much for your help !</English>
-        <French>Merci pour tout !</French>
-		<German>Vielen Dank für Ihre Hilfe !</German>
-		<Spanish>¡Muchas gracias por su ayuda !</Spanish>
-		<Italian>Grazie mille per il vostro aiuto !</Italian>
-      </Key>
       <Key ID="STR_DCW_voices_teamLeader_aChopperIsComing">
         <Original>A chopper is coming with medical and food supplies…</Original>
         <English>A chopper is coming with medical and food supplies…</English>
@@ -1933,9 +1925,9 @@
         <Original>%1 is occupied by enemy.</Original>
         <English>%1 is occupied by enemy.</English>
         <French>%1 est occupé par l'ennemi.</French>
-		<German>%1 wird vom Feind besetzt.</German>
-		<Spanish>%1 Está ocupado por el enemigo.</Spanish>
-		<Italian>%1 è occupato dal nemico.</Italian>
+      <German>%1 wird vom Feind besetzt.</German>
+      <Spanish>%1 Está ocupado por el enemigo.</Spanish>
+      <Italian>%1 è occupato dal nemico.</Italian>
       </Key>
       <Key ID="STR_DCW_voices_HQ_civilianSlaughtered">
         <Original>Civilian slaughtered in %1.</Original>

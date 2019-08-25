@@ -13,7 +13,7 @@
 
 
 // If debug enabled, each units will be visible on the map with markers
-DEBUG = getMissionConfigValue ["DCW_debug",false];
+DEBUG = getMissionConfigValue ["DCW_debug",true];
 AI_SKILLS = getMissionConfigValue ["DCW_AI_skills",.9];
 RESPAWN_ENABLED = true;
 MEDEVAC_ENABLED = true; // Reviving

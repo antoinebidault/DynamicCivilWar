@@ -191,7 +191,6 @@ while {sleep 20; count OFFICERS  > 0 } do {
     sleep 600 + random 200;
 };
 
-
 [HQ,format[localize "STR_DCW_voices_HQ_goodJob", NUMBER_OFFICERS], true] remoteExec ["DCW_fnc_talk"];
 [HQ,format[localize "STR_DCW_voices_HQ_nextStep" , name ENEMY_COMMANDER], true] remoteExec ["DCW_fnc_talk"];
   

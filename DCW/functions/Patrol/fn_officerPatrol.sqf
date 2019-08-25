@@ -97,10 +97,10 @@ while {sleep 5;  alive _unit}do{
 
     sleep (50 + (_compound select 4));
     if ((_compound select 13) > 70) then {
-        [_compound,"massacred"] call DCW_fnc_setCompoundState;
+        [_compound,"massacred"] spawn DCW_fnc_setCompoundState;
         [_compound,15,100] spawn DCW_fnc_setCompoundSupport;
     } else {
-        [_compound,"bastion"] call DCW_fnc_setCompoundState;
+        [_compound,"bastion"] spawn DCW_fnc_setCompoundState;
         [_compound,-30,100] spawn DCW_fnc_setCompoundSupport;
     };
 

@@ -86,8 +86,8 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 		[_taskId,"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach ([] call DCW_fnc_allPlayers);    
 
-	[_compound,"resistance"] call DCW_fnc_setCompoundState;
-	[_compound, 30, 10] call DCW_fnc_setCompoundSupport;         
+	[_compound,"resistance"] spawn DCW_fnc_setCompoundState;
+	[_compound, 30, 10] spawn DCW_fnc_setCompoundSupport;         
 
 } else {
 	{
@@ -95,8 +95,8 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 		[_taskId,"FAILED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach ([] call DCW_fnc_allPlayers);       
 
-	[_compound,"bastion"] call DCW_fnc_setCompoundState;
-	[_compound,-35, 10] call DCW_fnc_setCompoundSupport;
+	[_compound,"bastion"] spawn DCW_fnc_setCompoundState;
+	[_compound,-35, 10] spawn DCW_fnc_setCompoundSupport;
 };
 
 // Delete all units
