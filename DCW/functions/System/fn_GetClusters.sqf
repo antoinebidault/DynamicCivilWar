@@ -1,9 +1,9 @@
- /*
+  /*
   Author: 
     Bidass
 
   Version:
-    {VERSION}
+    0.9.1
 
   Description:
     Create a complete map cluster
@@ -17,7 +17,7 @@
 
 params["_gameArea"];
 
-diag_log "[GetClusters] Start process";
+diag_log localize "STR_DCW_getclusters_startProcess";
 
 private _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};
 private _worldCenter = [_worldSize/2,_worldSize/2,0];
@@ -83,7 +83,7 @@ _markerFriendly = [];
     _radius = _res select 0;
 	
 	if (_radius > 0 && !(surfaceIsWater _pos) && _pos inArea _gameArea)then {
-		_clusters pushback [_pos,_radius,_res select 1,true,if (text _x == "") then {"Unknown location"} else {text _x},_res select 2, _res select 3,str random 10000];
+		_clusters pushback [_pos,_radius,_res select 1,true,if (text _x == "") then {localize "STR_DCW_getclusters_unknownLocation"} else {text _x},_res select 2, _res select 3,str random 10000];
 	};
 } forEach nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), ["NameCityCapital","NameLocal","NameCity","NameVillage","Airport","CityCenter"], 25000]; 
 
@@ -102,20 +102,20 @@ for "_xc" from 0 to _worldNbBlocks do {
 				
 				_nbHouses = _res select 1;
 				if (_nbHouses > 0)then {
-					_name = "Compound";
+					_name = localize "STR_DCW_getclusters_compound";
 					if (_nbHouses < 2) then {
-						_name = "Land house";
+						_name = localize "STR_DCW_getclusters_landHouse";
 					} else {
 						if (_nbHouses < 6) then {
-							_name = "Small compound";
+							_name = localize "STR_DCW_getclusters_smallCompound";
 						} else{
 							if (_nbHouses < 10) then {
-								_name = "Large compound";
+								_name = localize "STR_DCW_getclusters_largeCompound";
 							} else{
 								if (_nbHouses < 30) then {
-									_name = "Village";
+									_name = localize "STR_DCW_getclusters_village";
 								} else{
-									_name = "Town";
+									_name = localize "STR_DCW_getclusters_town";
 								};
 							};
 						};
@@ -151,6 +151,6 @@ _sortedClustersReverse = [_clusters, [], { if(_x select 3) then { 0 } else { _x 
 _sortedClusters = [];
 _sortedClustersReverse = [];
 
-diag_log "[GetClusters] End of process";
+diag_log localize "STR_DCW_getclusters_endProcess";
 
 _clusters;
