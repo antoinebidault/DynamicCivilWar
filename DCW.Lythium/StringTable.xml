@@ -22,9 +22,9 @@
         <Original>Ammo (-100 points)</Original>
         <English>Ammo (-100 points)</English>
         <French>Munition (-100 points)</French>
-		<German>Munition (-100 Punkte)</German>
-		<Spanish>Munición (-100 puntos)</Spanish>
-		<Italian>Munizioni (-100 punti)</Italian>
+      <German>Munition (-100 Punkte)</German>
+      <Spanish>Munición (-100 puntos)</Spanish>
+      <Italian>Munizioni (-100 punti)</Italian>
       </Key>
 	  <Key ID="STR_DCW_buySupport_transport">
         <Original>Transport (-150 points)</Original>
