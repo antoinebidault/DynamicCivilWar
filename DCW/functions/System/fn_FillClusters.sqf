@@ -68,19 +68,13 @@ _supportScore = 0;
 		};
 
 		_m setMarkerBrush "Solid";
-
-		if (SHOW_SECTOR || DEBUG) then{
-			_m setMarkerAlpha .3;
-		}else{
-			_m setMarkerAlpha 0;
-		};
-			
+		
+		
 		_icon = createMarker [format["%1-icon", _m], _pos];
 		_icon setMarkerShape "ICON";
 		_icon setMarkerColor "ColorBlack";
 		_icon setMarkerSize [1,1];
 		_icon setMarkerType "loc_Cross";
-							
 
 		// default = startup state / corrupted / secured / succeeded / massacred = destroyed compound / helped = called the humanitary
 		_compoundState = "neutral";
@@ -152,6 +146,15 @@ _supportScore = 0;
 			};
 		};
 		
+		
+		if (SHOW_SECTOR || DEBUG) then{
+			_m setMarkerAlpha .3;
+			_icon setMarkerAlpha 1;
+		}else{ 
+			_m setMarkerAlpha 0;
+			_icon setMarkerAlpha 0;
+		};
+							
 
 		//Nb units to spawn per block
 		_popbase = 1 MAX (MAX_POPULATION MIN (ceil( (POPULATION_INTENSITY * _nbBuildings * RATIO_POPULATION)  + (round random 1))));

@@ -538,8 +538,7 @@ DCW_fnc_addActionRally = {
             _unit setVariable["DCW_disable_cache", true, true];
             _unit remoteExec ["DCW_fnc_addActionLeaveGroup"];
             [_unit,3] remoteExec ["DCW_fnc_updateRep",2];
-            [_unit] joinSilent grpNull;
-            [_unit] join GROUP_PLAYERS;
+            [[_unit],GROUP_PLAYERS] remoteExec["join", 2];
         }else{
             if (_isSuspect)then{
                 [_unit,"No thanks",false] remoteExec ["DCW_fnc_talk",_talker];

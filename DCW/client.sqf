@@ -206,32 +206,42 @@ addMissionEventHandler
 					_mapMarker = (ctrlMapMouseOver _map);
 					hintsilent "";
 					_map ctrlMapCursor ["Track","Track"];
-					if (_mapMarker select 0 == "marker"  ) then {
-						_map ctrlMapCursor ["Track","HC_overFriendly"];
-						if (DEBUG) then {
-							{
-								if (_x getVariable["marker",""] == _mapMarker select 1) then {
-									hint format["Type : %1",_x getVariable["DCW_type","unknown"]];
-								};
-							} foreach allUnits;
-						};
-						if ( ["dcw-cluster-",str (_mapMarker select 1)] call BIS_fnc_inString && CurrentMarker != _mapMarker select 1) then {
-							CurrentMarker = _mapMarker select 1;
-							_marker = [_markers,_mapMarker select 1] call DCW_fnc_getMarkerById;
-							_compound = _marker select 0;
-							_people = (_compound select 6);
-							_population = (_people select 0) + (_people select 1) + (_people select 2) + (_people select 5) + (_people select 8); 
-							_dbg =  "";
+					if (_mapMarker select 0 == "marker") then {
+						_mkr = _mapMarker select 1; 
+
+						// check the alpha level
+						if (markerAlpha _mkr > 0) then {
+							_map ctrlMapCursor ["Track","HC_overFriendly"];
+
+							// Debug specific handling
 							if (DEBUG) then {
-								_labels = ["Civilians","Snipers","Enemies","Cars","Ieds","Caches","Hostages","Mortars","Outposts","Friendlies"];
 								{
-									_dbg =  _dbg + format["<br/><t >%1:%2</t>",_labels select _foreachIndex,_x];
-								}foreach _people;
-								_dbg =  _dbg + format["<br/><t>Defend task state:%1</t>",_compound select 16];
+									if (_x getVariable["marker",""] == _mkr) then {
+										hint format["Type : %1",_x getVariable["DCW_type","unknown"]];
+									};
+								} foreach allUnits;
 							};
-							
-							hintsilent parseText format["<t color='#cd8700' >%1</t><br/><t size='1.3'>State : %2</t><br/><t size='1.3'>Reputation : %3/100</t><br/><t size='1.3'>Population : %4</t>%5",(_marker select 0) select 14,((_marker select 0) select 12) call DCW_fnc_getCompoundStateLabel,(_marker select 0) select 13,_population,_dbg];
-						} else {
+
+							if ( ["dcw-cluster-",str _mkr] call BIS_fnc_inString && CurrentMarker != _mkr) then {
+								CurrentMarker = _mkr;
+								_marker = [_markers,_mkr] call DCW_fnc_getMarkerById;
+								_compound = _marker select 0;
+								_people = (_compound select 6);
+								_population = (_people select 0) + (_people select 1) + (_people select 2) + (_people select 5) + (_people select 8); 
+								_dbg =  "";
+								if (DEBUG) then {
+									_labels = ["Civilians","Snipers","Enemies","Cars","Ieds","Caches","Hostages","Mortars","Outposts","Friendlies"];
+									{
+										_dbg =  _dbg + format["<br/><t >%1:%2</t>",_labels select _foreachIndex,_x];
+									}foreach _people;
+									_dbg =  _dbg + format["<br/><t>Defend task state:%1</t>",_compound select 16];
+								};
+								
+								hintsilent parseText format["<t color='#cd8700' >%1</t><br/><t size='1.3'>State : %2</t><br/><t size='1.3'>Reputation : %3/100</t><br/><t size='1.3'>Population : %4</t>%5",(_marker select 0) select 14,((_marker select 0) select 12) call DCW_fnc_getCompoundStateLabel,(_marker select 0) select 13,_population,_dbg];
+							} else {
+								CurrentMarker = "";
+							};
+						}else {
 							CurrentMarker = "";
 						};
 					} else{

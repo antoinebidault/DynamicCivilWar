@@ -134,6 +134,8 @@ while { true } do {
 							};
 
 							_triggered = true;
+							_marker setMarkerAlpha .3;
+							format["%1-icon", _marker] setMarkerAlpha 1;
 
 							//Add a little breath
 							sleep 1;
