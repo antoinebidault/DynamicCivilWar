@@ -91,8 +91,10 @@ if (count _tmpChoppers > 0) then {
 
 SUPPORT_DRONE_CLASS = if (SIDE_FRIENDLY == WEST) then {"B_UAV_02_dynamicLoadout_F"} else {"O_UAV_02_dynamicLoadout_F"};
 SUPPORT_MEDEVAC_CREW_CLASS = ALLIED_LIST_UNITS call BIS_fnc_selectrandom;
-SUPPORT_CAR_PARADROP_CLASS = [FACTION_PLAYER,["Car"],"slingload"] call DCW_fnc_factionGetSupportUnits ;
-
+_cars = [FACTION_PLAYER,["Car"],"slingload"] call DCW_fnc_factionGetSupportUnits;
+if (count _cars > 0) then {
+	SUPPORT_CAR_PARADROP_CLASS = _cars;
+};
 
 // EMpty the array for memory saving purposes...
 CONFIG_VEHICLES = []; 

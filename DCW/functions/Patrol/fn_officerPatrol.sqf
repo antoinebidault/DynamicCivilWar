@@ -11,8 +11,10 @@
 private["_marker"];
 _truck = _this select 0;
 _unit = _this select 1;
-_driver = driver _truck;
+
 _grp = group _unit;
+_driver = driver _truck;    
+    
 
 if (DEBUG) then {
     _marker = createMarker [format["officer-patrol-%1",random 13100], getPos _unit];
@@ -22,8 +24,9 @@ if (DEBUG) then {
     _marker setMarkerBrush "SolidBorder";
 };
 
-while {sleep 5;  alive _unit}do{
+while {sleep 5;  alive _unit && alive _truck && alive _driver}do{
     _curPos = getPos _truck;
+    _driver = driver _truck;    
     
     /*_pos = [_curPos, _radius/2, _radius, 2, 0, 20, 0] call BIS_fnc_findSafePos;
     _newPos = getPos([_pos,_radius,MARKER_WHITE_LIST] call BIS_fnc_nearestRoad);
@@ -96,6 +99,7 @@ while {sleep 5;  alive _unit}do{
     if (!alive _unit) exitWith{false};
 
     sleep (50 + (_compound select 4));
+
     if ((_compound select 13) > 70) then {
         [_compound,"massacred"] spawn DCW_fnc_setCompoundState;
         [_compound,15,100] spawn DCW_fnc_setCompoundSupport;

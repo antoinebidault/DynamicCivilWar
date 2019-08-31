@@ -1,11 +1,12 @@
 
-params["_pos","_dist","_type"];
+params["_pos","_dist","_type","_chopperClass"];
 
 
 if (isNil '_type') then {_type = "vehicle";};
 _cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { _type };
 _cargoClass = if (_type == "ammo") then { "B_CargoNet_01_ammo_F" } else { _type };
 _cargoClass = if (_type == "buildingKit") then { "B_Slingload_01_Repair_F" } else { _type };
+if (isNil '_chopperClass') then { _chopperClass =  SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom; };
 
 // Correct the destination position
 _pos = [_pos, 0, 50, 7, 0, 1, 0] call BIS_fnc_findSafePos;
@@ -44,11 +45,12 @@ sleep 1;
 _cargo setposatl _spawnpos;
 _success = _chopper setSlingLoad _cargo;
 if (!_success) exitWith { 
-	[HQ,"Sorry guy, we are unable to drop this kind of vehicle... Try a lighter vehicle"] remoteExec ["DCW_fnc_talk"];
+	//[HQ,"Sorry guy, we are unable to drop this kind of vehicle... Try a lighter vehicle"] remoteExec ["DCW_fnc_talk"];
     [GROUP_PLAYERS,150] remoteExec ["DCW_fnc_updateScore",2];   
 	{deleteVehicle _x} foreach crew _chopper; 
 	deleteVehicle _chopper; 
 	deleteVehicle _cargo;
+	[_type,_dist,_type,"B_Heli_Transport_03_F"] call DCW_fnc_vehicleLift;
 };
 
 [HQ,format["The %1 is in bound !",
