@@ -92,7 +92,9 @@ DCW_fnc_spawnOfficer = {
 
             [leader GROUP_PLAYERS,localize "STR_DCW_voices_teamLeader_targetDown", true] remoteExec ["DCW_fnc_talk", GROUP_PLAYERS,false];
             [format["DCW_secondary_%1", name _unit],_x, ["Talk to the wounded officer","Interrogate the officer","Talk to the wounded officer"],getPos _unit,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",leader GROUP_PLAYERS, true];
-        
+            _unit getVariable["marker",""] setMarkerAlpha 1;
+            _unit getVariable["marker",""] setMarkerPos (getPos _unit);
+            
             //Spasm and unconscious state
             _unit spawn {
                 sleep .2;
@@ -154,7 +156,8 @@ DCW_fnc_spawnOfficer = {
 
 // Spawning officers
 for "_i" from 1 to NUMBER_OFFICERS  do {
-     OFFICERS pushback([] call DCW_fnc_spawnOfficer);
+    _officer = [] call DCW_fnc_spawnOfficer;
+     OFFICERS pushback(_officer);
      sleep 5;
 };
 

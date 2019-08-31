@@ -82,6 +82,7 @@ class CfgFunctions
 			class spawnMeetingPoint {};
 			class spawnCivil {};
 			class spawnEnemy {};
+			class spawnAircraft {};
 			class spawnFriendlyOutpost {};
 			class spawnMortar {};
 			class spawnCars {};
@@ -115,6 +116,7 @@ class CfgFunctions
 			class simplePatrol {};
 			class largePatrol {};
 			class chase {};
+			class aircraftPatrol {};
 			class carPatrol {};
 			class officerPatrol {};
 			class civilianPatrol {};

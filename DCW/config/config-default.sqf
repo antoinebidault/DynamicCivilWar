@@ -13,7 +13,7 @@
 
 
 // If debug enabled, each units will be visible on the map with markers
-DEBUG = getMissionConfigValue ["DCW_debug",false]; 
+DEBUG = getMissionConfigValue ["DCW_debug",true]; 
 AI_SKILLS = getMissionConfigValue ["DCW_AI_skills",.9];
 RESPAWN_ENABLED = true;
 MEDEVAC_ENABLED = true; // Reviving
@@ -62,6 +62,7 @@ FRIENDLY_LIST_TURRETS = [ "B_Mortar_01_F","B_GMG_01_F","B_GMG_01_high_F","B_HMG_
 SIDE_CIV = CIVILIAN; // Side civilian
 CIV_LIST_UNITS = ["C_man_p_beggar_F_euro","C_Man_casual_1_F_euro","C_man_p_fugitive_F_euro","C_Man_casual_6_F_euro","C_man_polo_5_F_euro","C_man_polo_4_F_euro","C_Story_Mechanic_01_F","C_man_hunter_1_F","C_Man_Messenger_01_F","C_Man_casual_4_F","C_Man_Fisherman_01_F"];
 CIV_LIST_CARS = ["C_Truck_02_transport_F","C_Offroad_01_F","C_Offroad_02_unarmed_F","C_SUV_01_F"];
+CIV_LIST_AIRCRAFTS = ["C_Plane_Civil_01_F"];
 HUMANITAR_LIST_CARS = ["C_IDAP_Offroad_02_unarmed_F","C_IDAP_Offroad_01_F","C_IDAP_Truck_02_F","C_IDAP_Truck_02_water_F","C_IDAP_Van_02_medevac_F"];
 HUMANITAR_LIST_UNITS = ["C_IDAP_Man_AidWorker_06_F","C_IDAP_Man_AidWorker_05_F","C_IDAP_Man_AidWorker_01_F","C_IDAP_Man_AidWorker_08_F","C_IDAP_Man_UAV_06_medical_F","C_IDAP_Man_EOD_01_F","C_IDAP_Man_AidWorker_03_F"];
 MAX_RANDOM_CIVILIAN =  getMissionConfigValue ["DCW_max_random_civilian",4];
@@ -84,6 +85,7 @@ MAX_CHASERS = 8; //Max hunters who are looking for you !
 MAX_RANDOM_PATROL = getMissionConfigValue ["DCW_max_random_patrol",20]; //Number of units patroling around the player at the same time
 MAX_RANDOM_CAR = getMissionConfigValue ["DCW_max_random_car",2]; //Max car spawned.
 NUMBER_CHOPPERS = getMissionConfigValue ["DCW_number_choppers",0]; // Number of choppers
+MAX_NUMBER_AIRCRAFT = getMissionConfigValue ["DCW_max_number_aircrafts",5]; // Number of choppers
 NUMBER_CRASHSITES = getMissionConfigValue ["DCW_number_crashsites",2];
 NUMBER_TANKS = getMissionConfigValue ["DCW_number_tanks",2]; //Number of tanks
 ENEMY_LIST_UNITS = ["O_Soldier_SL_F","O_Soldier_AR_F","O_Soldier_GL_F","O_soldier_M_F","O_Soldier_AT_F","O_Soldier_AAT_F","O_Soldier_A_F","O_medic_F"];

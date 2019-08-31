@@ -346,7 +346,7 @@ MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
 [] spawn DCW_fnc_spawnRandomCivilian;
 [] spawn DCW_fnc_spawnChopper;
 [] spawn DCW_fnc_spawnTank;
-
+[] spawn DCW_fnc_spawnAircraft;
 
 // Revive friendlies with chopper pick up
 if (MEDEVAC_ENABLED) then{
