@@ -13,7 +13,7 @@ if (!isServer) exitWith{};
 
 // Keep only four units in singleplayer
 if (!isMultiplayer)then{
-	{ if (_foreachIndex > 3) then { deleteVehicle _x; } } forEach units GROUP_PLAYERS;
+	{ if ((_foreachIndex + 1) > SP_GROUP_PLAYER_NB_UNITS) then { deleteVehicle _x; } } forEach units GROUP_PLAYERS;
 };
 
 addMissionEventHandler ["HandleDisconnect", {

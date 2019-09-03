@@ -28,8 +28,8 @@
             </Key>
             <Key ID="STR_DCW_buySupport_transport">
                 <Original>Transport (-150 points)</Original>
-                <English>Transport (-100 points)</English>
-                <French>Transport (-100 points)</French>
+                <English>Transport (-150 points)</English>
+                <French>Transport (-150 points)</French>
                 <German>Transport (-150 Punkte)</German>
                 <Spanish>Transporte (-150 puntos)</Spanish>
                 <Italian>Trasporto (-150 punti)</Italian>
@@ -54,9 +54,9 @@
                 <Original>Outpost Building Kit (-300 points)</Original>
                 <English>Outpost Building Kit (-300 points)</English>
                 <French>Kit Construction de BOA (-300 points)</French>
-                <German>Baukasten</German>
-                <Spanish>Kit de construcción</Spanish>
-                <Italian>Kit di costruzione di base</Italian>
+                <German>Baukasten (-300 points)</German>
+                <Spanish>Kit de construcción (-300 points)</Spanish>
+                <Italian>Kit di costruzione di base (-300 points)</Italian>
             </Key>
             <Key ID="STR_DCW_buySupport_back">
                 <Original>Back</Original>

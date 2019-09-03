@@ -99,6 +99,7 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 	[_compound,-35, 10] spawn DCW_fnc_setCompoundSupport;
 };
 
+
 // Delete all units
 { { _x call DCW_fnc_deleteMarker; deleteVehicle _x; } foreach crew _x; _x call DCW_fnc_deleteMarker; deleteVehicle _x; } foreach _units;
 
