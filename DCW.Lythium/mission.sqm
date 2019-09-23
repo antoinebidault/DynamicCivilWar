@@ -17,9 +17,9 @@ class EditorData
 	class Camera
 	{
 		pos[]={4120.7783,398.61829,10446.536};
-		dir[]={-0.89481187,-0.037885532,-0.44510713};
-		up[]={-0.033996589,0.99926978,-0.016909126};
-		aside[]={-0.44543514,3.1693999e-006,0.89545649};
+		dir[]={-0.80763942,-0.097686768,-0.58173943};
+		up[]={-0.079327457,0.99520022,-0.057137314};
+		aside[]={-0.58454376,2.796849e-006,0.8115204};
 	};
 };
 binarizationWanted=0;
@@ -28,6 +28,7 @@ addons[]=
 	"A3_Ui_F",
 	"A3_Characters_F_Patrol",
 	"A3_Weapons_F_Exp_Rifles_SPAR_01",
+	"cba_jr",
 	"A3_Weapons_F_Exp",
 	"A3_Weapons_F_Acc",
 	"A3_Weapons_F_Mark_Acc",
@@ -45,13 +46,14 @@ addons[]=
 	"A3_Characters_F_Orange_Facewear",
 	"A3_Characters_F_Exp_Vests",
 	"A3_Weapons_F_Mark_LongRangeRifles_DMR_03",
-	"A3_Weapons_F_Pistols_P07"
+	"A3_Weapons_F_Pistols_P07",
+	"UK3CB_Factions_Equipment_Vests"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=11;
+		items=13;
 		class Item0
 		{
 			className="A3_Ui_F";
@@ -75,59 +77,73 @@ class AddonsMetaData
 		};
 		class Item3
 		{
+			className="cba_jr";
+			name="Community Base Addons - Rails d'accessoires";
+			author="Equipe CBA";
+			url="https://www.github.com/CBATeam/CBA_A3";
+		};
+		class Item4
+		{
 			className="A3_Weapons_F";
 			name="Arma 3 Alpha - Weapons and Accessories";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item4
+		class Item5
 		{
 			className="A3_Weapons_F_Mark";
 			name="Arma 3 Marksmen - Weapons and Accessories";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item5
+		class Item6
 		{
 			className="A3_Drones_F";
 			name="Arma 3 Beta - Drones";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item6
+		class Item7
 		{
 			className="A3_Characters_F";
 			name="Arma 3 Alpha - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item7
+		class Item8
 		{
 			className="A3_Characters_F_Mark";
 			name="Arma 3 Marksmen - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item8
+		class Item9
 		{
 			className="A3_Weapons_F_Orange";
 			name="Arma 3 Orange - Weapons and Accessories";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item9
+		class Item10
 		{
 			className="A3_Characters_F_Orange";
 			name="Arma 3 Orange - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item10
+		class Item11
 		{
 			className="A3_Characters_F_Exp";
 			name="Arma 3 Apex - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
+		};
+		class Item12
+		{
+			className="UK3CB_Factions_Equipment";
+			name="3CB Factions - Equipment";
+			author="3 Commando Brigade";
+			url="www.3commandobrigade.com";
 		};
 	};
 };

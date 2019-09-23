@@ -54,4 +54,9 @@ _marker setMarkerType "hd_objective";
 _intel setVariable["DCW_MarkerIntel",_marker];
 [_asker, "HQ, I found some informations !",true] remoteExec ["DCW_fnc_talk",owner _asker];
 [HQ, "Good job, keep up the good work !",true] remoteExec ["DCW_fnc_talk",owner _asker];
+
+// Increment the stat of intel found
+STAT_INTEL_FOUND = STAT_INTEL_FOUND + 1;
+publicVariable "STAT_INTEL_FOUND";
+
 [true,_message];

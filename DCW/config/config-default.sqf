@@ -34,9 +34,8 @@ CONFIG_VEHICLES = [] call DCW_fnc_getConfigVehicles;
 //SPAWNING CONFIG
 SIZE_BLOCK =  getMissionConfigValue ["DCW_size_block",400]; // Size of blocks
 MAX_CLUSTER_SIZE =  getMissionConfigValue ["DCW_max_cluster_size",200];
-SPAWN_DISTANCE = getMissionConfigValue ["DCW_spawn_distance",800]; //Distance units in compounds spawned
+SPAWN_DISTANCE = getMissionConfigValue ["DCW_spawn_distance",900]; //Distance units in compounds spawned
 MIN_SPAWN_DISTANCE =  350; //Units can't spawn before this distance
-
 
 // SUPPORT CLASSES
 SUPPORT_ARTILLERY_CLASS = ["B_MBT_01_arty_F"];

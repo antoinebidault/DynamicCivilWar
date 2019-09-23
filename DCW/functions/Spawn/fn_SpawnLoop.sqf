@@ -63,7 +63,7 @@ while { true } do {
 					if (_triggered && _playerPos distance _pos < _radius ) then {
 						_currentMarker = _x;
 						_playerInMarker = true;
-						[format["<t color='#cd8700'>%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Population support: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState call DCW_fnc_getCompoundStateLabel,_supportScore], 40] remoteExec ["DCW_fnc_showIndicator",_player,false];
+						[format["<t color='#cd8700'>%1</t><br/>Inhabitants: %2<br/>State: %3<br/>Reputation: <t >%4%/100</t><br/>",_nameLocation,(_peopleToSpawn select 0) + (_peopleToSpawn select 2),_compoundState call DCW_fnc_getCompoundStateLabel,_supportScore], 40] remoteExec ["DCW_fnc_showIndicator",_player,false];
 				
 						if (_defendTaskState == "planned" && (_compoundState == "neutral" || _compoundState == "resistance")  ) then {
 							[_currentCompound,_player] spawn {
@@ -75,7 +75,7 @@ while { true } do {
 						};
 					};
 					// && _playerPos distance _pos >= _radius
-					if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < ((_radius + 500) max 600) && !_isInFlyingVehicle) then{
+					if (!_triggered && !_isInFlyingVehicle && _playerPos distance _pos < ((_radius + 500) max 700) && !_isInFlyingVehicle) then{
 						
 						if (_nbUnitSpawned < MAX_SPAWNED_UNITS)then{
 
@@ -144,7 +144,7 @@ while { true } do {
 
 					}else{
 						// Cache put in case player is too far
-						if(_triggered && { _x distance _pos < ((_radius + 650) max 750) } count _players == 0 ) then {
+						if(_triggered && { _x distance _pos < ((_radius + 650) max 850) } count _players == 0 ) then {
 							_cacheResult = [_units,_notSpawnedArray] call DCW_fnc_cachePut;
 							_peopleToSpawn = _cacheResult select 0;
 							_units = _units - [_cacheResult select 1];
@@ -264,6 +264,15 @@ while { true } do {
 			};
 		} foreach UNITS_SPAWNED_CLOSE;
 		
+		if (STAT_INTEL_RESOLVED > 20) then {
+			
+		} else{
+			if (STAT_INTEL_RESOLVED > 30) then {
+				
+			};
+		};
+
+
 	} catch {
 		diag_log format["[SpawnLoop] Error in server.sqf loop :  %1",_exception];
 	};

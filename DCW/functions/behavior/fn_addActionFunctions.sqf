@@ -553,13 +553,18 @@ DCW_fnc_addActionRally = {
 
 DCW_fnc_addActionSupportUs = {
     //Try to gather intel
-     _this addaction ["<t color='#cd8700'>Give him help (2 hours/20points)</t>",{
+     _this addaction ["<t color='#cd8700'>Give him help (2 FAKs/20points)</t>",{
         params["_unit","_talker","_action"];
         if (!(_this call DCW_fnc_startTalking)) exitWith {};
         _unit removeAction _action;
-
+        _numberOfKits = { "FirstAidKit" == _x } count (items _talker);
+        if (_numberOfKits <= 1) exitWith {_this call DCW_fnc_endTalking;["Not enough FAK !"] remoteExec["hint", _talker];false;};
         if (!([GROUP_PLAYERS,20] call DCW_fnc_afford)) exitWith {_this call DCW_fnc_endTalking;[_unit,"You need more money !",false] remoteExec ["DCW_fnc_talk",_talker];false;};
         
+        // Remove two faks
+        _talker removeItem "FirstAidKit";
+        _talker removeItem "FirstAidKit";
+
         [_talker,"What are looking for ? We can provide you food, medicine, water...", false] remoteExec ["DCW_fnc_talk",_talker];
         [_unit,1] remoteExec ["DCW_fnc_updateRep",(2 + floor random 2)];
         [_unit,"Thanks for your precious help !",false] remoteExec ["DCW_fnc_talk",_talker];

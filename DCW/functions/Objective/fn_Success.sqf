@@ -61,4 +61,7 @@ _objWithTask setVariable["DCW_Type",""];
 _objWithTask setVariable["DCW_TaskNotCompleted",false, true];
 _objWithTask setVariable["DCW_IsIntelRevealed",false, true];
 
+STAT_INTEL_RESOLVED = STAT_INTEL_RESOLVED + 1;
+publicVariable "STAT_INTEL_RESOLVED";
+
 true;

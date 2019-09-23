@@ -19,10 +19,10 @@
 if (!isServer) exitWith{false};
 
 private _numberOfmen = 1;
-private _minRange = 300;
+private _minRange = 600;
+private _maxRange = SPAWN_DISTANCE;
 private _side = SIDE_ENEMY;
 private _unit = objNull;
-private _firstTrigger = true;
 
 while{true}do {
 	_nbUnitSpawned = { _x getVariable["DCW_type",""] == "patrol" } count UNITS_SPAWNED_CLOSE;
@@ -31,9 +31,7 @@ while{true}do {
 		//Get random pos
 		_side = SIDE_ENEMY;
 
-		if (_firstTrigger) then {_minRange = 150; _firstTrigger = false;}else{_minRange = 500;};
-
-		_pos = [position (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom), _minRange, 550, 1, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
+		_pos = [position (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom), _minRange, _maxRange, 1, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
 		if (_pos isEqualTo [] || _pos isEqualTo [2048,2048,2048]) then{
 			sleep 3;
 		} else {

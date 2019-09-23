@@ -88,6 +88,10 @@ STAT_COMPOUND_BASTION = 0;
 publicVariable "STAT_COMPOUND_BASTION";
 STAT_COMPOUND_MASSACRED = 0;
 publicVariable "STAT_COMPOUND_MASSACRED";
+STAT_INTEL_FOUND = 0;
+publicVariable "STAT_INTEL_FOUND";
+STAT_INTEL_RESOLVED = 0;
+publicVariable "STAT_INTEL_RESOLVED";
 
 
 _worldSize = if (isNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize")) then {getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");} else {8192;};

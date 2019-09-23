@@ -32,4 +32,7 @@ if (_unitWithTask getVariable["DCW_IsIntelRevealed",false])then{
     }] remoteExec ["spawn", GROUP_PLAYERS,false]; 
 };
 
+STAT_INTEL_FOUND = STAT_INTEL_FOUND - 1;
+publicVariable "STAT_INTEL_RESOLVED";
+
 _unitWithTask;

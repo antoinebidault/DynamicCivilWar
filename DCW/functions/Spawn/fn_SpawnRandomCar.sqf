@@ -17,15 +17,16 @@
 
 private["_unitName","_car","_pos","_unit","_roadConnectedTo","_roads","_road","_connectedRoad","_roadDirection"];
 if (!isServer) exitWith{false};
-private _minRange = 300;
+private _minRange = 1500;
+private _maxRange = 1900;
 private _carPool = [];
-private _firstTrigger = true;
+
 CAR = objNull;
 while{ true }do {
 	if (count _carPool < MAX_RANDOM_CAR)then{
 		//Get random pos
 		// get the next connected roadsegements to determine the direction of the road
-		_pos = [position (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom), 1500, 1900, 0, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
+		_pos = [position (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom), _minRange, _maxRange, 0, 0, 20, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
 		if (_pos isEqualTo []) then {
 			sleep 2;
 		} else {

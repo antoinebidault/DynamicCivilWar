@@ -98,11 +98,10 @@ while { alive _unit && !(_unit getVariable ["DCW_disable_patrol",false]) }do{
                 //Sit or not
                 if (round(random 1)==1)then{
                     _unit action ["sitdown",_unit];
-                    sleep 40 + random 25;
+                    sleep 50 + random 25;
                     _unit action ["sitdown",_unit];
-                    
                 }else{
-                    sleep 20 + random 25;
+                    sleep 50 + random 25;
                 };
                
                 //Play a suspect animation

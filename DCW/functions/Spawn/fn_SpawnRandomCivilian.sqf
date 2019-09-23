@@ -18,7 +18,8 @@
 
 if (!isServer) exitWith{false};
 private _numberOfmen = 1;
-private _minRange = 300;
+private _minRange = 450;
+private _maxRange = SPAWN_DISTANCE;
 private _firstTrigger = true; 
 
 while{true}do {
@@ -26,7 +27,7 @@ while{true}do {
 
 		//Get random pos
 		if (_firstTrigger) then {_minRange = 1; _firstTrigger = false;}else{_minRange = 450;};
-		_pos = [position (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom), _minRange, 600, 1, 0, 2, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
+		_pos = [position (([] call DCW_fnc_allPlayers) call BIS_fnc_selectRandom), _minRange, _maxRange, 1, 0, 2, 0, MARKER_WHITE_LIST + PLAYER_MARKER_LIST,[]] call BIS_fnc_findSafePos;
 		if (_pos isEqualTo [] || _pos isEqualTo [2048,2048,2048]) then {
 			sleep 2;
 		} else {

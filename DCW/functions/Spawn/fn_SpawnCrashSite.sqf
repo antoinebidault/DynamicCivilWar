@@ -52,8 +52,7 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     _chopper setVariable ["DCW_Type","wreck"];
     _chopper setVariable ["DCW_TaskNotCompleted",true];
     
-    _taskData = [_chopper,false] call DCW_fnc_createtask;
-    _chopper setVariable["DCW_Task",_taskData select 0];
+    // _taskData = [_chopper,false] call DCW_fnc_createtask;
 
      //Search intel;
      [_chopper,"Secure and put the charge on...","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa","_this distance _target < 6","true",
