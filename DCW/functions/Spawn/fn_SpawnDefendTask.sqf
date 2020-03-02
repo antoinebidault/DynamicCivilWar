@@ -87,6 +87,8 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 		[_taskId,"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach ([] call DCW_fnc_allPlayers);    
 
+
+	
 	STAT_INTEL_RESOLVED = STAT_INTEL_RESOLVED + 1;
 
 	[_compound,"resistance"] spawn DCW_fnc_setCompoundState;
@@ -100,6 +102,15 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 
 	[_compound,"bastion"] spawn DCW_fnc_setCompoundState;
 	[_compound,-35, 10] spawn DCW_fnc_setCompoundSupport;
+};
+
+
+// Remove the markers when mission accoplished #64
+for "_j" from 1 to _nbGroups do {	
+	_mkrName = format["DCW_defend_%1",str _j];
+	if (getMarkerColor _mkrName !="") then{
+		deleteMarker _mkrName;
+	};
 };
 
 
