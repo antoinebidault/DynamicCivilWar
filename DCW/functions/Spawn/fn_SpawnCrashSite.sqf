@@ -75,6 +75,10 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
 
                _bomb = "HelicopterExploBig";
                _boom = _bomb createVehicle getPos _chopper;
+
+               CRASHSITES = CRASHSITES - _chopper;
+               publicVariable "CRASHSITES";
+
                _chopper remoteExec ["DCW_fnc_success",2, false];
                sleep 1;
                deleteVehicle _chopper;
@@ -95,5 +99,7 @@ while {count CRASHSITES < NUMBER_CRASHSITES} do{
     MARKERS pushback [_enemyArea,getPos _chopper,false,false,40,[],[_civ,0,_en,0,0,0,0,0,0,0],[], 0,true,false,[],"chopper", 50,"Chopper crash site",[],"none", false, [0,0,0,0,0,0,0,0,0,0]];
     CRASHSITES pushback _chopper;
 };
+
+publicVariable "CRASHSITES";
 
 CRASHSITES;

@@ -36,13 +36,13 @@ _unit addHeadgear "H_Beret_blk";
      _success =_curr select 3;
      _state =_curr select 12;
     
-    [_asker,localize "STR_DCW_voices_localchief_tellUsAllYouKnow", false] call DCW_fnc_talk;
+    [_asker,localize "STR_DCW_voices_localchief_tellUsAllYouKnow", false] spawn DCW_fnc_talk;
     _this call DCW_fnc_endTalking; 
-    if(_state == "bastion" && !_success) exitWith{ [_unit,localize "STR_DCW_voices_localchief_securePositionFirst", false] call DCW_fnc_talk;false;};
+    if(_state == "bastion" && !_success) exitWith{ [_unit,localize "STR_DCW_voices_localchief_securePositionFirst", false] spawn DCW_fnc_talk;false;};
 
     if( _curr select 17 != "hasintel") then{ 
         _sentence = localize (["STR_DCW_voices_localchief_iDontKnow","STR_DCW_voices_localchief_noIdea","STR_DCW_voices_localchief_iWouldntCollaborate"] call BIS_fnc_selectRandom);
-        [_unit,_sentence, false] call DCW_fnc_talk; 
+        [_unit,_sentence, false] spawn DCW_fnc_talk; 
         [_unit,_action] remoteExec ["removeAction"];
         _unit call DCW_fnc_actionTorture;
         _unit call DCW_fnc_actionCorrupt;
@@ -82,6 +82,8 @@ _unit addHeadgear "H_Beret_blk";
 
         [_unit, localize "STR_DCW_voices_localchief_yourHelpIsWelcome", false] remoteExec ["DCW_fnc_talk",_asker];
         [HQ, localize "STR_DCW_voices_HQ_sendingTroops", false] remoteExec ["DCW_fnc_talk",_asker];
+
+
         sleep 15;
         
         [_curr] call DCW_fnc_compoundSecured; 

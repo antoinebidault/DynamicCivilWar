@@ -49,6 +49,9 @@ _this addEventHandler["HandleDamage",{
 			_unit setVariable ["marker", _marker];
 		};
 
+		// Score penalty
+        [GROUP_PLAYERS,-40,false,_source] remoteExec ["DCW_fnc_updateScore",2];   
+
 		_unit call DCW_fnc_addActionHeal;
 		
 	}else{

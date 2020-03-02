@@ -26,6 +26,7 @@ _taskId = format["DCW_defend_%1",str (_compound select 0)];
 {
 	[_taskId, _x, [localize "STR_DCW_spawnDefendTask_taskDesc",localize "STR_DCW_spawnDefendTask_taskName",localize "STR_DCW_spawnDefendTask_taskName"],_compound select 1,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, false];
 } foreach units GROUP_PLAYERS;     
+STAT_INTEL_FOUND = STAT_INTEL_FOUND + 1;
 
 _unitsInCompound = _compound select 5;
 {
@@ -85,6 +86,8 @@ if ({(alive _x) && !(captive _x)} count _units <= 2) then{
 		[HQ, localize "STR_DCW_voices_HQ_taskDefendSuccess"] remoteExec ["DCW_fnc_talk",_x,false];
 		[_taskId,"SUCCEEDED",true] remoteExec ["BIS_fnc_taskSetState",_x,false];
 	} foreach ([] call DCW_fnc_allPlayers);    
+
+	STAT_INTEL_RESOLVED = STAT_INTEL_RESOLVED + 1;
 
 	[_compound,"resistance"] spawn DCW_fnc_setCompoundState;
 	[_compound, 30, 10] spawn DCW_fnc_setCompoundSupport;         

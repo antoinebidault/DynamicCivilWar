@@ -17,21 +17,22 @@ DCW_fnc_addActionJoinAsTeamMember = {
          if (!(_this call DCW_fnc_startTalking)) exitWith {};
          if (!([GROUP_PLAYERS,500] call DCW_fnc_afford)) exitWith { hint (localize "STR_DCW_addActionFunctions_morePoints");_this call DCW_fnc_endTalking;false;};
       
-        [_unit,true] remoteExec ["stop",owner _unit];
-        _talker playActionNow "GestureFreeze";
-        [_unit, "GestureHi"] remoteExec ["playActionNow"];
+        [_unit, _talker, _action] spawn {
+             params["_unit","_talker","_action"];
+            [_unit,true] remoteExec ["stop",owner _unit];
+            _talker playActionNow "GestureFreeze";
+            [_unit, "GestureHi"] remoteExec ["playActionNow"];
+            sleep .3;
 
-        sleep .3;
-
-        [_talker,localize "STR_DCW_voices_teamLeader_hiBuddy",false] call DCW_fnc_talk;
-        [_unit,localize "STR_DCW_voices_teamMember_imIn",false] call DCW_fnc_talk;
-        [_unit,_action] remoteExec ["removeAction"];
-
-        sleep .3;
+            [_talker,localize "STR_DCW_voices_teamLeader_hiBuddy",false] call DCW_fnc_talk;
+            [_unit,localize "STR_DCW_voices_teamMember_imIn",false] call DCW_fnc_talk;
+            sleep .3;
+            [_unit,false] remoteExec ["stop",owner _unit];
+        };
         
+        [_unit] remoteExec ["removeAllActions"]; 
         _unit setVariable["DCW_disable_cache", true, true];
         _unit setVariable["DCW_disable_patrol", true, true];
-        [_unit,false] remoteExec ["stop",owner _unit];
         _unit call DCW_fnc_resetStateAI;
         [_unit] join GROUP_PLAYERS;
         _this call DCW_fnc_endTalking;
@@ -52,25 +53,28 @@ DCW_fnc_addActionJoinAsAdvisor = {
              hint (localize "STR_DCW_addActionFunctions_morePoints"); 
              _this call DCW_fnc_endTalking;false;
         };
-      
-        [_unit,true] remoteExec ["stop",owner _unit];
-        _talker playActionNow "GestureFreeze";
-        [_unit, "GestureHi"] remoteExec ["playActionNow"];
+         [_unit, _talker, _action] spawn {
+             params["_unit","_talker","_action"];
+            [_unit,true] remoteExec ["stop",owner _unit];
+            _talker playActionNow "GestureFreeze";
+            [_unit, "GestureHi"] remoteExec ["playActionNow"];
 
-        sleep .3;
+            sleep .3;
 
-        [_talker,localize "STR_DCW_voices_teamLeader_hiBuddyMil" ,false] call DCW_fnc_talk;
-        [_unit,localize "STR_DCW_voices_teamMember_imIn",false] call DCW_fnc_talk;
-        [_unit,_action] remoteExec ["removeAction"];
+            [_talker,localize "STR_DCW_voices_teamLeader_hiBuddyMil" ,false] call DCW_fnc_talk;
+            [_unit,localize "STR_DCW_voices_teamMember_imIn",false] call DCW_fnc_talk;
+           
+            sleep .3;
 
-        sleep .3;
-        
+            [_unit,false] remoteExec ["stop",owner _unit];
+        };
+
         _unit setVariable["DCW_advisor", true, true];
         _unit setVariable["DCW_disable_patrol", true, true];
         _unit setVariable["DCW_disable_cache", true, true];
-        [_unit,false] remoteExec ["stop",owner _unit];
         [_unit] join GROUP_PLAYERS;
         _this call DCW_fnc_endTalking;
+        [_unit] remoteExec ["removeAllActions"];
         _unit remoteExec ["DCW_fnc_addActionLeaveGroup",0];
 
     },nil,1,true,true,"","true",3,false,""];
@@ -235,6 +239,7 @@ DCW_fnc_addActionLookInventory = {
             [_unit,1] remoteExec ["DCW_fnc_updateRep",2];   
             [GROUP_PLAYERS,30,false,_human] remoteExec ["DCW_fnc_updateScore",2];   
             _unit remoteExec ["RemoveAllActions",0];
+
         }else{
             [_unit,-1] remoteExec ["DCW_fnc_updateRep",-2];   
         };

@@ -264,14 +264,6 @@ while { true } do {
 			};
 		} foreach UNITS_SPAWNED_CLOSE;
 		
-		if (STAT_INTEL_RESOLVED > 20) then {
-			
-		} else{
-			if (STAT_INTEL_RESOLVED > 30) then {
-				
-			};
-		};
-
 
 	} catch {
 		diag_log format["[SpawnLoop] Error in server.sqf loop :  %1",_exception];

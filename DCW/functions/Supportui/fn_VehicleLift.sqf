@@ -1,7 +1,6 @@
-
 params["_pos","_dist","_type","_chopperClass"];
 
-
+if (isNil '_pos') exitWith{hint "unknown position for chopper lift"};
 if (isNil '_type') then {_type = "vehicle";};
 _cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { _type };
 _cargoClass = if (_type == "ammo") then { "B_CargoNet_01_ammo_F" } else { _type };
@@ -9,7 +8,13 @@ _cargoClass = if (_type == "buildingKit") then { "B_Slingload_01_Repair_F" } els
 if (isNil '_chopperClass') then { _chopperClass =  SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom; };
 
 // Correct the destination position
-_pos = [_pos, 0, 50, 7, 0, 1, 0] call BIS_fnc_findSafePos;
+_destPos = [_pos, 0, 60, 7, 0, 1, 0] call BIS_fnc_findSafePos;
+
+// Spawn CH47
+_startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_findSafePos;
+
+// 200 meter lift for the chopper to be spawned
+_spawnpos = [_startPos select 0, _startPos select 1, 200];
 
 //Custom variable
 if (_type != "crate") then {
@@ -19,10 +24,6 @@ if (_type != "crate") then {
 	MARKER_PARADROP_VEHICLE setMarkerText "Vehicle paradrop";
 	MARKER_PARADROP_VEHICLE setMarkerType "mil_warning";
 };
-
-// Spawn CH47
-_startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_findSafePos;
-_spawnpos = [_startPos select 0, _startPos select 1, 200];
 
 _heli_spawn = [_spawnpos, 0, SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom, SIDE_FRIENDLY] call BIS_fnc_spawnVehicle;
 _chopper = _heli_spawn select 0;
@@ -72,9 +73,9 @@ _pilot setSkill 1;
 {_pilot disableAI _x} forEach ["TARGET", "AUTOTARGET","AUTOCOMBAT"];
 group _pilot setBehaviour "CARELESS";
 (group (_pilot)) allowFleeing 0;
-_helipad_obj = "Land_HelipadEmpty_F" createVehicle _pos;
+_helipad_obj = "Land_HelipadEmpty_F" createVehicle _destPos;
 
-_waypoint = (group (_pilot)) addWaypoint [_pos, 0];
+_waypoint = (group (_pilot)) addWaypoint [_destPos, 0];
 _waypoint setWaypointType "UNHOOK";
 _waypoint setWaypointBehaviour "CARELESS";
 //_Waypoint waypointAttachVehicle _cargo;

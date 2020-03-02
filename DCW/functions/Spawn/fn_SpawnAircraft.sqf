@@ -35,7 +35,10 @@ for "_xc" from 1 to _nbAircrafts do {
         _aircraft setVariable["marker",_marker];
     };
 
+    AIRCRAFTS pushback _aircraft;
+
     [_aircraft] call DCW_fnc_aircraftPatrol;
 
     sleep 10;
 };
+AIRCRAFTS;

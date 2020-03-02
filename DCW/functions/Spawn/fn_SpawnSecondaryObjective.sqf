@@ -182,6 +182,7 @@ while {sleep 20; count OFFICERS  > 0 } do {
     {
         private _officerPos = getPos _officer;
         private _officerName = name _officer;
+
         // Task creation
         [format["DCW_secondary_%1", _officerName],_x, [format["Our drones give us some informations about an insurgent's officer location. Move to his location and try to gather informations about the commander. His name is %1",_officerName],"Interrogate the officer","Interrogate the officer"],_officerPos,"CREATED",1, true] remoteExec ["BIS_fnc_setTask",_x, true];
         
@@ -197,5 +198,4 @@ while {sleep 20; count OFFICERS  > 0 } do {
 [HQ,format[localize "STR_DCW_voices_HQ_goodJob", NUMBER_OFFICERS], true] remoteExec ["DCW_fnc_talk"];
 [HQ,format[localize "STR_DCW_voices_HQ_nextStep" , name ENEMY_COMMANDER], true] remoteExec ["DCW_fnc_talk"];
   
-[100] call DCW_fnc_spawnConvoy;
 false;
