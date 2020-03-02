@@ -53,7 +53,7 @@ addMissionEventHandler ["PlayerConnected",{
 			player call DCW_fnc_resetState;
 			player setPos START_POSITION;
 			sleep 1;
-			[] call DCW_fnc_displayscore;
+			[] call DCW_fnc_displayscore; 
 		}] remoteExec["spawn", _player];
 	};
 }];
