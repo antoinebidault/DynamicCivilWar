@@ -38,6 +38,12 @@ DCW_fnc_handleRespawnBase = {
 	// Remove units around the player
 	{ if (_unit distance _x < 120 && side _x == SIDE_ENEMY) then {_x setDamage 1;} } foreach allUnits;
 
+
+	// Set the group leader as a human if he is an AI
+	if (!isPlayer (leader GROUP_PLAYERS)) then {
+		GROUP_PLAYERS selectLeader _unit;
+	};
+
 	// Create a basic hidden marker on player's position (Used for blacklisting purposes)
 	_pm = createMarker [format["player-marker-%1",name _unit], getPos _unit];
 	_pm setMarkerShape "ELLIPSE";
@@ -254,7 +260,6 @@ if (RESPAWN_ENABLED) then{
 				addCamShake [15, 6, 0.7];
 				_damage = .9;
 				_unit setDamage .9;
-					// Injured soldiers
 				[_unit] spawn DCW_fnc_handleRespawnSinglePlayer;
 			} else {
 				if (lifeState _unit == "INCAPACITATED")then{
