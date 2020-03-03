@@ -2,19 +2,20 @@ params["_pos","_dist","_type","_chopperClass"];
 
 if (isNil '_pos') exitWith{hint "unknown position for chopper lift"};
 if (isNil '_type') then {_type = "vehicle";};
-_cargoClass = if (_type == "crate") then { "CargoNet_01_box_F" } else { _type };
-_cargoClass = if (_type == "ammo") then { "B_CargoNet_01_ammo_F" } else { _type };
-_cargoClass = if (_type == "buildingKit") then { "B_Slingload_01_Repair_F" } else { _type };
+_cargoClass = _type;
+if (_type == "crate") then { _cargoClass = "CargoNet_01_box_F"; };
+if (_type == "ammo") then { _cargoClass =  "B_CargoNet_01_ammo_F"; };
+if (_type == "buildingKit") then { _cargoClass =  "B_Slingload_01_Repair_F"; };
 if (isNil '_chopperClass') then { _chopperClass =  SUPPORT_HEAVY_TRANSPORT_CLASS call BIS_fnc_selectRandom; };
 
 // Correct the destination position
 _destPos = [_pos, 0, 60, 7, 0, 1, 0] call BIS_fnc_findSafePos;
 
 // Spawn CH47
-_startPos = [_pos, _dist, _dist + 1, 0, 0, 20, 0] call BIS_fnc_findSafePos;
+_startPos = [_pos, _dist, _dist + 3, 0, 0, 20, 0] call BIS_fnc_findSafePos;
 
 // 200 meter lift for the chopper to be spawned
-_spawnpos = [_startPos select 0, _startPos select 1, 200];
+_spawnpos = [_startPos select 0, _startPos select 1, 0];
 
 //Custom variable
 if (_type != "crate") then {
@@ -30,7 +31,7 @@ _chopper = _heli_spawn select 0;
 _spawnpos set [2,400];
 _chopper setposatl _spawnpos;
 createVehicleCrew (_chopper);
-_spawnpos set [2,300]; 
+_spawnpos set [2,300];
 _cargo =  _cargoClass createVehicle _spawnpos;
 if (_type == "ammo")  then {
 	_cargo call DCW_fnc_spawnCrate;
@@ -45,13 +46,13 @@ _cargo setMass [((getMass _cargo) min 11400),0];
 sleep 1;
 _cargo setposatl _spawnpos;
 _success = _chopper setSlingLoad _cargo;
+
 if (!_success) exitWith { 
-	//[HQ,"Sorry guy, we are unable to drop this kind of vehicle... Try a lighter vehicle"] remoteExec ["DCW_fnc_talk"];
     [GROUP_PLAYERS,150] remoteExec ["DCW_fnc_updateScore",2];   
 	{deleteVehicle _x} foreach crew _chopper; 
 	deleteVehicle _chopper; 
 	deleteVehicle _cargo;
-	[_type,_dist,_type,"B_Heli_Transport_03_F"] call DCW_fnc_vehicleLift;
+	[_pos,_dist,_type,"B_Heli_Transport_03_F"] call DCW_fnc_vehicleLift;
 };
 
 [HQ,format["The %1 is in bound !",
