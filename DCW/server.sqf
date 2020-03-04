@@ -350,7 +350,6 @@ MARKERS = [CLUSTERS] call DCW_fnc_fillClusters;
 // Random spawning function decoupled from the compounds
 [] spawn DCW_fnc_spawnCrashSite; 
 [] spawn DCW_fnc_spawnSecondaryObjective; 
-[] spawn DCW_fnc_spawnMainObjective;
 [] call DCW_fnc_refreshMarkerStats; // Refresh marker stats
 [] spawn DCW_fnc_spawnSheep;
 [] spawn DCW_fnc_spawnRandomEnemies;

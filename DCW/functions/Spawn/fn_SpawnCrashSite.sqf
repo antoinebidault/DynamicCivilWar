@@ -19,7 +19,7 @@ CRASHSITES  = [];
 
 if (NUMBER_CRASHSITES == 0)exitWith{CRASHSITES};
 
- _worldSize = (getMarkerSize GAME_ZONE) select 0;
+_worldSize = (getMarkerSize GAME_ZONE) select 0;
 _worldCenter = getMarkerPos GAME_ZONE;
 private _tempMarkers = MARKER_WHITE_LIST;
 

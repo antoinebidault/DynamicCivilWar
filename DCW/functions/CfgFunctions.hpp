@@ -136,6 +136,7 @@ class CfgFunctions
 			class failed {};
 			class createtask {};
 			class mainObjectiveIntel {};
+			class secondaryObjectiveIntel {};
 			class compoundSecured {};
 		};
 

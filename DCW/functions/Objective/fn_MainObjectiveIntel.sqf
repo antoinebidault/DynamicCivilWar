@@ -17,7 +17,7 @@
 
 private _unit = _this;
 
-if(!alive ENEMY_COMMANDER)exitWith {false};
+if(!alive ENEMY_COMMANDER)exitWith { [_unit] call DCW_fnc_secondaryObjectiveIntel; };
 if(count COMMANDER_LAST_POS == 0) exitWith {[_unit,"But I think you already know it...",false] remoteExec ["DCW_fnc_talk"];false;};
 
 private _initPos = COMMANDER_LAST_POS call BIS_fnc_selectRandom;

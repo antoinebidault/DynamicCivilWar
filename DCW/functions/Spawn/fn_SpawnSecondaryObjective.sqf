@@ -154,16 +154,42 @@ DCW_fnc_spawnOfficer = {
     _officer;
 };
 
-// Spawning officers
+// Spawning officers 
 for "_i" from 1 to NUMBER_OFFICERS  do {
     _officer = [] call DCW_fnc_spawnOfficer;
      OFFICERS pushback(_officer);
      sleep 5;
 };
 
+// Add Base tasks
+ {
+    // Task creation
+    ["DCW_primary",_x, ["Find and kill the enemy commander.","Find and kill the commander","Find and kill the commander"],nil,"CREATED",5, false] remoteExec ["BIS_fnc_setTask",_x, true];
+    ["DCW_secondary",_x, ["Neutralize and interrogate the enemy officers","Neutralize and interrogate the enemy officers","Neutralize and interrogate the enemy officers"],nil,"CREATED",5, false] remoteExec ["BIS_fnc_setTask",_x, true];
+} foreach ([] call DCW_fnc_allPlayers);
 
 sleep 240;
 
+_state = 1;
+while {sleep 20; count OFFICERS  > 0 } do {
+    if (STAT_INTEL_RESOLVED > 150 && _state == 1) then {
+        [HQ] call DCW_fnc_secondaryObjectiveIntel;
+        _state = 2;
+    } else {
+        if (STAT_INTEL_RESOLVED > 100 && _state == 2) then {
+            [HQ] call DCW_fnc_secondaryObjectiveIntel;
+            _state = 3;
+        } else { 
+            if (STAT_INTEL_RESOLVED > 50  && _state == 3) then {
+                [HQ] call DCW_fnc_secondaryObjectiveIntel;
+                _state = 4;
+            };
+        };
+    };
+    sleep 20;
+};
+
+/*
 while {sleep 20; count OFFICERS  > 0 } do {
 
     // Find the closest officer
@@ -193,9 +219,13 @@ while {sleep 20; count OFFICERS  > 0 } do {
     _marker setMarkerAlpha 1;
     _marker setMarkerPos (getPos _officer);
     sleep 600 + random 200;
-};
+};*/
+waitUntil {count OFFICERS == 0;sleep 15;};
 
 [HQ,format[localize "STR_DCW_voices_HQ_goodJob", NUMBER_OFFICERS], true] remoteExec ["DCW_fnc_talk"];
 [HQ,format[localize "STR_DCW_voices_HQ_nextStep" , name ENEMY_COMMANDER], true] remoteExec ["DCW_fnc_talk"];
-  
+
+// Trigger the main objective
+[] spawn DCW_fnc_spawnMainObjective;
+
 false;

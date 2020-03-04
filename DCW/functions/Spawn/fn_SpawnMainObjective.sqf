@@ -93,6 +93,7 @@ ENEMY_COMMANDER addMPEventHandler ["MPKilled",{
             [_this, format["HQ ! This is %1, the enemy commander is KIA ! Out.",name _this],true] remoteExec ["DCW_fnc_talk"];
             [HQ, "Good job everyone ! We're sending you a chopper to the extraction point !",true] remoteExec ["DCW_fnc_talk"];
             hint "mission successful ! Good job soldier !";
+            // TODO add a little celebration moment...
             sleep 60;
             activateKey "key1";
             "EveryoneWon" call BIS_fnc_endMissionServer;
