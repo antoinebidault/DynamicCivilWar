@@ -20,7 +20,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-rimraf": "^0.2.2",
     "gulp-watch": "^5.0.1",
-    "moment": "^2.19.3",
+    "moment": "^2.29.2",
     "path": "^0.12.7"
   },
   "scripts": {
